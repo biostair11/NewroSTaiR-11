@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewroSync-11 | PC & Mobile</title>
+    <style>
+        :root {
+            /* PALETA AZUL-ARENA VIBRANTE */
+            --azul-profundo: #0a2463;
+            --azul-medio: #3e92cc;
+            --azul-cielo: #4cc9f0;
+            --arena-calida: #e6b775;
+            --arena-dorada: #f4a261;
+            --arena-oscura: #e76f51;
+            --fondo-gradiente: linear-gradient(135deg, #0a2463 0%, #1a3d7c 30%, #3e92cc 100%);
+            --texto-blanco: #ffffff;
+            --texto-arena: #fdf6e3;
+            --sombra-azul: rgba(62, 146, 204, 0.3);
+            --sombra-arena: rgba(230, 183, 117, 0.4);
+        }
+
+        body {
+            margin: 0; 
+            padding: 0;
+            background: var(--fondo-gradiente);
+            color: var(--texto-blanco);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header { 
+            text-align: center; 
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 { 
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, var(--azul-cielo), var(--arena-dorada));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 3px; 
+            margin-bottom: 5px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            color: var(--texto-arena);
+            opacity: 0.8;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .sync-container { 
+            width: 100%; 
+            max-width: 500px; 
+            padding: 20px;
+        }
+
+        /* CONTENEDOR DEL SLIDER */
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .carrusel {
+            display: flex;
+            overflow: hidden;
+            scroll-behavior: smooth;
+            width: 180px; /* Ancho de un solo hexágono + margen */
+            gap: 40px;
+        }
+
+        .item-hex {
+            flex: 0 0 180px;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        /* FLECHAS DE NAVEGACIÓN - DISEÑO MEJORADO */
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-nav:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: var(--arena-dorada);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px var(--sombra-arena);
+        }
+
+        /* ESTILO HEXÁGONOS - AZUL & ARENA */
+        .modulo {
+            width: 150px;
+            height: 170px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            text-align: center; 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* FASE SOL - ARENA DORADA */
+        .fase-sol .modulo { 
+            background: linear-gradient(135deg, var(--arena-dorada), var(--arena-oscura)); 
+            color: #2c1810; 
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .fase-sol .modulo:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px var(--sombra-arena);
+            border-color: white;
+        }
+
+        /* FASE LUNA - AZUL VIBRANTE */
+        .fase-luna .modulo { 
+            background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo)); 
+            color: var(--texto-blanco); 
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .fase-luna .modulo:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px var(--sombra-azul);
+            border-color: var(--azul-cielo);
+        }
+
+        /* CENTRO MEJORADO */
+        .centro-humor {
+            width: 100px; 
+            height: 100px; 
+            background: radial-gradient(circle, var(--azul-cielo), var(--arena-dorada));
+            border-radius: 50%; 
+            margin: 25px auto; 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
+            color: var(--texto-blanco); 
+            font-weight: 900; 
+            font-size: 0.9rem;
+            box-shadow: 0 0 30px rgba(78, 201, 240, 0.5);
+            animation: pulse 3s ease-in-out infinite;
+            border: 3px solid white;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ETIQUETAS MEJORADAS */
+        .etiqueta { 
+            font-size: 0.9rem; 
+            letter-spacing: 2px; 
+            text-align: center; 
+            margin-bottom: 15px;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .etiqueta-sol {
+            color: var(--arena-dorada);
+            background: rgba(244, 162, 97, 0.1);
+            border: 1px solid rgba(244, 162, 97, 0.3);
+        }
+
+        .etiqueta-luna {
+            color: var(--azul-cielo);
+            background: rgba(78, 201, 240, 0.1);
+            border: 1px solid rgba(78, 201, 240, 0.3);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .sync-container {
+                padding: 10px;
+            }
+            
+            .carrusel {
+                width: 160px;
+                gap: 30px;
+            }
+            
+            .item-hex {
+                flex: 0 0 160px;
+            }
+            
+            .modulo {
+                width: 140px;
+                height: 160px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .btn-nav {
+                width: 40px;
+                height: 40px;
+                padding: 8px;
+            }
+        }
+
+        /* EFECTO DE FONDO SUTIL */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(78, 201, 240, 0.05) 1%, transparent 2%),
+                radial-gradient(circle at 80% 70%, rgba(244, 162, 97, 0.05) 1%, transparent 2%);
+            background-size: 100px 100px;
+            z-index: -1;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>BioSTaiR-11</h1>
+        <p class="subtitle">Sistema de Correlación Neuronal</p>
+    </header>
+
+    <div class="sync-container">
+        
+        <!-- FASE SOL - ARENA DORADA -->
+        <div class="etiqueta etiqueta-sol">ESTRUCTURA FLEXIBLE (G-C)</div>
+        <div class="slider-wrapper">
+            <button class="btn-nav" onclick="moveSlider('sol', -1)">&#10094;</button>
+            <div class="carrusel fase-sol" id="slider-sol">
+                <div class="item-hex"><a href="01-Origen-y-Significado.html" class="modulo">ORIGEN Y SIGNIFICADO</a></div>
+                <div class="item-hex"><a href="02-Fundamentos-Teóricos.html" class="modulo">FUNDAMENTOS TEORICOS</a></div>
+                <div class="item-hex"><a href="03-Investigación-y-Desarrollo.html" class="modulo">INVESTIGACIÓN Y DESARROLLO(PRESENTACIÓN UD)</a></div>
+                <div class="item-hex"><a href="04-Modelo-de-Negocio-y-Aplicaciones.html" class="modulo">MODELO DE NEGOCIO Y APLICACIONES</a></div>
+            </div>
+            <button class="btn-nav" onclick="moveSlider('sol', 1)">&#10095;</button>
+        </div>
+
+        <!-- CENTRO -->
+        <div class="centro-humor">DIM 12</div>
+
+        <!-- FASE LUNA - AZUL VIBRANTE -->
+        <div class="etiqueta etiqueta-luna">FLEXIBILIDAD ESTRUCTURADA (A-T)</div>
+        <div class="slider-wrapper">
+            <button class="btn-nav" onclick="moveSlider('luna', -1)">&#10094;</button>
+            <div class="carrusel fase-luna" id="slider-luna">
+                <div class="item-hex"><a href="05-Ciencia-Arte-y-Cultura.html.html" class="modulo">CIENCIA, ARTE Y CULTURA</a></div>
+                <div class="item-hex"><a href="06-Historia-y-Neuroplasticidad.html" class="modulo">HISTORIA Y NEUROPLASTICIDAD (DAVINCI, BETHOVEN ETC.)</a></div>
+                <div class="item-hex"><a href="07-La-Era-Humano-IA.html" class="modulo">LA ERA HUMANO-IA</a></div>
+                <div class="item-hex"><a href="08-Por-Definir.html" class="modulo">RESERVADO</a></div>
+            </div>
+            <button class="btn-nav" onclick="moveSlider('luna', 1)">&#10095;</button>
+        </div>
+
+    </div>
+
+    <script>
+        function moveSlider(fase, direccion) {
+            const slider = document.getElementById('slider-' + fase);
+            const scrollAmount = 220; // Ancho del item + gap
+            slider.scrollBy({ left: direccion * scrollAmount, behavior: 'smooth' });
+        }
+
+        // Efecto hover táctil para móviles
+        document.querySelectorAll('.modulo').forEach(modulo => {
+            modulo.addEventListener('touchstart', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            modulo.addEventListener('touchend', function() {
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Inicialización - mostrar primer hexágono centrado
+        window.addEventListener('load', () => {
+            document.getElementById('slider-sol').scrollLeft = 0;
+            document.getElementById('slider-luna').scrollLeft = 0;
+        });
+    </script>
+
+</body>
+</html>
