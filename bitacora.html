@@ -1,0 +1,443 @@
+perfecto! muchas gracias,  Claude IA nos ayudó con este html, pero la verdad no sé como cargar imágenes, no me acuerdo.  qué pena
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitácora de Evidencia | BioSTaiR-11</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #e0e7ff;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #a5b4fc;
+      margin-bottom: 20px;
+    }
+
+    .nav-back {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: rgba(102, 126, 234, 0.2);
+      border: 1px solid rgba(102, 126, 234, 0.4);
+      border-radius: 8px;
+      color: #e0e7ff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .nav-back:hover {
+      background: rgba(102, 126, 234, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Timeline Section */
+    .timeline-section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #c7d2fe;
+    }
+
+    /* Video Grid */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .video-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-info {
+      padding: 20px;
+    }
+
+    .video-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #e0e7ff;
+    }
+
+    .video-date {
+      font-size: 0.9rem;
+      color: #a5b4fc;
+      margin-bottom: 10px;
+    }
+
+    .video-description {
+      font-size: 0.95rem;
+      color: #d1d5db;
+      line-height: 1.5;
+    }
+
+    /* Photo Gallery */
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .photo-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-card:hover {
+      transform: scale(1.03);
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-caption {
+      padding: 15px;
+      text-align: center;
+    }
+
+    .photo-caption h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: #e0e7ff;
+    }
+
+    .photo-caption p {
+      font-size: 0.9rem;
+      color: #a5b4fc;
+    }
+
+    /* Metrics Section */
+    .metrics-section {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      margin-bottom: 60px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #667eea;
+      margin-bottom: 5px;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: #a5b4fc;
+    }
+
+    /* Note Box */
+    .note-box {
+      background: rgba(251, 191, 36, 0.1);
+      border-left: 4px solid #fbbf24;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 30px 0;
+    }
+
+    .note-box strong {
+      color: #fbbf24;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #a5b4fc;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .video-grid,
+      .photo-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>📊 Bitácora de Evidencia Visual</h1>
+      <p class="subtitle">Documentación del progreso NewroSync-11 | Caso de Estudio n=1</p>
+      <a href="index.html" class="nav-back">← Volver al inicio</a>
+    </header>
+
+    <!-- Introduction -->
+    <div class="note-box">
+      <p><strong>Contexto:</strong> Esta bitácora documenta el progreso de escritura bimanual simultánea usando el protocolo NewroSync-11. Los videos y fotos muestran la evolución desde exploración inicial hasta coordinación cruzada en 4-7 días de práctica (15 min/día).</p>
+    </div>
+
+    <!-- Metrics Overview -->
+    <section class="metrics-section">
+      <h2 class="section-title">Métricas del Protocolo</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">7</div>
+          <div class="metric-label">Días de práctica</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">15</div>
+          <div class="metric-label">Min/día promedio</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">4</div>
+          <div class="metric-label">Ejercicios estructurados</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">~70%</div>
+          <div class="metric-label">Reducción densidad texto</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="timeline-section">
+      <h2 class="section-title">🎥 Videos de Demostración</h2>
+      
+      <div class="video-grid">
+        <!-- Video 1 -->
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/W6rtQOHWL5Q" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">Día 4: Escritura Simultánea</h3>
+            <p class="video-date">📅 7 enero 2026</p>
+            <p class="video-description">Primera demostración de escritura bimanual simultánea con brazos cruzados. Se observa fluidez en ambas manos sin vacilación significativa.</p>
+          </div>
+        </div>
+
+        <!-- Video 2 - Reemplaza con tu segundo video -->
+        <div class="video-card">
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/WQ9hlkY-x1c" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">Progreso Reciente</h3>
+            <p class="video-date">📅 [Fecha del video]</p>
+            <p class="video-description">[Describe brevemente qué muestra este video: ¿ejercicio específico? ¿día de práctica? ¿técnica nueva?]</p>
+          </div>
+        </div>
+
+        <!-- Video 3 - Añade más videos según necesites -->
+        <div class="video-card">
+          <div class="video-wrapper">
+            <!-- Reemplaza VIDEO_ID_3 con el ID de tu tercer video -->
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title">[Título del video]</h3>
+            <p class="video-date">📅 [Fecha]</p>
+            <p class="video-description">[Descripción]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="timeline-section">
+      <h2 class="section-title">📸 Galería Fotográfica</h2>
+      
+      <div class="photo-gallery">
+        <!-- Foto Día 1 -->
+        <div class="photo-card">
+          <img src="assets/img/dia1.jpg" alt="Día 1: Exploración inicial" onerror="this.src='https://via.placeholder.com/400x300/667eea/ffffff?text=Día+1'">
+          <div class="photo-caption">
+            <h3>Día 1 - Exploración</h3>
+            <p>4 enero 2026 | Alta densidad de texto</p>
+          </div>
+        </div>
+
+        <!-- Foto Día 2 -->
+        <div class="photo-card">
+          <img src="assets/img/dia2.jpg" alt="Día 2: Reducción de densidad" onerror="this.src='https://via.placeholder.com/400x300/764ba2/ffffff?text=Día+2'">
+          <div class="photo-caption">
+            <h3>Día 2 - Orientación Lateral</h3>
+            <p>5 enero 2026 | Emergencia de rotación 90°</p>
+          </div>
+        </div>
+
+        <!-- Foto Día 3 -->
+        <div class="photo-card">
+          <img src="assets/img/dia3.jpg" alt="Día 3: Sistema estructurado" onerror="this.src='https://via.placeholder.com/400x300/667eea/ffffff?text=Día+3'">
+          <div class="photo-caption">
+            <h3>Día 3 - Protocolo</h3>
+            <p>6 enero 2026 | 4 ejercicios numerados</p>
+          </div>
+        </div>
+
+        <!-- Foto Día 4 -->
+        <div class="photo-card">
+          <img src="assets/img/dia4.jpg" alt="Día 4: Escritura cruzada" onerror="this.src='https://via.placeholder.com/400x300/764ba2/ffffff?text=Día+4'">
+          <div class="photo-caption">
+            <h3>Día 4 - Cruzado</h3>
+            <p>7 enero 2026 | Simultáneo con brazos cruzados</p>
+          </div>
+        </div>
+
+        <!-- Añade más fotos según necesites -->
+        <div class="photo-card">
+          <img src="assets/img/dia5.jpg" alt="Día 5" onerror="this.src='https://via.placeholder.com/400x300/667eea/ffffff?text=Día+5'">
+          <div class="photo-caption">
+            <h3>Día 5 - [Título]</h3>
+            <p>[Fecha] | [Descripción]</p>
+          </div>
+        </div>
+
+        <div class="photo-card">
+          <img src="assets/img/dia6.jpg" alt="Día 6" onerror="this.src='https://via.placeholder.com/400x300/764ba2/ffffff?text=Día+6'">
+          <div class="photo-caption">
+            <h3>Día 6 - [Título]</h3>
+            <p>[Fecha] | [Descripción]</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case Study Link -->
+    <section class="metrics-section">
+      <h2 class="section-title">📋 Estudio de Caso Detallado</h2>
+      <p style="text-align: center; margin-top: 20px;">
+        Para análisis completo de métricas, metodología y limitaciones, consulta el 
+        <a href="estudios-caso/case-study-melvin.html" style="color: #667eea; font-weight: 600;">estudio de caso completo →</a>
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        <a href="index.html">← Inicio</a> | 
+        <a href="03-Investigacion-y-Desarrollo.html">Protocolo completo</a> | 
+        <a href="https://github.com/biostair11/biostair11" target="_blank">GitHub</a>
+      </p>
+      <p style="margin-top: 20px;">© 2026 BioSTaiR-11 | Documentación bajo Licencia Open Source</p>
+    </footer>
+  </div>
+</body>
+</html>
