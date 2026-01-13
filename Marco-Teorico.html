@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Módulo 02: Marco Teórico Unificado - NewroSync-11</title>
+    <style>
+        :root {
+            --blue-deep: #0a2463;
+            --blue-medium: #3e92cc;
+            --blue-sky: #4cc9f0;
+            --sand-warm: #e6b775;
+            --sand-gold: #f4a261;
+            --sand-dark: #e76f51;
+            --gray-light: #f5f5f5;
+            --gray-medium: #e0e0e0;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --complex-purple: #8a4fff;
+            --emerald-green: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Navegación mejorada */
+        .nav-container {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .nav-logo {
+            font-weight: 700;
+            color: var(--blue-deep);
+            font-size: 1.3rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(10, 36, 99, 0.1);
+        }
+        
+        .nav-links a.active {
+            background: var(--blue-deep);
+            color: white;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-medium) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 201, 240, 0.1) 0%, transparent 70%);
+            z-index: 0;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            background: linear-gradient(135deg, white 0%, rgba(255,255,255,0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 300;
+            margin-bottom: 10px;
+        }
+        
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .abstract-box {
+            background-color: white;
+            border-left: 5px solid var(--sand-gold);
+            padding: 30px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .abstract-box::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--sand-gold) 0%, var(--sand-dark) 100%);
+        }
+        
+        .abstract-box h2 {
+            color: var(--blue-deep);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 35px;
+            margin: 30px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
+        
+        .section-title {
+            color: var(--blue-medium);
+            border-bottom: 2px solid var(--sand-warm);
+            padding-bottom: 12px;
+            margin-bottom: 25px;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title::before {
+            font-size: 1.2rem;
+        }
+        
+        .principle-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-left: 4px solid var(--blue-sky);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .principle-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .principle-title {
+            color: var(--blue-deep);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+        
+        .principle-title::before {
+            content: "◈";
+            color: var(--sand-dark);
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+        
+        .matrix-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .matrix-item {
+            background: white;
+            border: 1px solid var(--gray-medium);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .matrix-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--blue-deep) 0%, var(--blue-sky) 100%);
+        }
+        
+        .matrix-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .matrix-header {
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px 6px 0 0;
+            margin: -25px -25px 20px -25px;
+            font-weight: 700;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        .footnote {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+            border-top: 1px dashed var(--gray-medium);
+            padding-top: 15px;
+            margin-top: 25px;
+        }
+        
+        .highlight {
+            background-color: rgba(244, 162, 97, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .definition {
+            background-color: rgba(76, 201, 240, 0.1);
+            border-left: 4px solid var(--blue-sky);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+        
+        .definition strong {
+            color: var(--blue-medium);
+        }
+        
+        /* Nueva sección de sistemas complejos */
+        .complex-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f2ff 100%);
+            border: 1px solid rgba(138, 79, 255, 0.2);
+        }
+        
+        .complex-card {
+            background: white;
+            border-left: 4px solid var(--complex-purple);
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            box-shadow: 0 4px 10px rgba(138, 79, 255, 0.1);
+        }
+        
+        .complex-title {
+            color: var(--complex-purple);
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+        
+        .complex-title::before {
+            content: "🌀";
+            margin-right: 10px;
+        }
+        
+        /* Botones de navegación interna */
+        .section-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray-medium);
+        }
+        
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--blue-medium) 0%, var(--blue-sky) 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(62, 146, 204, 0.3);
+        }
+        
+        .nav-button.secondary {
+            background: linear-gradient(135deg, var(--sand-warm) 0%, var(--sand-gold) 100%);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px 20px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--gray-medium);
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: var(--blue-medium);
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section {
+                padding: 25px 20px;
+            }
+            
+            .matrix-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .section-nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-button {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navegación -->
+    <nav class="nav-container">
+        <div class="nav-logo">BioStair11 | NewroSync-11 v2.5</div>
+        <div class="nav-links">
+            <a href="https://biostair11.github.io/biostair11/index.html">🏠 Inicio</a>
+            <a href="#" class="active">📘 Marco Teórico</a>
+            <a href="#">🔬 Experimentos</a>
+            <a href="#">⚙️ Procesador</a>
+            <a href="#">📚 Recursos</a>
+        </div>
+    </nav>
+
+    <!-- Header principal -->
+    <header>
+        <div class="header-content">
+            <h1>Módulo 02: Marco Teórico Unificado</h1>
+            <p class="subtitle">NewroSync-11 v2.5 – De Matemáticas Puras a Sistemas Complejos Biológicos</p>
+            <p><em>Documento integrado para discusión académica y desarrollo colaborativo</em></p>
+            <div class="version-badge">Versión Unificada | 13 Enero 2026</div>
+        </div>
+    </header>
+
+    <!-- Abstract mejorado -->
+    <div class="abstract-box">
+        <h2>📋 Síntesis Conceptual</h2>
+        <p>Este documento presenta el <strong>marco teórico unificado</strong> del proyecto <span class="highlight">NewroSync-11</span>, integrando tres versiones previas en una estructura coherente que abarca desde principios neurocognitivos hasta fenómenos emergentes en sistemas complejos.</p>
+        
+        <p>La investigación transita de observaciones perceptuales específicas hacia un modelo general donde <span class="highlight">patrones temporales Fibonacci</span> (y sus imperfecciones inherentes) pueden modular estados de plasticidad neuronal mediante mecanismos de <span class="highlight">sincronización no lineal</span> y <span class="highlight">adaptación perceptual compleja</span>.</p>
+        
+        <p><strong>Novedad en v2.5:</strong> Integración de la sección <em>"De Fibonacci Puro a Sistemas Complejos"</em> que aborda la <span class="highlight">imperfección como motor</span> de procesos neuroplásticos, posicionando el proyecto dentro del paradigma de sistemas complejos adaptativos.</p>
+        
+        <p><strong>Palabras clave:</strong> Neuroplasticidad, Audio Fibonacci, Sistemas Complejos, Sincronización Neuronal, Procesamiento Temporal, Auto-organización, Imperfección Generativa</p>
+    </div>
+
+    <!-- Sección 1: Fundamentos Neurocognitivos (actualizada) -->
+    <div class="section">
+        <h2 class="section-title">🧠 1. Fundamentos Neurocognitivos Integrados</h2>
+        
+        <div class="principle-card">
+            <div class="principle-title">Principio 1: Temporalidad y Sincronía Cerebral</div>
+            <p>El cerebro procesa información en <span class="highlight">múltiples escalas de tiempo simultáneamente</span>. La sincronización neuronal no es un estado estático, sino un proceso dinámico que fluctúa según la tarea, atención y estimulación sensorial. Este principio fundamenta la posibilidad de modular estados cerebrales mediante patrones temporales estructurados.</p>
+            <p class="footnote">Referencia: Teoría de la Comunicación Neuronal a Través de Coherencia (Fries, 2005)</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Principio 2: Plasticidad Perceptual Auditiva</div>
+            <p>El sistema auditivo mantiene capacidad de <span class="highlight">reorganización funcional</span> a lo largo de la vida. La exposición a patrones acústicos estructurados puede inducir recalibración perceptual, modificando cómo se interpretan estímulos futuros. Esta plasticidad es específica al estímulo y depende del engagement cognitivo.</p>
+            <p class="footnote">Referencia: Plasticidad Perceptual en Discriminación Auditiva (Recanzone et al., 1993; Merzenich et al.)</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Principio 3: Patrones Matemáticos en Sistemas Biológicos</div>
+            <p>Secuencias como Fibonacci aparecen recurrentemente en sistemas biológicos (filotaxis, proporciones corporales, ritmos cardíacos). La hipótesis sugiere que estos patrones pueden <span class="highlight">resonar con ritmos endógenos</span> del procesamiento cerebral, facilitando procesos de sincronización y auto-organización.</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Principio 4: Límites del Enfoque Lineal</div>
+            <p>Los modelos lineales estímulo-respuesta resultan insuficientes para describir fenómenos de adaptación perceptual compleja. En sistemas biológicos reales, <span class="highlight">pequeñas variaciones iniciales pueden amplificarse</span> dando lugar a comportamientos emergentes. NewroSync-11 se aborda desde un marco no determinista donde la variabilidad cumple un rol funcional.</p>
+        </div>
+    </div>
+
+    <!-- Sección 2: Arquitectura del Sistema (actualizada) -->
+    <div class="section">
+        <h2 class="section-title">⚙️ 2. Arquitectura del Sistema NewroSync-11 v2.5</h2>
+        
+        <div class="definition">
+            <strong>Sistema Fibonacci de Retrasos Mejorado:</strong> Cuatro canales procesados con retrasos basados en la secuencia Fibonacci (F1=1, F2=2, F3=3, F5=5) multiplicados por 22.68ms, más el canal original. Esta arquitectura crea un <span class="highlight">campo temporal estructurado pero no rígido</span>.
+        </div>
+        
+        <div class="definition">
+            <strong>Ratios de Velocidad Modulados:</strong> Cada canal procesado aplica un cambio de velocidad específico (0.939, 0.961, 0.986, 1.100) creando <span class="highlight">variación sutil pero perceptible</span> que evita la habituación sensorial.
+        </div>
+        
+        <div class="definition">
+            <strong>Volumen y Normalización Adaptativa:</strong> Todos los canales procesados se normalizan a -34dB (F34 en secuencia Fibonacci), manteniendo equilibrio perceptual mientras se <span class="highlight">preservan las imperfecciones naturales</span> del audio original.
+        </div>
+        
+        <h3>Matriz de Parámetros Técnicos Integrados:</h3>
+        <div class="matrix-container">
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #0a2463 0%, #3e92cc 100%);">Parámetro Temporal</div>
+                <p><strong>Base:</strong> 22.68ms (derivado de 1/44.1Hz)</p>
+                <p><strong>Retrasos:</strong> 1×, 2×, 3×, 5× base</p>
+                <p><strong>Total canales:</strong> 5 (1 original + 4 procesados)</p>
+                <p><strong>Patrón:</strong> Fibonacci con aceptación de desfases</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #3e92cc 0%, #4cc9f0 100%);">Parámetro Espectral</div>
+                <p><strong>Ratios:</strong> [0.939, 0.961, 0.986, 1.100]</p>
+                <p><strong>Volumen:</strong> -34dB uniforme</p>
+                <p><strong>Normalización:</strong> Preserva dinámicas naturales</p>
+                <p><strong>Fase:</strong> Variaciones intencionales</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #e76f51 0%, #f4a261 100%);">Parámetro Cognitivo</div>
+                <p><strong>Patrón:</strong> 3-4-3-4 (estructura-flexibilidad)</p>
+                <p><strong>Modos:</strong> Alternancia consciente/subconsciente</p>
+                <p><strong>Exposición:</strong> 20-40 minutos/día recomendado</p>
+                <p><strong>Engagement:</strong> Atención fluctuante óptima</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección 3: Hipótesis y Evidencia (actualizada) -->
+    <div class="section">
+        <h2 class="section-title">🔬 3. Hipótesis Integradas y Evidencia Convergente</h2>
+        
+        <h3>Hipótesis Principal Unificada:</h3>
+        <p>La exposición a audio procesado con estructura Fibonacci (y sus imperfecciones inherentes) induce cambios en la <span class="highlight">sincronización neuronal no lineal</span> que se manifiestan como:</p>
+        
+        <div class="matrix-container" style="margin-top: 20px;">
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #0a2463;">Perceptual</div>
+                <p>Mejora en discriminación auditiva de patrones temporales</p>
+                <p>Cambios en percepción de música conocida</p>
+                <p>Mayor sensibilidad a micro-variaciones</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #3e92cc;">Motor</div>
+                <p>Aceleración en adquisición de habilidades</p>
+                <p>Mejora coordinación interhemisférica</p>
+                <p>Transferencia a tareas no auditivas</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #e76f51;">Cognitivo</div>
+                <p>Reducción de habituación sensorial</p>
+                <p>Mayor engagement perceptual</p>
+                <p>Flexibilidad atencional mejorada</p>
+            </div>
+        </div>
+        
+        <h3 style="margin-top: 30px;">Evidencia Convergente Recogida:</h3>
+        
+        <div class="principle-card">
+            <div class="principle-title">Evidencia 1: Cambio Perceptual Subjetivo (Validado)</div>
+            <p><strong>Observación:</strong> Música escuchada previamente al desarrollo del sistema ahora suena "diferente" – se perciben detalles previamente inaudibles, con mayor separación de instrumentos.</p>
+            <p><strong>Interpretación Unificada:</strong> Recalibración del sistema de procesamiento temporal auditivo, posiblemente mediante ajuste de ventanas temporales de integración.</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Evidencia 2: Adquisición Acelerada de Habilidad Motora</div>
+            <p><strong>Observación:</strong> Adquisición de escritura bimanual (ambas manos simultáneamente) en 96 horas de práctica, superando curvas de aprendizaje típicas.</p>
+            <p><strong>Interpretación Unificada:</strong> Mejora en coordinación interhemisférica facilitada por sincronización temporal inducida por patrones Fibonacci.</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Evidencia 3: Engagement Perceptual Medido</div>
+            <p><strong>Observación:</strong> Videos con audio procesado muestran mejor ratio vistas/likes/comentarios en plataformas digitales.</p>
+            <p><strong>Interpretación Unificada:</strong> El audio procesado genera mayor engagement debido a su estructura temporal que mantiene atención sin fatigarla.</p>
+        </div>
+    </div>
+
+    <!-- Sección 4: Marco Conceptual Ampliado (actualizado) -->
+    <div class="section">
+        <h2 class="section-title">📐 4. Marco Conceptual Ampliado: Niveles de Análisis</h2>
+        
+        <div class="definition">
+            <strong>Regímenes Cognitivos Emergentes:</strong> No como "estados" discretos, sino como <span class="highlight">patrones dinámicos de actividad cerebral</span> que emergen de restricciones biológicas, experiencia previa, contexto actual, y que exhiben propiedades de auto-organización.
+        </div>
+        
+        <h3>Diferenciación Conceptual Integrada:</h3>
+        
+        <div class="matrix-container">
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);">Nivel Biológico</div>
+                <p><strong>Dominio:</strong> Vida / Autopoiesis</p>
+                <p><strong>Característica:</strong> Metabolismo, homeostasis</p>
+                <p><strong>Ejemplo:</strong> Célula, organismo</p>
+                <p><strong>NewroSync-11:</strong> Opera en sustrato biológico</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">Nivel Fenomenológico</div>
+                <p><strong>Dominio:</strong> Conciencia / Experiencia</p>
+                <p><strong>Característica:</strong> Subjetividad, qualia</p>
+                <p><strong>Ejemplo:</strong> Dolor, percepción musical</p>
+                <p><strong>NewroSync-11:</strong> Modifica experiencia auditiva</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Nivel Computacional</div>
+                <p><strong>Dominio:</strong> Procesamiento de información</p>
+                <p><strong>Característica:</strong> Algoritmos, procesamiento</p>
+                <p><strong>Ejemplo:</strong> Cerebro, IA, sistemas complejos</p>
+                <p><strong>NewroSync-11:</strong> Modula procesamiento temporal</p>
+            </div>
+        </div>
+        
+        <div class="definition" style="margin-top: 25px;">
+            <strong>Posicionamiento Integrado de NewroSync-11:</strong> Opera en la <span class="highlight">intersección tripartita</span> entre plataformas de inteligencia (cerebro como sistema de procesamiento complejo), conciencia (experiencia auditiva modificada), y biología (sustrato neuronal plástico). No afirma modificar la vida biológica directamente, sino optimizar procesos cognitivos emergentes de este sustrato.
+        </div>
+    </div>
+
+    <!-- NUEVA SECCIÓN: Sistemas Complejos e Imperfección -->
+    <div class="section complex-section">
+        <h2 class="section-title">🌀 5. De Fibonacci Puro a Sistemas Complejos: Imperfección como Motor</h2>
+        
+        <div class="complex-card">
+            <div class="complex-title">Reflexión y Refracción Cognitiva</div>
+            <p>Así como una onda acústica al refractarse pierde su pureza espectral pero gana complejidad estructural, la implementación de secuencias Fibonacci en sistemas biológicos <span class="highlight">introduce necesariamente imperfecciones</span> que se convierten en fuente de riqueza perceptual.</p>
+            <p>El "desfase" observado en las tablas de sincronización no es un error de implementación, sino la <span class="highlight">firma misma de la transición</span> de lo matemático-ideal a lo biológico-real. Estas discrepancias crean zonas de <span class="highlight">tensión perceptual</span> que pueden actuar como motor de plasticidad neuronal.</p>
+        </div>
+        
+        <div class="complex-card">
+            <div class="complex-title">Analogía del Copo de Nieve Neuroplástico</div>
+            <p>Cada experiencia de aprendizaje forma "ramificaciones sinápticas" únicas, como un copo de nieve. NewroSync-11 no busca crear <span class="highlight">cristales perfectos</span>, sino proveer el <span class="highlight">ambiente termodinámico</span> (patrones temporales Fibonacci con imperfecciones) donde la neuroplasticidad pueda auto-organizarse en estructuras complejas adaptativas.</p>
+            <p>La "sensación de vacío" percibida es el equivalente fenomenológico a la <span class="highlight">tensión de superficie</span> que guía la formación de patrones en sistemas complejos alejados del equilibrio.</p>
+        </div>
+        
+        <div class="matrix-container">
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #0a2463 0%, #3e92cc 100%);">Sistema Ideal Matemático</div>
+                <p><strong>Ondas:</strong> Sinusoidales puras</p>
+                <p><strong>Patrones:</strong> Fibonacci exacto</p>
+                <p><strong>Tiempo:</strong> Lineal, reversible</p>
+                <p><strong>Resultado:</strong> Predictible, estático</p>
+                <p><strong>Paradigma:</strong> Reduccionista</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: linear-gradient(135deg, #e76f51 0%, #f4a261 100%);">Sistema Real Biológico</div>
+                <p><strong>Ondas:</strong> Refractadas, complejas</p>
+                <p><strong>Patrones:</strong> Fibonacci con fluctuaciones</p>
+                <p><strong>Tiempo:</strong> No lineal, irreversible</p>
+                <p><strong>Resultado:</strong> Emergente, adaptativo</p>
+                <p><strong>Paradigma:</strong> Sistemas complejos</p>
+            </div>
+        </div>
+        
+        <div class="definition" style="margin-top: 25px; background: rgba(138, 79, 255, 0.1); border-left-color: var(--complex-purple);">
+            <strong>Principio de Imperfección Generativa:</strong> Los sistemas biológicos no optimizan por precisión matemática, sino por <span class="highlight">estabilidad dinámica</span> que emerge precisamente de las imperfecciones y fluctuaciones. En NewroSync-11, las inconsistencias entre patrones temporales Fibonacci y su implementación práctica no son "errores a corregir", sino <span class="highlight">características esenciales</span> del sistema.
+        </div>
+        
+        <div class="footnote">
+            <strong>Nota epistemológica:</strong> Esta perspectiva sitúa a NewroSync-11 firmemente dentro de la <em>ciencia de sistemas complejos</em>. La meta no es identificar mecanismos lineales causa-efecto, sino entender <em>patrones emergentes en sistemas no-lineales adaptativos</em>. La "imperfección" se re-conceptualiza como "variabilidad generativa".
+        </div>
+    </div>
+
+    <!-- Sección 6: Direcciones Futuras (actualizada) -->
+    <div class="section">
+        <h2 class="section-title">🚀 6. Direcciones Futuras y Validación en Sistemas Complejos</h2>
+        
+        <h3>Protocolo de Validación para Sistemas Complejos:</h3>
+        
+        <div class="principle-card">
+            <div class="principle-title">Estudio 1: Perceptual No-Lineal (n=25)</div>
+            <p><strong>Objetivo:</strong> Cuantificar cambios en discriminación auditiva temporal y medir sensibilidad a imperfecciones.</p>
+            <p><strong>Método:</strong> Test de discriminación de intervalos + exposición a audio con distintos grados de "imperfección Fibonacci".</p>
+            <p><strong>Métrica:</strong> Precisión, tiempo de reacción, y preferencia subjetiva por diferentes niveles de imperfección.</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Estudio 2: Motor y Transferencia (n=20)</div>
+            <p><strong>Objetivo:</strong> Medir aceleración en aprendizaje motor y transferencia a dominios no auditivos.</p>
+            <p><strong>Método:</strong> Tareas de secuenciación motora + seguimiento de curvas de aprendizaje con/sin exposición.</p>
+            <p><strong>Métrica:</strong> Tasa de aprendizaje, estabilidad de ejecución, medidas de coordinación interhemisférica (EEG).</p>
+        </div>
+        
+        <div class="principle-card">
+            <div class="principle-title">Estudio 3: Dinámicas No-Lineales (n=15)</div>
+            <p><strong>Objetivo:</strong> Identificar correlatos de complejidad y auto-organización neuronal.</p>
+            <p><strong>Método:</strong> EEG de alta densidad durante escucha, análisis de no-linearidad (entropía aproximada, dimensión de correlación).</p>
+            <p><strong>Métrica:</strong> Medidas de complejidad cerebral, sincronización fase-amplitud, patrones de conectividad dinámica.</p>
+        </div>
+        
+        <h3 style="margin-top: 30px;">Limitaciones y Consideraciones Éticas en Sistemas Complejos:</h3>
+        <div class="matrix-container" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #666;">Metodológicas</div>
+                <p>Auto-experimentación inicial</p>
+                <p>Complejidad de controlar variables</p>
+                <p>Dificultad en replicación exacta</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #e74c3c;">Éticas</div>
+                <p>Efectos a largo plazo</p>
+                <p>Variabilidad individual extrema</p>
+                <p>Consentimiento informado complejo</p>
+            </div>
+            
+            <div class="matrix-item">
+                <div class="matrix-header" style="background: #2ecc71;">Conceptuales</div>
+                <p>Modelos lineales insuficientes</p>
+                <p>Necesidad de nuevos paradigmas</p>
+                <p>Integración interdisciplinaria</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección 7: Conclusión Unificada -->
+    <div class="section">
+        <h2 class="section-title">💎 7. Conclusión Integrada: De la Observación a los Sistemas Complejos</h2>
+        
+        <p>NewroSync-11 ha evolucionado desde una <span class="highlight">hipótesis comprobable</span> sobre modulación de neuroplasticidad mediante patrones temporales, hacia un <span class="highlight">marco teórico de sistemas complejos</span> donde la imperfección, la no-linealidad y la emergencia son características centrales, no anomalías.</p>
+        
+        <p>Este documento unificado proporciona un <span class="highlight">andamiaje conceptual integrado</span> que abarca desde principios neurocognitivos básicos hasta fenómenos emergentes en sistemas complejos. La integración de matemáticas Fibonacci, neurociencia, procesamiento de señales, y teoría de sistemas complejos crea un espacio de investigación verdaderamente interdisciplinario.</p>
+        
+        <div class="definition">
+            <strong>Tesis Central Unificada:</strong> La eficacia potencial de NewroSync-11 no reside en la <em>precisión Fibonacci</em>, sino en la <span class="highlight">interacción dinámica</span> entre patrones estructurados y sus inevitables imperfecciones al implementarse en sistemas biológicos. Estas "imperfecciones generativas" crean zonas de tensión perceptual que pueden actuar como motor de plasticidad neuronal adaptativa.
+        </div>
+        
+        <p>El siguiente paso natural es la implementación del <strong>procesador web v2.5</strong> que permita no solo replicación, sino exploración sistemática del <span class="highlight">espacio de parámetros de imperfección</span>, seguido de estudios controlados que testeen las hipótesis integradas aquí planteadas.</p>
+        
+        <div class="footnote">
+            <strong>Nota epistemológica final:</strong> Este documento adopta una postura de <em>escepticismo metodológico constructivo</em> dentro del paradigma de sistemas complejos. Las afirmaciones se presentan como hipótesis emergentes de observaciones empíricas, abiertas a falsificación y refinamiento continuo. La apertura a lo inesperado y no-lineal es parte integral del diseño.
+        </div>
+        
+        <!-- Navegación entre secciones -->
+        <div class="section-nav">
+            <a href="https://biostair11.github.io/biostair11/index.html" class="nav-button secondary">← Volver al Inicio</a>
+            <a href="#" class="nav-button">Próximo: Implementación Técnica →</a>
+        </div>
+    </div>
+
+    <!-- Footer actualizado -->
+    <footer>
+        <p><strong>Documento Marco Teórico Unificado | NewroSync-11 v2.5</strong></p>
+        <p>Enero de 2026 </p>
+        
+        <div class="footer-links">
+            <a href="https://biostair11.github.io/biostair11/index.html">🏠 Página Principal</a>
+            |
+            <a href="#">📁 Repositorio GitHub</a>
+            |
+            <a href="#">📧 Contacto Académico</a>
+            |
+            <a href="#">🔗 Versiones Anteriores</a>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.85rem; color: #888;">
+            Este documento se distribuye bajo licencia <strong>Creative Commons Attribution-ShareAlike 4.0 International</strong><br>
+            Cita recomendada: "Marco Teórico Unificado NewroSync-11 v2.5 - BioStair11 (2026)"
+        </p>
+        
+        <div style="margin-top: 15px; font-size: 0.8rem; color: #aaa;">
+            <em>«Las imperfecciones no son errores del sistema, son el sistema encontrándose a sí mismo.»</em>
+        </div>
+    </footer>
+</body>
+</html>
