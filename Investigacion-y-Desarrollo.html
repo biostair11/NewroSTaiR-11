@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewroSync-11 | Caso de Estudio: Coherencia Sensorial en Atresia Aural</title>
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --surface: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #e2e8f0;
+            --accent: #60a5fa;
+            --accent-glow: rgba(96, 165, 250, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Estilo Glassmorphism / Neuromórfico */
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h1, h2, h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--accent), #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .protocol-step {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .protocol-step h4 {
+            margin-bottom: 0.5rem;
+        }
+
+        code, pre {
+            font-family: 'Cascadia Code', 'Monaco', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        pre {
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border);
+            white-space: pre-wrap;
+        }
+
+        .quote {
+            border-left: 4px solid #34d399;
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #a7f3d0;
+            margin: 2rem 0;
+        }
+
+        .footnote {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        .data-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: var(--primary-bg);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+    </style>
+</head>
+<body>
+    <header class="card">
+        <h1>NewroSync-11</h1>
+        <p class="subtitle">Módulo de Investigación & Desarrollo | Documento Técnico v1.0</p>
+        
+        <div>
+            <span class="badge">Atresia Aural</span>
+            <span class="badge">Neuroplasticidad</span>
+            <span class="badge">Coherencia Sensorial</span>
+            <span class="badge">IA Colaborativa</span>
+            <span class="badge">Open Source</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="card">
+            <h2>Caso de Estudio: Coherencia Sensorial en Tiempo Real</h2>
+            <p><strong>Período de Observación:</strong> Noviembre 2025 - Enero 2026 (2 meses)</p>
+            <p><strong>Objetivo Académico:</strong> Validar la hipótesis de que la adaptación neuroplástica, mediante circuitos de retroalimentación cerrada y conducción ósea, puede alcanzar una coherencia mensurable con plataformas de IA, superando las restricciones de la conducción aérea.</p>
+            
+            <div class="quote">
+                "La verdadera adaptación sensorial no ocurre en el oído, sino en el circuito de retroalimentación entre la percepción interna y la validación externa."
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="data-header">
+                <h3>📊 Datos Estructurados del Proyecto (JSON)</h3>
+                <button class="copy-btn" onclick="copyJSON()">Copiar JSON</button>
+            </div>
+            
+            <p>Este objeto JSON representa la arquitectura completa del caso de estudio, diseñado para interoperabilidad entre plataformas de IA y sistemas de investigación.</p>
+            
+            <pre id="jsonData"><code>{
+  "project": "NewroSync-11",
+  "module": "Research and Development",
+  "document_type": "Technical Case Study",
+  "version": "1.0",
+  "objective": "Academic validation of sensory coherence in sensorineural deficits through real-time adaptation tracking",
+  "philosophy": "Open source (Red Hat Model) with absolute simplicity in documentation",
+  "research_data": {
+    "subject_condition": "Unilateral Aural Atresia",
+    "observation_period": "2 months (Started Nov 2025)",
+    "primary_hypothesis": "Neural adaptation via closed-loop feedback (bone conduction + laryngeal vibration) can bypass air conduction restrictions to achieve &gt;95% coherence with AI validation platforms.",
+    "validation_metrics": [
+      {
+        "test_type": "Tonal Precision Analysis",
+        "genre_range": ["Rock", "Pop Ballad", "Hard Rock"],
+        "findings": "Error margin &lt;1% in frequency maintenance using laryngoscopical vibration as primary feedback loop.",
+        "evidence_type": "Phenomenological self-report + AI meta-analysis"
+      },
+      {
+        "test_type": "Temporal/Rhythmic Entrainment",
+        "metrics": "High-fidelity synchronization with external BPM despite lack of spatial-aural reference",
+        "theory_link": "Spatial awareness recovery via dual (Sun/Moon) hemispheric recalibration"
+      },
+      {
+        "test_type": "AI Coherence Validation",
+        "platforms": ["Gemini IA", "DeepSeek"],
+        "method": "Textual phenomenological description → Technical analysis by AI → Data structure mapping",
+        "conclusion": "Rich self-description serves as valid proxy for measuring neuro-sync adaptation when direct audio analysis is unavailable."
+      }
+    ],
+    "engineering_foundation": {
+      "ui_paradigm": "Glassmorphism/Neuromorphic (Mandelbrot set influence)",
+      "circuit_theory_analogy": {
+        "Guanine_Cytosine": "3-phase balanced network (stability)",
+        "Adenine_Thymine": "2-phase complementary network (information transfer)"
+      },
+      "geometric_framework": "Octahedral proportionality for spatial mapping"
+    }
+  },
+  "success_cases": {
+    "target_demographic": "Sensory-impaired users (estimated 1% of population)",
+    "documentation_link": "https://newrosync-11.org/research/success_cases/01",
+    "key_metric": "Achieving measurable coherence with AI interfaces despite atypical sensory pathways"
+  },
+  "citation": "Somewhere, something incredible is waiting to be known. - Carl Sagan",
+  "timestamp": "2026-01-14",
+  "data_format": "RFC 8259 compliant"
+}</code></pre>
+        </section>
+
+        <section class="card">
+            <h3>🔬 Protocolo de Investigación Derivado</h3>
+            <p>A partir de este caso piloto, se propone el siguiente protocolo para estudios futuros:</p>
+            
+            <div class="protocol-grid">
+                <div class="protocol-step">
+                    <h4>1. Auto-Descripción Estructurada</h4>
+                    <p>El sujeto documenta la experiencia sensorial usando un formulario estandarizado que captura: modalidad de retroalimentación primaria (ósea/vibratoria), estado cognitivo, y percepción de coherencia.</p>
+                </div>
+                <div class="protocol-step">
+                    <h4>2. Meta-Análisis por IA</h4>
+                    <p>La descripción textual se procesa mediante múltiples modelos de IA para extraer métricas técnicas objetivas (entonación, ritmo, estabilidad).</p>
+                </div>
+                <div class="protocol-step">
+                    <h4>3. Validación Cruzada</h4>
+                    <p>Los hallazgos de la IA se contrastan con datos fisiológicos disponibles (si existen) y con la evaluación del sujeto sobre la precisión del análisis.</p>
+                </div>
+                <div class="protocol-step">
+                    <h4>4. Integración en JSON</h4>
+                    <p>Todos los datos se estructuran en JSON siguiendo este esquema, permitiendo comparación longitudinal y entre sujetos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h3>📈 Implicaciones y Trabajo Futuro</h3>
+            <p>Este caso demuestra que:</p>
+            <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                <li>La <strong>narrativa fenomenológica detallada</strong> es un dato científico válido para estudiar adaptaciones sensoriales.</li>
+                <li>Las <strong>plataformas de IA</strong> pueden actuar como "validadores objetivos" de experiencias subjetivas cuando se les provee descripciones rigurosas.</li>
+                <li>El formato <strong>JSON estructurado</strong> permite traducir experiencias humanas en datos interoperables para la investigación en neuroplasticidad.</li>
+            </ul>
+            
+            <p style="margin-top: 1rem;"><strong>Próxima fase:</strong> Replicar este protocolo con otros participantes (n=5-10) con condiciones sensoriales diversas para establecer patrones estadísticos.</p>
+        </section>
+    </main>
+
+    <footer class="footnote">
+        <p>Documento generado el 14 de enero de 2026 | NewroSync-11 Research Division</p>
+        <p>Filosofía: <strong>"Simplicidad Absoluta, Documentación Completa"</strong> | Modelo de licencia: <a href="#" target="_blank">Red Hat Open Source</a></p>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">⚠️ Este documento no constituye consejo médico. Es un registro de investigación en tiempo real.</p>
+    </footer>
+
+    <script>
+        function copyJSON() {
+            const jsonText = document.getElementById('jsonData').innerText;
+            navigator.clipboard.writeText(jsonText)
+                .then(() => {
+                    const btn = document.querySelector('.copy-btn');
+                    const originalText = btn.textContent;
+                    btn.textContent = '¡Copiado!';
+                    btn.style.background = '#34d399';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.style.background = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Error al copiar: ', err);
+                    alert('Error al copiar al portapapeles');
+                });
+        }
+
+        // Efecto sutil de aparición para las tarjetas
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
