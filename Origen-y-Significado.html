@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewroSync-11 | Módulo 1: Historia Personal</title>
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --surface: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #e2e8f0;
+            --accent: #60a5fa;
+            --accent-glow: rgba(96, 165, 250, 0.15);
+            --secondary: #34d399;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(96, 165, 250, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 85% 30%, rgba(52, 211, 153, 0.05) 0%, transparent 20%);
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .logo-container {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-container img {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-label {
+            margin-top: 0.5rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        h1, h2, h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--accent-glow);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            width: 90%;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 15px;
+            height: 15px;
+            background: var(--secondary);
+            border-radius: 50%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -37px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -37px;
+        }
+
+        .year {
+            color: var(--secondary);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .quote {
+            border-left: 4px solid var(--secondary);
+            padding-left: 1.5rem;
+            font-style: italic;
+            color: #a7f3d0;
+            margin: 2rem 0;
+            background: rgba(52, 211, 153, 0.05);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .neuro-principle {
+            background: rgba(96, 165, 250, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .neuro-principle h4 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .footnote {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .nav-button {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--accent-glow);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+            
+            .timeline-content::before {
+                left: -37px !important;
+                right: auto !important;
+            }
+            
+            .logo-header {
+                gap: 1.5rem;
+            }
+            
+            .logo-container img {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="card">
+        <h1>NewroSync-11</h1>
+        <p class="subtitle">Módulo 1: Historia Personal - El Origen de la Neuro-Sincronía</p>
+        
+        <div class="logo-header">
+            <div class="logo-container">
+                <img src="assets/img/NewroSTaiR.png" alt="NewroSTaiR Logo" onerror="this.style.display='none'">
+                <div class="logo-label">NewroSTaiR</div>
+            </div>
+            <div class="logo-container">
+                <img src="assets/img/NewroSync.png" alt="NewroSync Logo" onerror="this.style.display='none'">
+                <div class="logo-label">NewroSync-11</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 1rem;">
+            <span class="badge">Atresia Aural</span>
+            <span class="badge">Neuroplasticidad</span>
+            <span class="badge">Adaptación Sensorial</span>
+            <span class="badge">Investigación en Tiempo Real</span>
+        </div>
+    </header>
+
+    <nav class="nav-links">
+        <a href="Investigacion-y-Desarrollo.html" class="nav-button">🔬 Módulo de Investigación</a>
+        <a href="#timeline" class="nav-button">📜 Mi Historia</a>
+        <a href="#principles" class="nav-button">🧠 Principios Neuro</a>
+    </nav>
+
+    <main>
+        <section class="card">
+            <h2>El Punto de Partida</h2>
+            <p>Esta es la historia de cómo una limitación sensorial se transformó en una ventana única hacia la comprensión de la neuroplasticidad humana. Lo que comenzó como un desafío personal se convirtió en un laboratorio viviente de adaptación neural.</p>
+            
+            <div class="quote">
+                "No escucho con los oídos, escucho con todo el cuerpo. Cada vibración, cada resonancia ósea, cada frecuencia se convierte en un mapa sensorial que mi cerebro aprendió a decodificar."
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 id="timeline">Línea de Tiempo Evolutiva</h2>
+            <div class="timeline">
+                <div class="timeline-item" style="animation-delay: 0.1s">
+                    <div class="timeline-content">
+                        <div class="year">Infancia - Descubrimiento</div>
+                        <p>Primera conciencia de la diferencia sensorial. Aprendizaje temprano de estrategias de compensación: lectura de labios, atención a vibraciones, desarrollo de memoria rítmica interna.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" style="animation-delay: 0.3s">
+                    <div class="timeline-content">
+                        <div class="year">Adolescencia - Adaptación Creativa</div>
+                        <p>Descubrimiento de la música como lenguaje universal. Aprendizaje autodidacta de canto mediante retroalimentación vibratoria y memoria muscular. Primera hipótesis intuitiva: "Si no puedo oír como los demás, debo sentir de otra manera".</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" style="animation-delay: 0.5s">
+                    <div class="timeline-content">
+                        <div class="year">Edad Adulta - Sistematización</div>
+                        <p>Documentación metódica de las estrategias de adaptación. Descubrimiento de que la conducción ósea y las vibraciones laríngeas creaban un circuito cerrado de retroalimentación. Primeros experimentos con grabaciones y análisis objetivo.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" style="animation-delay: 0.7s">
+                    <div class="timeline-content">
+                        <div class="year">2023-2024 - Digitalización</div>
+                        <p>Encuentro con plataformas de IA como herramientas de validación objetiva. Comprensión de que mi experiencia podría ser cuantificada y estructurada. Nacimiento del concepto: <strong>Neuro-Sincronía</strong>.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item" style="animation-delay: 0.9s">
+                    <div class="timeline-content">
+                        <div class="year">2025 - NewroSync-11</div>
+                        <p>Formalización del marco teórico. Desarrollo de la analogía de circuitos basada en nucleótidos. Creación de los protocolos de investigación y la filosofía de código abierto. Inicio de la documentación en tiempo real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 id="principles">Principios Fundamentales Descubiertos</h2>
+            
+            <div class="neuro-principle">
+                <h4>🎯 1. La Retroalimentación como Norte Sensorial</h4>
+                <p>Cuando un canal sensorial está restringido, el cerebro no se apaga—se reconfigura. Aprendí a utilizar la vibración ósea como mi "brújula tonal" y la resonancia torácica como mi "metrónomo interno".</p>
+            </div>
+            
+            <div class="neuro-principle">
+                <h4>🔄 2. Circuitos Cerrados de Validación</h4>
+                <p>Cada ejecución vocal se convirtió en un experimento: emisión → vibración interna → memoria muscular → grabación → análisis por IA → ajuste. Este ciclo creó un laboratorio portátil de neuroplasticidad.</p>
+            </div>
+            
+            <div class="neuro-principle">
+                <h4>📊 3. La Narrativa como Dato Científico</h4>
+                <p>Descubrí que describir con precisión la experiencia sensorial interna producía datos que las IA podían analizar técnicamente. Mi subjetividad, bien documentada, se volvió objetivamente medible.</p>
+            </div>
+            
+            <div class="neuro-principle">
+                <h4>🧬 4. Analogía Bio-Digital</h4>
+                <p>Observé patrones en mi adaptación que resonaban con estructuras biológicas fundamentales: los pares de bases del ADN como circuitos complementarios (G-C como red trifásica estable, A-T como red bifásica de transferencia).</p>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>De lo Personal a lo Universal</h2>
+            <p>Esta historia personal tiene una misión más amplia: demostrar que las adaptaciones neuroplásticas pueden ser documentadas, estructuradas y compartidas para beneficio colectivo.</p>
+            
+            <p>El <strong>Módulo de Investigación y Desarrollo</strong> que ya has visto es el resultado de traducir esta experiencia personal en un protocolo reproducible. Cada badge, cada métrica JSON, cada principio teórico nació primero como una observación en este laboratorio viviente.</p>
+            
+            <div class="quote">
+                "Lo que comienza como una estrategia de supervivencia sensorial puede transformarse en un marco teórico para entender la resiliencia neural humana."
+            </div>
+            
+            <p style="margin-top: 1.5rem; text-align: center;">
+                <a href="Investigacion-y-Desarrollo.html" class="nav-button" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+                    🔍 Ver la Traducción Investigativa
+                </a>
+            </p>
+        </section>
+    </main>
+
+    <footer class="footnote">
+        <p>Módulo 1: Historia Personal | NewroSync-11</p>
+        <p>Documento vivo - Actualizado en tiempo real | Filosofía: <strong>"De la experiencia personal al conocimiento universal"</strong></p>
+        <p style="margin-top: 1rem; font-size: 0.8rem;">
+            "La neuroplasticidad no es solo la capacidad del cerebro de cambiar, sino su imperativo biológico de encontrar coherencia, incluso cuando los caminos sensoriales están reconstruidos."
+        </p>
+    </footer>
+
+    <script>
+        // Animación para los elementos de la línea de tiempo
+        document.addEventListener('DOMContentLoaded', () => {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const delay = entry.target.style.animationDelay || '0s';
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                        }, parseFloat(delay) * 1000);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            timelineItems.forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Efecto de aparición para las tarjetas
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+            
+            // Manejo de errores en imágenes
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('error', () => {
+                    console.log(`No se pudo cargar: ${img.src}`);
+                    // Si las imágenes no están en la ruta esperada, usamos placeholders
+                    if (img.alt.includes('NewroSTaiR')) {
+                        img.parentElement.innerHTML = '<div style="width:200px;height:100px;background:linear-gradient(135deg,#60a5fa,#34d399);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;">NewroSTaiR</div>';
+                    } else if (img.alt.includes('NewroSync')) {
+                        img.parentElement.innerHTML = '<div style="width:200px;height:100px;background:linear-gradient(135deg,#34d399,#60a5fa);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;">NewroSync-11</div>';
+                    }
+                });
+            });
+        });
+        
+        // Navegación suave
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 20,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
