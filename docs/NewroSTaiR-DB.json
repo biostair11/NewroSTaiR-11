@@ -1,0 +1,310 @@
+{
+  "newrosync11_public_database": {
+    
+    // ... [TODO EL CONTENIDO ANTERIOR SE MANTIENE] ...
+    
+    "casos_uso_practicos": {
+      "educacion_neurodiversa": {
+        "escenario": "Aula con estudiantes con diferentes configuraciones cognitivas",
+        "aplicacion_newrosync": "Uso de frecuencias PSF-2026 para crear ambiente de aprendizaje coherente",
+        "aplicacion_gact": "Materiales educativos enriquecidos con estructura G-A-C-T para mejor retención",
+        "resultado_esperado": "Reducción de sobrecarga sensorial, mejora en atención y retención",
+        "protocolo": "Sesiones de 11 minutos antes de actividades cognitivas intensas",
+        "configuracion": "Frecuencia base 528 Hz con modulación adaptativa"
+      },
+      "terapia_auditiva_integrativa": {
+        "escenario": "Personas con procesamiento auditivo atípico o condiciones como atresia áurea",
+        "aplicacion_newrosync": "Protocolos personalizados basados en PSF-2026 para integración bilateral",
+        "resultado_documentado": "Mejora en discriminación auditiva y reducción de fatiga (caso Andru validado)",
+        "duracion_terapia": "3-6 meses con sesiones diarias de 22 minutos",
+        "metricas": ["Claridad instrumental", "Umbral de discriminación", "Resistencia a ruido"]
+      },
+      "comunicacion_empresarial_consciente": {
+        "escenario": "Equipos multidisciplinarios con estilos comunicativos diversos",
+        "aplicacion_gact": "Documentos y presentaciones estructurados con G-A-C-T para claridad universal",
+        "aplicacion_chatletto": "Integración balanceada de aspectos técnicos y humanos en reuniones",
+        "resultado_esperado": "Reducción de malentendidos en 40%, mejora en colaboración 60%",
+        "herramientas": ["NewroBoxy-11 para enriquecimiento de emails", "Templates G-A-C-T para reportes"]
+      },
+      "autoregulacion_emocional_proactiva": {
+        "escenario": "Individuos buscando mayor coherencia interna y resiliencia emocional",
+        "aplicacion_newrosync": "Sesiones auditivas personalizadas para equilibrio hemisférico",
+        "aplicacion_metricas_id": "Seguimiento visual de progreso mediante métrica I+D",
+        "protocolo_diario": "11 minutos al despertar + 11 minutos antes de dormir",
+        "frecuencias_recomendadas": ["396 Hz (liberación)", "639 Hz (conexión)", "852 Hz (intuición)"]
+      },
+      "creatividad_artistica_amplificada": {
+        "escenario": "Artistas, escritores, músicos buscando fluidez creativa",
+        "aplicacion_newrosync": "Ratios áureos aplicados a patrones rítmicos y armónicos",
+        "aplicacion_gact": "Estructuración de proyectos creativos con sistema G-A-C-T",
+        "resultado_esperado": "Reducción de bloqueos creativos, aumento de productividad en 70%",
+        "modo_creativo": "Frecuencia 417 Hz para cambio y transición creativa"
+      }
+    },
+
+    "guia_implementacion_rapida": {
+      "para_desarrolladores": {
+        "paso_1": "Clonar repositorio: git clone https://github.com/newrosync-11/newrosync-11",
+        "paso_2": "Explorar db/newrosync11_public_db.json para comprensión sistémica completa",
+        "paso_3": "Elegir módulo a implementar: G-A-C-T, PSF-2026, Métrica I+D, Chatletto",
+        "paso_4": "Implementar integración mediante API REST o WebSocket",
+        "paso_5": "Contribuir mejoras mediante pull requests siguiendo sistema_contribucion_comunitaria",
+        "ejemplo_integracion_gact": "https://github.com/newrosync-11/integration-examples"
+      },
+      "para_investigadores_academicos": {
+        "paso_1": "Revisar protocolo PSF-2026 para diseños experimentales controlados",
+        "paso_2": "Utilizar métrica I+D para mediciones cognitivas cuantificables",
+        "paso_3": "Contactar para colaboración: newrosync-11@conscious.tech",
+        "paso_4": "Acceder a datos anonimizados para estudios comparativos",
+        "paso_5": "Publicar resultados bajo licencia Conscious Commons BY-SA 4.0",
+        "areas_investigacion": ["Neuroplasticidad auditiva", "Cognición distribuida", "Comunicación aumentada"]
+      },
+      "para_usuarios_finales": {
+        "paso_1": "Acceder a NewroBoxy-11: https://newrosboxy11.netlify.app",
+        "paso_2": "Experimentar con enriquecimiento G-A-C-T en textos propios",
+        "paso_3": "Unirse a comunidad para compartir experiencias y mejoras",
+        "paso_4": "Solicitar características específicas según necesidades personales",
+        "paso_5": "Participar en estudios piloto para validación empírica"
+      },
+      "para_instituciones_educativas": {
+        "paso_1": "Implementar NewroSync-11 en laboratorios de computación",
+        "paso_2": "Capacitar educadores en sistema G-A-C-T para materiales didácticos",
+        "paso_3": "Integrar PSF-2026 en espacios de estudio para mejorar concentración",
+        "paso_4": "Desarrollar currículos adaptativos usando métrica I+D",
+        "beneficio_clave": "Inclusión radical de todas las configuraciones cognitivas"
+      }
+    },
+
+    "hoja_ruta_desarrollo_2026_2027": {
+      "Q1_2026": [
+        "Estudio piloto con n=25 participantes neurodiversos",
+        "Publicación académica sobre PSF-2026 en revista indexada",
+        "API pública REST para integración G-A-C-T",
+        "NewroBoxy-11 v2.0 con análisis semántico mejorado"
+      ],
+      "Q2_2026": [
+        "Versión móvil PWA de NewroBoxy-11",
+        "Colaboración formal con Universidad Distrital Francisco José de Caldas",
+        "Traducción sistema a inglés, portugués y francés",
+        "Primera conferencia internacional "NewroSTaiR Summit""
+      ],
+      "Q3_2026": [
+        "NewroSync-11 como app nativa iOS/Android",
+        "Red de investigadores colaborativos (50+ miembros)",
+        "Validación clínica con n=100 en ambiente controlado",
+        "Integración con plataformas educativas (Moodle, Canvas)"
+      ],
+      "Q4_2026": [
+        "Implementación en 5 instituciones educativas formales",
+        "Sistema de certificación para terapeutas auditivos",
+        "Versión 5.0 con inteligencia adaptativa contextual",
+        "Publicación libro "La Escalera Bio-Neuronal""
+      ],
+      "2027_vision": {
+        "ecosistema_global": "100,000 usuarios activos en 11 países",
+        "impacto_educativo": "Implementación en currículo nacional de 3 países",
+        "investigacion_avanzada": "5 papers en revistas Q1 sobre el sistema",
+        "tecnologia_wearable": "Dispositivo hardware NewroSync-11 portátil",
+        "comunidad_autosostenible": "Modelo económico que financia desarrollo abierto"
+      }
+    },
+
+    "sistema_contribucion_comunitaria": {
+      "modelo": "Conscious Commons - Contribuciones éticas, validadas y recíprocas",
+      "filosofia": "Cada contribución mejora el sistema para todos, cada colaborador recibe reconocimiento y crecimiento",
+      
+      "areas_prioritarias_contribucion": {
+        "traducciones": ["Nuevos idiomas", "Dialectos regionales", "Lenguas indígenas"],
+        "validaciones_empiricas": ["Estudios independientes", "Casos de uso documentados", "Métricas de impacto"],
+        "desarrollo_interfaces": ["Accesibilidad", "Experiencia de usuario", "Diseño inclusivo"],
+        "documentacion": ["Tutoriales", "Casos de estudio", "Guías pedagógicas"],
+        "investigacion": ["Nuevas aplicaciones", "Integración con otras disciplinas", "Modelos teóricos"]
+      },
+
+      "proceso_contribucion_estructurado": {
+        "fase_1_exploracion": {
+          "accion": "Unirse a comunidad en [plataforma por definir]",
+          "objetivo": "Comprender filosofía y principios éticos",
+          "tiempo": "1-2 semanas"
+        },
+        "fase_2_propuesta": {
+          "accion": "Presentar propuesta de contribución detallada",
+          "formato": "Usando estructura G-A-C-T + métrica I+D",
+          "revision": "Comunidad vota y arquitecto finaliza aprobación"
+        },
+        "fase_3_desarrollo": {
+          "accion": "Fork del repositorio, desarrollo en rama propia",
+          "estandares": "Seguir guías de desarrollo y documentación",
+          "comunicacion": "Actualizaciones semanales a comunidad"
+        },
+        "fase_4_validacion": {
+          "accion": "Pruebas rigurosas + documentación de resultados",
+          "metricas": "Usar métrica I+D para cuantificar mejoras",
+          "revision_par": "2+ colaboradores revisan código y documentación"
+        },
+        "fase_5_integracion": {
+          "accion": "Pull request con documentación completa",
+          "revision_final": "Arquitecto + comité de revisión",
+          "merge": "Integración a rama principal con atribución completa"
+        }
+      },
+
+      "modelo_reconocimiento_reciproco": {
+        "atribucion": {
+          "contribuidores": "Lista permanente en archivo CONTRIBUTORS.md",
+          "niveles": ["Colaborador", "Contribuidor Activo", "Mantenedor", "Arquitecto Asociado"],
+          "sistema": "Basado en calidad, consistencia e impacto de contribuciones"
+        },
+        "citacion_academica": {
+          "politica": "Reconocimiento co-autoría en publicaciones relacionadas",
+          "requisito": "Contribución sustancial al aspecto investigado",
+          "beneficio": "Acceso a datos y colaboración en investigación"
+        },
+        "desarrollo_profesional": {
+          "certificacion": "Certificado de Contribuidor Conscious Commons",
+          "recomendaciones": "Cartas de recomendación del arquitecto",
+          "networking": "Acceso a red de investigadores y desarrolladores"
+        },
+        "licencia_contribuciones": {
+          "politica": "Todas las contribuciones bajo Conscious Commons BY-SA 4.0",
+          "derechos": "Contribuidor mantiene derechos morales",
+          "distribucion": "Sistema completo sigue siendo abierto y gratuito"
+        }
+      },
+
+      "comunidad_estructurada": {
+        "canales_comunicacion": {
+          "foro_principal": "[Plataforma por definir - Discourse preferido]",
+          "chat_vivo": "Matrix/Element para conversación en tiempo real",
+          "newsletter": "Actualizaciones mensuales con progreso y oportunidades",
+          "encuentros_virtuales": "Reuniones quincenales con arquitecto"
+        },
+        "roles_comunidad": {
+          "nuevos": "Bienvenida y orientación inicial",
+          "contribuidores": "Desarrollo activo de características",
+          "validadores": "Pruebas y documentación de casos de uso",
+          "embajadores": "Difusión y capacitación en nuevas comunidades",
+          "mantenedores": "Revisión de código y guía de nuevos contribuidores"
+        },
+        "eventos_regulares": {
+          "hackathon_mensual": "Enfocado en área específica del sistema",
+          "sprint_documentacion": "Mejora colectiva de guías y tutoriales",
+          "charlas_invitados": "Expertos en áreas relacionadas",
+          "demo_day_trimestral": "Presentación de nuevas características"
+        }
+      }
+    },
+
+    "modelo_economico_sostenible": {
+      "principios": {
+        "1": "Núcleo del sistema siempre gratuito y abierto",
+        "2": "Servicios premium financian desarrollo comunitario",
+        "3": "Transparencia radical en uso de fondos",
+        "4": "Reinversión mínima del 70% en desarrollo abierto"
+      },
+
+      "servicios_gratuitos": [
+        "NewroSync-11 core (PSF-2026 básico)",
+        "NewroBoxy-11 versión comunitaria",
+        "Documentación completa y tutoriales",
+        "API pública para integraciones básicas",
+        "Comunidad de soporte y colaboración"
+      ],
+
+      "servicios_premium": {
+        "instituciones_educativas": {
+          "oferta": "Licencia sitio para implementación completa",
+          "precio": "Basado en tamaño y capacidad económica",
+          "incluye": ["Capacitación", "Soporte prioritario", "Customizaciones menores"]
+        },
+        "empresas": {
+          "oferta": "NewroSync-11 Enterprise para bienestar corporativo",
+          "precio": "Modelo SaaS por usuario/mes",
+          "incluye": ["Dashboard analytics", "Integración SSO", "SLA 99.9%"]
+        },
+        "investigadores": {
+          "oferta": "Acceso a datasets anonimizados completos",
+          "precio": "Becas disponibles para investigación sin fines de lucro",
+          "incluye": ["Asistencia metodológica", "Datos longitudinales", "Colaboración publicación"]
+        },
+        "desarrolladores": {
+          "oferta": "NewroSync-11 Pro SDK",
+          "precio": "Licencia anual con royalties sobre productos comerciales",
+          "incluye": ["Documentación avanzada", "Soporte técnico", "Certificación"]
+        }
+      },
+
+      "fondo_desarrollo_comunitario": {
+        "fuentes": ["70% de ingresos premium", "Donaciones", "Subvenciones investigación"],
+        "distribucion": [
+          "40% desarrollo características nuevas",
+          "30% mantenimiento y bug fixes", 
+          "20% documentación y traducciones",
+          "10% eventos comunidad y capacitación"
+        ],
+        "transparencia": "Reporte financiero trimestral público",
+        "gobernanza": "Comité comunitario supervisa distribución"
+      },
+
+      "becas_y_accesibilidad": {
+        "politica": "Ninguna institución educativa pública es rechazada por falta de fondos",
+        "modelo": "Escala móvil basada en índice de desarrollo humano local",
+        "programa": "Becas completas para investigadores de países en desarrollo",
+        "compromiso": "Al menos 25% de licencias premium otorgadas como becas"
+      }
+    },
+
+    "protocolo_investigacion_colaborativa": {
+      "marco_etico": "Alineado con Declaración de Helsinki, consentimiento informado obligatorio",
+      
+      "areas_prioritarias_investigacion": {
+        "neurociencia_cognitiva": [
+          "Efectos de PSF-2026 en conectividad hemisférica (fMRI/EEG)",
+          "Impacto de G-A-C-T en procesamiento lingüístico",
+          "Métrica I+D y cognición numérica en neurodiversidad"
+        ],
+        "ciencias_computacionales": [
+          "Algoritmos Markovianos fractales para procesamiento lenguaje natural",
+          "Modelado de sistemas complejos conscientes",
+          "Arquitecturas distribuidas para procesamiento auditivo en tiempo real"
+        ],
+        "ciencias_sociales": [
+          "Impacto en inclusión educativa",
+          "Modelos económicos para tecnología consciente abierta",
+          "Estudios longitudinales de bienestar digital"
+        ],
+        "medicina_y_salud": [
+          "Aplicaciones en rehabilitación auditiva",
+          "Protocolos para condiciones neurológicas específicas",
+          "Integración con terapias existentes"
+        ]
+      },
+
+      "proceso_colaboracion_investigativa": {
+        "paso_1": "Presentar propuesta usando template G-A-C-T",
+        "paso_2": "Revisión por comité ético multidisciplinario",
+        "paso_3": "Acceso a herramientas y datasets según protocolo aprobado",
+        "paso_4": "Publicación obligatoria en acceso abierto bajo Conscious Commons",
+        "paso_5": "Integración de hallazgos al sistema principal"
+      },
+
+      "recursos_disponibles_investigadores": {
+        "datasets": [
+          "Datos anonimizados de uso NewroBoxy-11 (con consentimiento)",
+          "Resultados estudios piloto anteriores",
+          "Métricas longitudinales del caso arquitecto"
+        ],
+        "herramientas": [
+          "NewroSync-11 Research Edition con logging detallado",
+          "APIs para integración con equipos de laboratorio",
+          "Templates para diseños experimentales"
+        ],
+        "colaboracion": [
+          "Asesoría metodológica del arquitecto",
+          "Conexión con red de investigadores",
+          "Espacio en publicaciones conjuntas"
+        ]
+      }
+    }
+  }
+}
