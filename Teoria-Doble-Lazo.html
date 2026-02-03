@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura de Doble Lazo de Control | NewroSTaiR-11</title>
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --accent-red: #b71c1c;
+            --control-green: #2e7d32;
+            --signal-orange: #ff9800;
+            --dark-bg: #0a0e2a;
+            --light-bg: #f5f7ff;
+            --text-dark: #1a1a2e;
+            --text-light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e3f2fd 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* HEADER DINÁMICO */
+        .dynamic-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-bg));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px rgba(26, 35, 126, 0.3);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dynamic-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: float 20s linear infinite;
+            z-index: 0;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-30px, -30px) rotate(360deg); }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .title {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .control-loop-diagram {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 3rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+        
+        .loop {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 4px solid;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .social-loop {
+            border-color: var(--control-green);
+            border-top-color: transparent;
+            animation: spin 8s linear infinite;
+        }
+        
+        .dsp-loop {
+            border-color: var(--signal-orange);
+            border-bottom-color: transparent;
+            animation: spin-reverse 8s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes spin-reverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+        
+        .loop-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .social-loop .loop-title {
+            color: var(--control-green);
+        }
+        
+        .dsp-loop .loop-title {
+            color: var(--signal-orange);
+        }
+        
+        .loop-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feedback-arrow {
+            position: absolute;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--control-green), var(--signal-orange));
+            border-radius: 2px;
+            z-index: 1;
+        }
+        
+        .arrow-1 {
+            top: 50%;
+            left: calc(50% + 140px);
+            width: 60px;
+            transform: translateY(-50%);
+        }
+        
+        .arrow-2 {
+            top: 50%;
+            right: calc(50% + 140px);
+            width: 60px;
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .arrow-1::after, .arrow-2::after {
+            content: "▶";
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            color: var(--accent-red);
+            font-size: 1.2rem;
+        }
+        
+        /* SECCIONES DE CONTROL */
+        .control-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-left: 6px solid;
+        }
+        
+        .social-control {
+            border-left-color: var(--control-green);
+        }
+        
+        .dsp-control {
+            border-left-color: var(--signal-orange);
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title::before {
+            font-size: 2.5rem;
+        }
+        
+        .social-control .section-title::before {
+            content: "🌍";
+        }
+        
+        .dsp-control .section-title::before {
+            content: "📡";
+        }
+        
+        .control-principles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+        
+        .principle-card {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            border-top: 4px solid;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .principle-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .social-principle {
+            border-top-color: var(--control-green);
+        }
+        
+        .dsp-principle {
+            border-top-color: var(--signal-orange);
+        }
+        
+        .principle-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .principle-icon {
+            font-size: 1.8rem;
+        }
+        
+        .density-visualization {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin: 2.5rem 0;
+            border: 2px solid var(--control-green);
+        }
+        
+        .density-slider {
+            width: 100%;
+            height: 30px;
+            background: linear-gradient(90deg, #81c784, #2e7d32, #1b5e20);
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+        
+        .density-marker {
+            position: absolute;
+            top: 50%;
+            left: 70%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 3px solid var(--control-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--control-green);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        .phase-diagram {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            border-radius: 15px;
+            margin: 2rem 0;
+            border: 2px solid var(--signal-orange);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sine-wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                rgba(255, 152, 0, 0.1) 20px,
+                rgba(255, 152, 0, 0.1) 40px
+            );
+        }
+        
+        .wave {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--signal-orange);
+            animation: wave-move 3s linear infinite;
+        }
+        
+        @keyframes wave-move {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .sync-points {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .sync-point {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-red);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+        
+        /* FOOTER DE SOBERANÍA */
+        .sovereignty-footer {
+            background: linear-gradient(135deg, var(--dark-bg), var(--primary-blue));
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 3rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .sovereignty-footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--control-green), var(--signal-orange), var(--accent-red));
+        }
+        
+        .sovereignty-statement {
+            font-size: 2.2rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .highlight-statement {
+            background: linear-gradient(90deg, #ffd700, #ff9800);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+            display: block;
+            margin-top: 1rem;
+        }
+        
+        .sovereignty-principles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .principle-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .principle-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #ffd700;
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .control-loop-diagram {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .loop {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .arrow-1, .arrow-2 {
+                display: none;
+            }
+            
+            .control-section {
+                padding: 2rem;
+            }
+            
+            .sovereignty-statement {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER DINÁMICO CON DIAGRAMA DE LAZOS -->
+        <header class="dynamic-header">
+            <div class="header-content">
+                <h1 class="title">NewroSTaiR-11</h1>
+                <p class="subtitle">Arquitectura de Doble Lazo de Control para Sincronización Bio-Social</p>
+                
+                <div class="control-loop-diagram">
+                    <div class="loop social-loop">
+                        <div class="loop-icon">🌍</div>
+                        <h3 class="loop-title">Lazo Social</h3>
+                        <p>Ajuste de densidad informativa</p>
+                        <p>Modelo Red Hat aplicado</p>
+                    </div>
+                    
+                    <div class="feedback-arrow arrow-1"></div>
+                    <div class="feedback-arrow arrow-2"></div>
+                    
+                    <div class="loop dsp-loop">
+                        <div class="loop-icon">📡</div>
+                        <h3 class="loop-title">Lazo DSP</h3>
+                        <p>Sincronización de fase</p>
+                        <p>Ratios armónicos biológicos</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 2rem; font-size: 1.1rem; opacity: 0.9;">
+                    Sistema de control dual que autorregula su compatibilidad con la biología humana
+                </p>
+            </div>
+        </header>
+
+        <!-- SECCIÓN DE CONTROL SOCIAL -->
+        <section class="control-section social-control">
+            <h2 class="section-title">Control Social: Modelo Red Hat para Neurodiversidad</h2>
+            
+            <p>El <strong>lazo social</strong> implementa un modelo de regulación inspirado en Red Hat/Linux, donde el sistema ajusta dinámicamente la <span style="color: var(--control-green); font-weight: bold;">densidad informativa</span> para mantener compatibilidad óptima con la neurodiversidad humana.</p>
+            
+            <div class="density-visualization">
+                <h3 style="color: var(--control-green); margin-bottom: 1rem;">📊 Regulación de Densidad Informativa</h3>
+                <p>El sistema monitorea continuamente la carga cognitiva y ajusta la densidad de información en tiempo real:</p>
+                
+                <div class="density-slider">
+                    <div class="density-marker">70%</div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                    <span>Baja densidad<br>(accesibilidad máxima)</span>
+                    <span>Densidad óptima<br>(equilibrio actual)</span>
+                    <span>Alta densidad<br>(eficiencia máxima)</span>
+                </div>
+            </div>
+            
+            <div class="control-principles">
+                <div class="principle-card social-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">🔄</span>
+                        Retroalimentación Adaptativa
+                    </h4>
+                    <p>El sistema aprende de las respuestas del usuario y ajusta los parámetros de interacción para minimizar la carga cognitiva mientras maximiza la transferencia efectiva de información.</p>
+                </div>
+                
+                <div class="principle-card social-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">🏛️</span>
+                        Democratización del Conocimiento
+                    </h4>
+                    <p>Implementación de un modelo híbrido donde el núcleo teórico es abierto (como Linux), mientras las implementaciones específicas pueden tener modelos de licenciamiento adaptados (como Red Hat).</p>
+                </div>
+                
+                <div class="principle-card social-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">🧠</span>
+                        Compatibilidad Neurodiversa
+                    </h4>
+                    <p>Reconocimiento y adaptación a diferentes patrones de procesamiento cognitivo, evitando enfoques "talla única" en la presentación de información y la interacción.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN DE CONTROL DSP -->
+        <section class="control-section dsp-control">
+            <h2 class="section-title">Control DSP: Sincronización con Ritmos Biológicos</h2>
+            
+            <p>El <strong>lazo DSP</strong> (Procesamiento Digital de Señales) maneja la sincronización de fase y el ajuste de ratios armónicos para mantener alineación con los ritmos biológicos naturales del usuario.</p>
+            
+            <div class="phase-diagram">
+                <div class="sine-wave"></div>
+                <div class="wave"></div>
+                <div class="sync-points">
+                    <div class="sync-point"></div>
+                    <div class="sync-point"></div>
+                    <div class="sync-point"></div>
+                    <div class="sync-point"></div>
+                    <div class="sync-point"></div>
+                </div>
+            </div>
+            
+            <div class="control-principles">
+                <div class="principle-card dsp-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">⚡</span>
+                        Sincronización de Fase
+                    </h4>
+                    <p>Alineación temporal precisa entre los estímulos del sistema y los ciclos naturales de atención y procesamiento del usuario, reduciendo la fatiga cognitiva.</p>
+                </div>
+                
+                <div class="principle-card dsp-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">🎵</span>
+                        Ratios Armónicos Biológicos
+                    </h4>
+                    <p>Utilización de relaciones matemáticas derivadas de la arquitectura biológica (proporciones áureas, secuencias fractales) para estructurar la presentación temporal de información.</p>
+                </div>
+                
+                <div class="principle-card dsp-principle">
+                    <h4 class="principle-title">
+                        <span class="principle-icon">📈</span>
+                        Modulación Adaptativa
+                    </h4>
+                    <p>Ajuste dinámico de frecuencias y patrones basado en la respuesta fisiológica medida, creando una experiencia que evoluciona con el estado del usuario.</p>
+                </div>
+            </div>
+            
+            <div style="background: #e3f2fd; padding: 2rem; border-radius: 15px; margin-top: 2.5rem;">
+                <h4 style="color: var(--primary-blue); margin-bottom: 1rem;">🔬 Principio Técnico Fundamental</h4>
+                <p><strong>Isomorfismo Audio-Motor:</strong> Existe una correspondencia matemática demostrable entre los patrones de procesamiento auditivo (ratios de frecuencia) y la organización motora (patrones de activación neural). Esta correspondencia permite usar técnicas de DSP para optimizar interfaces humano-sistema.</p>
+            </div>
+        </section>
+
+        <!-- FOOTER DE SOBERANÍA -->
+        <footer class="sovereignty-footer">
+            <div class="sovereignty-statement">
+                NewroSTaiR-11 no corrige al usuario;
+                <span class="highlight-statement">se corrige a sí mismo para mantenerse compatible con la biología humana</span>
+            </div>
+            
+            <p style="max-width: 700px; margin: 0 auto 2rem; opacity: 0.9; font-size: 1.1rem;">
+                Esta es la <strong>soberanía bio-céntrica</strong>: el sistema tecnológico se adapta a la biología humana, no al revés. Cada ajuste, cada modulación, cada sincronización tiene un único propósito: mantener la compatibilidad fundamental con nuestra arquitectura neurobiológica.
+            </p>
+            
+            <div class="sovereignty-principles">
+                <div class="principle-item">
+                    <h4>🧬 Soberanía Biológica</h4>
+                    <p>La biología humana es la referencia inmutable; la tecnología se adapta a ella mediante doble lazo de control.</p>
+                </div>
+                
+                <div class="principle-item">
+                    <h4>⚖️ Equilibrio Dinámico</h4>
+                    <p>El sistema busca constantemente el punto óptimo entre eficiencia informativa y compatibilidad neurofisiológica.</p>
+                </div>
+                
+                <div class="principle-item">
+                    <h4>🛡️ Protección por Diseño</h4>
+                    <p>La arquitectura de doble lazo incorpora límites intrínsecos que previenen la sobrecarga o incompatibilidad.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                <p style="font-size: 0.9rem; opacity: 0.8;">
+                    Arquitectura NewroSTaiR-11 | Sistema de Doble Lazo de Control | 
+                    <a href="https://github.com/biostair11/NewroSTaiR-11" style="color: #ffd700; text-decoration: none;">
+                        Ver documentación completa en GitHub
+                    </a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Animación interactiva para el marcador de densidad
+        document.addEventListener('DOMContentLoaded', function() {
+            const marker = document.querySelector('.density-marker');
+            let position = 70;
+            let direction = 1;
+            
+            function animateMarker() {
+                position += direction * 0.5;
+                
+                if (position > 85 || position < 55) {
+                    direction *= -1;
+                }
+                
+                marker.style.left = position + '%';
+                marker.textContent = Math.round(position) + '%';
+                
+                requestAnimationFrame(animateMarker);
+            }
+            
+            // Iniciar animación después de un breve retraso
+            setTimeout(animateMarker, 1000);
+            
+            // Efecto de aparición para las tarjetas de principios
+            const principleCards = document.querySelectorAll('.principle-card');
+            principleCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 300 + index * 150);
+            });
+            
+            // Actualización en tiempo real para el diagrama de fase
+            const syncPoints = document.querySelectorAll('.sync-point');
+            setInterval(() => {
+                syncPoints.forEach(point => {
+                    point.style.animationDelay = Math.random() + 's';
+                });
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
