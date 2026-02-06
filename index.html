@@ -4,12 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NewroSTaiR-11 | Inducción de Coherencia Interhemisférica</title>
-    <meta name="description" content="NewroSTaiR-11 es un sistema de sincronización interhemisférica mediante modulación coherente. Explora los módulos de investigación en neuroplasticidad.">
-    <meta name="keywords" content="neuroplasticidad, sincronización neuronal, NewroSTaiR-11, NewroSync-11, NewroBoxy-11, geometría coherente">
-    <meta name="author" content="Andru Stiven Rodríguez Bustos">
     <style>
         :root {
-            /* PALETA AZUL-ARENA VIBRANTE */
             --azul-profundo: #0a2463;
             --azul-medio: #3e92cc;
             --azul-cielo: #4cc9f0;
@@ -23,12 +19,7 @@
             --sombra-arena: rgba(230, 183, 117, 0.4);
         }
 
-        /* Reset y estilos generales */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -41,513 +32,183 @@
             padding: 20px;
         }
 
-        /* Header */
-        header { 
-            text-align: center; 
-            padding: 30px 20px;
-            width: 100%;
-            max-width: 800px;
-        }
-
-        h1 { 
-            font-size: 2.5rem;
-            background: linear-gradient(90deg, var(--azul-cielo), var(--arena-dorada));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 3px; 
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            color: var(--texto-arena);
-            opacity: 0.9;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        /* Contenedor principal */
-        .sync-container { 
-            width: 100%; 
-            max-width: 800px; 
-            padding: 20px;
-        }
-
-        /* Etiquetas de fase */
-        .etiqueta { 
-            font-size: 1rem; 
-            letter-spacing: 2px; 
-            text-align: center; 
-            margin-bottom: 20px;
-            font-weight: bold;
-            padding: 10px 20px;
-            border-radius: 25px;
-            display: inline-block;
-            margin-left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .etiqueta-Tesla {
-            color: var(--arena-dorada);
-            background: rgba(244, 162, 97, 0.15);
-            border: 1px solid rgba(244, 162, 97, 0.4);
-        }
-
-        .etiqueta-Mandelbrot {
-            color: var(--azul-cielo);
-            background: rgba(78, 201, 240, 0.15);
-            border: 1px solid rgba(78, 201, 240, 0.4);
-        }
-
-        /* Contenedor del carrusel */
-        .slider-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin: 20px 0 40px;
-        }
-
-        .carrusel {
-            display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-            width: 180px;
-            gap: 40px;
-            padding: 10px 0;
-        }
-
-        .carrusel::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Edge */
-        }
-
-        .item-hex {
-            flex: 0 0 180px;
-            display: flex;
-            justify-content: center;
-        }
-
-        /* Hexágonos */
-        .modulo {
-            width: 150px;
-            height: 170px;
-            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex; 
-            justify-content: center; 
-            align-items: center;
-            text-align: center; 
-            text-decoration: none; 
-            font-weight: bold; 
-            font-size: 0.9rem;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            word-break: break-word;
-        }
-
-        /* Fase Tesla - ARENA DORADA */
-        .fase-Tesla .modulo { 
-            background: linear-gradient(135deg, var(--arena-dorada), var(--arena-oscura)); 
-            color: #2c1810; 
-            border: 3px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .fase-Tesla .modulo:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 30px var(--sombra-arena);
-            border-color: white;
-        }
-
-        /* Fase Mandelbrot - AZUL VIBRANTE */
-        .fase-Mandelbrot .modulo { 
-            background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo)); 
-            color: var(--texto-blanco); 
-            border: 3px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .fase-Mandelbrot .modulo:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 30px var(--sombra-azul);
-            border-color: var(--azul-cielo);
-        }
-
-        /* Botones de navegación */
-        .btn-nav {
+        /* --- NUEVOS ESTILOS PARA BOTONES LATERALES --- */
+        .btn-lateral {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 10px 15px;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 12px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            z-index: 10;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            border-radius: 10px;
+            z-index: 1000;
+            transition: 0.3s;
+        }
+        .btn-izq { left: 10px; }
+        .btn-der { right: 10px; }
+        .btn-lateral:hover { background: var(--arena-dorada); color: var(--azul-profundo); }
+
+        header { text-align: center; padding: 30px 20px; width: 100%; max-width: 800px; }
+        h1 { font-size: 2.5rem; background: linear-gradient(90deg, var(--azul-cielo), var(--arena-dorada)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; margin-bottom: 10px; }
+        .subtitle { color: var(--texto-arena); opacity: 0.9; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px; }
+
+        .sync-container { width: 100%; max-width: 800px; padding: 20px; }
+
+        .etiqueta { 
+            font-size: 1rem; letter-spacing: 2px; text-align: center; 
+            margin-bottom: 20px; font-weight: bold; padding: 10px 20px;
+            border-radius: 25px; display: inline-block; margin-left: 50%;
+            transform: translateX(-50%);
         }
 
-        .btn-nav:hover { 
-            background: rgba(255, 255, 255, 0.2); 
-            border-color: var(--arena-dorada);
-            transform: scale(1.1);
-            box-shadow: 0 0 15px var(--sombra-arena);
-        }
-
-        /* Centro */
-        .centro-humor {
-            width: 120px; 
-            height: 120px; 
-            background: radial-gradient(circle, var(--azul-cielo), var(--arena-dorada));
-            border-radius: 50%; 
-            margin: 30px auto; 
-            display: flex; 
-            justify-content: center;
-            align-items: center; 
+        .etiqueta-Tesla { color: var(--arena-dorada); background: rgba(244, 162, 97, 0.15); border: 1px solid rgba(244, 162, 97, 0.4); }
+        .etiqueta-Mandelbrot { color: var(--azul-cielo); background: rgba(78, 201, 240, 0.15); border: 1px solid rgba(78, 201, 240, 0.4); }
+        
+        /* AJUSTE TÍTULO CAMPO INTEGRADOR */
+        .etiqueta-Integra { 
             color: var(--texto-blanco); 
-            font-weight: 900; 
-            font-size: 0.9rem;
-            box-shadow: 0 0 40px rgba(78, 201, 240, 0.7);
-            animation: pulse 3s ease-in-out infinite;
-            border: 3px solid white;
-            text-align: center;
-            padding: 10px;
-            text-decoration: none;
-            transition: transform 0.3s ease;
+            background: rgba(255, 255, 255, 0.1); 
+            border: 1px solid white;
+            margin-top: 20px;
         }
 
-        .centro-humor:hover {
-            transform: scale(1.05);
-            animation: none;
+        .slider-wrapper { display: flex; align-items: center; justify-content: center; position: relative; margin: 20px 0 40px; }
+        .carrusel { display: flex; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; width: 180px; gap: 40px; padding: 10px 0; }
+        .carrusel::-webkit-scrollbar { display: none; }
+        .item-hex { flex: 0 0 180px; display: flex; justify-content: center; }
+
+        .modulo {
+            width: 150px; height: 170px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex; justify-content: center; align-items: center; text-align: center; 
+            text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.3s;
+            padding: 10px; word-break: break-word;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .fase-Tesla .modulo { background: linear-gradient(135deg, var(--arena-dorada), var(--arena-oscura)); color: #2c1810; }
+        .fase-Mandelbrot .modulo { background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo)); color: var(--texto-blanco); }
+
+        .btn-nav { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; font-size: 1.5rem; cursor: pointer; padding: 12px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 10px; }
+
+        .centro-humor {
+            width: 120px; height: 120px; background: radial-gradient(circle, var(--azul-cielo), var(--arena-dorada));
+            border-radius: 50%; margin: 30px auto; display: flex; justify-content: center;
+            align-items: center; color: var(--texto-blanco); font-weight: 900; font-size: 0.9rem;
+            box-shadow: 0 0 40px rgba(78, 201, 240, 0.7); animation: pulse 3s infinite;
+            border: 3px solid white; text-align: center; padding: 10px; text-decoration: none;
         }
 
-        /* Indicadores de carrusel */
-        .indicadores {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 15px;
-        }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
 
-        .indicador {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+        .indicadores { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
+        .indicador { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
+        .indicador.activo { background: var(--arena-dorada); }
 
-        .indicador.activo {
-            background: var(--arena-dorada);
-        }
-
-        /* Footer */
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--texto-arena);
-            font-size: 0.9rem;
-        }
-
-        footer a {
-            color: var(--azul-cielo);
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s ease;
-        }
-
-        footer a:hover {
-            color: var(--arena-dorada);
-            text-decoration: underline;
-        }
-
-        /* Fondo decorativo */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(78, 201, 240, 0.05) 1%, transparent 2%),
-                radial-gradient(circle at 80% 70%, rgba(244, 162, 97, 0.05) 1%, transparent 2%);
-            background-size: 100px 100px;
-            z-index: -1;
-            opacity: 0.5;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .sync-container {
-                padding: 10px;
-            }
-
-            .carrusel {
-                width: 160px;
-                gap: 30px;
-            }
-
-            .item-hex {
-                flex: 0 0 160px;
-            }
-
-            .modulo {
-                width: 140px;
-                height: 160px;
-                font-size: 0.85rem;
-            }
-
-            .btn-nav {
-                width: 40px;
-                height: 40px;
-                padding: 8px;
-                margin: 0 5px;
-            }
-
-            .centro-humor {
-                width: 100px;
-                height: 100px;
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
-
-            .subtitle {
-                font-size: 0.9rem;
-            }
-
-            .etiqueta {
-                font-size: 0.9rem;
-                padding: 8px 16px;
-            }
-
-            .modulo {
-                width: 130px;
-                height: 150px;
-                font-size: 0.8rem;
-            }
-        }
+        footer { margin-top: 40px; padding: 20px; text-align: center; width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--texto-arena); font-size: 0.9rem; }
+        footer a { color: var(--azul-cielo); text-decoration: none; margin: 0 10px; }
     </style>
 </head>
 <body>
+    <a href="Base-Newro-Sync.html" class="btn-lateral btn-izq">NewroSync-11</a>
+    <a href="https://newrosboxy11.netlify.app" class="btn-lateral btn-der">NewroBoxy-11</a>
+
     <header>
         <h1>NewroSTaiR-11</h1>
         <p class="subtitle">Inducción de Sincronización Interhemisférica</p>
     </header>
 
     <main class="sync-container">
-        <!-- FASE Tesla - ARENA DORADA -->
-        <section class="fase-Tesla" aria-label="Fase Tesla: Estructura Flexible">
+        <section class="fase-Tesla">
             <div class="etiqueta etiqueta-Tesla">ESTRUCTURA FLEXIBLE (G-C)</div>
             <div class="slider-wrapper">
-                <button class="btn-nav" onclick="moveSlider('Tesla', -1)" aria-label="Anterior módulo">
-                    &#10094;
-                </button>
-                <div class="carrusel fase-Tesla" id="slider-Tesla">
-                    <div class="item-hex"><!-- 01-Origen-y-Significado.html -->
-                        <a href="01-Origen-y-Significado.html" class="modulo">HISTORIA Y JUSTIFICACIÓN</a>
-                    </div>
-                    <div class="item-hex"><!-- 02-Fundamentos-Teoricos.html -->
-                        <a href="02-Marco-Teorico.html" class="modulo">FUNDAMENTOS TEÓRICOS</a>
-                    </div>
-                    <div class="item-hex"><!-- 03-Investigacion-y-Desarrollo.html -->
-                        <a href="03-Investigacion-y-Desarrollo.html" class="modulo">INVESTIGACIÓN Y DESARROLLO</a>
-                    </div>
-                    <div class="item-hex"><!-- 04-Modelo-de-Negocio-y-Aplicaciones.html -->
-                        <a href="pagina-en-desarrollo.html" class="modulo">MODELO DE NEGOCIO Y APLICACIONES</a>
-                    </div>
+                <button class="btn-nav" onclick="moveSlider('Tesla', -1)">&#10094;</button>
+                <div class="carrusel" id="slider-Tesla">
+                    <div class="item-hex"><a href="01-Origen-y-Significado.html" class="modulo">HISTORIA Y JUSTIFICACIÓN</a></div>
+                    <div class="item-hex"><a href="02-Marco-Teorico.html" class="modulo">PROPIEDAD INTELECTUAL Y FUNDAMENTOS TEÓRICOS</a></div>
+                    <div class="item-hex"><a href="03-Investigacion-y-Desarrollo.html" class="modulo">INVESTIGACIÓN Y DESARROLLO</a></div>
+                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">MODELO DE NEGOCIO</a></div>
                 </div>
-                <button class="btn-nav" onclick="moveSlider('Tesla', 1)" aria-label="Siguiente módulo">
-                    &#10095;
-                </button>
+                <button class="btn-nav" onclick="moveSlider('Tesla', 1)">&#10095;</button>
             </div>
-            <div class="indicadores" id="indicadores-Tesla">
-                <!-- Los indicadores se generan con JavaScript -->
-            </div>
+            <div class="indicadores" id="indicadores-Tesla"></div>
         </section>
 
-        <a href="Actualizacion-PI-4F.html" class="centro-humor">Actualización PI</a>
+        <section class="fase-Integra">
+            <div class="etiqueta etiqueta-Integra">CAMPO INTEGRADOR</div>
+            <div class="slider-wrapper">
+                <button class="btn-nav" onclick="moveSlider('Integra', -1)">&#10094;</button>
+                <div class="carrusel" id="slider-Integra">
+                    <div class="item-hex"><a href="Actualizacion-PI-4F.html" class="centro-humor">Actualización PI</a></div>
+                    <div class="item-hex"><a href="Teoria-Doble-Lazo.html" class="centro-humor">Doble Lazo</a></div>
+                    <div class="item-hex"><a href="Bitacora.html" class="centro-humor">Bitácora</a></div>
+                    <div class="item-hex"><a href="MarcoTeoricoClaude2F.html" class="centro-humor">Preliminar</a></div>
+                </div>
+                <button class="btn-nav" onclick="moveSlider('Integra', 1)">&#10095;</button>
+            </div>
+            <div class="indicadores" id="indicadores-Integra"></div>
+        </section>
 
-        <!-- CENTRO -->
-        <a href="Teoria-Doble-Lazo.html" class="centro-humor">Doble Lazo</a>
-
-        <a href="Bitacora.html" class="centro-humor">Bitácora</a>
-        <!-- CENTRO -->
-        <a href="MarcoTeoricoClaude2F.html" class="centro-humor">Preliminar</a>
-
-        <!-- CENTRO -->
-        <a href="Base-Newro-Sync.html" class="centro-humor">NewroSync-11</a>
-
-        <!-- CENTRO -->
-        <a href="https://newrosboxy11.netlify.app" class="centro-humor">NewroBoxy-11</a>
-
-        <!-- FASE Mandelbrot - AZUL VIBRANTE -->
-        <section class="fase-Mandelbrot" aria-label="Fase Mandelbrot: Flexibilidad Estructurada">
+        <section class="fase-Mandelbrot">
             <div class="etiqueta etiqueta-Mandelbrot">FLEXIBILIDAD ESTRUCTURADA (A-T)</div>
             <div class="slider-wrapper">
-                <button class="btn-nav" onclick="moveSlider('Mandelbrot', -1)" aria-label="Anterior módulo">
-                    &#10094;
-                </button>
-                <div class="carrusel fase-Mandelbrot" id="slider-Mandelbrot">
-                    <div class="item-hex"><!-- 05-Ciencia-Arte-y-Cultura.html -->
-                        <a href="pagina-en-desarrollo.html" class="modulo">CIENCIA, ARTE Y CULTURA</a>
-                    </div>
-                    <div class="item-hex"><!-- 06-Historia-y-Neuroplasticidad.html -->
-                        <a href="pagina-en-desarrollo.html" class="modulo">HISTORIA Y NEUROPLASTICIDAD (DAVINCI, BEETHOVEN, ETC.)</a>
-                    </div>
-                    <div class="item-hex"><!-- 07-La-Era-Humano-IA.html -->
-                        <a href="pagina-en-desarrollo.html" class="modulo">LA ERA HUMANO-IA</a>
-                    </div>
-                    <div class="item-hex"><!-- 08-Comunidad-BiStair.html -->
-                        <a href="pagina-en-desarrollo.html" class="modulo">COMUNIDAD NewroSTAIR</a>
-                    </div>
+                <button class="btn-nav" onclick="moveSlider('Mandelbrot', -1)">&#10094;</button>
+                <div class="carrusel" id="slider-Mandelbrot">
+                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">CIENCIA, ARTE Y CULTURA</a></div>
+                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">HISTORIA Y NEUROPLASTICIDAD</a></div>
+                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">LA ERA HUMANO-IA</a></div>
+                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">COMUNIDAD NewroSTAIR</a></div>
                 </div>
-                <button class="btn-nav" onclick="moveSlider('Mandelbrot', 1)" aria-label="Siguiente módulo">
-                    &#10095;
-                </button>
+                <button class="btn-nav" onclick="moveSlider('Mandelbrot', 1)">&#10095;</button>
             </div>
-            <div class="indicadores" id="indicadores-Mandelbrot">
-                <!-- Los indicadores se generan con JavaScript -->
-            </div>
+            <div class="indicadores" id="indicadores-Mandelbrot"></div>
         </section>
     </main>
 
     <footer>
-        <p>
-            <a href="https://github.com/Newrostair11/Newrostair11" target="_blank" rel="noopener">GitHub</a> | 
-            <a href="mailto:tu@email.com">Contacto</a> |
-            <a href="/bitacora">Bitácora de Evidencia</a> |
-            <a href="NewroSync-11.html">Experimenta NewroSync-11</a>
-        </p>
         <p>© 2026 NewroSTaiR-11 | Modelo de Negocio Ético Linux/Red Hat</p>
     </footer>
 
     <script>
-        // Configuración del carrusel
-        const fases = ['Tesla', 'Mandelbrot'];
-        const itemsPorFase = {
-            Tesla: 4,
-            Mandelbrot: 4
-        };
+        // CONFIGURACIÓN INCLUYENDO INTEGRA
+        const fases = ['Tesla', 'Integra', 'Mandelbrot'];
+        const itemsPorFase = { Tesla: 4, Integra: 4, Mandelbrot: 4 };
 
-        // Inicializar indicadores para cada fase
         fases.forEach(fase => {
             const contenedor = document.getElementById(`indicadores-${fase}`);
             for (let i = 0; i < itemsPorFase[fase]; i++) {
                 const indicador = document.createElement('div');
                 indicador.classList.add('indicador');
                 if (i === 0) indicador.classList.add('activo');
-                indicador.addEventListener('click', () => {
-                    moveToSlide(fase, i);
-                });
+                indicador.onclick = () => moveToSlide(fase, i);
                 contenedor.appendChild(indicador);
             }
         });
 
-        // Función para mover el slider
         function moveSlider(fase, direccion) {
             const slider = document.getElementById(`slider-${fase}`);
-            const itemWidth = 180 + 40; // ancho + gap
-            const scrollAmount = itemWidth * direccion;
-            const newScrollLeft = slider.scrollLeft + scrollAmount;
-            
-            // Asegurarse de no salirse de los límites
-            const maxScroll = slider.scrollWidth - slider.clientWidth;
-            const finalScroll = Math.max(0, Math.min(newScrollLeft, maxScroll));
-            
-            slider.scrollTo({
-                left: finalScroll,
-                behavior: 'smooth'
-            });
-            
-            // Actualizar indicadores después de un pequeño retraso
+            const itemWidth = 180 + 40;
+            slider.scrollBy({ left: itemWidth * direccion, behavior: 'smooth' });
             setTimeout(() => updateIndicators(fase), 300);
         }
 
-        // Función para mover a un slide específico
         function moveToSlide(fase, index) {
             const slider = document.getElementById(`slider-${fase}`);
-            const itemWidth = 180 + 40; // ancho + gap
-            const scrollAmount = itemWidth * index;
-            
-            slider.scrollTo({
-                left: scrollAmount,
-                behavior: 'smooth'
-            });
-            
-            // Actualizar indicadores
+            slider.scrollTo({ left: (180 + 40) * index, behavior: 'smooth' });
             updateIndicators(fase);
         }
 
-        // Función para actualizar los indicadores
         function updateIndicators(fase) {
             const slider = document.getElementById(`slider-${fase}`);
             const indicadores = document.querySelectorAll(`#indicadores-${fase} .indicador`);
-            const itemWidth = 180 + 40;
-            const currentIndex = Math.round(slider.scrollLeft / itemWidth);
-            
-            indicadores.forEach((ind, index) => {
-                if (index === currentIndex) {
-                    ind.classList.add('activo');
-                } else {
-                    ind.classList.remove('activo');
-                }
-            });
+            const currentIndex = Math.round(slider.scrollLeft / (180 + 40));
+            indicadores.forEach((ind, i) => ind.classList.toggle('activo', i === currentIndex));
         }
 
-        // Actualizar indicadores al hacer scroll
         fases.forEach(fase => {
-            const slider = document.getElementById(`slider-${fase}`);
-            slider.addEventListener('scroll', () => {
-                updateIndicators(fase);
-            });
-        });
-
-        // Efecto hover táctil para móviles
-        document.querySelectorAll('.modulo').forEach(modulo => {
-            modulo.addEventListener('touchstart', function() {
-                this.style.transform = 'translateY(-5px) scale(1.05)';
-            });
-            
-            modulo.addEventListener('touchend', function() {
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
-
-        // Inicialización
-        window.addEventListener('load', () => {
-            fases.forEach(fase => {
-                document.getElementById(`slider-${fase}`).scrollLeft = 0;
-                updateIndicators(fase);
-            });
+            document.getElementById(`slider-${fase}`).onscroll = () => updateIndicators(fase);
         });
     </script>
 </body>
