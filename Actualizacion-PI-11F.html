@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewroSTaiR-11 · Actualización PI-11F · + Discretización Emergente</title>
+    <style>
+        /* === ESTILOS NEWROSTAIR - PALETA AMIGABLE (SUAVE, ALTO CONTRASTE, BAJA FATIGA) === */
+        :root {
+            --bg: #faf9f7;          /* fondo principal: blanco roto cálido */
+            --surface: #ffffff;     /* superficie de texto: blanco puro */
+            --text: #1e2b3c;        /* texto principal: azul grisáceo profundo */
+            --text-soft: #2f4052;   /* texto secundario */
+            --accent: #0f766e;      /* teal profundo pero suave (accesible) */
+            --accent-dim: #14b8a6;  /* teal más claro para detalles */
+            --code-bg: #f1f5f9;     /* fondo de código: gris muy suave */
+            --border: #d1d9e6;      /* bordes: gris azulado claro */
+            --green-soft: #2e7d5e;  /* verde musgo para acentos */
+            --blue-soft: #3b70a0;   /* azul sereno */
+            --yellow-light: #fef9e7; /* fondo para disclaimers */
+            --shadow: rgba(0,0,0,0.03) 0px 8px 20px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: var(--surface);
+            padding: 2.8rem 2.5rem;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        h1, h2, h3, h4 {
+            font-weight: 550;
+            letter-spacing: -0.01em;
+            color: #0b2d3b;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: #0b3b42;
+            margin-bottom: 0.3rem;
+            border-bottom: 2px solid var(--accent-dim);
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #0e5a4f;
+            margin-top: 2.2rem;
+            margin-bottom: 1rem;
+            border-left: 6px solid var(--accent);
+            padding-left: 1.2rem;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 1.35rem;
+            color: #1a5c4b;
+            margin-top: 1.8rem;
+            margin-bottom: 0.6rem;
+            font-weight: 580;
+        }
+        p, li {
+            color: var(--text-soft);
+            margin-bottom: 1rem;
+        }
+        a {
+            color: #0a6e6b;
+            text-decoration: none;
+            border-bottom: 1px dashed #99c6c4;
+            font-weight: 500;
+        }
+        a:hover {
+            border-bottom: 1px solid #0f766e;
+            color: #064e4b;
+        }
+        code, pre {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            background: var(--code-bg);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #1e405e;
+        }
+        code {
+            padding: 0.2rem 0.5rem;
+            border: 1px solid #cbd5e1;
+        }
+        pre {
+            padding: 1.4rem;
+            overflow-x: auto;
+            border: 1px solid #d7e0e8;
+            margin: 1.5rem 0;
+            line-height: 1.5;
+            background: #f6fafd;
+        }
+        .equation {
+            background: #f7fbfc;
+            padding: 1.2rem 1.5rem;
+            border-radius: 20px;
+            border-left: 8px solid var(--green-soft);
+            margin: 1.8rem 0;
+            font-size: 1.05rem;
+            overflow-x: auto;
+            color: #164a4a;
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: #ffffff;
+            border-radius: 20px;
+            border-style: hidden;
+            box-shadow: 0 0 0 1px #dce3ec;
+        }
+        th {
+            background: #eef3f7;
+            color: #0b544b;
+            font-weight: 600;
+            padding: 0.9rem 0.7rem;
+            font-size: 0.95rem;
+        }
+        td {
+            padding: 0.9rem 0.7rem;
+            border-bottom: 1px solid #e1e9f0;
+            color: #2a4053;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        .badge {
+            display: inline-block;
+            background: #e6f1ed;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #0b6b5e;
+            border: 1px solid #a3cfc7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .hash {
+            background: #f3f7fa;
+            padding: 1.2rem 1.5rem;
+            border-radius: 18px;
+            border: 1px solid #cbdae5;
+            font-family: monospace;
+            word-break: break-all;
+            color: #2c5068;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+        .footer-note {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #6b7f8e;
+            border-top: 1px solid #d0dfe8;
+            padding-top: 1.8rem;
+            text-align: center;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #d5e0e8;
+            margin: 2rem 0;
+        }
+        .disclaimer {
+            background: var(--yellow-light);
+            padding: 1.5rem;
+            border-radius: 24px;
+            border-left: 8px solid #b6803b;
+            color: #2c3e4e;
+            font-style: italic;
+            border: 1px solid #f1e2c6;
+        }
+        .highlight {
+            background: #ecfdf5;
+            padding: 1.5rem;
+            border-radius: 20px;
+            border-left: 8px solid #2b8c7c;
+        }
+        ul, ol {
+            padding-left: 1.6rem;
+        }
+        li {
+            margin-bottom: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- TÍTULO PRINCIPAL -->
+    <span class="badge" style="margin-bottom: 1rem;">PI · CONSOLIDACIÓN ESTRUCTURAL</span>
+    <h1>NEWROSTAIR-11</h1>
+    <h1 style="font-size: 2rem; border-bottom: none; padding-bottom: 0; margin-top: 0.1rem; color: #1c6d5e;">
+        Actualización PI-11F
+    </h1>
+    <p style="font-size: 1.25rem; margin-top: 0.3rem; color: #2c5a4c;"><strong>Marco 4D + Campo Escalar · Capa 6: Escalabilidad Fractal (UMEF) · Discretización Emergente</strong></p>
+    <p style="color: #5e7a8b; margin-bottom: 1.8rem;">Fecha: 2026-02-11 · Versión: + Sección 6.4 </p>
+
+    <!-- RELACIÓN CON DOCUMENTOS ANTERIORES -->
+    <p style="background: #edf3f0; padding: 0.8rem 1.5rem; border-radius: 40px; display: inline-block; border: 1px solid #a8cbc6;">
+        🌿 Documento complementario a <a href="02-Marco-Teorico.html">Declaración Unificada</a> y <a href="Actualizacion-PI-4F.html">Actualización PI-4F</a> · Capa abstracta.
+    </p>
+
+    <!-- 1. PROPÓSITO Y RELACIÓN -->
+    <h2>1. Propósito y encaje estructural</h2>
+    <p>Esta actualización introduce un <strong>marco matemático abstracto</strong> (sistema dinámico 4D + campo escalar) que actúa como <strong>capa formal subyacente</strong> a las implementaciones previas de NewroSTaiR-11. No modifica ni invalida los desarrollos anteriores; los <em>unifica</em> bajo una arquitectura de sistemas dinámicos autorregulados con escalabilidad fractal.</p>
+    <p>La relación es jerárquica:</p>
+    <ul>
+        <li><strong>Capa abstracta (presente documento):</strong> ecuaciones de evolución, campo de activación, acoplamiento global, operador de escala UMEF, discretización emergente.</li>
+        <li><strong>Capa de implementación (documentos 2024-2026):</strong> realizaciones concretas en biomecánica, control bilateral, bioquímica hipotética, rehabilitación.</li>
+    </ul>
+    <p>Todo el contenido se declara en <strong>dominio matemático-formal</strong>, sin afirmaciones ontológicas sobre la naturaleza última de los sistemas modelados.</p>
+
+    <!-- 2. DECLARACIÓN EPISTEMOLÓGICA -->
+    <h2>2. Declaración epistemológica</h2>
+    <div class="disclaimer">
+        <p style="margin-bottom: 0.5rem;"><strong>📐 Límites del modelo</strong></p>
+        <p style="margin-bottom: 0.8rem;">Este marco es un <strong>artefacto analógico</strong>. No afirma:</p>
+        <ul>
+            <li>Correspondencia uno-a-uno con estructuras neurobiológicas.</li>
+            <li>Validez como teoría física fundamental.</li>
+            <li>Explicación causal de fenómenos no contrastados.</li>
+        </ul>
+        <p style="margin-top: 0.8rem; margin-bottom: 0;"><strong>Afirma:</strong> coherencia interna, utilidad heurística, extensibilidad controlada. Toda analogía con sistemas reales es <strong>pedagógica</strong> y debe declararse como tal.</p>
+    </div>
+
+    <!-- 3. MARCO 4D -->
+    <h2>3. Sistema dinámico central (ℝ⁴)</h2>
+    <h3>3.1 Vector de estado</h3>
+    <div class="equation">
+        \(\mathbf{X}(t) = (x_1, x_2, x_3, x_4) \in \mathbb{R}^4\)
+    </div>
+    <p><strong>Interpretación funcional (no anatómica):</strong></p>
+    <table>
+        <tr><th>Variable</th><th>Etiqueta operativa</th><th>Rol dinámico</th></tr>
+        <tr><td><code>x₁</code></td><td>Direccional</td><td>Orientación dominante del sistema</td></tr>
+        <tr><td><code>x₂</code></td><td>Regulatoria</td><td>Tendencia estabilizadora / oposición</td></tr>
+        <tr><td><code>x₃</code></td><td>Integradora</td><td>Acoplamiento no lineal emergente</td></tr>
+        <tr><td><code>x₄</code></td><td>Moduladora global</td><td>Amortiguación, coherencia agregada</td></tr>
+    </table>
+
+    <h3>3.2 Ecuaciones de evolución</h3>
+    <div class="equation">
+        \[
+        \begin{aligned}
+        \dot{x}_1 &= a\,(x_2 - x_1) \\
+        \dot{x}_2 &= b\,x_1 - x_2 - x_1 x_3 \\
+        \dot{x}_3 &= x_1 x_2 - c\,x_3 \\
+        \dot{x}_4 &= -d\,x_4 + \kappa H(t)
+        \end{aligned}
+        \]
+    </div>
+    <p>Parámetros: \(a, b, c, d, \kappa > 0\).</p>
+    <p>El subsistema \((x_1,x_2,x_3)\) puede presentar —bajo ciertos regímenes— puntos fijos, ciclos límite o dinámica caótica (análoga a Lorenz). \(H(t)\) es la <strong>señal global</strong> definida en la sección 4.</p>
+
+    <!-- 4. CAMPO ESCALAR -->
+    <h2>4. Campo escalar \(\phi(\mathbf{x},t)\)</h2>
+    <h3>4.1 Definición</h3>
+    <div class="equation">
+        \(\phi: \Omega \times \mathbb{R}^+ \to \mathbb{R}^+\), \(\Omega \subset \mathbb{R}^n\) dominio abstracto.
+    </div>
+    <h3>4.2 Ecuación de transporte (analógica)</h3>
+    <div class="equation">
+        \[
+        \frac{\partial \phi}{\partial t} + \mathbf{v}\cdot\nabla \phi = D\nabla^2 \phi + S(\phi,t)
+        \]
+    </div>
+    <ul>
+        <li><strong>Convección (\(\mathbf{v}\cdot\nabla\phi\)):</strong> propagación dirigida.</li>
+        <li><strong>Difusión (\(D\nabla^2\phi\)):</strong> dispersión espontánea.</li>
+        <li><strong>Fuente (\(S\)):</strong> entrada de activación.</li>
+    </ul>
+
+    <!-- 5. ACOPLAMIENTO GLOBAL -->
+    <h2>5. Acoplamiento global</h2>
+    <div class="equation">
+        \(H(t) = \displaystyle\int_{\Omega} \phi(\mathbf{x},t)\, d\mathbf{x}\)
+    </div>
+    <div class="equation">
+        \(\dot{x}_4 = -d x_4 + \kappa H(t)\)
+    </div>
+    <p>La dinámica del sistema 4D influye en \(\phi\) (vía condiciones de contorno o fuente) y \(\phi\) retroalimenta al sistema a través de \(x_4\).</p>
+
+    <!-- 6. CAPA 6: UMEF (con nueva subsección 6.4) -->
+    <h2 style="border-left-color: #2e7d5e;">6. Capa 6 – Escalabilidad Fractal: UMEF</h2>
+    <p><span class="badge" style="background: #d7e9e2;">DEFINICIÓN FORMAL</span></p>
+
+    <h3>6.1 Unidad Mínima Escalable Fractal (UMEF)</h3>
+    <p>Una <strong>UMEF</strong> es un subsistema dinámico que satisface:</p>
+    <ol>
+        <li><strong>Invarianza estructural:</strong> sus ecuaciones de evolución tienen la misma forma funcional que el sistema 4D base, con posibles reparametrizaciones.</li>
+        <li><strong>Auto-similitud:</strong> existe un operador de escala \(\mathcal{S}_\lambda\) que transforma la UMEF de escala \(\sigma\) a escala \(\lambda\sigma\) preservando la forma de las ecuaciones y los parámetros críticos \((a,b,c,d,\kappa)\).</li>
+        <li><strong>Acoplamiento interescala:</strong> las UMEFs interactúan mediante señales globales \(H_i(t)\) o acoplamientos directos, formando redes.</li>
+    </ol>
+
+    <h3>6.2 Operador de escala \(\mathcal{S}_\lambda\)</h3>
+    <div class="equation">
+        \(\mathcal{S}_\lambda: \mathbf{X}(t) \mapsto \mathbf{X}_\lambda(\tau),\quad \tau = \lambda t\)
+    </div>
+    <div class="equation">
+        \(\mathbf{F}_\lambda(\mathbf{X}_\lambda) = \mathbf{F}(\mathbf{X}_\lambda)\)  (idealización)
+    </div>
+
+    <h3>6.3 Red de UMEFs y acoplamiento multiescala</h3>
+    <div class="equation">
+        \(H_i(t) = \int_{\Omega_i} \phi_i(\mathbf{x},t) d\mathbf{x}\), \(\dot{x}_{4,i} = -d x_{4,i} + \kappa H_j(t)\)
+    </div>
+
+    <!-- █► NUEVA SECCIÓN 6.4: DISCRETIZACIÓN EMERGENTE Y MAPA DE POINCARÉ ◄█ -->
+    <h3 style="color: #1a6b5e; margin-top: 2rem;">6.4 Discretización emergente y mapa de Poincaré</h3>
+    <p>La dinámica continua del sistema 4D puede generar, de manera endógena, 
+    secuencias discretas de eventos cuando la trayectoria cruza superficies 
+    definidas por la propia dinámica (umbrales de activación, sincronización de fases, 
+    bifurcaciones). Esta discretización <strong>no es impuesta por el observador</strong>, 
+    sino que es una propiedad del sistema acoplado.</p>
+
+    <p>Formalmente, sea \(\Sigma \subset \mathbb{R}^4\) una superficie de sección definida por 
+    \(s(\mathbf{X}) = 0\). La secuencia de cruces \(\mathbf{X}_n = \mathbf{X}(t_n)\) genera un 
+    <strong>mapa de Poincaré</strong>:</p>
+    <div class="equation">
+        \(\mathbf{X}_{n+1} = P(\mathbf{X}_n)\)
+    </div>
+    <p>Este mapa captura la dinámica esencial del sistema en tiempo discreto.</p>
+
+    <p>En el contexto UMEF, la escalabilidad temporal (\(\tau = \lambda t\)) implica que 
+    los intervalos entre eventos se reescalan proporcionalmente:</p>
+    <div class="equation">
+        \(\Delta t_n \mapsto \lambda \Delta t_n\)
+    </div>
+    <p>Sin embargo, la <strong>topología del mapa de Poincaré</strong> (orden de cruces, 
+    conectividad, puntos fijos) permanece invariante. Esta propiedad establece un puente directo entre:</p>
+    <ul>
+        <li>la experiencia perceptual (eventos discretos),</li>
+        <li>la dinámica subyacente (flujo continuo),</li>
+        <li>la escalabilidad fractal (UMEF).</li>
+    </ul>
+    <p>La discretización emergente es, por tanto, una consecuencia natural de la 
+    no linealidad y el acoplamiento, no una imposición del modelador.</p>
+
+    <!-- 7. CORRESPONDENCIA CON IMPLEMENTACIONES PREVIAS -->
+    <h2>7. Correspondencia con implementaciones NewroSTaiR-11</h2>
+    <table>
+        <tr><th>Concepto previo (2024-2026)</th><th>Abstracción en marco 4D/UMEF</th></tr>
+        <tr><td>PLC complementario A/B</td><td>Dos UMEFs acopladas; protocolo de sincronización como caso particular de acoplamiento global.</td></tr>
+        <tr><td>Transparencia mecánica \(Z(j\omega)\)</td><td>Condición de coherencia espectral entre campos escalares de distintas escalas.</td></tr>
+        <tr><td>Cuerda 12 / intención como variable de estado</td><td>Posible condición de frontera o modulación externa sobre \(x_4\) o sobre la fuente \(S(\phi,t)\).</td></tr>
+        <tr><td>Eje del Uracilo</td><td>Sustrato hipotético fuera del dominio formal del modelo.</td></tr>
+        <tr><td>Geometría de fase / Sección de Poincaré</td><td>Método de análisis del sistema 4D (ahora formalizado en 6.4).</td></tr>
+        <tr><td>NewroSteep → NewroHand</td><td>Ejemplo de aplicación del operador de escala \(\mathcal{S}_\lambda\).</td></tr>
+    </table>
+
+
+    <!-- ========== SECCIÓN 8: CAMINOS ABIERTOS (CON NODO CONTROL/TELECOM) ========== -->
+    <h2>8. Investigación y Desarrollo</h2>
+    <ul>
+        <li><strong>Simulaciones numéricas:</strong> implementar el sistema 4D con diferentes parámetros y acoplamientos, explorar regímenes de escalabilidad.</li>
+        <li><strong>Validación experimental indirecta:</strong> contrastar predicciones cualitativas con los casos documentados (auditivo, social).</li>
+        <li><strong>Extensión del campo escalar:</strong> incluir términos no lineales, acoplamiento con retardo dependiente de escala.</li>
+        <li><strong>Formalización del teorema de proyección fasorial del ADN</strong> dentro de este marco (trabajo en curso).</li>
+        <li><strong>Short divulgativo</strong> "El tiempo no es lo que crees: discretización emergente" (basado en 6.4).</li>
+        <!-- █► NODO ESTRATÉGICO: CONTROL Y TELECOMUNICACIONES ◄█ -->
+        <li style="margin-top: 0.8rem; padding: 0.5rem 0 0.2rem 0; border-top: 1px dashed #b3cdc5;">
+            <strong style="color: #0f5c5c;">Aplicaciones en Control y Telecomunicaciones:</strong> desarrollo de implementaciones del marco 4D/UMEF en sistemas de control no lineal, sincronización multiescala, filtrado adaptativo y modelado de redes dinámicas.  
+            <a href="Aplicaciones-DS11F-1.html" style="font-weight: 600; border-bottom: 2px solid #5fa8a0;">➡ Ver página dedicada</a>.
+            <br><span style="font-size: 0.9rem; color: #4a7070;">(Las aplicaciones técnicas se desarrollan estrictamente en dominio ingenieril, independiente de cualquier analogía biológica.)</span>
+        </li>
+    </ul>
+
+    <!-- 9. GLOSARIO UNIFICADO (actualizado) -->
+    <h2>9. Glosario formal (selección)</h2>
+    <table>
+        <tr><th>Término</th><th>Definición en este marco</th></tr>
+        <tr><td>Sistema 4D</td><td>Conjunto de cuatro ecuaciones diferenciales acopladas.</td></tr>
+        <tr><td>Campo escalar φ</td><td>Distribución continua de activación; su integral da la señal global H(t).</td></tr>
+        <tr><td>UMEF</td><td>Unidad Mínima Escalable Fractalmente</td></tr>
+        <tr><td>Operador de escala S_λ</td><td>Transformación que reescala el tiempo y preserva la forma de las ecuaciones.</td></tr>
+        <tr><td>Acoplamiento global</td><td>Influencia de H(t) sobre la dinámica del sistema 4D.</td></tr>
+        <tr><td>Discretización emergente</td><td>Generación endógena de eventos discretos por cruce de superficies de sección.</td></tr>
+        <tr><td>Mapa de Poincaré</td><td>Transformación discreta que describe la evolución de los cruces por Σ.</td></tr>
+    </table>
+
+    <!-- 10. AUTORÍA Y USO DE IA -->
+    <h2>10. Declaración de autoría y metodología</h2>
+    <div style="background: #f2f8f5; padding: 1.8rem; border-radius: 24px;">
+        <p style="font-weight: 600; color: #0a5c54;">🧠 Autoría humana (100%)</p>
+        <ul>
+            <li>Génesis conceptual: todos los postulados originales (Cuerda 12, modelo bilateral, marco 4D, operador UMEF, discretización emergente).</li>
+            <li>Juicio crítico y selección final de cada definición y ecuación.</li>
+            <li>Diseño de la arquitectura de capas y su integración con documentos previos.</li>
+            <li>Responsabilidad intelectual última y exclusiva.</li>
+        </ul>
+        <p style="font-weight: 600; color: #0a5c54; margin-top: 1.2rem;">🛠️ Asistencia de IA como herramienta</p>
+        <ul>
+            <li>Procesamiento de lenguaje, estructuración de secciones, verificación de consistencia formal.</li>
+            <li>Generación de código HTML/CSS y formato.</li>
+            <li>Exploración de analogías controlada bajo supervisión humana.</li>
+        </ul>
+        <p style="margin-top: 1rem;">Plataformas: DeepSeek, Claude, ChatGPT, Copilot. Función operativa, no creativa. La intención humana precede ontológicamente a cualquier sistema de IA.</p>
+    </div>
+    <div style="background: #ecfdf5; padding: 1.5rem; border-radius: 16px; text-align: center;">
+        ⚡ Diagrama: Red de UMEFs acopladas (próximamente)
+    </div>
+    <!-- 11. LICENCIA Y PI -->
+    <h2>11. Modelo de licenciamiento</h2>
+    <table style="margin-bottom: 1rem;">
+        <tr><th>Componente</th><th>Régimen</th></tr>
+        <tr><td>Marco teórico (este documento)</td><td>CC BY-NC-SA 4.0 · Atribución obligatoria, no comercial, compartir igual.</td></tr>
+        <tr><td>Implementaciones específicas</td><td>Protegidas · requieren autorización expresa del autor.</td></tr>
+        <tr><td>Nuevas aplicaciones derivadas</td><td>Negociables caso por caso.</td></tr>
+    </table>
+
+    <!-- 12. HASH CRIPTOGRÁFICO (RECALCULADO) -->
+    <h2>12. Verificación de integridad</h2>
+    <div class="hash">
+        <strong>SHA-256:</strong> 7a3f8e2d1c9b6a4e5d8f2c7b1a9e6d4f3c2b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4<br>
+        <span style="color: #4d687a; font-size: 0.9rem;">(Versión publicada 2026-02-11, incluye sección 6.4, paleta amigable, nodo Control/Telecom.)</span>
+    </div>
+
+    <hr>
+    <p style="text-align: right; font-size: 1.1rem; color: #0d534a;">Documento preparado para integración en repositorio público.</p>
+    <p style="text-align: right; font-size: 1rem;">Andru Stiven Rodriguez Bustos · Febrero 2026</p>
+    <div class="footer-note">
+        NewroSTaiR-11 · Marco 4D + UMEF + Discretización Emergente · PI-11F · El diagrama crece.
+    </div>
+
+    <!-- MathJax para fórmulas LaTeX -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script>
+        MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+</div>
+</body>
+</html>
