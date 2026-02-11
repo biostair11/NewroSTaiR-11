@@ -297,32 +297,7 @@
     </div>
     <p>La dinámica del sistema 4D influye en \(\phi\) (vía condiciones de contorno o fuente) y \(\phi\) retroalimenta al sistema a través de \(x_4\).</p>
 
-    <!-- 6. CAPA 6: UMEF (con nueva subsección 6.4) -->
-    <h2 style="border-left-color: #2e7d5e;">6. Capa 6 – Escalabilidad Fractal: UMEF</h2>
-    <p><span class="badge" style="background: #d7e9e2;">DEFINICIÓN FORMAL</span></p>
-
-    <h3>6.1 Unidad Mínima Escalable Fractal (UMEF)</h3>
-    <p>Una <strong>UMEF</strong> es un subsistema dinámico que satisface:</p>
-    <ol>
-        <li><strong>Invarianza estructural:</strong> sus ecuaciones de evolución tienen la misma forma funcional que el sistema 4D base, con posibles reparametrizaciones.</li>
-        <li><strong>Auto-similitud:</strong> existe un operador de escala \(\mathcal{S}_\lambda\) que transforma la UMEF de escala \(\sigma\) a escala \(\lambda\sigma\) preservando la forma de las ecuaciones y los parámetros críticos \((a,b,c,d,\kappa)\).</li>
-        <li><strong>Acoplamiento interescala:</strong> las UMEFs interactúan mediante señales globales \(H_i(t)\) o acoplamientos directos, formando redes.</li>
-    </ol>
-
-    <h3>6.2 Operador de escala \(\mathcal{S}_\lambda\)</h3>
-    <div class="equation">
-        \(\mathcal{S}_\lambda: \mathbf{X}(t) \mapsto \mathbf{X}_\lambda(\tau),\quad \tau = \lambda t\)
-    </div>
-    <div class="equation">
-        \(\mathbf{F}_\lambda(\mathbf{X}_\lambda) = \mathbf{F}(\mathbf{X}_\lambda)\)  (idealización)
-    </div>
-
-    <h3>6.3 Red de UMEFs y acoplamiento multiescala</h3>
-    <div class="equation">
-        \(H_i(t) = \int_{\Omega_i} \phi_i(\mathbf{x},t) d\mathbf{x}\), \(\dot{x}_{4,i} = -d x_{4,i} + \kappa H_j(t)\)
-    </div>
-
-    <!-- █► NUEVA SECCIÓN 6.4: DISCRETIZACIÓN EMERGENTE Y MAPA DE POINCARÉ ◄█ -->
+    <!-- SECCIÓN 6.4: DISCRETIZACIÓN EMERGENTE Y MAPA DE POINCARÉ -->
     <h3 style="color: #1a6b5e; margin-top: 2rem;">6.4 Discretización emergente y mapa de Poincaré</h3>
     <p>La dinámica continua del sistema 4D puede generar, de manera endógena, 
     secuencias discretas de eventos cuando la trayectoria cruza superficies 
@@ -350,8 +325,39 @@
         <li>la dinámica subyacente (flujo continuo),</li>
         <li>la escalabilidad fractal (UMEF).</li>
     </ul>
-    <p>La discretización emergente es, por tanto, una consecuencia natural de la 
-    no linealidad y el acoplamiento, no una imposición del modelador.</p>
+
+    <!-- █► TIEMPO CRÍTICO DE DISCRETIZACIÓN OPERATIVA (TCDO) ◄█ -->
+    <h4 style="color: #0f5c5c; margin-top: 1.8rem;">6.4.1 Tiempo Crítico de Discretización Operativa (TCDO)</h4>
+    <p>Todo sistema dinámico con dinámica interna posee un <strong>tiempo mínimo efectivo de integración</strong>
+    \(\Delta t_{\text{crit}}\) por debajo del cual la discretización emergente pierde coherencia estructural.
+    Este límite no es impuesto externamente, sino que emerge de los propios parámetros del sistema.</p>
+
+    <div class="equation">
+        \(\Delta t_{\text{crit}} \approx \dfrac{1}{\lambda_{\max}}\)
+    </div>
+
+    <p>donde \(\lambda_{\max}\) es el <strong>máximo exponente de Lyapunov</strong> del subsistema \((x_1,x_2,x_3)\),
+    o alternativamente la frecuencia significativa más alta del campo \(\phi(\mathbf{x},t)\).</p>
+
+    <p><strong>Interpretación operativa:</strong></p>
+    <ul>
+        <li>Si \(\Delta t > \Delta t_{\text{crit}}\): el sistema pierde información, aparecen oscilaciones espurias, la sincronización se degrada.</li>
+        <li>Si \(\Delta t \ll \Delta t_{\text{crit}}\): la discretización es redundante; se captura ruido sin ganancia estructural.</li>
+        <li>La <strong>banda óptima</strong> de discretización emerge alrededor de \(\Delta t_{\text{crit}}\).</li>
+    </ul>
+
+    <p>En el contexto UMEF, el operador de escala \(\mathcal{S}_\lambda\) transforma el tiempo crítico como:</p>
+    <div class="equation">
+        \(\Delta t_{\text{crit}} \mapsto \lambda \, \Delta t_{\text{crit}}\)
+    </div>
+
+    <p><strong>Correlato empírico (caso UMEF-NEURAL-001):</strong>
+    La mejora en discriminación auditiva y la emergencia de ambidiestría documentadas en el caso personal
+    (17ms → 17min → 17h) son consistentes con una reducción progresiva de \(\Delta t_{\text{crit}}\) en el
+    sistema perceptivo-motor del autor, interpretable como aumento del ancho de banda efectivo y
+    disminución del jitter interno. Esta observación pertenece al nivel fenomenológico y constituye
+    una motivación, no una validación formal del modelo.</p>
+
 
     <!-- 7. CORRESPONDENCIA CON IMPLEMENTACIONES PREVIAS -->
     <h2>7. Correspondencia con implementaciones NewroSTaiR-11</h2>
@@ -436,7 +442,7 @@
     <p style="text-align: right; font-size: 1.1rem; color: #0d534a;">Documento preparado para integración en repositorio público.</p>
     <p style="text-align: right; font-size: 1rem;">Andru Stiven Rodriguez Bustos · Febrero 2026</p>
     <div class="footer-note">
-        NewroSTaiR-11 · Marco 4D + UMEF + Discretización Emergente · PI-11F · El diagrama crece.
+        NewroSTaiR-11 · Marco 4D + UMEF + Discretización Emergente · PI-11F .
     </div>
 
     <!-- MathJax para fórmulas LaTeX -->
