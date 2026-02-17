@@ -32,7 +32,7 @@
             padding: 20px;
         }
 
-        /* --- NUEVOS ESTILOS PARA BOTONES LATERALES --- */
+        /* Botones laterales fijos */
         .btn-lateral {
             position: fixed;
             top: 50%;
@@ -52,23 +52,53 @@
         .btn-der { right: 10px; }
         .btn-lateral:hover { background: var(--arena-dorada); color: var(--azul-profundo); }
 
-        header { text-align: center; padding: 30px 20px; width: 100%; max-width: 800px; }
-        h1 { font-size: 2.5rem; background: linear-gradient(90deg, var(--azul-cielo), var(--arena-dorada)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 3px; margin-bottom: 10px; }
-        .subtitle { color: var(--texto-arena); opacity: 0.9; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px; }
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--azul-cielo), var(--arena-dorada));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: var(--texto-arena);
+            opacity: 0.9;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
 
-        .sync-container { width: 100%; max-width: 800px; padding: 20px; }
+        .sync-container { width: 100%; max-width: 900px; padding: 20px; }
 
         .etiqueta { 
-            font-size: 1rem; letter-spacing: 2px; text-align: center; 
-            margin-bottom: 20px; font-weight: bold; padding: 10px 20px;
-            border-radius: 25px; display: inline-block; margin-left: 50%;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-align: center; 
+            margin-bottom: 20px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-left: 50%;
             transform: translateX(-50%);
         }
 
-        .etiqueta-Tesla { color: var(--arena-dorada); background: rgba(244, 162, 97, 0.15); border: 1px solid rgba(244, 162, 97, 0.4); }
-        .etiqueta-Mandelbrot { color: var(--azul-cielo); background: rgba(78, 201, 240, 0.15); border: 1px solid rgba(78, 201, 240, 0.4); }
-        
-        /* AJUSTE TÍTULO CAMPO INTEGRADOR */
+        .etiqueta-Tesla {
+            color: var(--arena-dorada);
+            background: rgba(244, 162, 97, 0.15);
+            border: 1px solid rgba(244, 162, 97, 0.4);
+        }
+        .etiqueta-Mandelbrot {
+            color: var(--azul-cielo);
+            background: rgba(78, 201, 240, 0.15);
+            border: 1px solid rgba(78, 201, 240, 0.4);
+        }
         .etiqueta-Integra { 
             color: var(--texto-blanco); 
             background: rgba(255, 255, 255, 0.1); 
@@ -76,39 +106,184 @@
             margin-top: 20px;
         }
 
-        .slider-wrapper { display: flex; align-items: center; justify-content: center; position: relative; margin: 20px 0 40px; }
-        .carrusel { display: flex; overflow-x: auto; scroll-behavior: smooth; scrollbar-width: none; width: 180px; gap: 40px; padding: 10px 0; }
+        /* Carrusel base para todas las secciones */
+        .slider-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 20px 0 40px;
+        }
+        .carrusel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            width: 220px;
+            gap: 40px;
+            padding: 10px 0;
+        }
         .carrusel::-webkit-scrollbar { display: none; }
-        .item-hex { flex: 0 0 180px; display: flex; justify-content: center; }
+        .item-hex {
+            flex: 0 0 180px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
+        /* Hexágonos */
         .modulo {
-            width: 150px; height: 170px; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex; justify-content: center; align-items: center; text-align: center; 
-            text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: all 0.3s;
-            padding: 10px; word-break: break-word;
+            width: 150px;
+            height: 170px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center; 
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            padding: 10px;
+            word-break: break-word;
+        }
+        .fase-Tesla .modulo {
+            background: linear-gradient(135deg, var(--arena-dorada), var(--arena-oscura));
+            color: #2c1810;
+        }
+        .fase-Mandelbrot .modulo {
+            background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo));
+            color: var(--texto-blanco);
         }
 
-        .fase-Tesla .modulo { background: linear-gradient(135deg, var(--arena-dorada), var(--arena-oscura)); color: #2c1810; }
-        .fase-Mandelbrot .modulo { background: linear-gradient(135deg, var(--azul-medio), var(--azul-profundo)); color: var(--texto-blanco); }
-
-        .btn-nav { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; font-size: 1.5rem; cursor: pointer; padding: 12px; border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; margin: 0 10px; }
-
+        /* Círculos */
         .centro-humor {
-            width: 120px; height: 120px; background: radial-gradient(circle, var(--azul-cielo), var(--arena-dorada));
-            border-radius: 50%; margin: 30px auto; display: flex; justify-content: center;
-            align-items: center; color: var(--texto-blanco); font-weight: 900; font-size: 0.9rem;
-            box-shadow: 0 0 40px rgba(78, 201, 240, 0.7); animation: pulse 3s infinite;
-            border: 3px solid white; text-align: center; padding: 10px; text-decoration: none;
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, var(--azul-cielo), var(--arena-dorada));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--texto-blanco);
+            font-weight: 900;
+            font-size: 0.9rem;
+            box-shadow: 0 0 40px rgba(78, 201, 240, 0.7);
+            animation: pulse 3s infinite;
+            border: 3px solid white;
+            text-align: center;
+            padding: 10px;
+            text-decoration: none;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        /* Botones de navegación */
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+        .btn-nav:hover {
+            background: var(--arena-dorada);
+            color: var(--azul-profundo);
+        }
 
-        .indicadores { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
-        .indicador { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); cursor: pointer; }
-        .indicador.activo { background: var(--arena-dorada); }
+        /* Indicadores (puntos) */
+        .indicadores {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .indicador {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+        .indicador.activo {
+            background: var(--arena-dorada);
+        }
 
-        footer { margin-top: 40px; padding: 20px; text-align: center; width: 100%; border-top: 1px solid rgba(255, 255, 255, 0.1); color: var(--texto-arena); font-size: 0.9rem; }
-        footer a { color: var(--azul-cielo); text-decoration: none; margin: 0 10px; }
+        /* Secciones de tarjetas (módulos y aplicaciones) */
+        .lista-modulos {
+            margin-top: 50px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .lista-modulos h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--arena-dorada);
+        }
+        .grid-enlaces {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .tarjeta-enlace {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .tarjeta-enlace:hover {
+            border-color: var(--arena-dorada);
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .tarjeta-enlace a {
+            color: var(--azul-cielo);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .tarjeta-enlace p {
+            font-size: 0.85rem;
+            color: var(--texto-arena);
+            opacity: 0.9;
+        }
+        .proximamente {
+            opacity: 0.7;
+            filter: grayscale(0.5);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--texto-arena);
+            font-size: 0.9rem;
+        }
+        footer a {
+            color: var(--azul-cielo);
+            text-decoration: none;
+            margin: 0 10px;
+        }
     </style>
 </head>
 <body>
@@ -121,6 +296,7 @@
     </header>
 
     <main class="sync-container">
+        <!-- SECCIÓN TESLA (hexágonos) -->
         <section class="fase-Tesla">
             <div class="etiqueta etiqueta-Tesla">ESTRUCTURA FLEXIBLE (G-C)</div>
             <div class="slider-wrapper">
@@ -129,19 +305,18 @@
                     <div class="item-hex"><a href="01-Origen-y-Significado.html" class="modulo">HISTORIA Y JUSTIFICACIÓN</a></div>
                     <div class="item-hex"><a href="02-Marco-Teorico.html" class="modulo">PROPIEDAD INTELECTUAL Y FUNDAMENTOS TEÓRICOS</a></div>
                     <div class="item-hex"><a href="03-Investigacion-y-Desarrollo.html" class="modulo">INVESTIGACIÓN Y DESARROLLO</a></div>
-                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">MODELO DE NEGOCIO</a></div>
+                    <div class="item-hex"><a href="04-Modelo-de-Negocio.html" class="modulo">MODELO DE NEGOCIO</a></div>
                 </div>
                 <button class="btn-nav" onclick="moveSlider('Tesla', 1)">&#10095;</button>
             </div>
             <div class="indicadores" id="indicadores-Tesla"></div>
         </section>
 
+        <!-- SECCIÓN INTEGRA (círculos) -->
         <section class="fase-Integra">
-
-                <div class="etiqueta etiqueta-Integra">
+            <div class="etiqueta etiqueta-Integra">
                 <a href="Actualizacion-PI-11F.html" style="text-decoration: none; color: inherit;">Actualización 11F</a>
-                </div>
-
+            </div>
             <div class="slider-wrapper">
                 <button class="btn-nav" onclick="moveSlider('Integra', -1)">&#10094;</button>
                 <div class="carrusel" id="slider-Integra">
@@ -155,19 +330,66 @@
             <div class="indicadores" id="indicadores-Integra"></div>
         </section>
 
+        <!-- SECCIÓN MANDELBROT (hexágonos) -->
         <section class="fase-Mandelbrot">
             <div class="etiqueta etiqueta-Mandelbrot">FLEXIBILIDAD ESTRUCTURADA (A-T)</div>
             <div class="slider-wrapper">
                 <button class="btn-nav" onclick="moveSlider('Mandelbrot', -1)">&#10094;</button>
                 <div class="carrusel" id="slider-Mandelbrot">
-                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">CIENCIA, ARTE Y CULTURA</a></div>
-                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">HISTORIA Y NEUROPLASTICIDAD</a></div>
-                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">LA ERA HUMANO-IA</a></div>
-                    <div class="item-hex"><a href="pagina-en-desarrollo.html" class="modulo">COMUNIDAD NewroSTAIR</a></div>
+                    <div class="item-hex"><a href="05-Ciencia-Arte-Cultura.html" class="modulo">CIENCIA, ARTE Y CULTURA</a></div>
+                    <div class="item-hex"><a href="06-Historia-Neuroplasticidad.html" class="modulo">HISTORIA Y NEUROPLASTICIDAD</a></div>
+                    <div class="item-hex"><a href="07-Era-Humano-IA.html" class="modulo">LA ERA HUMANO-IA</a></div>
+                    <div class="item-hex"><a href="08-Comunidad.html" class="modulo">COMUNIDAD NewroSTAIR</a></div>
                 </div>
                 <button class="btn-nav" onclick="moveSlider('Mandelbrot', 1)">&#10095;</button>
             </div>
             <div class="indicadores" id="indicadores-Mandelbrot"></div>
+        </section>
+
+        <!-- MÓDULOS DE ACTUALIZACIÓN (submódulos matemáticos) -->
+        <section class="lista-modulos">
+            <h2>📚 Módulos de Actualización</h2>
+            <div class="grid-enlaces">
+                <div class="tarjeta-enlace">
+                    <a href="compleja.html">Formulación compleja y dualidad</a>
+                    <p>Desarrollo riguroso de la sección 4.4: variable compleja, admitancia y estabilidad en frecuencia.</p>
+                </div>
+                <div class="tarjeta-enlace">
+                    <a href="umef.html">UMEF y escalamiento fractal</a>
+                    <p>Profundización en la Unidad Mínima Escalable Fractal, condiciones de auto-similitud y acoplamiento entre escalas.</p>
+                </div>
+                <div class="tarjeta-enlace">
+                    <a href="casos.html">Casos de estudio</a>
+                    <p>Velocímetro 2007, reflexión fenomenológica del autor y otros casos en control y telecomunicaciones.</p>
+                </div>
+                <div class="tarjeta-enlace">
+                    <a href="implementaciones.html">Implementaciones y ejemplos</a>
+                    <p>Código en C/Python/MATLAB, simulaciones con diferentes parámetros y guías para microcontroladores.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- APLICACIONES DEL FRAMEWORK -->
+        <section class="lista-modulos" style="margin-top: 30px;">
+            <h2>🚀 Aplicaciones del Framework</h2>
+            <div class="grid-enlaces">
+                <div class="tarjeta-enlace">
+                    <a href="Base-Newro-Sync.html">NewroSync-11</a>
+                    <p>Reproductor de audio con DSP para inducir coherencia cerebral (aumento de coeficientes duales). En desarrollo.</p>
+                </div>
+                <div class="tarjeta-enlace">
+                    <a href="https://newrosboxy11.netlify.app" target="_blank">NewroBoxy-11</a>
+                    <p>Caja de texto enriquecido con emoticones markovianos para facilitar la comunicación humano-IA.</p>
+                </div>
+                <div class="tarjeta-enlace proximamente">
+                    <a href="NewroHand-11.html" style="pointer-events: none; color: #aaa;">NewroHand-11</a>
+                    <p>Investigación motriz neuronal con tabletas y lápiz (próximamente).</p>
+                </div>
+                <div class="tarjeta-enlace">
+                    <a href="#">VR / Robótica / Control</a>
+                    <p>Próximas implementaciones en realidad virtual, robótica, telemática, telecomunicaciones y química (prótesis).</p>
+                </div>
+            </div>
         </section>
     </main>
 
@@ -176,12 +398,18 @@
     </footer>
 
     <script>
-        // CONFIGURACIÓN INCLUYENDO INTEGRA
+        // Configuración de los carruseles
         const fases = ['Tesla', 'Integra', 'Mandelbrot'];
-        const itemsPorFase = { Tesla: 4, Integra: 4, Mandelbrot: 4 };
+        const itemsPorFase = {
+            Tesla: document.querySelectorAll('#slider-Tesla .item-hex').length,
+            Integra: document.querySelectorAll('#slider-Integra .item-hex').length,
+            Mandelbrot: document.querySelectorAll('#slider-Mandelbrot .item-hex').length
+        };
 
+        // Crear indicadores dinámicamente
         fases.forEach(fase => {
             const contenedor = document.getElementById(`indicadores-${fase}`);
+            if (!contenedor) return;
             for (let i = 0; i < itemsPorFase[fase]; i++) {
                 const indicador = document.createElement('div');
                 indicador.classList.add('indicador');
@@ -193,26 +421,30 @@
 
         function moveSlider(fase, direccion) {
             const slider = document.getElementById(`slider-${fase}`);
-            const itemWidth = 180 + 40;
+            const itemWidth = 220;
             slider.scrollBy({ left: itemWidth * direccion, behavior: 'smooth' });
             setTimeout(() => updateIndicators(fase), 300);
         }
 
         function moveToSlide(fase, index) {
             const slider = document.getElementById(`slider-${fase}`);
-            slider.scrollTo({ left: (180 + 40) * index, behavior: 'smooth' });
+            const itemWidth = 220;
+            slider.scrollTo({ left: itemWidth * index, behavior: 'smooth' });
             updateIndicators(fase);
         }
 
         function updateIndicators(fase) {
             const slider = document.getElementById(`slider-${fase}`);
             const indicadores = document.querySelectorAll(`#indicadores-${fase} .indicador`);
-            const currentIndex = Math.round(slider.scrollLeft / (180 + 40));
+            const currentIndex = Math.round(slider.scrollLeft / 220);
             indicadores.forEach((ind, i) => ind.classList.toggle('activo', i === currentIndex));
         }
 
         fases.forEach(fase => {
-            document.getElementById(`slider-${fase}`).onscroll = () => updateIndicators(fase);
+            const slider = document.getElementById(`slider-${fase}`);
+            if (slider) {
+                slider.addEventListener('scroll', () => updateIndicators(fase));
+            }
         });
     </script>
 </body>
