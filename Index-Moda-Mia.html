@@ -3,22 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Moda Sostenible Mia | Bogotá</title>
+<title>Moda Sostenible Mia | Historias que se sostienen</title>
 
 <style>
-
 :root {
-  --color-principal: #F757DC;      /* Rosa base */
-  --color-secundario: #ffd6f7;     /* Rosa muy claro para fondo */
-  --color-fondo: #fff5fc;          /* Fondo general suave */
-  --color-oscuro: #3a0033;         /* Contraste elegante */
+  --color-principal: #F757DC;
+  --color-secundario: #ffd6f7;
+  --color-fondo: #fff5fc;
+  --color-oscuro: #3a0033;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Segoe UI', sans-serif;
@@ -26,105 +21,77 @@ body {
   color: var(--color-oscuro);
 }
 
-/* HEADER */
-
 header {
   background: linear-gradient(135deg, var(--color-principal), #d633c2);
   color: white;
-  padding: 40px 20px;
+  padding: 50px 20px;
   text-align: center;
 }
 
-.logo {
-  margin-bottom: 15px;
-}
-
-.logo img {
-  max-width: 120px;
-}
-
-header h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1rem;
-  opacity: 0.95;
-}
-
-/* GALERÍA */
-
-.galeria {
-  padding: 40px 20px;
-}
-
-.galeria h2 {
-  text-align: center;
-  margin-bottom: 30px;
-  color: var(--color-principal);
-}
+.galeria { padding: 40px 20px; max-width: 1200px; margin: 0 auto; }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  gap: 25px;
 }
+
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+@media (min-width: 601px) and (max-width: 992px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 993px) { .grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }
 
 .card {
   background: white;
-  border-radius: 14px;
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(247, 87, 220, 0.15);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 8px 20px rgba(247, 87, 220, 0.15);
 }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(247, 87, 220, 0.25);
+.card img { width: 100%; display: block; }
+
+/* BOTONES FLOTANTES */
+.social-float {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 9999;
 }
 
-.card img {
-  width: 100%;
-  display: block;
+.float-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-size: 30px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* FOOTER */
+.ws-btn { background-color: #25d366; }
+.tk-btn { background-color: #000000; }
 
 footer {
   background-color: var(--color-principal);
   color: white;
   text-align: center;
-  padding: 25px 20px;
-  margin-top: 40px;
+  padding: 40px 20px;
+  margin-top: 50px;
 }
-
-footer p {
-  font-size: 0.9rem;
-}
-
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 1.6rem;
-  }
-}
-
 </style>
 </head>
-
 <body>
 
 <header>
-  <div class="logo">
-    <img src="images/logo.png" alt="Logo Moda Sostenible Mia">
-  </div>
   <h1>Moda Sostenible Mia</h1>
-  <p>Ropa con historia ♻️ | Consumo consciente en Bogotá</p>
+  <p>✨ Historias que se sostienen ✨</p>
 </header>
 
 <section class="galeria">
-  <h2>Catálogo Disponible</h2>
-
   <div class="grid">
     <div class="card"><img src="images/prenda1.jpg" alt="Prenda 1"></div>
     <div class="card"><img src="images/prenda2.jpg" alt="Prenda 2"></div>
@@ -134,25 +101,23 @@ footer p {
     <div class="card"><img src="images/prenda6.jpg" alt="Prenda 6"></div>
     <div class="card"><img src="images/prenda7.jpg" alt="Prenda 7"></div>
     <div class="card"><img src="images/prenda8.jpg" alt="Prenda 8"></div>
-    <div class="card"><img src="images/prenda9.jpg" alt="Prenda 9"></div>
-    <div class="card"><img src="images/prenda10.jpg" alt="Prenda 10"></div>
-    <div class="card"><img src="images/prenda11.jpg" alt="Prenda 11"></div>
-    <div class="card"><img src="images/prenda12.jpg" alt="Prenda 12"></div>
-    <div class="card"><img src="images/prenda13.jpg" alt="Prenda 13"></div>
-    <div class="card"><img src="images/prenda14.jpg" alt="Prenda 14"></div>
-    <div class="card"><img src="images/prenda15.jpg" alt="Prenda 15"></div>
-    <div class="card"><img src="images/prenda16.jpg" alt="Prenda 16"></div>
-    <div class="card"><img src="images/prenda17.jpg" alt="Prenda 17"></div>
-    <div class="card"><img src="images/prenda18.jpg" alt="Prenda 18"></div>
-    <div class="card"><img src="images/prenda19.jpg" alt="Prenda 19"></div>
-    <div class="card"><img src="images/prenda20.jpg" alt="Prenda 20"></div>
+    <div class="card"><img src="images/prenda9.jpg" alt="Prenda 6"></div>
+    <div class="card"><img src="images/prenda10.jpg" alt="Prenda 7"></div>
+    <div class="card"><img src="images/prenda11.jpg" alt="Prenda 8"></div>
+    <div class="card"><img src="images/prenda12.jpg" alt="Prenda 8"></div>
   </div>
-
 </section>
 
+<div class="social-float">
+  <a href="https://web.whatsapp.com/send?phone=573222172417&text=Hola!%20Me%20interesa%20una%20prenda" 
+     class="float-btn ws-btn" 
+     target="_blank">💬</a>
+     
+  <a href="https://www.tiktok.com/@TU_USUARIO" class="float-btn tk-btn" target="_blank">📱</a>
+</div>
+
 <footer>
-  <p>© 2026 Moda Sostenible Mia | Bogotá, Colombia</p>
-  <p>Compra consciente. Reduce, reutiliza, reimagina.</p>
+  <p>© 2026 Moda Sostenible Mia | Bogotá</p>
 </footer>
 
 </body>
