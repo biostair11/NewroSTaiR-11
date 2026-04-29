@@ -6,23 +6,20 @@
     <title>NewroSTaiR-11 · Nodo Elipso · v5.5 Coherencia con desfase</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* ===== ESTILOS BASE Y GRILLA ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #f5f3f0; font-family: 'Georgia', 'Times New Roman', serif; color: #352070; line-height: 1.7; }
-        
+
         .main-grid {
             display: grid;
             grid-template-columns: 260px 1fr 260px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            gap: 20px;
+            width: 100vw;
+            margin: 0;
+            padding: 0;
+            gap: 0;
         }
 
-        /* ===== SIDEBARS ===== */
         .sidebar-left, .sidebar-right {
             background-color: #f0efea;
-            border-radius: 25px;
             padding: 1.5rem 1.2rem;
             margin-top: 2rem;
             max-height: calc(100vh - 40px);
@@ -31,14 +28,44 @@
             overflow-y: auto;
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid #ddd9d2;
+            scrollbar-width: thin;
+            scrollbar-color: #c4bcb0 #f0efea;
+            overscroll-behavior-y: contain;
         }
+        .sidebar-left::-webkit-scrollbar,
+        .sidebar-right::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-left::-webkit-scrollbar-track,
+        .sidebar-right::-webkit-scrollbar-track {
+            background: #f0efea;
+        }
+        .sidebar-left::-webkit-scrollbar-thumb,
+        .sidebar-right::-webkit-scrollbar-thumb {
+            background-color: #c4bcb0;
+            border-radius: 2px;
+        }
+
+        .sidebar-left {
+            border-radius: 0 25px 25px 0;
+            margin-left: 0;
+            direction: rtl;
+        }
+        .sidebar-left > * {
+            direction: ltr;
+        }
+
+        .sidebar-right {
+            border-radius: 25px 0 0 25px;
+            margin-right: 0;
+        }
+
         .sidebar-left h2, .sidebar-right h2 { font-size: 1.3rem; color: #4d6a5f; border-bottom: 1px solid #c4bcb0; padding-bottom: 0.5rem; margin-bottom: 1rem; }
         .sidebar-left ul { list-style: none; }
         .sidebar-left li { margin-bottom: 0.6rem; }
         .sidebar-left a { color: #3a4d53; text-decoration: none; font-size: 0.95rem; display: block; padding: 0.3rem 0.6rem; border-radius: 20px; transition: 0.2s; }
         .sidebar-left a:hover { background-color: #e3dfd7; color: #2b5e4f; }
 
-        /* ===== HEADER ASIMÉTRICO ===== */
         .header-imagen {
             background: linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%);
             padding: 2rem 3rem;
@@ -51,26 +78,21 @@
         .header-container { display: flex; align-items: center; justify-content: space-between; max-width: 1350px; width: 100%; }
         
         .logo-main { background: #ffffff; padding: 12px; border-radius: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); flex-shrink: 0; }
+        a.logo-main { display: block; text-decoration: none; }
         .logo-main img { height: 120px; display: block; }
 
         .header-text-block { text-align: center; color: white; flex-grow: 1; padding: 0 40px; }
         .header-text-block h1 { font-size: 2.8rem; font-weight: 450; color: #FFFFF0; margin-bottom: 0.3rem; }
         .header-text-block p { font-size: 1.1rem; color: #4cc9f0; margin: 2px 0; }
 
-        .logo-stack { display: flex; flex-direction: column; gap: 10px; flex-shrink: 0; }
-        .logo-sub { background: #ffffff; padding: 5px; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
-        .logo-sub img { height: 55px; display: block; }
-
         .header-nav-quick { margin-top: 1.2rem; display: flex; gap: 15px; justify-content: center; }
         .header-nav-quick a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.85rem; text-transform: uppercase; border-bottom: 1px solid transparent; transition: 0.3s; }
         .header-nav-quick a:hover { color: white; border-color: #4cc9f0; }
 
-        /* ===== CONTENIDO ===== */
-        .content { background-color: #ffffff; border: 1px solid #ddd9d2; border-radius: 28px; padding: 2.5rem 2rem; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02); margin: 2rem 0; }
+        .content { background-color: #ffffff; border: 1px solid #ddd9d2; border-radius: 28px; padding: 2.5rem 2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.02); margin: 2rem 0; }
         .intro-newrostair { background: #f9f2e7; border-left: 6px solid #f4a261; padding: 2rem; margin: 2rem 0 3rem 0; border-radius: 0 20px 20px 0; }
         .origen-destacado { font-style: italic; background: #fff9f0; padding: 0.8rem 1.5rem; border-radius: 40px; display: inline-block; margin-top: 0.5rem; border: 1px dashed #e6b775; }
 
-        /* ===== MÓDULOS (HEXÁGONOS) ===== */
         .etiqueta { font-size: 1rem; letter-spacing: 2px; text-align: center; margin-bottom: 20px; font-weight: bold; padding: 10px 20px; border-radius: 25px; display: inline-block; margin-left: 50%; transform: translateX(-50%); }
         .etiqueta-Tesla { color: #f4a261; background: rgba(244, 162, 97, 0.15); border: 1px solid rgba(244, 162, 97, 0.4); }
         .etiqueta-Integra { color: #ffffff; background: rgba(10, 36, 99, 0.8); border: 1px solid white; }
@@ -145,13 +167,10 @@
         .btn-nodo { display: block; width: fit-content; margin: 3rem auto; background: #464669; color: white; padding: 1.2rem 2.5rem; border-radius: 60px; font-weight: bold; text-decoration: none; border: 2px solid #f4a261; text-align: center; }
         .firma { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #b0a99f; font-size: 0.9rem; color: #4f4a45; text-align: right; }
         .hash { font-family: monospace; background: #edebe9; padding: 0.2rem 0.6rem; border-radius: 4px; }
-        .status-circle { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
-        .status-blue { background: #2e86c1; } .status-violet { background: #6a0dad; }
 
         .definition { background: #e6f3e6; border-left: 6px solid #2e7d32; padding: 1rem 1.5rem; margin: 1.5rem 0; border-radius: 0 12px 12px 0; }
         .math-block { background: #f2f2f2; padding: 1rem; border-radius: 8px; text-align: center; margin: 1.5rem 0; overflow-x: auto; border: 1px solid #d0cdc8; font-family: monospace; }
 
-        /* ===== PIE DE PÁGINA GLOBAL ===== */
         .global-footer {
             background-color: #e7e3dd;
             padding: 1.5rem 2rem;
@@ -164,7 +183,6 @@
         .global-footer a { color: #3a4d53; text-decoration: none; border-bottom: 1px dotted; }
         .global-footer a:hover { color: #2b5e4f; }
 
-        /* ===== MENÚS FLOTANTES (para móvil) ===== */
         .menu-flotante-left, .menu-flotante-right {
             display: none;
             position: fixed;
@@ -229,6 +247,7 @@
 
 <header class="header-imagen">
     <div class="header-container">
+        <!-- Enlaces corregidos a la raíz -->
         <a href="Index.html" class="logo-main">
             <img src="img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio">
         </a>
@@ -237,8 +256,8 @@
             <p>Conocimiento Colaborativo Complementario</p>
             <p>Con Flexibilidad Estructurada · v5.5</p>
             <nav class="header-nav-quick">
-                <a href="../Index.html">[Inicio]</a>
-                <a href="../Elipso/Elipso-3.html">[Red Elipso]</a>
+                <a href="Index.html">[Inicio]</a>
+                <a href="Elipso/Elipso-3.html">[Red Elipso]</a>
             </nav>
         </div>
         <a href="Elipso/Elipso-3.html" class="logo-main">
@@ -258,7 +277,7 @@
         <hr>
         <h2>📚 Módulos principales</h2>
         <ul>
-            <li><a href="MVO/OSD.html">01 · Misión, Visíón y Origen</a></li>
+            <li><a href="MVO/OSD.html">01 · Misión, Visión y Origen</a></li>
             <li><a href="02-Marco-Teorico.html">02 · Marco teórico</a></li>
             <li><a href="03-Investigacion-y-Desarrollo.html">03 · I+D</a></li>
             <li><a href="04-Modelo-de-Negocio.html">04 · Modelo de negocio</a></li>
@@ -270,7 +289,6 @@
     </aside>
 
     <main class="content">
-
         <section class="fase-Tesla">
             <div class="etiqueta etiqueta-Tesla">ESTRUCTURA FLEXIBLE</div>
             <div class="grid-hex">
@@ -301,8 +319,6 @@
             </div>
         </section>
 
-       
-
         <a href="#" class="btn-nodo">
             ✦ YA ERES UN NODO AUTÓNOMO DE ESTA RED ✦<br>
             <span style="font-size: 0.9rem;">Aquí encontrarás diversas formas de aportar a este proyecto que apuesta por la soberanía de la persona.</span>
@@ -315,48 +331,34 @@
     </main>
 
     <aside class="sidebar-right">
-
-        
         <h2>🔗 Nodo de Acceso</h2>
-
         <div style="text-align:center; margin: 15px 0;">
             <img src="img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
         </div>
-
         <p style="font-size:0.9rem; text-align:center;">
             Escanea para acceder a la versión viva del sistema<br>
             <strong>NewroSTaiR-11</strong>
-        </p>        
-
-
-        <br>
-        <h2> 📘 Docs y otros Nodos</h2>
+        </p>
+        <hr style="margin: 1.5rem 0;">
+        <h2>📘 Docs y otros Nodos</h2>
         <ul>
-            <li><a href="Elipso/Elipso-3.html">​🛜​ elipso Red Colaborativa</a></li>
-            <br>
+            <li><a href="Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li>
             <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
-            <br>
             <li><a href="NewroHand-11.html">🖐️ NewroHand-11 (próx)</a></li>
-            <br>
         </ul>
-        <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">⚙️ Navegación rápida</h2>
+        <h2 style="font-size:1.1rem; margin-top:1.5rem;">⚙️ Navegación rápida</h2>
         <ul>
             <li><a href="#top">⬆️ Volver arriba</a></li>
         </ul>
-    
-    
-    
     </aside>
 </div>
 
-<!-- PIE DE PÁGINA GLOBAL -->
 <footer class="global-footer">
     <p>📝 Registro de actualización de propiedad intelectual · NewroSTaiR-11 v5.5</p>
     <p>📅 25 de marzo de 2026 · Coherencia con desfase controlado · <a href="#top">⬆️ Volver arriba</a></p>
     <p style="margin-top:0.5rem; font-size:0.75rem;">🍥 NewroSTaiR · 2026 · Conocimiento Colaborativo Complementario</p>
 </footer>
 
-<!-- MENÚS FLOTANTES (izquierdo y derecho) -->
 <div class="menu-flotante-left">
     <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Local</small></button>
     <div class="menu-desplegable left" id="menuLeft">
@@ -369,7 +371,7 @@
         <hr>
         <h2 style="font-size:1.1rem; margin-bottom:0.5rem;">📚 Módulos principales</h2>
         <ul>
-            <li><a href="MVO/OSD.html">01 · Misión, Visíón y Origen</a></li>
+            <li><a href="MVO/OSD.html">01 · Misión, Visión y Origen</a></li>
             <li><a href="02-Marco-Teorico.html">02 · Marco teórico</a></li>
             <li><a href="03-Investigacion-y-Desarrollo.html">03 · I+D</a></li>
             <li><a href="04-Modelo-de-Negocio.html">04 · Modelo de negocio</a></li>
