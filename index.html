@@ -187,6 +187,32 @@
             font-size: 1rem;
             color: #4cc9f0;
         }
+        .header-nav-quick {
+            margin-top: 0.8rem;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-nav-quick a {
+            color: rgba(255,245,235,0.8);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .header-nav-quick a:hover {
+            color: white;
+            border-color: #e09d6f;
+        }
+        .header-nav-quick a img {
+            height: 18px;
+            width: auto;
+            display: block;
+        }
 
         /* ===== CONTENIDO PRINCIPAL ===== */
         .content {
@@ -492,13 +518,25 @@
 
 <header class="header-imagen">
     <div class="header-container">
-        <a href="index-8May.html" class="logo-main">
+        <a href="index.html" class="logo-main">
             <img src="img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio">
         </a>
         <div class="header-text-block">
             <h1>NewroSTaiR-11</h1>
             <p>Conocimiento Colaborativo Complementario</p>
             <p>Con Flexibilidad Estructurada · v5.5</p>
+            <nav class="header-nav-quick">
+                <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
+                    <img src="img/youtube-icon.png" alt="YouTube" style="height: 20px; vertical-align: middle;">
+                </a>
+                <a href="index.html">NewroBraink-11
+
+                </a>
+                <a href="https://www.tiktok.com/@atresicoaureo">
+                    <img src="img/tiktok-icon.jpg" alt="YouTube" style="height: 20px; vertical-align: middle;">
+
+                </a>
+            </nav>
         </div>
         <a href="Elipso/Elipso-3.html" class="logo-main">
             <img src="img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso">
@@ -521,11 +559,11 @@
             <li class="folder open">
                 <span role="button" tabindex="0">📚 Módulos principales</span>
                 <ul>
-                    <li><a href="MVO/OSD.html" class="file-icon">01 · 🔎Origen,​🎯​Misión y 🔭Visión</a></li>
-                    <li><a href="PI&FT.html" class="file-icon">02 · 📚​Marco teórico</a></li>
+                    <li><a href="MVO/OSD.html" class="file-icon">01 · 🔎Origen,​🎯 Misión <br> y <br> 🔭 Visión</a></li>
+                    <li><a href="PI&FT.html" class="file-icon">02 · 📚 Marco teórico</a></li>
                     <li><a href="03-Investigacion-y-Desarrollo.html" class="file-icon">03 · I+D</a></li>
                     <li><a href="04-Modelo-de-Negocio.html" class="file-icon">04 · Modelo de negocio</a></li>
-                    <li><a href="Humanidades.html" class="file-icon">05 · 🎨Arte, 📚Cultura y 🌍Humanidades</a></li>
+                    <li><a href="Humanidades.html" class="file-icon">05 · 🎨 Arte, 📚 Cultura y 🌍 Humanidades</a></li>
                     <li><a href="06-Historia-Neuroplasticidad.html" class="file-icon">06 · Historia y neuroplasticidad</a></li>
                     <li><a href="07-Era-Humano-IA.html" class="file-icon">07 · Era humano-IA</a></li>
                     <li><a href="08-Comunidad.html" class="file-icon">08 · Comunidad</a></li>
@@ -566,7 +604,7 @@
         <div style="text-align:center; margin: 15px 0;">
             <img src="img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
         </div>
-        <p style="font-size:0.9rem; text-align:center;">Escanea para acceder a la versión viva<br><strong>NewroSTaiR-11</strong></p>
+        <p style="font-size:0.9rem; text-align:center;">Escanea para compartir<br><strong>NewroSTaiR-11</strong></p>
         <hr>
         <h2>📘 Docs y otros Nodos</h2>
         <ul style="list-style:none;">
@@ -596,7 +634,7 @@
             </li>
             <li class="folder open"><span role="button" tabindex="0">📚 Módulos principales</span>
                 <ul>
-                    <li><a href="MVO/OSD.html">01 · 🔎Origen,​🎯​Misión y 🔭Visión</a></li>
+                    <li><a href="MVO/OSD.html">01 · 🔎Origen,​🎯​Misión <br>y<br> 🔭Visión</a></li>
                     <li><a href="PI&FT.html">02 · 📚​Marco teórico</a></li>
                     <li><a href="03-Investigacion-y-Desarrollo.html">03 · I+D</a></li>
                     <li><a href="04-Modelo-de-Negocio.html">04 · Modelo de negocio</a></li>
@@ -649,7 +687,7 @@
 
         // ===== DATOS DINÁMICOS DE MÓDULOS (JSON) =====
         const modulosEstructura = [
-            { titulo: "🌱ORIGEN<br>🎯MISIÓN Y<br>🔭VISIÓN", ruta: "MVO/OSD.html", id: "origen" },
+            { titulo: "🌱ORIGEN<br>🎯MISIÓN <br>Y<br>🔭VISIÓN", ruta: "MVO/OSD.html", id: "origen" },
             { titulo: "💡PROPIEDAD INTELECTUAL<br>Y<br>📚FUNDAMENTOS TEÓRICOS", ruta: "PI&FT.html", id: "pi" },
             { titulo: "🔎INVESTIGACIÓN<br>Y<br>⚙️DESARROLLO", ruta: "03-Investigacion-y-Desarrollo.html", id: "id" },
             { titulo: "➿MODELO DE NEGOCIO", ruta: "04-Modelo-de-Negocio.html", id: "negocio" }
