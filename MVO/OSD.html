@@ -205,7 +205,11 @@
       color: #FFFFF0;
       margin-bottom: 0.3rem;
     }
-    .header-text-block p { font-size: 1rem; color: #4cc9f0; }
+    .header-text-block p {
+      font-size: 1rem;
+      color: #4cc9f0;
+      margin: 0.2rem 0;
+    }
     .header-nav-quick {
       margin-top: 0.8rem;
       display: flex;
@@ -443,17 +447,101 @@
     }
     @media (max-width: 700px) {
       .content { padding: 1.2rem; }
-      .header-container { flex-direction: column; text-align: center; }
-      .header-imagen { padding: 1.5rem 1rem; }
+      /* En pantallas medianas se permitía columna, luego lo ajustamos con especificidad */
+      .header-container {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
       .header-text-block h1 { font-size: 1.5rem; }
       .grid-tarjetas-2col { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
-      .menu-flotante-left, .menu-flotante-right { bottom: 80px; }
-      .menu-desplegable { bottom: 70px; max-height: calc(100vh - 180px); }
-      .voice-floating-bar { bottom: 10px; padding: 0.3rem 0.5rem; gap: 0.3rem; }
-      .voice-btn { font-size: 0.7rem; min-width: 45px; }
-      .voice-select, .voice-scope-select { font-size: 0.65rem; max-width: 100px; }
+      .header-container {
+        flex-direction: row !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .logo-main {
+        flex: 0 0 auto;
+        padding: 4px;
+      }
+      .logo-main img {
+        max-height: 65px !important; /* Aumentado un 20% respecto a 54px */
+        width: auto;
+      }
+      .header-text-block {
+        flex: 1;
+        width: auto;
+        text-align: center;
+        margin: 0;
+        padding: 0 0.2rem;
+      }
+      .header-text-block h1 {
+        font-size: 1.2rem;
+        margin-bottom: 0.1rem;
+        white-space: normal;
+      }
+      .header-text-block p {
+        font-size: 0.8rem;
+        line-height: 1.2;
+        margin: 0.1rem 0;
+        white-space: normal;
+      }
+      .header-nav-quick {
+        margin-top: 0.2rem;
+        gap: 6px;
+      }
+      .header-nav-quick a {
+        font-size: 0.6rem;
+      }
+      .header-nav-quick a img {
+        height: 12px;
+      }
+      .header-imagen {
+        padding: 0.5rem 0.3rem;
+      }
+      body {
+        padding-bottom: 100px;
+      }
+      .menu-flotante-left,
+      .menu-flotante-right {
+        bottom: 80px;
+      }
+      .menu-desplegable {
+        bottom: 70px;
+        max-height: calc(100vh - 180px);
+      }
+      .voice-floating-bar {
+        bottom: 10px;
+        padding: 0.3rem 0.5rem;
+        gap: 0.3rem;
+      }
+      .voice-btn {
+        font-size: 0.7rem;
+        min-width: 45px;
+      }
+      .voice-select,
+      .voice-scope-select {
+        font-size: 0.65rem;
+        max-width: 100px;
+      }
+    }
+    /* Para pantallas muy pequeñas (menos de 450px) ajustamos aún más */
+    @media (max-width: 450px) {
+      .header-text-block h1 {
+        font-size: 1rem;
+      }
+      .header-text-block p {
+        font-size: 0.7rem;
+      }
+      .header-nav-quick a {
+        font-size: 0.5rem;
+      }
+      .logo-main img {
+        max-height: 55px !important;
+      }
     }
     .highlight { background: #e2eaf1; padding: 0.1rem 0.3rem; border-radius: 4px; }
   </style>
@@ -485,10 +573,9 @@
     </a>
     <div class="header-text-block">
       <h1>NewroSTaiR-11</h1>
-      <p>🌀 ORIGEN · 🎯 MISIÓN · 🧭 VISIÓN</p>
-      <p>Conocimiento Colaborativo Complementario
-<br>
-Con Flexibilidad Estructurada · v5.5</p>
+      <p>Conocimiento Colaborativo</p>
+      <p>Complementario Con</p>
+      <p>Flexibilidad Estructurada</p>
       <nav class="header-nav-quick">
         <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
           <img src="../img/youtube-icon.png" alt="YouTube" style="height: 20px; vertical-align: middle;">
