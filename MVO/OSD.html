@@ -26,7 +26,6 @@
       padding-bottom: 120px;
     }
 
-    /* ===== GRILLA PRINCIPAL ===== */
     .main-grid {
       display: grid;
       grid-template-columns: 280px 1fr 280px;
@@ -37,7 +36,6 @@
       align-items: start;
     }
 
-    /* ===== BARRAS LATERALES ===== */
     .sidebar-left, .sidebar-right {
       background-color: #f0f4f8;
       padding: 1.5rem 1.2rem;
@@ -60,7 +58,7 @@
       top: 20px;
       max-height: calc(100vh - 40px);
     }
-    .sidebar-left h2, .sidebar-right h2 {
+    h2 {
       font-size: 1.3rem;
       color: #1e4a6b;
       border-bottom: 1px solid #b9c8dd;
@@ -68,59 +66,110 @@
       margin-bottom: 1rem;
     }
 
-    /* ===== MENÚ TIPO ÁRBOL ===== */
-    .tree, .tree ul {
+    /* ===== MINI-MAPA MEJORADO ===== */
+    .tree {
       list-style: none;
       margin: 0;
       padding-left: 0;
     }
-    .tree li { margin-bottom: 0.2rem; position: relative; }
-    .tree .folder > span {
-      cursor: pointer;
-      display: block;
-      padding: 0.3rem 0.6rem;
-      border-radius: 20px;
-      font-weight: 500;
-      transition: 0.2s;
-      color: #1e4a6b;
+    .tree li {
+      margin-bottom: 0.3rem;
+      position: relative;
     }
-    .tree .folder > span:hover { background-color: #e2eaf1; }
-    .tree .folder > span::before {
-      content: "📁 ";
-      font-size: 0.9rem;
+    .module-row {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
     }
-    .tree .folder.open > span::before { content: "📂 "; }
-    .tree .folder ul {
-      display: none;
-      margin-left: 1.5rem;
-      padding-left: 0.5rem;
-      border-left: 1px dashed #b9c8dd;
-    }
-    .tree .folder.open ul { display: block; }
-    .tree a {
-      color: #2c5a7a;
+    .module-link {
+      flex: 1;
+      color: #1a4d6b;
       text-decoration: none;
-      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 0.5rem 0.8rem;
+      border-radius: 30px 0 0 30px;
+      background: #e6edf4;
+      border: 1px solid #cbdae6;
+      transition: all 0.2s;
       display: block;
-      padding: 0.2rem 0.6rem 0.2rem 1.8rem;
-      border-radius: 20px;
-      transition: 0.2s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .tree a:hover { background-color: #e2eaf1; color: #0f3b5c; }
-    .tree .current-page {
+    .module-link:hover {
+      background-color: #d4e0ea;
+      border-color: #9eb4c8;
+      color: #0a3146;
+    }
+    .module-link.current-page {
       background-color: #d0dce8;
+      border-left: 4px solid #e09d6f;
       font-weight: bold;
       color: #0f3b5c;
     }
-    .tree .file-icon::before {
-      content: "📄 ";
+    .module-toggle {
+      cursor: pointer;
+      background: #e6edf4;
+      border: 1px solid #cbdae6;
+      border-left: none;
+      border-radius: 0 30px 30px 0;
+      padding: 0.5rem;
       font-size: 0.8rem;
-      margin-right: 4px;
+      color: #1e4a6b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      min-width: 2.4rem;
+      user-select: none;
+    }
+    .module-toggle:hover {
+      background: #d4e0ea;
+    }
+    .module-toggle::before {
+      content: "▶";
+      display: block;
+      transition: transform 0.2s;
+    }
+    .folder.open>.module-row .module-toggle::before {
+      transform: rotate(90deg);
+    }
+    .submenu {
+      display: none;
+      margin-left: 1.5rem;
+      padding-left: 0.8rem;
+      border-left: 2px solid #b9c8dd;
+    }
+    .folder.open>.submenu {
+      display: block;
+    }
+    .submenu a {
+      color: #1a4d6b;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: block;
+      padding: 0.4rem 0.8rem 0.4rem 1.8rem;
+      border-radius: 25px;
+      background: #f9fbfd;
+      border: 1px solid #dce5ed;
+      margin: 0.2rem 0;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .submenu a:hover {
+      background-color: #e4edf5;
+      border-color: #9fb7cc;
+      transform: translateX(3px);
+    }
+    .submenu a.current-page {
+      background-color: #d0dce8;
+      border-left: 4px solid #e09d6f;
+      font-weight: bold;
+      color: #0f3b5c;
     }
 
     hr { margin: 1rem 0; border-color: #b9c8dd; }
 
-    /* ===== HEADER ===== */
     .header-imagen {
       background: linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%);
       padding: 2rem 3rem;
@@ -184,7 +233,6 @@
       display: block;
     }
 
-    /* ===== CONTENIDO PRINCIPAL ===== */
     .content {
       background-color: #ffffff;
       border: 1px solid #cbd5e1;
@@ -276,7 +324,6 @@
       margin-bottom: 1rem;
     }
 
-    /* ===== MENÚS FLOTANTES MÓVIL ===== */
     .menu-flotante-left, .menu-flotante-right {
       display: none;
       position: fixed;
@@ -319,7 +366,6 @@
     .menu-desplegable.right { right: 0; }
     .menu-desplegable.visible { display: block; }
 
-    /* ===== REPRODUCTOR DE VOZ FLOTANTE ===== */
     .voice-floating-bar {
       position: fixed;
       bottom: 20px;
@@ -425,8 +471,9 @@
     <option value="masc_lat">Masculina (Latina)</option>
   </select>
   <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
-    <option value="todo">📚 Todo</option>
+    <option value="intro">📖 Introducción</option>
     <option value="secciones">🧩 Secciones principales</option>
+    <option value="todo">📚 Todo</option>
   </select>
   <div class="voice-status" id="voiceStatus">Listo</div>
 </div>
@@ -447,11 +494,9 @@ Con Flexibilidad Estructurada · v5.5</p>
           <img src="../img/youtube-icon.png" alt="YouTube" style="height: 20px; vertical-align: middle;">
         </a>
         <a href="../index.html">NewroBraink-11
-
         </a>
         <a href="https://www.tiktok.com/@atresicoaureo">
             <img src="../img/tiktok-icon.jpg" alt="YouTube" style="height: 20px; vertical-align: middle;">
-
         </a>
       </nav>
     </div>
@@ -463,37 +508,113 @@ Con Flexibilidad Estructurada · v5.5</p>
 
 <div class="main-grid">
   <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
-    <h2>🗺️ Mapa del documento</h2>
+    <h2>🗺️ Mini‑mapa del sitio</h2>
     <ul class="tree">
       <li class="folder open">
-        <span role="button" tabindex="0">🌀 Origen</span>
-        <ul>
-          <li><a href="#nacimiento" class="file-icon">🧬 Mi historia</a></li>
-          <li><a href="#newrostair" class="file-icon">🧠 NewroSTaiR-11</a></li>
-          <li><a href="#mcdee11" class="file-icon">📐 Modelo McDee-11</a></li>
-          <li><a href="#proyectos" class="file-icon">🌐 Proyectos</a></li>
+        <div class="module-row">
+          <a href="../index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a>
+          <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span>
+        </div>
+        <ul class="submenu">
+          <li class="folder open">
+            <div class="module-row">
+              <a href="OSD.html" class="module-link current-page">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu">
+              <li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li>
+              <li><a href="../McDee-11-V3.17.1.html">📐 McDee-11 v3.17</a></li>
+            </ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 Investigación y Desarrollo</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../Humanidades.html" class="module-link">05 · 🎨 Arte, 📚 Cultura y 🌍 Humanidades</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia y neuroplasticidad</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder">
+            <div class="module-row">
+              <a href="../08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a>
+              <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
         </ul>
       </li>
-            <li class="folder open">
-                <span role="button" tabindex="0">📚 Módulos principales</span>
-                <ul>
-                    <li><a href="MVO/OSD.html" class="file-icon">01 · 🔎Origen,​🎯 Misión <br> y <br> 🔭 Visión</a></li>
-                    <li><a href="PI&FT.html" class="file-icon">02 · 📚 Marco teórico</a></li>
-                    <li><a href="03-Investigacion-y-Desarrollo.html" class="file-icon">03 · I+D</a></li>
-                    <li><a href="04-Modelo-de-Negocio.html" class="file-icon">04 · Modelo de negocio</a></li>
-                    <li><a href="Humanidades.html" class="file-icon">05 · 🎨 Arte, 📚 Cultura y 🌍 Humanidades</a></li>
-                    <li><a href="06-Historia-Neuroplasticidad.html" class="file-icon">06 · Historia y neuroplasticidad</a></li>
-                    <li><a href="07-Era-Humano-IA.html" class="file-icon">07 · Era humano-IA</a></li>
-                    <li><a href="08-Comunidad.html" class="file-icon">08 · Comunidad</a></li>
-                </ul>
-            </li>
+      <li class="folder open">
+        <div class="module-row">
+          <a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a>
+          <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+        </div>
+        <ul class="submenu">
+          <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+          <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+          <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+        </ul>
+      </li>
+      <li class="folder open">
+        <div class="module-row">
+          <a href="../Principios-Redes.html" class="module-link">🤝 Principios</a>
+          <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+        </div>
+        <ul class="submenu">
+          <li><a href="../Principios-Redes.html">Liderazgo Distribuido</a></li>
+        </ul>
+      </li>
+      <li class="folder open">
+        <div class="module-row">
+          <span class="module-link" style="cursor: default; background: transparent; border: none;">🌀 Origen (esta página)</span>
+          <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú"></span>
+        </div>
+        <ul class="submenu">
+          <li><a href="#nacimiento">🧬 Mi historia</a></li>
+          <li><a href="#newrostair">🧠 NewroSTaiR-11</a></li>
+          <li><a href="#mcdee11">📐 Modelo McDee-11</a></li>
+          <li><a href="#proyectos">🌐 Proyectos</a></li>
+        </ul>
+      </li>
     </ul>
     <hr>
     <p style="font-size: 0.85rem;">📍 Estás en: <strong>🌀 Origen · 🎯 Misión · 🧭 Visión ✨</strong></p>
   </aside>
 
   <main class="content">
-    <!-- CONTENIDO ORIGINAL CON EMOTICONES CONTEXTUALES -->
     <header style="text-align: center; margin-bottom: 1.5rem;">
       <h1 style="font-size: 1.7rem; color: #b45a3b;">🌀 ORIGEN · 🎯 MISIÓN · 🧭 VISIÓN ✨</h1>
       <p style="color: #8b6b5a;">📖 Una historia real de malformación congénita 🧬, adaptación 🦎 y neuroplasticidad asistida 🧠💡 con herramientas digitales 🤖🛠️</p>
@@ -604,9 +725,9 @@ Con Flexibilidad Estructurada · v5.5</p>
       <h2>🌐 Los proyectos que forman parte de NewroSTaiR-11 🛠️📦</h2>
       <p>🔗 Lo que empezó como una exploración personal se ha ido convirtiendo en una <strong>red de herramientas abiertas</strong> 🌍🛠️. Cada una aborda un aspecto de la adaptación y el aprendizaje, sin imposiciones 🧩✅.</p>
       <div class="grid-tarjetas-2col">
-        <div class="tarjeta-enlace"><a href="../Base-Newro-Sync.html">🎵 NewroSync-11</a><small> Ejercicios de escucha neuroplástica 🧠👂</small></div>
-        <div class="tarjeta-enlace"><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a><small> Contenedor de módulos interactivos 🧩🖱️</small></div>
-        <div class="tarjeta-enlace"><a href="../NewroGraph-11.html">🎨 NewroGraph-11</a><small> Visualización de redes de coherencia 🔗📊</small></div>
+        <div class="tarjeta-enlace"><a href="../Base-Newro-Sync.html">🎵 NewroSync-11</a><small> Reproductor de audio con DSP integrado 🧠👂</small></div>
+        <div class="tarjeta-enlace"><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a><small> Caja de Chat Inteligente 🧩🖱️</small></div>
+        <div class="tarjeta-enlace"><a href="../NewroGraph-11.html">🎨 NewroGraph-11</a><small> Aprendizaje Simbólico Recursivo 🔗📊</small></div>
         <div class="tarjeta-enlace"><a href="../NewroHand-11.html">🖐️ NewroHand-11</a><small> Interfaces táctiles adaptativas (próximamente) ✋🧪</small></div>
       </div>
       <p style="margin-top: 1rem;">🔗 La <strong>red Elipso</strong> es el espacio colaborativo 🤝🌐. <a href="../Elipso/Elipso-3.html" style="color:#c06c3e;">🛜 Conoce más sobre Elipso → 🧩</a></p>
@@ -633,12 +754,19 @@ Con Flexibilidad Estructurada · v5.5</p>
     </div>
     <p style="font-size:0.9rem; text-align:center;">📱 Escanea para acceder a la versión viva<br><strong>NewroSTaiR-11</strong> 🧠🌐</p>
     <hr>
-    <h2>📘 Enlaces rápidos ⚡</h2>
+    <h2>📘 Docs y otros Nodos</h2>
     <ul style="list-style:none;">
-      <li><a href="../index.html">🏠 Portal</a></li>
-      <li><a href="../Elipso/Elipso-3.html">🛜 Red Elipso</a></li>
-      <li><a href="../Principios-Redes.html">🤝 Liderazgo Distribuido</a></li>
+      <li><a href="../Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li>
+      <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+      <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+      <li><a href="../Principios-Redes.html">🤝 Manual de Integridad</a></li>
     </ul>
+    <h2 style="font-size:1.1rem; margin-top:1.5rem;">🎶🎚️ Escucha Audios Procesados</h2>
+    <ul style="list-style:none;">
+      <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li>
+      <li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li>
+    </ul>
+    <hr>
     <h2 style="font-size:1.1rem; margin-top:1.5rem;">⚙️ Navegación 🧭</h2>
     <ul style="list-style:none;">
       <li><a href="#top">⬆️ Volver arriba 🔝</a></li>
@@ -651,42 +779,66 @@ Con Flexibilidad Estructurada · v5.5</p>
   <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
   <div class="menu-desplegable left" id="menuLeft">
     <ul class="tree">
-      <li class="folder open"><span role="button" tabindex="0">🌀 Origen</span>
-        <ul>
+      <li class="folder open">
+        <div class="module-row">
+          <a href="../index.html" class="module-link">🏠 Portal</a>
+          <span class="module-toggle"></span>
+        </div>
+        <ul class="submenu">
+          <li class="folder open">
+            <div class="module-row">
+              <a href="OSD.html" class="module-link current-page">01 · Origen</a>
+              <span class="module-toggle"></span>
+            </div>
+            <ul class="submenu"></ul>
+          </li>
+          <li class="folder"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · PI</a><span class="module-toggle"></span></div><ul class="submenu"><li><a href="../PI&FT.html">📘 Índice PI</a></li><li><a href="../McDee-11-V3.17.1.html">📐 McDee-11</a></li></ul></li>
+          <li class="folder"><div class="module-row"><a href="../03-Investigacion-y-Desarrollo.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+          <li class="folder"><div class="module-row"><a href="../04-Modelo-de-Negocio.html" class="module-link">04 · Negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+          <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+          <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+          <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+          <li class="folder"><div class="module-row"><a href="../08-Comunidad.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+        </ul>
+      </li>
+      <li class="folder open">
+        <div class="module-row">
+          <a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos</a>
+          <span class="module-toggle"></span>
+        </div>
+        <ul class="submenu">
+          <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+          <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+          <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+        </ul>
+      </li>
+      <li class="folder open">
+        <div class="module-row">
+          <a href="../Principios-Redes.html" class="module-link">🤝 Principios</a>
+          <span class="module-toggle"></span>
+        </div>
+        <ul class="submenu">
+          <li><a href="../Principios-Redes.html">Liderazgo Distribuido</a></li>
+        </ul>
+      </li>
+      <li class="folder open">
+        <div class="module-row">
+          <span class="module-link" style="background: transparent; border: none;">🌀 Origen (página)</span>
+          <span class="module-toggle"></span>
+        </div>
+        <ul class="submenu">
           <li><a href="#nacimiento">🧬 Mi historia</a></li>
-          <li><a href="#newrostair">🧠 NewroSTaiR-11</a></li>
+          <li><a href="#newrostair">🧠 NewroSTaiR</a></li>
           <li><a href="#mcdee11">📐 McDee-11</a></li>
           <li><a href="#proyectos">🌐 Proyectos</a></li>
         </ul>
       </li>
-
-            <li class="folder open">
-                <span role="button" tabindex="0">📚 Módulos principales</span>
-                <ul>
-                    <li><a href="MVO/OSD.html" class="file-icon">01 · 🔎Origen,​🎯 Misión <br> y <br> 🔭 Visión</a></li>
-                    <li><a href="PI&FT.html" class="file-icon">02 · 📚 Marco teórico</a></li>
-                    <li><a href="03-Investigacion-y-Desarrollo.html" class="file-icon">03 · I+D</a></li>
-                    <li><a href="04-Modelo-de-Negocio.html" class="file-icon">04 · Modelo de negocio</a></li>
-                    <li><a href="Humanidades.html" class="file-icon">05 · 🎨 Arte, 📚 Cultura y 🌍 Humanidades</a></li>
-                    <li><a href="06-Historia-Neuroplasticidad.html" class="file-icon">06 · Historia y neuroplasticidad</a></li>
-                    <li><a href="07-Era-Humano-IA.html" class="file-icon">07 · Era humano-IA</a></li>
-                    <li><a href="08-Comunidad.html" class="file-icon">08 · Comunidad</a></li>
-                </ul>
-            </li>
-
-
-
     </ul>
   </div>
 </div>
 <div class="menu-flotante-right">
   <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
   <div class="menu-desplegable right" id="menuRight">
-    <h2 style="font-size:1.1rem; margin-bottom:0.5rem; color:#1e4a6b;">📘 Manual de Integridad ✅</h2>
-    <p style="font-size:0.9rem; margin-bottom:10px;"><strong>✓</strong> No prescripción 🚫💊.</p>
-    <p style="font-size:0.9rem; margin-bottom:10px;"><strong>✓</strong> Soberanía de alias 🛡️.</p>
-    <p style="font-size:0.9rem;"><strong>✓</strong> Alerta proporcional ⚠️.</p>
-    <hr>
     <div style="text-align:center; margin:10px 0;">
       <img src="../img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:120px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.2);">
     </div>
@@ -697,7 +849,13 @@ Con Flexibilidad Estructurada · v5.5</p>
       <li><a href="../Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li>
       <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
       <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
-      <li><a href="../Principios-Redes.html">🤝 Liderazgo Distribuido</a></li>
+      <li><a href="../Principios-Redes.html">🤝 Manual de Integridad</a></li>
+    </ul>
+    <hr>
+    <h2 style="font-size:1.1rem; margin-bottom:0.5rem; color:#1e4a6b;">🎶🎚️ Escucha Audios Procesados</h2>
+    <ul style="list-style:none;">
+      <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li>
+      <li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li>
     </ul>
     <hr>
     <h2 style="font-size:1.1rem; margin-bottom:0.5rem; color:#1e4a6b;">⚙️ Navegación 🧭</h2>
@@ -712,26 +870,33 @@ Con Flexibilidad Estructurada · v5.5</p>
   (function() {
     document.documentElement.classList.remove('no-js');
 
-    // Menús de árbol
-    const folders = document.querySelectorAll('.tree .folder > span');
-    folders.forEach(span => {
-      const parentLi = span.parentElement;
-      span.setAttribute('aria-expanded', parentLi.classList.contains('open') ? 'true' : 'false');
-      span.addEventListener('click', function(e) {
-        e.stopPropagation();
-        parentLi.classList.toggle('open');
-        span.setAttribute('aria-expanded', parentLi.classList.contains('open') ? 'true' : 'false');
+    function bindToggles() {
+      document.querySelectorAll('.module-toggle').forEach(toggle => {
+        toggle.removeEventListener('click', handleToggleClick);
+        toggle.removeEventListener('keydown', handleToggleKey);
+        toggle.addEventListener('click', handleToggleClick);
+        toggle.addEventListener('keydown', handleToggleKey);
       });
-      span.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          parentLi.classList.toggle('open');
-          span.setAttribute('aria-expanded', parentLi.classList.contains('open') ? 'true' : 'false');
-        }
-      });
-    });
+    }
 
-    // Menús flotantes móviles
+    function handleToggleClick(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      const folder = this.closest('.folder');
+      if (folder) folder.classList.toggle('open');
+    }
+
+    function handleToggleKey(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        e.stopPropagation();
+        const folder = this.closest('.folder');
+        if (folder) folder.classList.toggle('open');
+      }
+    }
+
+    bindToggles();
+
     const menuLeft = document.getElementById('menuLeft');
     const menuRight = document.getElementById('menuRight');
     const btnLeft = document.getElementById('menuLeftBtn');
@@ -761,7 +926,6 @@ Con Flexibilidad Estructurada · v5.5</p>
       if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll();
     });
 
-    // ===== REPRODUCTOR DE VOZ MODULAR =====
     const synth = window.speechSynthesis;
     const playPauseBtn = document.getElementById('playPauseBtn');
     const playPauseLabel = document.getElementById('playPauseLabel');
@@ -791,8 +955,9 @@ Con Flexibilidad Estructurada · v5.5</p>
 
     function obtenerTextoActual() {
       const scope = scopeSelect.value;
-      if (scope === 'todo') return textoIntro + ' ' + textoSecciones;
-      else return textoSecciones;
+      if (scope === 'intro') return textoIntro;
+      else if (scope === 'secciones') return textoSecciones;
+      else return textoIntro + ' ' + textoSecciones;
     }
 
     function construirVoiceMap() {
