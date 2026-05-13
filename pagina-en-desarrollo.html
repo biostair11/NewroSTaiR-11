@@ -97,7 +97,7 @@
             .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; }
         }
 
-        /* ===== ESTILOS INTERNOS DE LA PÁGINA (se mantienen exactamente igual) ===== */
+        /* ===== ESTILOS INTERNOS DE LA PÁGINA (se mantienen, solo se ajusta el título) ===== */
         :root {
             --blue-deep: #0a2463;
             --blue-medium: #3e92cc;
@@ -111,7 +111,6 @@
             --text-light: #666666;
         }
         
-        /* Estilos del contenido central (se mantienen idénticos) */
         .construction-box {
             background-color: white;
             border-radius: 10px;
@@ -122,22 +121,30 @@
             position: relative;
             overflow: hidden;
         }
-        .construction-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+        /* Título en línea con el ícono */
+        .titulo-en-linea {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+        .construction-icon-inline {
+            font-size: 2.2rem;
             color: var(--blue-medium);
             animation: pulse 2s infinite;
+            line-height: 1;
+        }
+        .construction-title-inline {
+            color: var(--blue-deep);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
-        }
-        .construction-title {
-            color: var(--blue-deep);
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-            font-weight: 600;
         }
         .construction-text {
             color: var(--text-light);
@@ -349,10 +356,12 @@
         </aside>
 
         <main class="content">
-            <!-- ========== CONTENIDO CENTRAL ORIGINAL (SIN MODIFICAR) ========== -->
+            <!-- ========== CONTENIDO CENTRAL ORIGINAL, con ícono y título en línea ========== -->
             <div class="construction-box">
-                <div class="construction-icon">⚙️</div>
-                <h2 class="construction-title">Página en Desarrollo</h2>
+                <div class="titulo-en-linea">
+                    <div class="construction-icon-inline">⚙️</div>
+                    <h2 class="construction-title-inline">Página en Desarrollo</h2>
+                </div>
                 <p class="construction-text">
                     Esta sección está actualmente en construcción como parte del desarrollo iterativo de NewroSTaiR-11.  <br>
                     Estamos trabajando para optimizar tanto el contenido como la experiencia de usuario.
@@ -565,7 +574,7 @@
                 if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll();
             });
 
-            // ===== VOZ =====
+            // VOZ (mínima)
             const synth = window.speechSynthesis;
             const playPauseBtn = document.getElementById('playPauseBtn');
             const playPauseLabel = document.getElementById('playPauseLabel');
