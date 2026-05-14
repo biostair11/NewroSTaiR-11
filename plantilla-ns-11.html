@@ -13,7 +13,7 @@
 
         .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
 
-        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1.5rem 1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; /* reducido de 1.5rem 1.2rem */ box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
         .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
         .sidebar-left>* { direction:ltr; }
         .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
@@ -22,7 +22,7 @@
         .tree { list-style:none; margin:0; padding-left:0; }
         .tree li { margin-bottom:0.3rem; position:relative; }
         .module-row { display:flex; align-items:center; gap:0.2rem; }
-        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 0.8rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; /* reducido de 0.5rem 0.8rem */ border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
         .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
@@ -31,7 +31,7 @@
         .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
         .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
         .folder.open>.submenu { display:block; }
-        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.9rem; display:block; padding:0.4rem 0.8rem 0.4rem 1.8rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.2rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.9rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; /* reducido: vertical 0.3, horizontal 0.5 y left 1rem */ border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; /* reducido de 0.2rem */ font-weight:500; transition:all 0.2s; }
         .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
@@ -204,7 +204,8 @@
                 Si necesita añadir estilos propios, hágalo dentro de un bloque <style> adicional.
                 No modifique nada fuera de esta sección para mantener la coherencia del ecosistema.
             -->
-            <div style="border: 3px dashed #e09d6f; background: #fefaf5; border-radius: 28px; padding: 3rem 2rem; text-align: center; margin: 2rem 0;">
+            <div style="border: 3px dashed #e09d6f; background: #fefaf5; border-radius: 28px; padding: 3rem 2rem; text-align:
+             center; margin: 2rem 0;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
                 <h2 style="color: #b45a3b; margin-bottom: 1rem;">Área de contenido personalizable</h2>
                 <p style="color: #5a4a3a; max-width: 600px; margin: 0 auto 1.5rem auto;">
@@ -232,6 +233,9 @@
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Zona editable</a></li>
+                </ul>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">📋 Mantener esta estructura</a></li>
                 </ul>
             </div>
             <hr>
@@ -302,6 +306,9 @@
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Zona editable</a></li>
+                </ul>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">📋 Mantener esta estructura</a></li>
                 </ul>
             </div>
             <hr>
