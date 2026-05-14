@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiperpiñón · Mecanismo de Sincronía Distribuida · NewroSTaiR-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== RESET Y ESTILOS GLOBALES (paleta azul corporativa) ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+            height: auto;
+        }
+        body {
+            background-color: #f5f3f0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #1e2a3a;
+            line-height: 1.7;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding-bottom: 120px;
+        }
+
+        /* ===== GRILLA PRINCIPAL ===== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            gap: 0;
+            align-items: start;
+        }
+
+        /* ===== BARRAS LATERALES ===== */
+        .sidebar-left, .sidebar-right {
+            background-color: #f0f4f8;
+            padding: 1.5rem 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #cbd5e1;
+            scrollbar-width: thin;
+            overflow-y: auto;
+        }
+        .sidebar-left {
+            border-radius: 0 25px 25px 0;
+            direction: rtl;
+            height: calc(100vh - 40px);
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar-left > * { direction: ltr; }
+        .sidebar-right {
+            border-radius: 25px 0 0 25px;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+        }
+        .sidebar-left h2, .sidebar-right h2 {
+            font-size: 1.3rem;
+            color: #1e4a6b;
+            border-bottom: 1px solid #b9c8dd;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== MENÚ TIPO ÁRBOL ===== */
+        .tree, .tree ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+        }
+        .tree li { margin-bottom: 0.2rem; position: relative; }
+        .tree .folder > span {
+            cursor: pointer;
+            display: block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: 0.2s;
+            color: #1e4a6b;
+        }
+        .tree .folder > span:hover { background-color: #e2eaf1; }
+        .tree .folder > span::before { content: "📁 "; font-size: 0.9rem; }
+        .tree .folder.open > span::before { content: "📂 "; }
+        .tree .folder ul {
+            display: none;
+            margin-left: 1.5rem;
+            padding-left: 0.5rem;
+            border-left: 1px dashed #b9c8dd;
+        }
+        .tree .folder.open ul { display: block; }
+        .tree a {
+            color: #2c5a7a;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.2rem 0.6rem 0.2rem 1.8rem;
+            border-radius: 20px;
+            transition: 0.2s;
+        }
+        .tree a:hover { background-color: #e2eaf1; color: #0f3b5c; }
+        .tree .current-page {
+            background-color: #d0dce8;
+            font-weight: bold;
+            color: #0f3b5c;
+        }
+        .tree .file-icon::before { content: "📄 "; font-size: 0.8rem; margin-right: 4px; }
+        hr { margin: 1rem 0; border-color: #b9c8dd; }
+
+        /* ===== HEADER ===== */
+        .header-imagen {
+            background: linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%);
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 4px solid #3e92cc;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1350px;
+            width: 100%;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .logo-main {
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 22px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        .logo-main img { height: auto; max-height: 90px; width: auto; display: block; }
+        .header-text-block { text-align: center; color: white; flex: 1; }
+        .header-text-block h1 { font-size: 2rem; font-weight: 450; color: #FFFFF0; margin-bottom: 0.3rem; }
+        .header-text-block p { font-size: 1rem; color: #4cc9f0; }
+        .header-nav-quick {
+            margin-top: 0.8rem;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+        }
+        .header-nav-quick a {
+            color: rgba(255,245,235,0.8);
+            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .header-nav-quick a:hover { color: white; border-color: #e09d6f; }
+        .header-nav-quick a img { height: 18px; width: auto; display: block; }
+
+        /* ===== CONTENIDO PRINCIPAL ===== */
+        .content {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            margin: 2rem 0;
+        }
+        section[id], div[id], section.modulo { scroll-margin-top: 100px; }
+
+        /* Estilos internos */
+        .content h2 {
+            color: #b45a3b;
+            border-left: 3px solid #e09d6f;
+            padding-left: 0.8rem;
+            margin: 2rem 0 1rem;
+        }
+        .content h3 {
+            color: #c06c3e;
+            margin-top: 1.5rem;
+            font-size: 1.3rem;
+        }
+        .formula {
+            background: #eaf2f9;
+            padding: 1rem 1.8rem;
+            border-radius: 40px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            border: 1px dashed #2c7da0;
+            overflow-x: auto;
+        }
+        .nota-cafe {
+            background: #fff4e6;
+            border-left: 6px solid #b97341;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            font-style: italic;
+            color: #3d2f1f;
+            margin: 2rem 0;
+        }
+        .tabla-diferenciacion {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,20,30,0.05);
+        }
+        .tabla-diferenciacion th {
+            background: #1b4a6b;
+            color: white;
+            font-weight: 500;
+            padding: 12px 16px;
+            text-align: left;
+        }
+        .tabla-diferenciacion td {
+            border: 1px solid #cfdee9;
+            padding: 12px 16px;
+            background: #f9fcff;
+            vertical-align: top;
+        }
+        .badge {
+            background: #1b4a6b;
+            color: white;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+        .clausula-alcance {
+            background: #f0f4f8;
+            border-left: 6px solid #4a6fa5;
+            padding: 1.2rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 20px 20px 0;
+        }
+        .card-establecido {
+            background: #f8f9fc;
+            border-left: 6px solid #4a6fa5;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 20px 20px 0;
+        }
+        .card-interpretacion {
+            background: #fef7f0;
+            border-left: 6px solid #e09d6f;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 20px 20px 0;
+        }
+
+        /* ===== MENÚS FLOTANTES MÓVIL ===== */
+        .menu-flotante-left, .menu-flotante-right {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            z-index: 1000;
+        }
+        .menu-flotante-left { left: 20px; }
+        .menu-flotante-right { right: 20px; }
+        .menu-flotante-btn {
+            background-color: #1e4a6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+        .menu-desplegable {
+            display: none;
+            position: absolute;
+            bottom: 70px;
+            background-color: #f0f4f8;
+            border-radius: 20px;
+            padding: 1rem;
+            width: 260px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 1px solid #cbd5e1;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .menu-desplegable.left { left: 0; }
+        .menu-desplegable.right { right: 0; }
+        .menu-desplegable.visible { display: block; }
+
+        /* ===== REPRODUCTOR DE VOZ FLOTANTE ===== */
+        .voice-floating-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1100;
+            background: rgba(240, 244, 248, 0.96);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 0.4rem 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 10px 28px rgba(0,0,0,0.13);
+            max-width: 95vw;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+        .voice-btn {
+            background: #ffffff;
+            border: 1px solid #b9c8dd;
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.85rem;
+            color: #1e4a6b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            min-width: 70px;
+            justify-content: center;
+        }
+        .voice-btn.play-btn { background: #1e4a6b; border-color: #4cc9f0; color: white; }
+        .voice-status { font-size: 0.75rem; color: #2c5a7a; font-style: italic; }
+        .voice-select, .voice-scope-select {
+            background: #ffffff;
+            border: 1px solid #b9c8dd;
+            border-radius: 30px;
+            padding: 0.35rem 0.6rem;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 1000px) {
+            .main-grid { grid-template-columns: 1fr; }
+            .sidebar-left, .sidebar-right { display: none; }
+            .menu-flotante-left, .menu-flotante-right { display: block; bottom: 80px; }
+        }
+        @media (max-width: 600px) {
+            .content { padding: 1.2rem; }
+            .voice-floating-bar { bottom: 10px; padding: 0.3rem; gap: 0.3rem; }
+            .voice-btn { font-size: 0.7rem; min-width: 45px; }
+            .tabla-diferenciacion td, .tabla-diferenciacion th { padding: 8px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body id="top">
+
+<!-- BARRA FLOTANTE DE VOZ -->
+<div class="voice-floating-bar" id="voiceFloatingBar">
+    <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+    <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+    <select id="voiceSelect" class="voice-select">
+        <option value="fem_es">Femenina (España)</option>
+        <option value="fem_lat" selected>Femenina (Latina)</option>
+        <option value="masc_es">Masculina (España)</option>
+        <option value="masc_lat">Masculina (Latina)</option>
+    </select>
+    <select id="scopeSelect" class="voice-scope-select">
+        <option value="intro">📖 Introducción</option>
+        <option value="modulos">🧩 Núcleo</option>
+        <option value="todo">📚 Todo</option>
+    </select>
+    <div class="voice-status" id="voiceStatus">Listo</div>
+</div>
+
+<header class="header-imagen">
+    <div class="header-container">
+        <a href="index.html" class="logo-main">
+            <img src="img/Logo-Ns.png" alt="Logo Principal">
+        </a>
+        <div class="header-text-block">
+            <h1>NewroSTaiR-11</h1>
+            <p>Conocimiento Colaborativo Complementario · v5.5</p>
+            <nav class="header-nav-quick">
+                <a href="https://www.youtube.com/results?search_query=andrustiven">
+                    <img src="img/youtube-icon.png" alt="YouTube" style="height:20px;">
+                </a>
+                <a href="index.html">NewroBraink-11</a>
+                <a href="https://www.tiktok.com/@atresicoaureo">
+                    <img src="img/tiktok-icon.jpg" alt="TikTok" style="height:20px;">
+                </a>
+            </nav>
+        </div>
+        <a href="Elipso/Elipso-3.html" class="logo-main">
+            <img src="img/elipso-completo.png" alt="Red Elipso">
+        </a>
+    </div>
+</header>
+
+<div class="main-grid">
+    <aside class="sidebar-left">
+        <h2>🗺️ Mapa del sitio</h2>
+        <ul class="tree">
+            <li class="folder open"><span>🌀 NewroSTaiR-11</span>
+                <ul>
+                    <li><a href="Base-Newro-Sync.html" class="file-icon">🔊 NewroSync-11</a></li>
+                    <li><a href="https://newrosboxy11.netlify.app" target="_blank" class="file-icon">📦 NewroBoxy-11</a></li>
+                    <li><a href="NewroHand-11.html" class="file-icon">🖐️ NewroHand-11</a></li>
+                </ul>
+            </li>
+            <li class="folder open"><span>📚 Módulos principales</span>
+                <ul>
+                    <li><a href="MVO/OSD.html" class="file-icon">01 · Origen, Misión y Visión</a></li>
+                    <li><a href="PI&FT.html" class="file-icon">02 · Propiedad Intelectual y Fundamentos</a></li>
+                    <li><a href="03-Investigacion-y-Desarrollo.html" class="file-icon">03 · I+D</a></li>
+                    <li><a href="04-Modelo-de-Negocio.html" class="file-icon">04 · Modelo de negocio</a></li>
+                    <li><a href="Humanidades.html" class="file-icon">05 · Arte, Cultura y Humanidades</a></li>
+                    <li><a href="06-Historia-Neuroplasticidad.html" class="file-icon">06 · Historia y neuroplasticidad</a></li>
+                    <li><a href="07-Era-Humano-IA.html" class="file-icon">07 · Era humano-IA</a></li>
+                    <li><a href="08-Comunidad.html" class="file-icon">08 · Comunidad</a></li>
+                </ul>
+            </li>
+            <li class="folder"><span>🤝 Principios</span>
+                <ul><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+            </li>
+        </ul>
+        <hr>
+        <p style="font-size:0.85rem;">📍 Estás en: <strong>Hiperpiñón · Mecanismo de Sincronía Distribuida</strong></p>
+    </aside>
+
+    <main class="content">
+        <header style="text-align:center; margin-bottom:1.5rem;">
+            <h1 style="font-size:1.7rem; color:#b45a3b;">⚙️ Hiperpiñón</h1>
+            <p style="color:#8b6b5a;">Mecanismo de Sincronía Distribuida</p>
+            <p style="font-size:0.9rem;">El engranaje que conecta y equilibra múltiples UMEAD en red</p>
+        </header>
+
+        <!-- CLAUSULA DE ALCANCE -->
+        <div class="clausula-alcance">
+            <span class="badge">📌 CLÁUSULA DE ALCANCE</span>
+            <p style="margin-top:0.8rem;">📢 Este documento es un <strong>marco interpretativo</strong> 🧭 dentro de la teoría de sistemas complejos. No pretende establecer leyes de mecánica clásica ⚙️❌, sino describir la 🧠 <strong>lógica</strong> de transferencia de carga ⚡ y 🌀 sincronía entre nodos de información.</p>
+        </div>
+
+        <!-- SECCIÓN 1: DEFINICIÓN -->
+        <section id="definicion">
+            <h2>🔵 1. Definición operacional</h2>
+            <div class="card-interpretacion">
+                <p style="font-size:1.2rem; font-weight:bold;">⚙️ El Hiperpiñón es el mecanismo que 🔄 <strong>engrana</strong> la dinámica continua de las UMEAD con ⚡ eventos discretos de reconfiguración.</p>
+                <p>Permite la 🧩 transmisión de 🌀 coherencia y torque adaptativo entre nodos de una red, evitando que el sistema se vuelva 🪨 rígido o 🔄 aislado. Actúa como un regulador que 🔁 reparte el impacto de una perturbación para mantener la 💠 sincronía colectiva.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: TABLA DE DIFERENCIACIÓN -->
+        <section id="diferenciacion">
+            <h2>🔵 2. Diferenciación sistémica</h2>
+            <table class="tabla-diferenciacion">
+                <thead>
+                    <tr><th>📐 Mecánica Tradicional</th><th>🌀 Hiperpiñón (NewroSTaiR-11)</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Transmisión de movimiento físico</td><td>Distribución de ⚡ torque informativo</td></tr>
+                    <tr><td>Dientes como puntos de contacto rígidos</td><td>Acoplamiento de 🌀 fase temporal</td></tr>
+                    <tr><td>Objetivo: tracción mecánica</td><td>Mantenimiento de la 💠 sincronía colectiva</td></tr>
+                    <tr><td>Engranaje pasivo</td><td>Engranaje adaptativo con memoria 🧠</td></tr>
+                </tbody>
+            </table>
+            <p>✅ La diferencia clave está en que el Hiperpiñón no transfiere ⚙️ fuerza bruta, sino 🧩 <strong>información de fase</strong> que ajusta la coherencia de toda la red.</p>
+        </section>
+
+        <!-- SECCIÓN 3: DINÁMICA DE TRANSMISIÓN -->
+        <section id="dinamica">
+            <h2>🔵 3. Dinámica de transmisión</h2>
+            <p>Cuando una ⚖️ UMEAD recibe una perturbación 🌊, el ⚙️ Hiperpiñón actúa como un regulador que 🔁 reparte el impacto. Este proceso asegura que el sistema mantenga su 🧭 orientación sin que ningún nodo sufra una 🧱 saturación crítica.</p>
+            <div class="formula">
+                \[
+                I_{\text{sistema}}\dot{\gamma} = \tau_{\text{externo}} - \tau_{\text{adaptativo}}, \quad 
+                \tau_{\text{adapt}} = k\,\beta\,(1-e^{-U/U_{\text{máx}}})
+                \]
+            </div>
+            <p>El umbral de disparo se modela como:</p>
+            <div class="formula">
+                \[
+                \phi(t) \equiv \phi_{\text{diente}} \pmod{2\pi} \quad \Rightarrow \quad \text{disparo}
+                \]
+            </div>
+            <p>Aquí, \(\phi(t)\) es la fase del nodo, y \(\phi_{\text{diente}}\) son las posiciones de enganche. Cuando la fase coincide con un diente, se produce un 🔔 evento discreto que actualiza los parámetros adaptativos (\(\alpha,\beta,\gamma\)) de los nodos conectados.</p>
+            <div class="nota-cafe">
+                <p>⚙️ <strong>Zona muerta:</strong> Si \(|\phi - \phi_{\text{diente}}| > \delta\), el Hiperpiñón se 🔓 desacopla temporalmente, permitiendo exploración sin disparos espurios (flexibilidad).</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: CONEXIÓN CON UMEAD Y MCDEE-11 -->
+        <section id="conexion">
+            <h2>🔵 4. Conexión con UMEAD y McDee‑11</h2>
+            <ul>
+                <li><strong>🔄 UMEAD:</strong> Cada UMEAD es un nodo que puede engancharse al Hiperpiñón. El disparo del piñón reconfigura la memoria \(\beta\) de las UMEAD acopladas.</li>
+                <li><strong>🌀 Condición \(T^2=-I\):</strong> Cada ciclo completo de enganche y desenganche aplica dos transformaciones, retornando a un estado complementario (aprendizaje distribuido).</li>
+                <li><strong>📐 Coeficientes \(\alpha,\beta,\gamma\):</strong> Modulan el torque adaptativo \(\tau_{\text{adapt}}\) y la sensibilidad al acoplamiento.</li>
+                <li><strong>📡 Telemetría simbólica:</strong> La fase \(\phi(t)\) se transmite entre nodos como señal de coherencia.</li>
+            </ul>
+        </section>
+
+        <!-- SECCIÓN 5: APLICACIONES CONCEPTUALES -->
+        <section id="aplicaciones">
+            <h2>🔵 5. Aplicaciones conceptuales</h2>
+            <ul>
+                <li><strong>🧠 Sincronía de múltiples UMEAD:</strong> Permite que ajustes locales (ej. reflejo postural) se coordinen en una respuesta global (ej. mantener el equilibrio al caminar).</li>
+                <li><strong>⚡ Transmisión entre dominios analógico y digital:</strong> El Hiperpiñón actúa como puente de impedancias (galvánicas o de paquetes IP), evitando la pérdida de coherencia (Atractor Octaédrico).</li>
+                <li><strong>🧘 Prevención de rigidez:</strong> La zona muerta \(\delta\) evita que el sistema se “atasque” en un patrón, permitiendo exploración y aprendizaje.</li>
+            </ul>
+        </section>
+
+        <!-- SECCIÓN 6: ESCALABILIDAD FRACTAL -->
+        <section id="escalabilidad">
+            <h2>🔵 6. Escalabilidad fractal</h2>
+            <div class="card-interpretacion">
+                <p>🌀 Un Hiperpiñón puede contener otros Hiperpiñones (engranajes de engranajes), formando jerarquías de sincronía.</p>
+                <ul>
+                    <li><strong>🧬 Micro‑piñón:</strong> Ajuste de fase entre dos neuronas.</li>
+                    <li><strong>🧍 Meso‑piñón:</strong> Coordinación entre reflejos locales (UMEAD musculares).</li>
+                    <li><strong>🌐 Macro‑piñón:</strong> Sincronía entre agentes humanos o IA en una red distribuida.</li>
+                </ul>
+                <p>La misma lógica del engranaje de fase se repite en cada escala, permitiendo que el ecosistema NewroSTaiR-11 modele desde 🔬 microprocesos hasta 🌍 sistemas sociotécnicos.</p>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 7: NOTA DE RIGOR -->
+        <section id="rigor">
+            <h2>🔵 7. Nota de rigor</h2>
+            <div class="card-establecido">
+                <span class="badge">📐 HERRAMIENTAS ESTABLECIDAS</span>
+                <p>📈 Ecuaciones de momento angular, 🧮 histéresis, ⚙️ sistemas de eventos discretos, 🎛️ control por modos deslizantes. Todo ello es conocimiento público de la física e ingeniería.</p>
+            </div>
+            <div class="card-interpretacion">
+                <span class="badge">🌀 INTERPRETACIÓN NEWROSTAIR-11</span>
+                <p>🧩 La <strong>organización</strong> de esas herramientas en un mecanismo de <strong>sincronía distribuida</strong>, la <strong>zona muerta adaptativa</strong> y la <strong>escalabilidad fractal</strong> del engranaje constituyen la contribución original.</p>
+            </div>
+            <p>📢 Este documento no reemplaza la teoría de engranajes mecánicos ni el control clásico. Propone una capa interpretativa para describir cómo los sistemas complejos mantienen coherencia cuando múltiples unidades adaptativas interactúan.</p>
+        </section>
+
+        <div class="firma" style="margin-top:2rem; text-align:right; border-top:1px solid #e0d0c2; padding-top:1rem;">
+            <p><strong>Hiperpiñón · NewroSTaiR-11</strong><br>
+            📅 Documento v1.0 · 10 de mayo de 2026<br>
+            ⚙️ Mecanismo de sincronía distribuida — el engranaje del ecosistema</p>
+        </div>
+    </main>
+
+    <aside class="sidebar-right">
+        <h2>🔗 Nodo de Acceso</h2>
+        <div style="text-align:center; margin:15px 0;">
+            <img src="img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:180px; border-radius:15px;">
+        </div>
+        <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>NewroSTaiR-11</strong></p>
+        <hr>
+        <h2>📘 Docs y otros Nodos</h2>
+        <ul style="list-style:none;">
+            <li><a href="Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li>
+            <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+            <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+        </ul>
+        <h2 style="margin-top:1.5rem;">⚙️ Navegación</h2>
+        <ul style="list-style:none;"><li><a href="#top">⬆️ Volver arriba</a></li></ul>
+    </aside>
+</div>
+
+<!-- Menús flotantes móviles -->
+<div class="menu-flotante-left">
+    <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Mapa</small></button>
+    <div class="menu-desplegable left" id="menuLeft">
+        <ul class="tree"><li class="folder open"><span>🌀 NewroSTaiR-11</span><ul><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li></ul></li>
+        <li class="folder open"><span>📚 Módulos principales</span><ul><li><a href="MVO/OSD.html">01 · Origen</a></li><li><a href="PI&FT.html">02 · Propiedad Intelectual</a></li><li><a href="03-Investigacion-y-Desarrollo.html">03 · I+D</a></li><li><a href="04-Modelo-de-Negocio.html">04 · Modelo de negocio</a></li><li><a href="Humanidades.html">05 · Arte, Cultura</a></li></ul></li></ul>
+    </div>
+</div>
+<div class="menu-flotante-right">
+    <button class="menu-flotante-btn" id="menuRightBtn">⚙️<br><small>Docs</small></button>
+    <div class="menu-desplegable right" id="menuRight">
+        <h2>📘 Manual de Integridad</h2>
+        <p>✓ No prescripción<br>✓ Soberanía de alias<br>✓ Alerta proporcional</p>
+        <hr>
+        <img src="img/qr_newrostair.png" alt="QR" style="width:100px; margin:10px auto; display:block;">
+        <p style="text-align:center;">🔗 Escanea</p>
+    </div>
+</div>
+
+<script>
+    (function() {
+        document.documentElement.classList.remove('no-js');
+        // Menús de árbol
+        const folders = document.querySelectorAll('.tree .folder > span');
+        folders.forEach(span => {
+            const li = span.parentElement;
+            span.setAttribute('aria-expanded', li.classList.contains('open') ? 'true' : 'false');
+            span.addEventListener('click', (e) => {
+                e.stopPropagation();
+                li.classList.toggle('open');
+                span.setAttribute('aria-expanded', li.classList.contains('open') ? 'true' : 'false');
+            });
+        });
+
+        // Menús flotantes
+        const menuLeft = document.getElementById('menuLeft');
+        const menuRight = document.getElementById('menuRight');
+        const btnLeft = document.getElementById('menuLeftBtn');
+        const btnRight = document.getElementById('menuRightBtn');
+        function closeAll() {
+            menuLeft.classList.remove('visible');
+            menuRight.classList.remove('visible');
+            localStorage.setItem('menuLeftState', 'hidden');
+            localStorage.setItem('menuRightState', 'hidden');
+        }
+        function toggleMenu(menu, key) {
+            const isVis = menu.classList.contains('visible');
+            closeAll();
+            if (!isVis) menu.classList.add('visible');
+            localStorage.setItem(key, isVis ? 'hidden' : 'visible');
+        }
+        if (localStorage.getItem('menuLeftState') === 'visible') menuLeft.classList.add('visible');
+        if (localStorage.getItem('menuRightState') === 'visible') menuRight.classList.add('visible');
+        btnLeft.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuLeft, 'menuLeftState'); });
+        btnRight.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuRight, 'menuRightState'); });
+        document.addEventListener('click', closeAll);
+        menuLeft.addEventListener('click', (e) => e.stopPropagation());
+        menuRight.addEventListener('click', (e) => e.stopPropagation());
+
+        // Reproductor de voz (simplificado, igual a UMEAD)
+        const synth = window.speechSynthesis;
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const playPauseLabel = document.getElementById('playPauseLabel');
+        const stopBtn = document.getElementById('stopBtn');
+        const voiceSelect = document.getElementById('voiceSelect');
+        const scopeSelect = document.getElementById('scopeSelect');
+        const voiceStatus = document.getElementById('voiceStatus');
+        let utterance = null, isPaused = false, isSpeaking = false;
+        let voiceMap = {}, selectedVoice = null;
+
+        const intro = "Hiperpiñón. Mecanismo de sincronía distribuida. Engrana la dinámica continua de las UMEAD con eventos discretos de reconfiguración.";
+        const full = intro + " Permite transmitir coherencia y torque adaptativo entre nodos. Incluye zona muerta, ecuación de momento angular y escalabilidad fractal.";
+
+        function getText() { return scopeSelect.value === 'intro' ? intro : full; }
+        function buildVoiceMap() {
+            const voices = synth.getVoices();
+            if (!voices.length) return;
+            const spanish = voices.filter(v => v.lang.startsWith('es'));
+            const female = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer'));
+            voiceMap = { fem_lat: female || spanish[0] };
+            selectedVoice = voiceMap[voiceSelect.value] || voiceMap.fem_lat;
+            voiceStatus.innerText = selectedVoice ? 'Voz lista' : 'Sin voz compatible';
+        }
+        function updateUI(state, btnChar) {
+            playPauseBtn.querySelector('span:first-child').innerHTML = btnChar;
+            if (state === 'playing') { playPauseBtn.classList.add('play-btn'); playPauseLabel.innerText = 'Pausa'; stopBtn.disabled = false; }
+            else if (state === 'paused') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.innerText = 'Reanudar'; stopBtn.disabled = false; }
+            else { playPauseBtn.classList.add('play-btn'); playPauseLabel.innerText = 'Escuchar'; stopBtn.disabled = true; }
+        }
+        function newUtterance() {
+            const u = new SpeechSynthesisUtterance(getText());
+            if (selectedVoice) u.voice = selectedVoice;
+            u.rate = 0.95;
+            u.onstart = () => { isSpeaking = true; updateUI('playing', '⏸️'); voiceStatus.innerText = 'Leyendo...'; };
+            u.onend = () => { isSpeaking = false; updateUI('stopped', '▶'); voiceStatus.innerText = 'Listo'; };
+            u.onpause = () => { isPaused = true; updateUI('paused', '▶'); };
+            u.onresume = () => { isPaused = false; updateUI('playing', '⏸️'); };
+            u.onerror = () => { isSpeaking = false; updateUI('stopped', '▶'); };
+            return u;
+        }
+        function speak() {
+            if (!isSpeaking && !isPaused) {
+                if (synth.speaking) synth.cancel();
+                if (!selectedVoice) { voiceStatus.innerText = 'Seleccione voz'; return; }
+                utterance = newUtterance();
+                synth.speak(utterance);
+            } else if (isSpeaking && !isPaused) synth.pause();
+            else if (isSpeaking && isPaused) synth.resume();
+        }
+        playPauseBtn.addEventListener('click', speak);
+        stopBtn.addEventListener('click', () => { synth.cancel(); isSpeaking = false; isPaused = false; updateUI('stopped', '▶'); voiceStatus.innerText = 'Detenido'; });
+        voiceSelect.addEventListener('change', () => { selectedVoice = voiceMap[voiceSelect.value]; if (isSpeaking) synth.cancel(); isSpeaking = false; isPaused = false; updateUI('stopped', '▶'); });
+        scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; updateUI('stopped', '▶'); } });
+        window.speechSynthesis.onvoiceschanged = buildVoiceMap;
+        buildVoiceMap();
+    })();
+</script>
+</body>
+</html>
