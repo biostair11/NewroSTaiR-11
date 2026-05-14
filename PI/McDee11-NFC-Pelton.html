@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDee-11 · Núcleo Formal Completo y Reivindicaciones · NewroSTaiR-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== ESTILOS (idénticos a la plantilla Anexo-ADN) ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1.5rem 1.2rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 0.8rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.9rem; display:block; padding:0.4rem 0.8rem 0.4rem 1.8rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.2rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-size:2rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1rem; color:#4cc9f0; margin:0.2rem 0; }
+        .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
+        .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
+        .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
+        .header-nav-quick a img { height:18px; width:auto; display:block; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id], div[id], section.modulo { scroll-margin-top:100px; }
+
+        .content h2 { color:#b45a3b; border-left:3px solid #e09d6f; padding-left:0.8rem; margin:2rem 0 1rem; }
+        .content h3 { color:#c06c3e; margin-top:1.5rem; font-size:1.3rem; }
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .blindaje { background:#fff5f5; border:2px dashed #ae2012; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#721c24; margin:2rem 0; box-shadow:0 2px 8px rgba(174,32,18,0.1); }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        
+        /* Tablas responsivas */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        table { width:100%; border-collapse:collapse; background:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 2px 8px rgba(0,20,30,0.05); min-width:500px; }
+        th { background:#1b4a6b; color:white; font-weight:500; padding:12px 16px; }
+        td { border:1px solid #cfdee9; padding:12px 16px; background:#f9fcff; }
+        @media (max-width:700px) {
+            th, td { padding:6px 8px; font-size:0.75rem; }
+            .table-responsive { margin:1rem 0; }
+        }
+
+        .json-block { background:#0f1c2b; color:#bbe1f0; font-family:'Courier New',monospace; padding:1.8rem; border-radius:18px; overflow-x:auto; white-space:pre-wrap; word-wrap:break-word; border:2px solid #5786a8; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+        .definition { background:#f0f4ff; border-left:6px solid #3e92cc; padding:1rem 1.5rem; margin:1.5rem 0; border-radius:0 12px 12px 0; }
+        .anexo { background:#f9f3e9; border-left:6px solid #d4a373; padding:1.5rem 2rem; margin:2rem 0; border-radius:0 12px 12px 0; }
+        .anexo h3 { margin-top:0; color:#7b4f3a; }
+
+        details.reivindicaciones { background:#f0f4ff; border-left:6px solid #3e92cc; padding:1rem 1.5rem; margin:1.5rem 0; border-radius:0 12px 12px 0; }
+        details.reivindicaciones summary { font-weight:bold; cursor:pointer; color:#1a4d6b; padding:0.5rem 0; }
+        details.reivindicaciones .definition { margin:1rem 0; background:transparent; border-left:none; padding:0.5rem 0; }
+
+        /* Diagrama de flujo de dos filas */
+        .flujo-contenedor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .flujo-fila {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+        .flujo-nodo {
+            background: #e6edf4;
+            border: 2px solid #3e92cc;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            text-align: center;
+            font-weight: bold;
+            color: #1a4d6b;
+            flex: 0 0 auto;
+        }
+        .flujo-flecha {
+            font-size: 1.8rem;
+            color: #3e92cc;
+            font-weight: bold;
+        }
+        .flujo-flecha-vertical {
+            font-size: 2rem;
+            color: #3e92cc;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+        @media (max-width: 600px) {
+            .flujo-fila { flex-direction: column; }
+            .flujo-flecha { transform: rotate(90deg); }
+            .flujo-flecha-vertical { transform: rotate(90deg); }
+        }
+
+        #mapa-logico .mapa-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        #mapa-logico .mapa-nodo { padding: 1rem 0.8rem; font-size: 0.85rem; }
+        #mapa-logico .mapa-nodo h3 { font-size: 1rem; margin: 0.5rem 0; }
+        #mapa-logico .mapa-nodo p { font-size: 0.8rem; margin-bottom: 0.8rem; }
+        #mapa-logico .mapa-nodo a { font-size: 0.8rem; }
+
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:nowrap; white-space:nowrap; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); }
+            #mapa-logico .mapa-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width:700px) {
+            .content { padding:1.2rem; }
+            .formula { font-size:1rem; padding:0.8rem; }
+        }
+        @media (max-width:600px) {
+            .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:65px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.2rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .header-nav-quick { margin-top:0.2rem; gap:6px; }
+            .header-nav-quick a { font-size:0.6rem; }
+            .header-nav-quick a img { height:12px; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; }
+            .voice-btn { font-size:0.7rem; min-width:45px; }
+            .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <!-- Barra de voz -->
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="intro">📖 Introducción</option>
+            <option value="modulos">🧩 Núcleo completo</option>
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="../index.html" class="logo-main"><img src="../img/Logo-Ns.png" alt="Logo"></a>
+            <div class="header-text-block">
+                <h1>NewroSTaiR-11</h1>
+                <p>Conocimiento Colaborativo</p>
+                <p>Complementario Con</p>
+                <p>Flexibilidad Estructurada</p>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven"><img src="../img/youtube-icon.png" alt="YouTube"></a>
+                    <a href="../index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo"><img src="../img/tiktok-icon.jpg" alt="TikTok"></a>
+                </nav>
+            </div>
+            <a href="../Elipso/Elipso.html" class="logo-main"><img src="../img/elipso-completo.png" alt="Elipso"></a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <!-- Sidebar izquierdo -->
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <h4>🗺️ Mini-mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="McDee11-NFC.html" class="current-page">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>McDee-11 · Núcleo Completo</strong></p>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL MEJORADO -->
+        <main class="content">
+            <header style="text-align: center; margin-bottom: 1.5rem;">
+                <h1 style="font-size: 1.7rem; color: #b45a3b;">🌀 McDee-11 · Núcleo Formal Completo</h1>
+                <p style="color: #8b6b5a;">🔬 Modelo Matemático Basado en Geometría Fractal y Control Adaptativo <br> 🧠 Capa de Coherencia y Reivindicaciones</p>
+                <p style="font-size:0.9rem;">👨‍🔬 Andru Stiven Rodríguez Bustos · Tecnólogo en Electrónica - U. Distrital <br> 🤝 Co-exploración con IA · Mayo 2026</p>
+            </header>
+
+            <section id="origen">
+                <h2>🔵 0. 🔭 Origen y visión sistémica</h2>
+                <p>🧬 Este documento consolida el modelo <strong>McDee‑11</strong>, nacido de la experiencia personal de adaptación auditiva (microtia/atresia, 35%-45% pérdida en oído derecho) y la observación de neuroplasticidad, ambidiestría emergente y complementariedad en sistemas biológicos. 🎯 El objetivo es describir la <strong>adaptabilidad dinámica</strong> de un sistema complejo (cuerpo, red neuronal, organización) cuando enfrenta perturbaciones, utilizando herramientas de teoría de control, geometría diferencial y análisis de sistemas híbridos como <em>lenguajes descriptivos</em>, nunca como ontología.</p>
+                <div class="nota-cafe">
+                    <p>✨ <strong>Visión integradora:</strong> 🧠 El cuerpo actúa como un <strong>procesador adaptativo</strong>. La experiencia no solo se acumula por repetición mecánica, sino que también se <strong>organiza en patrones adaptativos recurrentes</strong> (lo que llamamos <a href="UMEAD.html">UMEAD</a>) que pueden reconocerse a diferentes escalas del sistema (desde un reflejo local hasta una estrategia motora global). ⚙️ La acción se coordina a través del <a href="hiperpinnon.html">Hiperpiñón</a>, que engrana la torsión necesaria entre la dinámica continua y los eventos discretos. 📐 El espacio de fases se curva con la memoria (\(\beta\)) y la torsión (\(\gamma\)), haciendo que el movimiento óptimo sea una <strong>geodésica</strong> en una geometría no euclidiana.</p>
+                </div>
+            </section>
+
+            <section id="flujo-sistema">
+                <h2>🔵 🗺️ Flujo del sistema McDee‑11</h2>
+                <p>🧩 El ecosistema McDee‑11 opera como una cadena de procesamiento donde cada componente cumple una función específica. El dato ingresa, se adapta, se engrana y se estabiliza siguiendo este recorrido:</p>
+                <div class="flujo-contenedor">
+                    <div class="flujo-fila">
+                        <div class="flujo-nodo">🔢 Variable Compleja</div>
+                        <div class="flujo-flecha">→</div>
+                        <div class="flujo-nodo">🧬 <a href="UMEAD.html" style="color:#1a4d6b;">UMEAD</a></div>
+                    </div>
+                    <div class="flujo-flecha-vertical">↓</div>
+                    <div class="flujo-fila">
+                        <div class="flujo-nodo">⚙️ <a href="hiperpinnon.html" style="color:#1a4d6b;">Hiperpiñón</a></div>
+                        <div class="flujo-flecha">→</div>
+                        <div class="flujo-nodo">🌀 McDee‑11 (Núcleo)</div>
+                    </div>
+                </div>
+                <ul>
+                    <li><strong>🔢 Variable Compleja:</strong> formaliza la dualidad y la admitancia del sistema.</li>
+                    <li><strong>🧬 <a href="UMEAD.html">UMEAD</a>:</strong> unidad mínima de equilibrio adaptativo, estabiliza el ciclo excitación‑memoria.</li>
+                    <li><strong>⚙️ <a href="hiperpinnon.html">Hiperpiñón</a>:</strong> engrana la dinámica continua con los eventos discretos.</li>
+                    <li><strong>🌀 McDee‑11 (Núcleo):</strong> condición topológica, coherencia y reivindicaciones.</li>
+                </ul>
+            </section>
+
+            <section id="mapa-logico" style="margin: 4rem 0; padding: 2.5rem; background: #ffffff; border-radius: 28px; border: 1px solid #cbd5e1; box-shadow: 0 8px 20px rgba(0,0,0,0.02);">
+                <header style="text-align: center; margin-bottom: 3rem;">
+                    <h2 style="color: #1e4a6b; font-size: 1.8rem; border-bottom: none;">🧭 Guía de Navegación Sistémica</h2>
+                    <p style="color: #64748b; font-style: italic; margin-top: 0.5rem;">⚡ Sigue el flujo de la energía informativa para entender el modelo.</p>
+                </header>
+                <div class="mapa-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                    <div class="mapa-nodo" style="position: relative; padding: 1rem 0.8rem; background: #f8fafc; border-radius: 16px; border: 1px solid #e2e8f0; text-align: center;">
+                        <span style="position: absolute; top: -12px; left: 15px; background: #3b82f6; color: white; padding: 2px 10px; border-radius: 8px; font-weight: bold; font-size: 0.7rem;">01</span>
+                        <div style="font-size: 1.3rem; margin-bottom: 8px;">🌀</div>
+                        <h3 style="color: #1e3a8a; margin-bottom: 6px; font-size: 1rem;">Percepción Dual</h3>
+                        <p style="font-size: 0.8rem; color: #475569; margin-bottom: 0.8rem;">📡 Captación de datos mediante la ♾️ <strong>variable</strong> compleja y el análisis de fase.</p>
+                        <a href="compleja.html" style="text-decoration: none; color: #3b82f6; font-size: 0.8rem; font-weight: bold;">Explorar Origen →</a>
+                    </div>
+                    <div class="mapa-nodo" style="position: relative; padding: 1rem 0.8rem; background: #fffcf9; border-radius: 16px; border: 1px solid #ffedd5; text-align: center;">
+                        <span style="position: absolute; top: -12px; left: 15px; background: #f97316; color: white; padding: 2px 10px; border-radius: 8px; font-weight: bold; font-size: 0.7rem;">02</span>
+                        <div style="font-size: 1.3rem; margin-bottom: 8px;">⚖️</div>
+                        <h3 style="color: #9a3412; margin-bottom: 6px; font-size: 1rem;">Estabilización</h3>
+                        <p style="font-size: 0.8rem; color: #475569; margin-bottom: 0.8rem;">⚖️ La <strong>UMEAD</strong> procesa el desfase para mantener la homeostasis activa.</p>
+                        <a href="UMEAD.html" style="text-decoration: none; color: #f97316; font-size: 0.8rem; font-weight: bold;">Ver Equilibrio →</a>
+                    </div>
+                    <div class="mapa-nodo" style="position: relative; padding: 1rem 0.8rem; background: #fdf2f2; border-radius: 16px; border: 1px solid #fee2e2; text-align: center;">
+                        <span style="position: absolute; top: -12px; left: 15px; background: #ef4444; color: white; padding: 2px 10px; border-radius: 8px; font-weight: bold; font-size: 0.7rem;">03</span>
+                        <div style="font-size: 1.3rem; margin-bottom: 8px;">⚙️</div>
+                        <h3 style="color: #991b1b; margin-bottom: 6px; font-size: 1rem;">Distribución</h3>
+                        <p style="font-size: 0.8rem; color: #475569; margin-bottom: 0.8rem;">⚙️ El <strong>hiperpiñón</strong> reparte el torque de sincronía en toda la red.</p>
+                        <a href="hiperpinnon.html" style="text-decoration: none; color: #ef4444; font-size: 0.8rem; font-weight: bold;">Ver Transmisión →</a>
+                    </div>
+                    <div class="mapa-nodo" style="position: relative; padding: 1rem 0.8rem; background: #f0fdf4; border-radius: 16px; border: 1px solid #dcfce7; text-align: center;">
+                        <span style="position: absolute; top: -12px; left: 15px; background: #22c55e; color: white; padding: 2px 10px; border-radius: 8px; font-weight: bold; font-size: 0.7rem;">04</span>
+                        <div style="font-size: 1.3rem; margin-bottom: 8px;">🧠</div>
+                        <h3 style="color: #166534; margin-bottom: 6px; font-size: 1rem;">Integración</h3>
+                        <p style="font-size: 0.8rem; color: #475569; margin-bottom: 0.8rem;">🧠 Núcleo formal <strong>McDee-11</strong> donde ocurre la co-evolución del sistema.</p>
+                        <a href="#nucleo-formal" style="text-decoration: none; color: #22c55e; font-size: 0.8rem; font-weight: bold;">Ver Núcleo →</a>
+                    </div>
+                </div>
+                <!-- Nota operativa eliminada -->
+            </section>
+
+            <section id="nucleo-formal">
+                <h2>🔵 1. 🧠 Núcleo formal: sistema dinámico adaptativo</h2>
+                <h3>📐 1.1 Espacio de estados y condición topológica</h3>
+                <p>Sea un sistema con estados \(\mathbf{x} \in \mathcal{E}\). Existe una transformación \(T\) que satisface:</p>
+                <div class="formula">\[ T^2 = -I \]</div>
+                <p>🔄 Esta condición <strong>anti‑periódica</strong> (análoga a una banda de Möbius) implica que aplicar dos veces la transformación no regresa al mismo estado, sino a un estado complementario. 🎯 En control representa ciclos que incorporan memoria: tras una perturbación y su compensación, el sistema no vuelve al punto inicial, sino a uno modificado por la experiencia. 🧩 Matemáticamente puede interpretarse como una <strong>estructura casi compleja</strong> en el espacio de estados efectivo, una herramienta geométrica, no una propiedad física literal.</p>
+
+                <h3>🎛️ 1.2 Coeficientes de acoplamiento (\(\alpha, \beta, \gamma\))</h3>
+                <ul>
+                    <li><span class="badge">α</span> <strong>acoplamiento externo:</strong> ganancia de entradas sensoriales o ambientales (señal de referencia o perturbación).</li>
+                    <li><span class="badge">β</span> <strong>memoria interna:</strong> variable de estado que acumula historia; modula la realimentación (parámetros adaptativos en control MRAC).</li>
+                    <li><span class="badge">γ</span> <strong>torsión geométrica:</strong> rotaciones acumuladas o desfases estructurales.</li>
+                </ul>
+                <p>🔗 Relación complementaria con factor de compensación \(k\) (\(0<k\le1\)):</p>
+                <div class="formula">\[ \Delta \beta = -k\,\Delta \alpha \]</div>
+                <p>🎯 Este factor introduce realismo: la compensación rara vez es exacta en sistemas biológicos.</p>
+
+                <h3>📊 1.3 Discretización por coherencia</h3>
+                <p>Variable de <strong>coherencia acumulativa</strong> \(C(t)\), que mide la sincronización entre subsistemas. Cuando \(C(t)\) cruza un umbral \(\pm U\), se produce un <strong>evento discreto</strong>: cambio de patrón motor, decisión, salto de capa. El cruce puede ocurrir por:</p>
+                <ul>
+                    <li><strong>🔻 Defecto de coherencia</strong> (\(C < -U\)): pérdida de sincronía, espasmo, caída.</li>
+                    <li><strong>🔺 Exceso de coherencia</strong> (\(C > +U\)): momentos de claridad, alta sincronía interna que dispara reconfiguración y consolidación de nuevos patrones.</li>
+                </ul>
+                <p>⚙️ En control, es un sistema híbrido: la dinámica continua modula una máquina de estados discreta.</p>
+            </section>
+
+            <section id="umead">
+                <h2>🔵 2. 🧬 <a href="UMEAD.html">UMEAD</a>: Unidad Mínima de Equilibrio Adaptativo Dinámico</h2>
+                <p>🧬 Estructura mínima que sostiene un ciclo adaptativo completo. Su topología se basa en <strong>dos pares complementarios</strong> que actúan como un andamiaje universal para la supervivencia y la evolución. La naturaleza utiliza este diseño en sistemas fundamentales: por ejemplo, el ADN con sus pares A‑T y G‑C. De forma análoga:</p>
+                <ul>
+                    <li>🧬 El primer par complementario es <strong>α (excitación) ↔ β (memoria)</strong>, como la interacción entre el estímulo externo y la adaptación interna.</li>
+                    <li>🧬 El segundo par complementario es <strong>fase de excitación‑retracción ↔ fase de resonancia‑consolidación</strong>, que asegura la estabilización cíclica.</li>
+                </ul>
+                <p>🔁 Así, la <a href="UMEAD.html">UMEAD</a> se convierte en la unidad mínima observable en cualquier sistema adaptativo, desde reflejos celulares hasta estrategias cognitivas complejas.</p>
+                <p>🔄 Su génesis tiene cuatro fases:</p>
+                <ol>
+                    <li><strong>Excitación (\(\downarrow \to \uparrow\)):</strong> perturbación \(\alpha\) rompe la inercia.</li>
+                    <li><strong>Retracción (\(\uparrow \to \circlearrowleft\)):</strong> el sistema responde con memoria \(\beta\), iniciando un giro.</li>
+                    <li><strong>Resonancia (\(\circlearrowleft \to \infty\)):</strong> acoplamiento armónico entre \(\alpha\) y \(\beta\) que genera un ciclo estable (primer armónico).</li>
+                    <li><strong>Consolidación (\(\infty \to \square\)):</strong> estabilización en un nuevo régimen adaptativo.</li>
+                </ol>
+                <p>⚖️ En control, la <a href="UMEAD.html">UMEAD</a> es un <strong>controlador adaptativo con modelo interno</strong> que ha aprendido a compensar perturbaciones recurrentes minimizando el error.</p>
+            </section>
+
+            <section id="hiperpinon">
+                <h2>🔵 3. ⚙️ <a href="hiperpinnon.html">Hiperpiñón</a>: transmisión continuo-discreto</h2>
+                <p>⚙️ Mecanismo que engrana la dinámica continua con los eventos discretos. Se modela como:</p>
+                <div class="formula">\[ \phi(t) \equiv \phi_{\text{diente}} \pmod{2\pi} \quad \Rightarrow \quad \text{disparo} \]</div>
+                <p>🔄 Conservación del momento angular:</p>
+                <div class="formula">\[ I_{\text{sistema}}\dot{\gamma} = \tau_{\text{externo}} - \tau_{\text{adaptativo}}, \quad \tau_{\text{adapt}} = k\,\beta\,(1-e^{-U/U_{\text{máx}}}) \]</div>
+                <p>⚙️ El <a href="hiperpinnon.html">Hiperpiñón</a> puede <strong>desacoplarse</strong> temporalmente para permitir exploración sin disparos (zona neutra):</p>
+                <div class="formula">\[ |\phi - \phi_{\text{diente}}| > \delta \quad \Rightarrow \quad \text{sin disparo} \]</div>
+
+                <h3>📡 3.1 Aplicación del Hiperpiñón en sistemas reales</h3>
+                <p>⚙️ El modelo del <a href="hiperpinnon.html">Hiperpiñón</a> admite realizaciones concretas en distintos dominios de ingeniería. Un ejemplo detallado se encuentra en el <strong><a href="../ejemplos/T-Pelton.html">Caso de la turbina Pelton</a></strong>, donde el Hiperpiñón se interpreta como el mecanismo que convierte el giro del servomotor en desplazamiento lineal del inyector, y la coherencia \(C(t)\) mide la sincronización de la frecuencia eléctrica con la red.</p>
+                <p>🧩 Este ejemplo muestra cómo la condición topológica (\(T^2 = -I\)), la memoria \(\beta\) y la excitación mínima \(\varepsilon\) pueden traducirse a magnitudes físicas reales como el error de frecuencia, la posición de la válvula o la histéresis del sistema.</p>
+                <div class="blindaje">
+                    📌 <strong>Cláusula aclaratoria:</strong> “Las aplicaciones mencionadas son ejemplos conceptuales y no constituyen divulgación técnica suficiente para implementación industrial. El valor del modelo reside en su capacidad para describir la adaptación de fase en cualquier sistema con disonancia estructural.”
+                </div>
+            </section>
+
+            <section id="equilibrio">
+                <h2>🔵 4. ⚖️ Equilibrio dinámico: Estructura vs. Flexibilidad</h2>
+                <div class="nota-cafe">
+                    <p>⚖️ El objetivo no es maximizar la coherencia, sino mantener un equilibrio adaptativo entre <strong>estructura</strong> (coherencia, memoria) y <strong>flexibilidad</strong> (capacidad de deformarse ante lo nuevo). Demasiada coherencia lleva a rigidez o, en otras palabras, el dinamismo tiende a cero; demasiada flexibilidad lleva a niveles de complejidad muy altos.</p>
+                </div>
+                <h3>📊 4.1 Índice de adaptabilidad dinámica</h3>
+                <div class="formula">\[ H(t) = \frac{C(t)}{1 + \text{Var}(C)} \]</div>
+                <p>📈 \(\text{Var}(C)\) es la varianza en ventana deslizante. \(H\) alcanza valores elevados cuando la coherencia es alta y se mantiene estable, penalizando tanto la baja coherencia como la variabilidad excesiva. Así, \(H\) refleja la capacidad del sistema para permanecer en una zona de coherencia productiva sin caer en la rigidez ni en el desorden.</p>
+                <h3>🧩 4.2 Zona neutra del <a href="hiperpinnon.html">Hiperpiñón</a></h3>
+                <p>El parámetro \(\delta\) (histéresis) introduce flexibilidad: permite exploración sin disparar eventos.</p>
+            </section>
+
+            <section id="fenomenologia">
+                <h2>🔵 5. 🧩 Fenomenología de la reconfiguración</h2>
+                <p>El sistema reconoce dos tipos de eventos discretos (cruces de umbral):</p>
+                <div class="table-responsive">
+                    <table> <thead><tr><th>📌 Tipo</th><th>⚖️ Umbral</th><th>🌊 Fenómeno</th><th>🔄 Rol adaptativo</th></tr></thead>
+                    <tbody><tr><td>🔻 Defecto</td><td>\(-U\)</td><td>Espasmo, pérdida de sincronía</td><td>Corrección brusca</td></tr>
+                    <tr><td>🔺 Exceso</td><td>\(+U\)</td><td>Alta coherencia interna</td><td>Consolidación</td></tr>
+                    </tbody>
+                </table>
+                </div>
+                <p>Ambos son necesarios: los defectos evitan el caos, los excesos evitan la rigidez y permiten la evolución del repertorio adaptativo.</p>
+            </section>
+
+            <section id="contrastacion">
+                <h2>🔵 6. 🔬 Consistencia teórica y potencial de contrastación</h2>
+                <p>El modelo McDee‑11 se construye sobre teorías validadas y marcos formales consolidados: geometría fractal (Mandelbrot), sincronización de osciladores acoplados (Kuramoto), mecánica Lagrangiana y control adaptativo (MRAC). Esta genealogía garantiza la <strong>consistencia interna</strong> del formalismo.</p>
+                <p>Las relaciones entre los coeficientes \(\alpha\), \(\beta\), \(\gamma\), la coherencia \(C\) y los umbrales \(U\) constituyen una arquitectura conceptual que, una vez operacionalizadas las variables mediante protocolos de medición específicos en cada dominio (biomecánica, fisiología, procesamiento de señales), permitirá generar hipótesis contrastables. En su estado actual, McDee‑11 no formula predicciones empíricas cerradas, sino que ofrece un lenguaje matemático común para guiar el diseño experimental y la interpretación de fenómenos adaptativos.</p>
+                <div class="nota-cafe"><p>💡 <strong>Nota:</strong> La validez del modelo como herramienta científica no depende de una verificación inmediata, sino de su capacidad para organizar coherentemente observaciones y inspirar rutas de investigación que, en el futuro, podrán someterse a prueba.</p></div>
+            </section>
+
+            <section id="escenarios">
+                <h2>🔵 7. 📋 Escenarios operativos</h2>
+                <div class="blindaje">
+                    <p><strong>🔹 Caso de control hidráulico — regulación de frecuencia en turbina Pelton:</strong> En una central hidroeléctrica, las variaciones de carga eléctrica provocan un error de frecuencia \(\alpha(t)\) que el sistema debe compensar moviendo el inyector. El <a href="hiperpinnon.html">Hiperpiñón</a> actúa como la transmisión que convierte la orden del controlador en desplazamiento mecánico. La coherencia \(C(t)\) refleja qué tan sincronizada está la frecuencia del generador con la red (atractor \(\Omega\)). Cuando \(C(t)\) cruza los umbrales \(\pm U\), se activan acciones discretas de protección (deflector o corte de caudal). El índice de adaptabilidad \(H(t)\) monitorea la estabilidad del acoplamiento; si \(H\) decae, el modelo sugiere que los parámetros de sintonía (\(\lambda, k, \tau\)) necesitan reajuste. <strong>→ <a href="../ejemplos/T-Pelton.html">Ver caso completo desarrollado</a></strong></p>
+                </div>
+            </section>
+
+            <section id="epistemologia">
+                <h2>🔵 8. 🧭 Conciencia de límite: herramienta, no ontología</h2>
+                <div class="nota-cafe"><p>🧠 Este modelo es un <strong>andamio conceptual</strong>, no una verdad física. Las métricas, topologías y ecuaciones son herramientas para describir fenómenos, no propiedades del cerebro o del tejido. La distinción entre el mapa y el territorio es fundamental: podemos incorporar estructuras analíticas sin perder de vista que son lentes, no realidades últimas.</p></div>
+            </section>
+
+            <!-- GLOSARIO INTEGRADO CON 4 COLUMNAS Y ENLACES -->
+            <section id="glosario-integrado">
+                <h2>🔵 9. 📚 Glosario integrado del ecosistema McDee‑11</h2>
+                <p>Definiciones de los términos clave con su correspondencia en teoría de control y enlaces a más información.</p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr><th>📖 Término</th><th>🧠 Definición</th><th>⚙️ Correspondencia en control</th><th>🔗 Ver más</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Atractor</strong></td><td>Región de convergencia \(\Omega\)</td><td>Punto de equilibrio, ciclo límite</td><td><a href="#nucleo-formal">Núcleo</a></td></tr>
+                            <tr><td><strong>Coherencia (C)</strong></td><td>Sincronización entre subsistemas</td><td>Función de coste, métrica de sincronización</td><td><a href="#nucleo-formal">Núcleo</a></td></tr>
+                            <tr><td><strong>Desfase controlado (ε)</strong></td><td>Excitación mínima que evita certeza absoluta</td><td>Ruido persistente, sesgo positivo</td><td><a href="#capa-coherencia">Capa de coherencia</a></td></tr>
+                            <tr><td><strong>Hiperpiñón</strong></td><td>Engranaje continuo-discreto</td><td>Interfaz híbrida</td><td><a href="hiperpinnon.html">Hiperpiñón</a></td></tr>
+                            <tr><td><strong>McDee‑11</strong></td><td>Núcleo formal: T²=-I, α-β-γ, coherencia</td><td>Sistema de control adaptativo</td><td><a href="#nucleo-formal">Núcleo</a></td></tr>
+                            <tr><td><strong>UMEAD</strong></td><td>Unidad mínima de equilibrio adaptativo</td><td>Sistema adaptativo con modelo interno</td><td><a href="UMEAD.html">UMEAD</a></td></tr>
+                            <tr><td><strong>Variable Compleja</strong></td><td>Dualidad del sistema</td><td>Función de transferencia, fasor</td><td><a href="compleja.html">Formulación compleja</a></td></tr>
+                            <tr><td><strong>α, β, γ</strong></td><td>Acoplamiento externo, memoria, torsión</td><td>Entrada, estado adaptativo, momento angular</td><td><a href="#nucleo-formal">Núcleo formal</a></td></tr>
+                            <tr><td><strong>U (umbral)</strong></td><td>Valor crítico de coherencia</td><td>Zona muerta, histéresis</td><td><a href="#nucleo-formal">Núcleo formal</a></td></tr>
+                            <tr><td><strong>η (eficiencia adaptativa)</strong></td><td>Relación energía útil / metabólica</td><td>Índice de rendimiento</td><td><a href="#equilibrio">Equilibrio dinámico</a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="capa-coherencia">
+                <h2>🔵 10. 🎯 Capa de coherencia con desfase controlado</h2>
+                <div style="background:#f0f4ff; border-left:6px solid #3e92cc; padding:2rem; margin:2rem 0; border-radius:0 20px 20px 0;">
+                    <div class="formula">\[ C_{\text{medida}}(t) = \exp\left(-\sigma \int |\hat{\phi}(t) - \phi(t)| dt\right) \]</div>
+                    <div class="formula">\[ \dot{C}(t) = -\frac{1}{\tau}\left(C(t) - C_{\text{medida}}(t)\right) + \varepsilon \]</div>
+                    <p>ε > 0 impide la convergencia a certeza absoluta.</p>
+                </div>
+            </section>
+
+            <section id="reivindicaciones">
+                <h2>🔵 11. 📜 Reivindicaciones de propiedad intelectual</h2>
+                <details class="reivindicaciones" open>
+                    <summary>📜 Ver reivindicaciones completas (4 reivindicaciones)</summary>
+                    <div class="definition"><p><strong>Reivindicación 1:</strong> Método con T² = –I, coeficientes α‑β‑γ, operador ℋ, detección de coherencia.</p></div>
+                    <div class="definition"><p><strong>Reivindicación 2:</strong> Sistema que implementa el método.</p></div>
+                    <div class="definition"><p><strong>Reivindicación 3:</strong> Inclusión de término de excitación mínima en la coherencia.</p></div>
+                    <div class="definition"><p><strong>Reivindicación 4:</strong> Evolución de C(t) con ε constante positiva.</p></div>
+                </details>
+            </section>
+
+            <section id="fundamentos-complementarios">
+                <h2>🔵 12. 📖 Fundamentos teóricos complementarios</h2>
+                <h3>Fractalidad y escalamiento de la UMEAD</h3>
+                <p>La UMEAD funciona como patrón autosimilar en múltiples escalas, conectando con geometría fractal.</p>
+                <h3>Autopoiesis</h3>
+                <p>El sistema conserva su organización dinámica mediante la relación \(\Delta\beta = -k\Delta\alpha\).</p>
+                <h3>Osciladores acoplados (Kuramoto)</h3>
+                <p>La coherencia \(C(t)\) generaliza el parámetro de orden de Kuramoto con memoria e histéresis.</p>
+                <h3>Unificación Lagrangiana</h3>
+                <p>La métrica deformada \(g_{ij}(\beta,\gamma)\) convierte la dinámica en geometrodinámica adaptativa.</p>
+            </section>
+
+            <section id="documentos-asociados">
+                <h2>🔵 13. 📚 Documentos asociados</h2>
+                <ul><li><a href="bibliografia-pi.html">📚 Bibliografía</a></li><li><a href="../PI&FT.html">📘 Propiedad Intelectual</a></li></ul>
+            </section>
+
+            <section id="anexos">
+                <h2>🔵 14. 📎 Anexos</h2>
+                <div><a href="McDee-11-JSON.html">📄 Documento JSON</a> <a href="sonorizacion.html">🎵 Sonorización</a></div>
+            </section>
+
+            <div class="firma">
+                <p><strong>📜 Depósito de propiedad intelectual</strong><br>🔒 Actualizado 14 de Mayo de 2026.</p>
+                <p>🍥 NewroSTaiR-11 · 2026</p>
+            </div>
+        </main>
+
+        <!-- Sidebar derecho con estructura de árbol -->
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center; margin:15px 0 5px 0;"><img src="../img/qr_newrostair.png" alt="QR" style="width:180px; border-radius:15px;"></div>
+            <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>NewroSTaiR-11</strong></p>
+            <hr>
+            <div class="folder" style="margin-bottom:1rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold;">📑 En este documento</span><span class="module-toggle"></span></div>
+                <ul class="submenu">
+                    <li><a href="#origen">🔭 0. Origen</a></li>
+                    <li><a href="#flujo-sistema">🗺️ Flujo del sistema</a></li>
+                    <li><a href="#mapa-logico">🧭 Guía del ecosistema</a></li>
+                    <li><a href="#nucleo-formal">🧠 1. Núcleo formal</a></li>
+                    <li><a href="#umead">🧬 2. UMEAD</a></li>
+                    <li><a href="#hiperpinnon">⚙️ 3. Hiperpiñón</a></li>
+                    <li><a href="#equilibrio">⚖️ 4. Equilibrio</a></li>
+                    <li><a href="#fenomenologia">🧩 5. Fenomenología</a></li>
+                    <li><a href="#contrastacion">🔬 6. Consistencia</a></li>
+                    <li><a href="#escenarios">📋 7. Escenarios</a></li>
+                    <li><a href="#epistemologia">🧭 8. Límite</a></li>
+                    <li><a href="#glosario-integrado">📚 9. Glosario</a></li>
+                    <li><a href="#capa-coherencia">🎯 10. Coherencia</a></li>
+                    <li><a href="#reivindicaciones">📜 11. Reivindicaciones</a></li>
+                    <li><a href="#fundamentos-complementarios">📖 12. Fundamentos</a></li>
+                    <li><a href="#documentos-asociados">📚 13. Documentos</a></li>
+                    <li><a href="#anexos">📎 14. Anexos</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="folder">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold;">📘 Otros Nodos</span><span class="module-toggle"></span></div>
+                <ul class="submenu">
+                    <li><a href="../Elipso/Elipso.html">🛜 elipso Red</a></li>
+                    <li><a href="https://newrosboxy11.netlify.app">📦 NewroBoxy-11</a></li>
+                    <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                    <li><a href="../pagina-en-desarrollo.html">🤝 Manual de Integridad</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 Audio YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <ul><li><a href="#top">⬆️ Volver arriba</a></li></ul>
+        </aside>
+    </div>
+
+    <!-- Menús flotantes -->
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 Portal</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="MVO/OSD.html">01 · OMV</a></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · PI</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">Índice</a></li>
+                                <li><a href="McDee11-NFC.html" class="current-page">McDee-11</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">Anexo ADN</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="03-Investigacion-y-Desarrollo.html">03 · I+D</a></li>
+                        <li><a href="04-Modelo-de-Negocio.html">04 · Negocio</a></li>
+                        <li><a href="Humanidades.html">05 · Humanidades</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html">06 · Historia</a></li>
+                        <li><a href="07-Era-Humano-IA.html">07 · Humano-IA</a></li>
+                        <li><a href="08-Comunidad.html">08 · Comunidad</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html">NewroSync</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app">NewroBoxy</a></li>
+                        <li><a href="NewroHand-11.html">NewroHand</a></li>
+                    </ul>
+                </li>
+                <li><a href="../pagina-en-desarrollo.html">🤝 Principios</a></li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>McDee-11 · Núcleo</strong></p>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn">📑<br><small>Secciones</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div class="folder open">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none;">📑 Este documento</span><span class="module-toggle"></span></div>
+                <ul class="submenu">
+                    <li><a href="#origen">0. Origen</a></li>
+                    <li><a href="#flujo-sistema">Flujo</a></li>
+                    <li><a href="#mapa-logico">Guía</a></li>
+                    <li><a href="#nucleo-formal">1. Núcleo</a></li>
+                    <li><a href="#umead">2. UMEAD</a></li>
+                    <li><a href="#hiperpinnon">3. Hiperpiñón</a></li>
+                    <li><a href="#equilibrio">4. Equilibrio</a></li>
+                    <li><a href="#fenomenologia">5. Fenomenología</a></li>
+                    <li><a href="#contrastacion">6. Consistencia</a></li>
+                    <li><a href="#escenarios">7. Escenarios</a></li>
+                    <li><a href="#epistemologia">8. Límite</a></li>
+                    <li><a href="#glosario-integrado">9. Glosario</a></li>
+                    <li><a href="#capa-coherencia">10. Coherencia</a></li>
+                    <li><a href="#reivindicaciones">11. Reivindicaciones</a></li>
+                    <li><a href="#fundamentos-complementarios">12. Fundamentos</a></li>
+                    <li><a href="#documentos-asociados">13. Documentos</a></li>
+                    <li><a href="#anexos">14. Anexos</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="folder open">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none;">📘 Otros Nodos</span><span class="module-toggle"></span></div>
+                <ul class="submenu">
+                    <li><a href="../Elipso/Elipso.html">🛜 elipso</a></li>
+                    <li><a href="https://newrosboxy11.netlify.app">📦 NewroBoxy</a></li>
+                    <li><a href="NewroHand-11.html">🖐️ NewroHand</a></li>
+                    <li><a href="../pagina-en-desarrollo.html">🤝 Manual</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <ul><li><a href="#top">⬆️ Arriba</a></li></ul>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Toggle folders
+            document.querySelectorAll('.module-toggle').forEach(toggle => {
+                toggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const folder = this.closest('.folder');
+                    if (folder) folder.classList.toggle('open');
+                });
+            });
+
+            // Menús flotantes: cierre al hacer clic fuera o en el mismo botón
+            const leftBtn = document.getElementById('menuLeftBtn');
+            const leftMenu = document.getElementById('menuLeft');
+            const rightBtn = document.getElementById('menuRightBtn');
+            const rightMenu = document.getElementById('menuRight');
+
+            function closeAllMenus() {
+                if (leftMenu) leftMenu.classList.remove('visible');
+                if (rightMenu) rightMenu.classList.remove('visible');
+            }
+
+            if (leftBtn && leftMenu) {
+                leftBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (leftMenu.classList.contains('visible')) {
+                        leftMenu.classList.remove('visible');
+                    } else {
+                        closeAllMenus();
+                        leftMenu.classList.add('visible');
+                    }
+                });
+            }
+
+            if (rightBtn && rightMenu) {
+                rightBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (rightMenu.classList.contains('visible')) {
+                        rightMenu.classList.remove('visible');
+                    } else {
+                        closeAllMenus();
+                        rightMenu.classList.add('visible');
+                    }
+                });
+            }
+
+            document.addEventListener('click', function(event) {
+                if (leftMenu && !leftMenu.contains(event.target) && event.target !== leftBtn &&
+                    rightMenu && !rightMenu.contains(event.target) && event.target !== rightBtn) {
+                    closeAllMenus();
+                }
+            });
+
+            if (leftMenu) leftMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+            if (rightMenu) rightMenu.addEventListener('click', function(e) { e.stopPropagation(); });
+
+            // Síntesis de voz con limpieza de emojis
+            const synth = window.speechSynthesis;
+            const playBtn = document.getElementById('playPauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const statusDiv = document.getElementById('voiceStatus');
+            let utterance = null;
+            let isPlaying = false;
+
+            function limpiarTexto(texto) {
+                if (!texto) return '';
+                return texto.replace(/[\u{1F000}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F300}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1FA70}-\u{1FAFF}\u{1F680}-\u{1F6FF}\u{FE0F}\u{20E3}]/gu, '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+            }
+
+            function getText() {
+                let raw = '';
+                if (scopeSelect.value === 'intro') {
+                    const intro = document.querySelector('#origen');
+                    raw = intro ? intro.textContent : '';
+                } else if (scopeSelect.value === 'modulos') {
+                    const main = document.querySelector('main.content');
+                    raw = main ? main.textContent : '';
+                } else {
+                    raw = document.body.textContent;
+                }
+                return limpiarTexto(raw);
+            }
+
+            function createUtterance(text) {
+                const u = new SpeechSynthesisUtterance(text);
+                u.lang = 'es-ES';
+                const voices = synth.getVoices();
+                const sel = voiceSelect.value;
+                if (sel === 'fem_es') u.voice = voices.find(v => v.lang === 'es-ES' && v.name.includes('Female')) || null;
+                else if (sel === 'masc_es') u.voice = voices.find(v => v.lang === 'es-ES' && v.name.includes('Male')) || null;
+                else if (sel === 'fem_lat') u.voice = voices.find(v => (v.lang === 'es-MX' || v.lang === 'es-ES') && v.name.includes('Female')) || null;
+                else if (sel === 'masc_lat') u.voice = voices.find(v => (v.lang === 'es-MX' || v.lang === 'es-ES') && v.name.includes('Male')) || null;
+                u.onstart = () => { isPlaying = true; statusDiv.textContent = '🔊 Reproduciendo...'; if(playBtn) playBtn.querySelector('span:last-child').textContent = 'Pausa'; };
+                u.onend = () => { isPlaying = false; statusDiv.textContent = 'Listo'; if(playBtn) playBtn.querySelector('span:last-child').textContent = 'Escuchar'; };
+                return u;
+            }
+
+            if (playBtn) {
+                playBtn.addEventListener('click', () => {
+                    if (isPlaying) {
+                        synth.pause();
+                        isPlaying = false;
+                        statusDiv.textContent = 'Pausado';
+                        playBtn.querySelector('span:last-child').textContent = 'Reanudar';
+                    } else if (synth.paused) {
+                        synth.resume();
+                        isPlaying = true;
+                        statusDiv.textContent = '🔊 Reproduciendo...';
+                        playBtn.querySelector('span:last-child').textContent = 'Pausa';
+                    } else {
+                        if (utterance) utterance.onend = null;
+                        utterance = createUtterance(getText());
+                        synth.speak(utterance);
+                    }
+                });
+            }
+
+            if (stopBtn) {
+                stopBtn.addEventListener('click', () => {
+                    synth.cancel();
+                    isPlaying = false;
+                    statusDiv.textContent = 'Detenido';
+                    if (playBtn) playBtn.querySelector('span:last-child').textContent = 'Escuchar';
+                });
+            }
+
+            if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = () => {};
+        })();
+    </script>
+</body>
+</html>
