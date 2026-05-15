@@ -31,7 +31,7 @@
         .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
         .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
         .folder.open>.submenu { display:block; }
-        .submenu a { color:#1a4d6b; text-decoration:none; font-size:.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
         .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
@@ -128,7 +128,7 @@
             .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
             .accesibilidad-header-text { font-size:0.65rem; }
             .header-nav-quick { margin-top:0.2rem; gap:6px; }
-            .header-nav-quick a { font-size:.6rem; }
+            .header-nav-quick a { font-size:0.6rem; }
             .header-nav-quick a img { height:12px; }
             .header-imagen { padding:0.5rem 0.3rem; }
             body { padding-bottom:100px; }
@@ -230,19 +230,25 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <!-- Biblioteca de Sincronía como carpeta fija (conservada para futuras páginas) -->
+                <!-- 📚 Carpeta de la Biblioteca con enlaces a secciones del archivo real -->
                 <li class="folder open" id="biblio-sync-folder">
                     <div class="module-row">
-                        <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblioteca de Sincronía</span>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Ejes de la biblioteca (siempre visibles)" id="biblio-toggle"></span>
+                        <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca" id="biblio-toggle"></span>
                     </div>
                     <ul class="submenu" id="biblio-submenu">
-                        <li><a href="#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
-                        <li><a href="#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
-                        <li><a href="#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
-                        <li><a href="#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
-                        <li><a href="#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
-                        <li><a href="#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                        <!-- 
+                            ⚠️ Ajusta la ruta si la página no está en la raíz:
+                            - Si estás en raíz:        href="bibliografia-emojis.html#eje1"
+                            - Si estás en una subcarpeta: href="../bibliografia-emojis.html#eje1"
+                            - Con base absoluta (recomendado): href="/bibliografia-emojis.html#eje1"
+                        -->
+                        <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
                     </ul>
                 </li>
             </ul>
@@ -284,8 +290,7 @@
             <hr>
             <div class="folder" style="margin-bottom:1rem;">
                 <div class="module-row">
-                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default; font-size:1rem;">
-                        📑 En esta página</span>
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
                     <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
@@ -294,7 +299,7 @@
                 </ul>
             </div>
             <hr>
-            <h2 style="font-size:.8rem; margin-top:.8rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
+            <h2 style="font-size:1.1rem; margin-top:.9rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
             <div class="back-button">
                 <ul>
                     <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️​ Audio en Youtube</a></li>
@@ -345,16 +350,17 @@
                 </li>
                 <li class="folder open">
                     <div class="module-row">
-                        <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblioteca de Sincronía</span>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes"></span>
+                        <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca"></span>
                     </div>
                     <ul class="submenu">
-                        <li><a href="#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
-                        <li><a href="#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
-                        <li><a href="#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
-                        <li><a href="#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
-                        <li><a href="#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
-                        <li><a href="#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                        <!-- Ajusta las rutas según la ubicación de esta página (ver comentario en menú lateral fijo) -->
+                        <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
                     </ul>
                 </li>
             </ul>
@@ -369,8 +375,7 @@
             <hr>
             <div class="folder" style="margin-bottom:0.5rem;">
                 <div class="module-row">
-                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default; font-size:.8rem;">
-                        📑 En esta página</span>
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
                     <span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
@@ -379,7 +384,7 @@
                 </ul>
             </div>
             <hr>
-            <h2 style="font-size:.8rem;">🎶 Audios Procesados</h2>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
             <div class="back-button">
                 <ul>
                     <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
@@ -409,7 +414,7 @@
                 e.preventDefault();
                 const folder = this.closest('.folder');
                 if (folder) {
-                    if (folder.id === 'biblio-sync-folder') return;
+                    if (folder.id === 'biblio-sync-folder') return; // se mantiene siempre abierta
                     folder.classList.toggle('open');
                 }
             }
