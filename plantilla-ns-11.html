@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plantilla · NewroSTaiR-11</title>
+    <title>Plantilla Universal · NewroSTaiR-11</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         /* ===== PLANTILLA UNIFICADA (NO MODIFICAR ESTA SECCIÓN) ===== */
@@ -31,7 +31,7 @@
         .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
         .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
         .folder.open>.submenu { display:block; }
-        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
         .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
@@ -128,7 +128,7 @@
             .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
             .accesibilidad-header-text { font-size:0.65rem; }
             .header-nav-quick { margin-top:0.2rem; gap:6px; }
-            .header-nav-quick a { font-size:0.6rem; }
+            .header-nav-quick a { font-size:.6rem; }
             .header-nav-quick a img { height:12px; }
             .header-imagen { padding:0.5rem 0.3rem; }
             body { padding-bottom:100px; }
@@ -182,7 +182,7 @@
                     </a>
                 </nav>
             </div>
-            <a href="Elipso/Elipso-3.html" class="logo-main">
+            <a href="elipso/elipso.html" class="logo-main">
                 <img src="img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso">
             </a>
         </div>
@@ -190,7 +190,6 @@
 
     <div class="main-grid">
         <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
-            <!-- Botón Volver atrás -->
             <div class="back-button">
                 <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
             </div>
@@ -231,9 +230,24 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
+                <!-- Biblioteca de Sincronía como carpeta fija (conservada para futuras páginas) -->
+                <li class="folder open" id="biblio-sync-folder">
+                    <div class="module-row">
+                        <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblioteca de Sincronía</span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Ejes de la biblioteca (siempre visibles)" id="biblio-toggle"></span>
+                    </div>
+                    <ul class="submenu" id="biblio-submenu">
+                        <li><a href="#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
             </ul>
             <hr>
-            <p style="font-size:0.85rem;">📍 Estás en: <strong>Plantilla · NewroSTaiR-11</strong></p>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Plantilla Universal</strong></p>
         </aside>
 
         <main class="content">
@@ -270,39 +284,33 @@
             <hr>
             <div class="folder" style="margin-bottom:1rem;">
                 <div class="module-row">
-                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta plantilla</span>
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default; font-size:1rem;">
+                        📑 En esta página</span>
                     <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Zona editable</a></li>
-                </ul>
-                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Mantener esta estructura</a></li>
                 </ul>
             </div>
             <hr>
-            <h3>📘 Docs y otros Nodos</h3>
-            <ul style="list-style:none;">
-                <li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
-                <li><a href="Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li>
-                <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
-                <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
-                <li><a href="Principios-Redes.html">🤝 Manual de Integridad</a></li>
-            </ul>
-            <h2 style="font-size:1.1rem; margin-top:1.5rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
-            <ul style="list-style:none;">
-                <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">​🎶​​⏯️​ Audio en Youtube</a></li>
-                <li><a href="https://www.tiktok.com/@atresicoaureo">​🎶​​⏯️​ Audio en TikTok</a></li>
-            </ul>
+            <h2 style="font-size:.8rem; margin-top:.8rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️​ Audio en Youtube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶​⏯️​ Audio en TikTok</a></li>
+                </ul>
+            </div>
             <hr>
-            <ul><li><a href="#top">⬆️ Volver arriba</a></li></ul>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
         </aside>
     </div>
 
     <div class="menu-flotante-left">
         <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
-            <!-- Botón Volver atrás en menú flotante -->
             <div class="back-button">
                 <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
             </div>
@@ -335,6 +343,20 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
+                <li class="folder open">
+                    <div class="module-row">
+                        <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblioteca de Sincronía</span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li><a href="#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -347,24 +369,27 @@
             <hr>
             <div class="folder" style="margin-bottom:0.5rem;">
                 <div class="module-row">
-                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta plantilla</span>
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default; font-size:.8rem;">
+                        📑 En esta página</span>
                     <span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
                 </div>
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Zona editable</a></li>
-                </ul>
-                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">📋 Mantener esta estructura</a></li>
                 </ul>
             </div>
             <hr>
-            <h3 style="font-size:1.1rem; color:#1e4a6b;">📘 Docs y otros Nodos</h3>
-            <ul style="list-style:none;"><li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li><li><a href="Elipso/Elipso-3.html">🛜 elipso Red Colaborativa</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="Principios-Redes.html">🤝 Manual de Integridad</a></li></ul>
+            <h2 style="font-size:.8rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
             <hr>
-            <h2 style="font-size:1.1rem;">🎶 Audios Procesados</h2>
-            <ul><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li></ul>
-            <hr>
-            <ul><li><a href="#top">⬆️ Volver arriba</a></li></ul>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
         </div>
     </div>
 
@@ -383,17 +408,41 @@
                 e.stopPropagation();
                 e.preventDefault();
                 const folder = this.closest('.folder');
-                if (folder) folder.classList.toggle('open');
+                if (folder) {
+                    if (folder.id === 'biblio-sync-folder') return;
+                    folder.classList.toggle('open');
+                }
             }
             function handleToggleKey(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     e.stopPropagation();
                     const folder = this.closest('.folder');
-                    if (folder) folder.classList.toggle('open');
+                    if (folder) {
+                        if (folder.id === 'biblio-sync-folder') return;
+                        folder.classList.toggle('open');
+                    }
                 }
             }
             bindToggles();
+
+            function mantenerBibliotecaAbierta() {
+                const biblioFolder = document.getElementById('biblio-sync-folder');
+                const biblioSubmenu = document.getElementById('biblio-submenu');
+                if (biblioFolder && !biblioFolder.classList.contains('open')) {
+                    biblioFolder.classList.add('open');
+                }
+                if (biblioSubmenu) {
+                    biblioSubmenu.style.display = 'block';
+                }
+                const biblioToggle = document.getElementById('biblio-toggle');
+                if (biblioToggle) {
+                    biblioToggle.style.pointerEvents = 'none';
+                    biblioToggle.style.opacity = '0.4';
+                }
+            }
+            mantenerBibliotecaAbierta();
+            setTimeout(mantenerBibliotecaAbierta, 100);
 
             function actualizarArbolSegunPagina() {
                 const pathActual = window.location.pathname.replace(/\/$/, '');
@@ -401,7 +450,10 @@
                 document.querySelectorAll('.tree').forEach(tree => {
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     const folders = tree.querySelectorAll('.folder');
-                    folders.forEach(f => f.classList.remove('open'));
+                    folders.forEach(f => {
+                        if (f.id === 'biblio-sync-folder') return;
+                        f.classList.remove('open');
+                    });
                     let enlaceActual = null;
                     for (const enlace of tree.querySelectorAll('a')) {
                         const href = enlace.getAttribute('href');
@@ -413,7 +465,9 @@
                         enlaceActual.classList.add('current-page');
                         let elemento = enlaceActual.closest('.folder');
                         while (elemento) {
-                            elemento.classList.add('open');
+                            if (elemento.id !== 'biblio-sync-folder') {
+                                elemento.classList.add('open');
+                            }
                             elemento = elemento.parentElement.closest('.folder');
                         }
                     } else if (nombreArchivo === 'index.html' || nombreArchivo === 'index-tempo.html' || nombreArchivo === '') {
@@ -425,6 +479,7 @@
                         }
                     }
                 });
+                mantenerBibliotecaAbierta();
             }
             actualizarArbolSegunPagina();
 
@@ -451,7 +506,6 @@
                 if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll();
             });
 
-            // VOZ (texto genérico para la plantilla)
             const synth = window.speechSynthesis;
             const playPauseBtn = document.getElementById('playPauseBtn');
             const playPauseLabel = document.getElementById('playPauseLabel');
@@ -461,8 +515,8 @@
             const voiceStatus = document.getElementById('voiceStatus');
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
-            const textoIntro = `Plantilla para nuevas páginas de NewroSTaiR-11. Incluye toda la estructura común. Reemplace el contenido de la zona editable por su propio texto.`;
-            const textoCompleto = `Instrucciones: Copie y pegue su contenido dentro del bloque marcado como zona editable. No modifique el resto para mantener la coherencia del ecosistema.`;
+            const textoIntro = `Plantilla universal de NewroSTaiR-11. Use esta base para crear nuevas páginas respetando el ecosistema. Reemplace el contenido de la zona editable.`;
+            const textoCompleto = `Instrucciones: Copie y pegue su contenido dentro del bloque marcado. No modifique el resto de la estructura para mantener la coherencia visual y funcional.`;
 
             function obtenerTextoActual() {
                 const scope = scopeSelect.value;
