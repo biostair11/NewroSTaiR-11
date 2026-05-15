@@ -13,7 +13,7 @@
 
         .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
 
-        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; /* reducido de 1.5rem 1.2rem */ box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
         .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
         .sidebar-left>* { direction:ltr; }
         .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
@@ -22,7 +22,7 @@
         .tree { list-style:none; margin:0; padding-left:0; }
         .tree li { margin-bottom:0.3rem; position:relative; }
         .module-row { display:flex; align-items:center; gap:0.2rem; }
-        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; /* reducido de 0.5rem 0.8rem */ border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
         .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
         .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
@@ -31,7 +31,7 @@
         .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
         .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
         .folder.open>.submenu { display:block; }
-        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.9rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; /* reducido: vertical 0.3, horizontal 0.5 y left 1rem */ border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; /* reducido de 0.2rem */ font-weight:500; transition:all 0.2s; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
         .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
@@ -41,8 +41,19 @@
         .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
         .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
         .header-text-block { text-align:center; color:white; flex:1; }
-        .header-text-block h1 { font-size:2rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
-        .header-text-block p { font-size:1rem; color:#4cc9f0; margin:0.2rem 0; }
+        .header-text-block h1 { font-size:3.5rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.6rem; color:#bbdfec; margin:0.2rem 0; }
+ 
+        .header-text-block .accesibilidad-header-text {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-top: 0.8rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 0.6rem;
+            font-style: normal;
+            opacity: 1;        }
+
         .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
         .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
         .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
@@ -51,7 +62,6 @@
         .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
         section[id], div[id], section.modulo { scroll-margin-top:100px; }
 
-        /* Estilos para fórmulas, notas, etc. (opcionales) */
         .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
         .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
         .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
@@ -75,6 +85,30 @@
         .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
         .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
 
+        /* Botón volver atrás */
+        .back-button {
+            display:block;
+            text-align:center;
+            margin-bottom:1rem;
+        }
+        .back-button a {
+            display:inline-block;
+            background:#e6edf4;
+            color:#1a4d6b;
+            text-decoration:none;
+            font-weight:600;
+            padding:0.5rem 1rem;
+            border-radius:30px;
+            border:1px solid #cbdae6;
+            font-size:0.85rem;
+            transition:background 0.2s, border-color 0.2s;
+        }
+        .back-button a:hover {
+            background:#d4e0ea;
+            border-color:#9eb4c8;
+            color:#0a3146;
+        }
+
         @media (max-width:1000px) {
             .main-grid { grid-template-columns:1fr; }
             .sidebar-left,.sidebar-right { display:none; }
@@ -90,8 +124,9 @@
             .logo-main { flex:0 0 auto; padding:4px; }
             .logo-main img { max-height:65px !important; width:auto; }
             .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
-            .header-text-block h1 { font-size:1.2rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block h1 { font-size:1.95rem; margin-bottom:0.1rem; white-space:normal; }
             .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
             .header-nav-quick { margin-top:0.2rem; gap:6px; }
             .header-nav-quick a { font-size:0.6rem; }
             .header-nav-quick a img { height:12px; }
@@ -131,9 +166,12 @@
             </a>
             <div class="header-text-block">
                 <h1>NewroSTaiR-11</h1>
-                <p>Conocimiento Colaborativo</p>
-                <p>Complementario Con</p>
-                <p>Flexibilidad Estructurada</p>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    🧩 Este sitio web integra iconos semánticos como <strong>anclajes cognitivos</strong>.
+                    🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas
+                    📖 y promover una lectura inclusiva mediante el refuerzo pictográfico de conceptos clave. 🌈
+                </p>
                 <nav class="header-nav-quick">
                     <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
                         <img src="img/youtube-icon.png" alt="YouTube" style="height:20px; vertical-align:middle;">
@@ -152,7 +190,11 @@
 
     <div class="main-grid">
         <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
-            <h4>🗺️ Mini-mapa del sitio</h4>
+            <!-- Botón Volver atrás -->
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
             <ul class="tree">
                 <li class="folder open">
                     <div class="module-row">
@@ -260,6 +302,10 @@
     <div class="menu-flotante-left">
         <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
+            <!-- Botón Volver atrás en menú flotante -->
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
             <ul class="tree">
                 <li class="folder open">
                     <div class="module-row"><a href="index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a><span class="module-toggle"></span></div>
