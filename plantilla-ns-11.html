@@ -41,11 +41,11 @@
         .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
         .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
         .header-text-block { text-align:center; color:white; flex:1; }
-        .header-text-block h1 { font-size:3.5rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
-        .header-text-block p { font-size:1.6rem; color:#bbdfec; margin:0.2rem 0; }
+        .header-text-block h1 { font-size:3rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.1rem; color:#bbdfec; margin:0.2rem 0; }
  
         .header-text-block .accesibilidad-header-text {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #ffffff;
             margin-top: 0.8rem;
             line-height: 1.6;
@@ -230,19 +230,13 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <!-- 📚 Carpeta de la Biblioteca con enlaces a secciones del archivo real -->
-                <li class="folder open" id="biblio-sync-folder">
+                <!-- 📚 Carpeta de la Biblioteca (ahora plegable normalmente) -->
+                <li class="folder" id="biblio-sync-folder">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca" id="biblio-toggle"></span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span>
                     </div>
                     <ul class="submenu" id="biblio-submenu">
-                        <!-- 
-                            ⚠️ Ajusta la ruta si la página no está en la raíz:
-                            - Si estás en raíz:        href="bibliografia-emojis.html#eje1"
-                            - Si estás en una subcarpeta: href="../bibliografia-emojis.html#eje1"
-                            - Con base absoluta (recomendado): href="/bibliografia-emojis.html#eje1"
-                        -->
                         <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
                         <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
                         <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
@@ -258,14 +252,6 @@
 
         <main class="content">
             <!-- ========== INICIO DE LA ZONA EDITABLE ========== -->
-            <!-- 
-                ⚠️ INSTRUCCIONES ⚠️
-                Copie y pegue aquí el contenido específico de su página.
-                Puede usar cualquier etiqueta HTML (títulos, párrafos, imágenes, tablas, fórmulas).
-                Los estilos comunes (nota-cafe, formula, badge, firma) están disponibles.
-                Si necesita añadir estilos propios, hágalo dentro de un bloque <style> adicional.
-                No modifique nada fuera de esta sección para mantener la coherencia del ecosistema.
-            -->
             <div style="border: 3px dashed #e09d6f; background: #fefaf5; border-radius: 28px; padding: 3rem 2rem; text-align:
              center; margin: 2rem 0;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
@@ -299,7 +285,7 @@
                 </ul>
             </div>
             <hr>
-            <h2 style="font-size:1.1rem; margin-top:.9rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
+            <h2 style="font-size:.9rem; margin-top:.9rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
             <div class="back-button">
                 <ul>
                     <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️​ Audio en Youtube</a></li>
@@ -348,13 +334,12 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <li class="folder open">
+                <li class="folder">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca"></span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span>
                     </div>
                     <ul class="submenu">
-                        <!-- Ajusta las rutas según la ubicación de esta página (ver comentario en menú lateral fijo) -->
                         <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
                         <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
                         <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
@@ -414,7 +399,7 @@
                 e.preventDefault();
                 const folder = this.closest('.folder');
                 if (folder) {
-                    if (folder.id === 'biblio-sync-folder') return; // se mantiene siempre abierta
+                    // Sin restricciones, todas las carpetas se pliegan/despliegan
                     folder.classList.toggle('open');
                 }
             }
@@ -424,30 +409,14 @@
                     e.stopPropagation();
                     const folder = this.closest('.folder');
                     if (folder) {
-                        if (folder.id === 'biblio-sync-folder') return;
                         folder.classList.toggle('open');
                     }
                 }
             }
             bindToggles();
 
-            function mantenerBibliotecaAbierta() {
-                const biblioFolder = document.getElementById('biblio-sync-folder');
-                const biblioSubmenu = document.getElementById('biblio-submenu');
-                if (biblioFolder && !biblioFolder.classList.contains('open')) {
-                    biblioFolder.classList.add('open');
-                }
-                if (biblioSubmenu) {
-                    biblioSubmenu.style.display = 'block';
-                }
-                const biblioToggle = document.getElementById('biblio-toggle');
-                if (biblioToggle) {
-                    biblioToggle.style.pointerEvents = 'none';
-                    biblioToggle.style.opacity = '0.4';
-                }
-            }
-            mantenerBibliotecaAbierta();
-            setTimeout(mantenerBibliotecaAbierta, 100);
+            // La función mantenerBibliotecaAbierta ha sido eliminada.
+            // La biblioteca se comporta como cualquier otra carpeta.
 
             function actualizarArbolSegunPagina() {
                 const pathActual = window.location.pathname.replace(/\/$/, '');
@@ -456,7 +425,8 @@
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     const folders = tree.querySelectorAll('.folder');
                     folders.forEach(f => {
-                        if (f.id === 'biblio-sync-folder') return;
+                        // Todas las carpetas se cierran al cambiar de página,
+                        // incluida la biblioteca.
                         f.classList.remove('open');
                     });
                     let enlaceActual = null;
@@ -470,9 +440,8 @@
                         enlaceActual.classList.add('current-page');
                         let elemento = enlaceActual.closest('.folder');
                         while (elemento) {
-                            if (elemento.id !== 'biblio-sync-folder') {
-                                elemento.classList.add('open');
-                            }
+                            // Se abre la cadena de carpetas necesarias
+                            elemento.classList.add('open');
                             elemento = elemento.parentElement.closest('.folder');
                         }
                     } else if (nombreArchivo === 'index.html' || nombreArchivo === 'index-tempo.html' || nombreArchivo === '') {
@@ -484,7 +453,7 @@
                         }
                     }
                 });
-                mantenerBibliotecaAbierta();
+                // Ya no se fuerza la apertura de la biblioteca
             }
             actualizarArbolSegunPagina();
 
