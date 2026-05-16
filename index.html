@@ -327,11 +327,11 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <!-- 📚 Carpeta de la Biblioteca con enlaces a secciones del archivo real -->
-                <li class="folder open" id="biblio-sync-folder">
+                <!-- 📚 Carpeta de la Biblioteca (PLEGABLE, empieza cerrada) -->
+                <li class="folder" id="biblio-sync-folder">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca" id="biblio-toggle"></span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span>
                     </div>
                     <ul class="submenu" id="biblio-submenu">
                         <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
@@ -348,7 +348,6 @@
         </aside>
 
         <main class="content">
-            <!-- ========== INICIO DE LA ZONA EDITABLE (8 dodecágonos) ========== -->
             <section class="fase-Integra" id="modulo-estructura">
                 <div class="etiqueta etiqueta-Mandelbrot">ESTRUCTURA FLEXIBLE</div>
                 <div class="grid-hex" id="gridEstructura"></div>
@@ -362,7 +361,6 @@
                 ✦ YA ERES UN NODO AUTÓNOMO DE ESTA RED ✦<br>
                 <span style="font-size: 0.9rem;">Aquí encontrarás diversas formas de aportar a este proyecto que apuesta por la soberanía de la persona.</span>
             </button>
-            <!-- ========== FIN DE LA ZONA EDITABLE ========== -->
         </main>
 
         <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
@@ -379,7 +377,7 @@
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">🏠 Portal principal</a></li>
                     <li><a href="#modulo-estructura">📋 Estructura Flexible</a></li>
-                    <li><a href="#modulo-flexibilidad">📋 Flexibilida Estructurada</a></li>
+                    <li><a href="#modulo-flexibilidad">📋 Flexibilidad Estructurada</a></li>
                 </ul>
             </div>
             <hr>
@@ -432,10 +430,10 @@
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <li class="folder open">
+                <li class="folder" id="biblio-sync-folder-flotante">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
-                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar ejes de la biblioteca"></span>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span>
                     </div>
                     <ul class="submenu">
                         <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
@@ -464,7 +462,7 @@
                 <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
                     <li><a href="#">🏠 Portal principal</a></li>
                     <li><a href="#modulo-estructura">📋 Estructura Flexible</a></li>
-                    <li><a href="#modulo-flexibilidad">📋 Flexibilida Estructurada</a></li>
+                    <li><a href="#modulo-flexibilidad">📋 Flexibilidad Estructurada</a></li>
                 </ul>
             </div>
             <hr>
@@ -498,7 +496,7 @@
                 e.preventDefault();
                 const folder = this.closest('.folder');
                 if (folder) {
-                    if (folder.id === 'biblio-sync-folder') return;
+                    // Se eliminó la restricción que bloqueaba la biblioteca
                     folder.classList.toggle('open');
                 }
             }
@@ -508,30 +506,14 @@
                     e.stopPropagation();
                     const folder = this.closest('.folder');
                     if (folder) {
-                        if (folder.id === 'biblio-sync-folder') return;
+                        // Se eliminó la restricción que bloqueaba la biblioteca
                         folder.classList.toggle('open');
                     }
                 }
             }
             bindToggles();
 
-            function mantenerBibliotecaAbierta() {
-                const biblioFolder = document.getElementById('biblio-sync-folder');
-                const biblioSubmenu = document.getElementById('biblio-submenu');
-                if (biblioFolder && !biblioFolder.classList.contains('open')) {
-                    biblioFolder.classList.add('open');
-                }
-                if (biblioSubmenu) {
-                    biblioSubmenu.style.display = 'block';
-                }
-                const biblioToggle = document.getElementById('biblio-toggle');
-                if (biblioToggle) {
-                    biblioToggle.style.pointerEvents = 'none';
-                    biblioToggle.style.opacity = '0.4';
-                }
-            }
-            mantenerBibliotecaAbierta();
-            setTimeout(mantenerBibliotecaAbierta, 100);
+            // La función mantenerBibliotecaAbierta ya no existe – la biblioteca se comporta como cualquier carpeta
 
             function actualizarArbolSegunPagina() {
                 const pathActual = window.location.pathname.replace(/\/$/, '');
@@ -540,7 +522,7 @@
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     const folders = tree.querySelectorAll('.folder');
                     folders.forEach(f => {
-                        if (f.id === 'biblio-sync-folder') return;
+                        // Ahora también se cierra la biblioteca al cambiar de página
                         f.classList.remove('open');
                     });
                     let enlaceActual = null;
@@ -554,9 +536,7 @@
                         enlaceActual.classList.add('current-page');
                         let elemento = enlaceActual.closest('.folder');
                         while (elemento) {
-                            if (elemento.id !== 'biblio-sync-folder') {
-                                elemento.classList.add('open');
-                            }
+                            elemento.classList.add('open');
                             elemento = elemento.parentElement.closest('.folder');
                         }
                     } else if (nombreArchivo === 'index.html' || nombreArchivo === 'index-tempo.html' || nombreArchivo === '') {
@@ -568,11 +548,11 @@
                         }
                     }
                 });
-                mantenerBibliotecaAbierta();
+                // Ya no se fuerza la biblioteca a abrirse
             }
             actualizarArbolSegunPagina();
 
-            // ===== 8 DODECÁGONOS CORREGIDOS (orden del menú izquierdo) =====
+            // ===== 8 DODECÁGONOS (orden del menú izquierdo) =====
             const enlacesEstructura = [
                 { texto: '🔎 Origen, 🎯 Misión y 🔭 Visión', href: 'MVO/OSD.html' },
                 { texto: '💡 Propiedad Intelectual', href: 'PI&FT.html' },
@@ -590,7 +570,7 @@
             function generarHexagonos(contenedorId, enlaces) {
                 const contenedor = document.getElementById(contenedorId);
                 if (!contenedor) return;
-                contenedor.innerHTML = ''; // Limpiar por si acaso
+                contenedor.innerHTML = '';
                 enlaces.forEach(enlace => {
                     const divHex = document.createElement('div');
                     divHex.className = 'item-hex';
