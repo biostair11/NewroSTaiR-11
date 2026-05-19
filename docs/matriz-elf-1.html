@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla Universal · NewroSTaiR-11 · Matriz DSP completa</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== PLANTILLA UNIFICADA (NO MODIFICAR ESTA SECCIÓN) ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-size:3rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.1rem; color:#bbdfec; margin:0.2rem 0; }
+ 
+        .header-text-block .accesibilidad-header-text {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-top: 0.8rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 0.6rem;
+            font-style: normal;
+            opacity: 1;        }
+
+        .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
+        .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
+        .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
+        .header-nav-quick a img { height:18px; width:auto; display:block; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id], div[id], section.modulo { scroll-margin-top:100px; }
+
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:nowrap; white-space:nowrap; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+
+        /* Botón volver atrás */
+        .back-button {
+            display:block;
+            text-align:center;
+            margin-bottom:1rem;
+        }
+        .back-button a {
+            display:inline-block;
+            background:#e6edf4;
+            color:#1a4d6b;
+            text-decoration:none;
+            font-weight:600;
+            padding:0.5rem 1rem;
+            border-radius:30px;
+            border:1px solid #cbdae6;
+            font-size:0.85rem;
+            transition:background 0.2s, border-color 0.2s;
+        }
+        .back-button a:hover {
+            background:#d4e0ea;
+            border-color:#9eb4c8;
+            color:#0a3146;
+        }
+
+        /* Estilos específicos para la tabla DSP compacta */
+        .tabla-dsp {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            background-color: #ffffff;
+        }
+        .tabla-dsp th, .tabla-dsp td {
+            border: 1px solid #cbd5e1;
+            padding: 0.5rem 0.3rem;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .tabla-dsp th {
+            background-color: #e6efec;
+            color: #1d4a4a;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        .fila-ejemplo {
+            background-color: #fffde6;
+            font-weight: 500;
+        }
+        .nota-tecnica {
+            background: #eef2f0;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+        .col-freq {
+            white-space: nowrap;
+        }
+        .freq-number {
+            font-weight: 500;
+        }
+        .freq-unit {
+            font-size: 0.7rem;
+            display: block;
+            line-height: 1.2;
+        }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); }
+        }
+        @media (max-width:700px) {
+            .content { padding:1.2rem; }
+            .formula { font-size:1rem; padding:0.8rem; }
+            .tabla-dsp th, .tabla-dsp td { padding: 0.3rem 0.2rem; font-size: 0.7rem; }
+        }
+        @media (max-width:600px) {
+            .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:65px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.95rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
+            .header-nav-quick { margin-top:0.2rem; gap:6px; }
+            .header-nav-quick a { font-size:0.6rem; }
+            .header-nav-quick a img { height:12px; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; }
+            .voice-btn { font-size:0.7rem; min-width:45px; }
+            .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="intro">📖 Introducción</option>
+            <option value="completo">📄 Plantilla</option>
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="index.html" class="logo-main">
+                <img src="img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio">
+            </a>
+            <div class="header-text-block">
+                <h1>NewroSTaiR-11</h1>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    🧩 Este sitio web integra iconos semánticos como <strong>anclajes cognitivos</strong>.
+                    🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas
+                    📖 y promover una lectura inclusiva mediante el refuerzo pictográfico de conceptos clave. 🌈
+                </p>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
+                        <img src="img/youtube-icon.png" alt="YouTube" style="height:20px; vertical-align:middle;">
+                    </a>
+                    <a href="index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo">
+                        <img src="img/tiktok-icon.jpg" alt="TikTok" style="height:20px; vertical-align:middle;">
+                    </a>
+                </nav>
+            </div>
+            <a href="elipso/elipso.html" class="logo-main">
+                <img src="img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso">
+            </a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row">
+                        <a href="index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder">
+                    <div class="module-row">
+                        <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span>
+                    </div>
+                    <ul class="submenu" id="biblio-submenu">
+                        <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Plantilla Universal · Matriz DSP (completa)</strong></p>
+        </aside>
+
+        <main class="content">
+            <!-- ========== ZONA EDITABLE: TABLA DSP COMPLETA ========== -->
+            <h1 style="font-size:1.8rem; margin-bottom:0.5rem;">Matriz Central de Correspondencias Espectrales</h1>
+            <p style="margin-bottom:1rem;">Especificación técnica de calibración lineal (referencia 440 Hz) y constante de modulación binaural de 11 Hz. La fila destacada corresponde a la frecuencia original de <strong>396 Hz</strong>.</p>
+
+            <div style="overflow-x: auto; margin: 1.5rem 0;">
+                <table class="tabla-dsp">
+                    <thead>
+                        <tr>
+                            <th>Frec.<br>Original</th>
+                            <th>ELFO<br>(Hz)</th>
+                            <th>ELFAB<br>(Hz)</th>
+                            <th>ELFC<br>(Hz)</th>
+                            <th>ELFAC<br>(Hz)</th>
+                            <th>Ratio<br>ELFO</th>
+                            <th>Ratio<br>ELFC</th>
+                            <th>Ratio<br>ELFAB</th>
+                            <th>Ratio<br>ELFAC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td class="col-freq"><span class="freq-number">147</span><span class="freq-unit">Hz</span></td><td>416.1</td><td>405.1</td><td>435.0</td><td>446.0</td><td>0.946</td><td>0.989</td><td>0.921</td><td>1.014</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">174</span><span class="freq-unit">Hz</span></td><td>417.0</td><td>406.0</td><td>427.8</td><td>438.8</td><td>0.948</td><td>0.972</td><td>0.923</td><td>0.997</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">258</span><span class="freq-unit">Hz</span></td><td>419.1</td><td>408.1</td><td>438.0</td><td>449.0</td><td>0.953</td><td>0.995</td><td>0.928</td><td>1.020</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">285</span><span class="freq-unit">Hz</span></td><td>420.0</td><td>409.0</td><td>430.8</td><td>441.8</td><td>0.955</td><td>0.979</td><td>0.930</td><td>1.004</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">369</span><span class="freq-unit">Hz</span></td><td>422.1</td><td>411.1</td><td>441.0</td><td>452.0</td><td>0.960</td><td>1.002</td><td>0.934</td><td>1.027</td></tr>
+                        <tr class="fila-ejemplo"><td class="col-freq"><span class="freq-number">396</span><span class="freq-unit">Hz</span></td><td>423.0</td><td>412.0</td><td>433.8</td><td>444.8</td><td>0.961</td><td>0.986</td><td>0.936</td><td>1.011</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">417</span><span class="freq-unit">Hz</span></td><td>426.0</td><td>415.0</td><td>434.1</td><td>445.1</td><td>0.968</td><td>0.987</td><td>0.943</td><td>1.012</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">471</span><span class="freq-unit">Hz</span></td><td>427.8</td><td>416.8</td><td>417.0</td><td>428.0</td><td>0.972</td><td>0.948</td><td>0.947</td><td>0.973</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">528</span><span class="freq-unit">Hz</span></td><td>429.0</td><td>418.0</td><td>437.1</td><td>448.1</td><td>0.975</td><td>0.993</td><td>0.950</td><td>1.018</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">582</span><span class="freq-unit">Hz</span></td><td>430.8</td><td>419.8</td><td>420.0</td><td>431.0</td><td>0.979</td><td>0.955</td><td>0.954</td><td>0.980</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">639</span><span class="freq-unit">Hz</span></td><td>432.0</td><td>421.0</td><td>440.1</td><td>451.1</td><td>0.982</td><td>1.000</td><td>0.957</td><td>1.025</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">693</span><span class="freq-unit">Hz</span></td><td>433.8</td><td>422.8</td><td>423.0</td><td>434.0</td><td>0.986</td><td>0.961</td><td>0.961</td><td>0.986</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">714</span><span class="freq-unit">Hz</span></td><td>434.1</td><td>423.1</td><td>426.0</td><td>437.0</td><td>0.987</td><td>0.968</td><td>0.962</td><td>0.993</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">741</span><span class="freq-unit">Hz</span></td><td>435.0</td><td>424.0</td><td>416.1</td><td>427.1</td><td>0.989</td><td>0.946</td><td>0.964</td><td>0.971</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">825</span><span class="freq-unit">Hz</span></td><td>437.1</td><td>426.1</td><td>429.0</td><td>440.0</td><td>0.993</td><td>0.975</td><td>0.968</td><td>1.000</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">852</span><span class="freq-unit">Hz</span></td><td>438.0</td><td>427.0</td><td>419.1</td><td>430.1</td><td>0.995</td><td>0.953</td><td>0.970</td><td>0.978</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">936</span><span class="freq-unit">Hz</span></td><td>440.1</td><td>429.1</td><td>432.0</td><td>443.1</td><td>1.000</td><td>0.982</td><td>0.975</td><td>1.007</td></tr>
+                        <tr><td class="col-freq"><span class="freq-number">963</span><span class="freq-unit">Hz</span></td><td>441.0</td><td>430.0</td><td>422.1</td><td>433.1</td><td>1.002</td><td>0.960</td><td>0.977</td><td>0.984</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nota-tecnica">
+                <strong>🔍 Nota analítica:</strong><br>
+                • <strong>ELFO</strong> = Equivalencia Lineal de Frecuencia Original.<br>
+                • <strong>ELFAB</strong> = ELFO – 11 Hz (arrastre binaural por sustracción).<br>
+                • <strong>ELFC</strong> = Equivalencia Lineal de Frecuencia Complemento (obtenida por inversión posicional).<br>
+                • <strong>ELFAC</strong> = ELFC + 11 Hz.<br>
+                • Los <strong>ratios</strong> se calculan respecto a 440 Hz (p. ej., Ratio ELFO = ELFO / 440).<br>
+                • La constante <strong>11 Hz</strong> se fundamenta en la banda alfa de la neurociencia (asociada a atención y relajación).<br>
+                • La fila amarilla corresponde a la frecuencia <strong>396 Hz</strong>, usada como ejemplo de cálculo.
+            </div>
+            <!-- ========== FIN ZONA EDITABLE ========== -->
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center; margin:15px 0 5px 0;">
+                <img src="img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+            </div>
+            <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>NewroSTaiR-11</strong></p>
+            <hr>
+            <div class="folder" style="margin-bottom:1rem;">
+                <div class="module-row">
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
+                    <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
+                </div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">📋 Matriz DSP completa</a></li>
+                    <li><a href="#">📋 Tabla de correspondencias</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem; margin-top:.9rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️​ Audio en Youtube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶​⏯️​ Audio en TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
+        </aside>
+    </div>
+
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">01 · Origen, Misión y Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · Propiedad Intelectual</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice PI</a></li>
+                                <li><a href="McDee11-NFC.html">📐 McDee-11 (Completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li></ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+                <li class="folder">
+                    <div class="module-row">
+                        <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center; margin:10px 0;"><img src="img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:120px; border-radius:12px;"></div>
+            <p style="font-size:0.8rem; text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <div class="folder" style="margin-bottom:0.5rem;">
+                <div class="module-row">
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
+                    <span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
+                </div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">📋 Matriz DSP completa</a></li>
+                    <li><a href="#">📋 Tabla de correspondencias</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            function bindToggles() {
+                document.querySelectorAll('.module-toggle').forEach(toggle => {
+                    toggle.removeEventListener('click', handleToggleClick);
+                    toggle.removeEventListener('keydown', handleToggleKey);
+                    toggle.addEventListener('click', handleToggleClick);
+                    toggle.addEventListener('keydown', handleToggleKey);
+                });
+            }
+            function handleToggleClick(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                const folder = this.closest('.folder');
+                if (folder) {
+                    folder.classList.toggle('open');
+                }
+            }
+            function handleToggleKey(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const folder = this.closest('.folder');
+                    if (folder) {
+                        folder.classList.toggle('open');
+                    }
+                }
+            }
+            bindToggles();
+
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    const folders = tree.querySelectorAll('.folder');
+                    folders.forEach(f => {
+                        f.classList.remove('open');
+                    });
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) {
+                            elemento.classList.add('open');
+                            elemento = elemento.parentElement.closest('.folder');
+                        }
+                    } else if (nombreArchivo === 'index.html' || nombreArchivo === 'index-tempo.html' || nombreArchivo === '') {
+                        const portalFolder = tree.querySelector('.folder');
+                        if (portalFolder) {
+                            portalFolder.classList.add('open');
+                            const portalLink = portalFolder.querySelector('.module-link');
+                            if (portalLink) portalLink.classList.add('current-page');
+                        }
+                    }
+                });
+            }
+            actualizarArbolSegunPagina();
+
+            const menuLeft = document.getElementById('menuLeft');
+            const menuRight = document.getElementById('menuRight');
+            const btnLeft = document.getElementById('menuLeftBtn');
+            const btnRight = document.getElementById('menuRightBtn');
+            function closeAll() {
+                menuLeft.classList.remove('visible');
+                menuRight.classList.remove('visible');
+                localStorage.setItem('menuLeftState', 'hidden');
+                localStorage.setItem('menuRightState', 'hidden');
+            }
+            function toggleMenu(menu, btn, storageKey) {
+                const isVisible = menu.classList.contains('visible');
+                if (!isVisible) { closeAll(); menu.classList.add('visible'); localStorage.setItem(storageKey, 'visible'); }
+                else { menu.classList.remove('visible'); localStorage.setItem(storageKey, 'hidden'); }
+            }
+            if (localStorage.getItem('menuLeftState') === 'visible') menuLeft.classList.add('visible');
+            if (localStorage.getItem('menuRightState') === 'visible') menuRight.classList.add('visible');
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuLeft, btnLeft, 'menuLeftState'); });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuRight, btnRight, 'menuRightState'); });
+            document.addEventListener('click', (event) => {
+                if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll();
+            });
+
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playPauseLabel = document.getElementById('playPauseLabel');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const voiceStatus = document.getElementById('voiceStatus');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+
+            const textoIntro = `Matriz Central de Correspondencias Espectrales del método DSP. La tabla muestra las frecuencias originales, desplazamientos lineales, valores de arrastre binaural y cuatro ratios respecto a 440 Hz. La fila destacada corresponde a la frecuencia de 396 Hz.`;
+            const textoCompleto = `La tabla contiene dieciocho filas con todos los pares complementarios. Cada columna ofrece información precisa para la implementación del procesamiento digital de señales.`;
+
+            function obtenerTextoActual() {
+                const scope = scopeSelect.value;
+                if (scope === 'intro') return textoIntro;
+                else if (scope === 'completo') return textoCompleto;
+                else return textoIntro + ' ' + textoCompleto;
+            }
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces || voces.length === 0) return false;
+                const spanishVoices = voces.filter(v => v.lang.startsWith('es'));
+                const esES = spanishVoices.filter(v => v.lang === 'es-ES');
+                const esLat = spanishVoices.filter(v => v.lang !== 'es-ES');
+                function elegirVoz(lista, genero) {
+                    const patrones = { female: ['female', 'mujer'], male: ['male', 'hombre'] };
+                    const filtrada = lista.filter(v => patrones[genero].some(p => v.name.toLowerCase().includes(p)));
+                    if (filtrada.length) return filtrada.find(v => v.localService) || filtrada[0];
+                    return lista[0] || null;
+                }
+                voiceMap = {
+                    fem_es: elegirVoz(esES, 'female'), fem_lat: elegirVoz(esLat, 'female'),
+                    masc_es: elegirVoz(esES, 'male'), masc_lat: elegirVoz(esLat, 'male')
+                };
+                for (const [key, voz] of Object.entries(voiceMap)) {
+                    const option = voiceSelect.querySelector(`option[value="${key}"]`);
+                    if (option) {
+                        option.disabled = !voz;
+                        option.textContent = option.textContent.replace(' (no disponible)', '') + (voz ? '' : ' (no disponible)');
+                    }
+                }
+                if (!voiceMap[voiceSelect.value]) {
+                    const primera = Object.entries(voiceMap).find(([, v]) => v);
+                    if (primera) { voiceSelect.value = primera[0]; selectedVoice = primera[1]; }
+                } else selectedVoice = voiceMap[voiceSelect.value];
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible';
+                return true;
+            }
+            function actualizarInterfaz(estado, textoBoton) {
+                playPauseBtn.querySelector('span:first-child').textContent = textoBoton;
+                if (estado === 'reproduciendo') { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; }
+                else if (estado === 'pausado') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; }
+                else { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; }
+            }
+            construirVoiceMap();
+            synth.onvoiceschanged = construirVoiceMap;
+            voiceSelect.addEventListener('change', () => {
+                if (voiceMap[voiceSelect.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶');
+                }
+            });
+            function crearNuevaUtterance() {
+                const u = new SpeechSynthesisUtterance(obtenerTextoActual());
+                if (selectedVoice) { u.voice = selectedVoice; u.lang = selectedVoice.lang; }
+                u.rate = 0.95; u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo', '⏸️'); voiceStatus.textContent = 'Reproduciendo...'; };
+                u.onend = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Listo'; };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado', '▶'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo', '⏸️'); };
+                return u;
+            }
+            playPauseBtn.addEventListener('click', () => {
+                if (!isSpeaking && !isPaused) {
+                    if (synth.speaking) synth.cancel();
+                    if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz'; return; }
+                    utterance = crearNuevaUtterance();
+                    synth.speak(utterance);
+                } else if (isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume();
+            });
+            stopBtn.addEventListener('click', () => {
+                if (synth.speaking) synth.cancel();
+                isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Detenido';
+            });
+            scopeSelect.addEventListener('change', () => {
+                if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); }
+            });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+        })();
+    </script>
+</body>
+</html>
