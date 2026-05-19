@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Conversión Lineal Sincronizada - Método DSP</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #faf9f8;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #1e2a3a;
+      padding: 2rem 1.5rem;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: #1f3b3c;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: #4c6a6e;
+      margin-bottom: 2rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid #9bbf3a;
+    }
+    p {
+      margin-bottom: 1.2rem;
+      text-align: justify;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e6e7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th {
+      background-color: #f4f7f6;
+      color: #1d4a4a;
+      padding: 1.1rem 1rem;
+      font-weight: 600;
+      border-bottom: 2px solid #cbdcd9;
+      text-align: center;
+    }
+    td {
+      padding: 1.1rem 1rem;
+      border-bottom: 1px solid #eef2f1;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    /* Estilos cromáticos desaturados para el ciclo secuencial interconectado */
+    .grupo-a {
+      background-color: #f0f4f8; /* Azul pizarra suave */
+      color: #2e4a62;
+    }
+    .grupo-b {
+      background-color: #f5f0fa; /* Violeta lavanda suave */
+      color: #523a6d;
+    }
+    .grupo-c {
+      background-color: #f4faf6; /* Verde menta suave */
+      color: #2d5a43;
+    }
+
+    .label-grupo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.35rem;
+      margin-bottom: 0.25rem;
+    }
+    .label-a { background-color: #dbe4ee; color: #213547; }
+    .label-b { background-color: #eaddf5; color: #3c2456; }
+    .label-c { background-color: #daf2e6; color: #1b3d2b; }
+
+    .incremento {
+      font-weight: 600;
+      color: #617a7d;
+    }
+    .nota-metodo {
+      background-color: #f0f4f2;
+      padding: 1.2rem;
+      border-radius: 0.75rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e6e7;
+      font-size: 0.85rem;
+      text-align: center;
+      color: #7a9295;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Tabla de Conversión Lineal y Ciclos Estructurales</h1>
+  <div class="subtitle">Mapeo base con distribución secuencial intercalada de atractores (A-B-C)</div>
+  
+  <p>Esta especificación organiza la matriz fundamental a través de un ciclo recurrente. La nomenclatura y la asignación cromática de las filas siguen un orden secuencial continuo donde se transita de manera progresiva por cada familia, manteniendo la correspondencia exacta de los datos armónicos y el incremento constante de 3 Hz en la escala desplazada.</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Familia</th>
+          <th>Frecuencia Solfeggio Original</th>
+          <th>Solfeggio Lineal Desplazado</th>
+          <th>Incremento Secuencial</th>
+          <th>Frecuencia Complemento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grupo-a">
+          <td><span class="label-grupo label-a">Grupo A</span></td>
+          <td>174 Hz</td>
+          <td>417 Hz</td>
+          <td class="incremento">—</td>
+          <td>471 Hz</td>
+        </tr>
+        <tr class="grupo-b">
+          <td><span class="label-grupo label-b">Grupo B</span></td>
+          <td>285 Hz</td>
+          <td>420 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>582 Hz</td>
+        </tr>
+        <tr class="grupo-c">
+          <td><span class="label-grupo label-c">Grupo C</span></td>
+          <td>396 Hz <span>(Ut)</span></td>
+          <td>423 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>693 Hz</td>
+        </tr>
+
+        <tr class="grupo-a">
+          <td><span class="label-grupo label-a">Grupo A</span></td>
+          <td>417 Hz <span>(Re)</span></td>
+          <td>426 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>714 Hz</td>
+        </tr>
+        <tr class="grupo-b">
+          <td><span class="label-grupo label-b">Grupo B</span></td>
+          <td>528 Hz <span>(Mi)</span></td>
+          <td>429 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>825 Hz</td>
+        </tr>
+        <tr class="grupo-c">
+          <td><span class="label-grupo label-c">Grupo C</span></td>
+          <td>639 Hz <span>(Fa)</span></td>
+          <td>432 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>936 Hz</td>
+        </tr>
+
+        <tr class="grupo-a">
+          <td><span class="label-grupo label-a">Grupo A</span></td>
+          <td>741 Hz <span>(Sol)</span></td>
+          <td>435 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>147 Hz</td>
+        </tr>
+        <tr class="grupo-b">
+          <td><span class="label-grupo label-b">Grupo B</span></td>
+          <td>852 Hz <span>(La)</span></td>
+          <td>438 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>258 Hz</td>
+        </tr>
+        <tr class="grupo-c">
+          <td><span class="label-grupo label-c">Grupo C</span></td>
+          <td>963 Hz <span>(Si)</span></td>
+          <td>441 Hz</td>
+          <td class="incremento">+3 Hz</td>
+          <td>369 Hz</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nota-metodo">
+    <p><strong>Propiedad de transitabilidad recursiva:</strong> La disposición intercalada (A, B, C, A, B, C, A, B, C) evidencia cómo el sistema alterna dinámicamente sus atractores. Esta secuencia cíclica asegura que el flujo de información mantenga un equilibrio constante en sus tres dimensiones operativas mientras la escala se desplaza linealmente.</p>
+  </div>
+
+  <footer>
+    Documento de Calibración Sincronizada — Especificación del Método DSP<br>
+    Distribución intercalada y progresión de fase lineal continua.
+  </footer>
+</div>
+
+</body>
+</html>
