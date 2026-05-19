@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewroSync-11 · Especificación del algoritmo de procesado acústico</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== PLANTILLA UNIFICADA (NO MODIFICAR ESTA SECCIÓN) ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-size:3.25rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1rem; color:#4cc9f0; margin:0.2rem 0; }
+        .header-text-block .accesibilidad-header-text {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-top: 0.8rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            padding-top: 0.6rem;
+            font-style: normal;
+            opacity: 1;
+        }
+        .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
+        .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
+        .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
+        .header-nav-quick a img { height:18px; width:auto; display:block; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id], div[id], section.modulo { scroll-margin-top:100px; }
+
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:nowrap; white-space:nowrap; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+
+        /* Botón volver atrás */
+        .back-button {
+            display:block;
+            text-align:center;
+            margin-bottom:1rem;
+        }
+        .back-button a {
+            display:inline-block;
+            background:#e6edf4;
+            color:#1a4d6b;
+            text-decoration:none;
+            font-weight:600;
+            padding:0.5rem 1rem;
+            border-radius:30px;
+            border:1px solid #cbdae6;
+            font-size:0.85rem;
+            transition:background 0.2s, border-color 0.2s;
+        }
+        .back-button a:hover {
+            background:#d4e0ea;
+            border-color:#9eb4c8;
+            color:#0a3146;
+        }
+
+        /* ===== ESTILOS PROPIOS DEL DOCUMENTO (CONSERVADOS) ===== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .content h1 {
+            color: #b45a3b;
+            border-left: 4px solid #e09d6f;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .content h2 {
+            color: #1e4a6b;
+            border-bottom: 1px solid #cbd5e1;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+        }
+        .content h3 {
+            color: #c06c3e;
+            margin: 1.5rem 0 0.5rem;
+        }
+        .note {
+            background: #fff4e6;
+            border-left: 6px solid #b97341;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 20px 20px 0;
+        }
+        .step {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .step-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #0f3b5c;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        th, td {
+            border: 1px solid #cfdee9;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: #e6edf4;
+        }
+        footer {
+            margin-top: 3rem;
+            text-align: right;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); }
+        }
+        @media (max-width:700px) {
+            .content { padding:1.2rem; }
+            .formula { font-size:1rem; padding:0.8rem; }
+        }
+        @media (max-width:600px) {
+            .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:65px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.95rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
+            .header-nav-quick { margin-top:0.2rem; gap:6px; }
+            .header-nav-quick a { font-size:0.6rem; }
+            .header-nav-quick a img { height:12px; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; }
+            .voice-btn { font-size:0.7rem; min-width:45px; }
+            .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="intro">📖 Introducción</option>
+            <option value="completo">📄 Especificación</option>
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="index.html" class="logo-main">
+                <img src="../img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio">
+            </a>
+            <div class="header-text-block">
+                <h1>NewroSTaiR-11</h1>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    🧩 Este sitio web integra iconos semánticos como <strong>anclajes cognitivos</strong>.
+                    🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas
+                    📖 y promover una lectura inclusiva mediante el refuerzo pictográfico de conceptos clave. 🌈
+                </p>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
+                        <img src="../img/youtube-icon.png" alt="YouTube" style="height:20px; vertical-align:middle;">
+                    </a>
+                    <a href="index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo">
+                        <img src="../img/tiktok-icon.jpg" alt="TikTok" style="height:20px; vertical-align:middle;">
+                    </a>
+                </nav>
+            </div>
+            <a href="elipso/elipso-3.html" class="logo-main">
+                <img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso">
+            </a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row">
+                        <a href="index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>NewroSync-11 · Especificación</strong></p>
+        </aside>
+
+        <main class="content">
+            <div class="container">
+                <h1>🧬 NewroSync-11 · Especificación del algoritmo de procesado acústico</h1>
+                <p><em>Versión 1.0 – Basada en la evolución de BioTuner (v2.3, v2.4) y los fundamentos de McDee‑11.</em></p>
+                
+                <div class="note">
+                    <strong>🎯 Propósito:</strong> Este documento describe, paso a paso, el flujo de procesamiento de audio que convierte una canción o pista en una <strong>experiencia de reprogramación por coherencia de fase</strong>. No se generan tonos puros; se <strong>procesa el audio original</strong> añadiendo capas desplazadas en tono, filtradas y desfasadas, mientras se conserva la pista original como ancla unificadora. Si la fuente es monofónica, simplemente se duplica el canal cuatro veces para alimentar las capas L1, L2, R1 y R2; el efecto de coherencia se mantiene porque los desfases y los distintos ratios de pitch shift generan una estructura percibida muy similar a la de una pista estéreo.
+                </div>
+
+                <h2>📥 1. Entrada</h2>
+                <p>Un archivo de audio (WAV, MP3, FLAC, etc.) de cualquier duración, estéreo o monofónico. El archivo puede estar afinado a 440 Hz o a cualquier otra referencia; el algoritmo no asume una frecuencia base concreta.</p>
+
+                <h2>🔄 2. Flujo general del procesado</h2>
+                <div class="step">
+                    <div class="step-title">⚙️ Diagrama conceptual (textual)</div>
+                    <pre style="font-family: monospace; background: #1e2a3a; color: #e2e8f0; padding: 1rem; border-radius: 16px; overflow-x: auto;">
+Audio original (estéreo o mono → duplicado 4 veces si es mono)
+        │
+        ├───────────────────────────────────────────► (se conserva como pista unificadora)
+        │
+        └──► Separar canales L y R (mono)
+                │
+                ├─► Duplicar L → L1, L2
+                └─► Duplicar R → R1, R2
+                        │
+                        ├─► L1 → pitch shift × ratio (0.961) + ganancia negativa + filtros + offset + fase
+                        ├─► L2 → pitch shift × ratio (0.939) + ganancia negativa + filtros + offset + fase
+                        ├─► R1 → pitch shift × ratio (0.986) + ganancia negativa + filtros + offset + fase
+                        └─► R2 → pitch shift × ratio (1.100) + ganancia negativa + filtros + offset + fase
+                                │
+                                └─► Mezcla final (suma) con la pista original → estéreo de salida
+                    </pre>
+                </div>
+
+                <h3>📐 Formalización del pipeline</h3>
+                <p>El procesado completo puede expresarse como una superposición controlada de capas. Cada una de las cuatro señales procesadas sufre un desplazamiento frecuencial, un retardo temporal, una atenuación y un acondicionamiento espectral antes de sumarse a la señal original.</p>
+                <div class="formula">
+                    \( y(t) = x(t) + \sum_{i=1}^{4} G_i \cdot \Phi_i\!\left( P_i\!\left( x(t-\tau_i) \right) \right) \)
+                </div>
+                <p>donde:</p>
+                <ul>
+                    <li><strong>\( x(t) \)</strong> — señal original (ancla).</li>
+                    <li><strong>\( P_i \)</strong> — operador de pitch shift con el ratio correspondiente a la capa \( i \) (L1, L2, R1, R2).</li>
+                    <li><strong>\( \tau_i \)</strong> — retardo temporal progresivo (offset).</li>
+                    <li><strong>\( G_i \)</strong> — ganancia negativa (atenuación).</li>
+                    <li><strong>\( \Phi_i \)</strong> — operador de filtro (HPF, LPF, campana) y fase (0° o 180°).</li>
+                    <li><strong>\( y(t) \)</strong> — señal de salida después de la mezcla final.</li>
+                </ul>
+                <p>Esta arquitectura refleja los principios de <strong>atractores de fase</strong> y <strong>autosimilitud fractal</strong> documentados en la <a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a> y el <a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a> de la Biblioteca de Sincronía.</p>
+
+                <h2>🧬 3. Parámetros fijos (atractores de fase)</h2>
+                <p>Estos ratios se aplican como factores de reescalado de frecuencia (pitch shift). 
+                    Están inspirados en la lógica de los <strong>atractores de Lorenz</strong> 
+                    (<a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a>) 
+                    y actúan como <strong>atractores</strong> en el espacio de fases (ver McDee‑11). 
+                    Los valores de L1, L2, R1 y R2 son <strong>propuestas flexibles</strong>, no requisitos exactos: 
+                    al igual que los atractores biológicos o climáticos, el sistema no depende de una precisión 
+                    absoluta, sino de la relación cualitativa entre las capas.
+                </p>
+                <p>
+                    La analogía con las bases nitrogenadas (Citosina, Timina, Adenina, Guanina) se emplea 
+                    únicamente como <strong>isomorfismo topológico</strong> para facilitar la representación 
+                    conceptual de las cuatro capas; no implica una correspondencia bioquímica literal.
+                </p>
+                <p>
+                    Los arrastres de <strong>10 Hz</strong> y <strong>50 Hz</strong> mencionados en la tabla 
+                    están asociados a teorías de <strong>neuroplasticidad</strong> y a fenómenos de 
+                    <strong>arrastre binaural</strong>, áreas que complementan el marco de McDee‑11 y que 
+                    podrán integrarse formalmente en futuras secciones de la bibliografía.
+                </p>
+                
+                <table>
+                    <thead>
+                        <tr><th>Capa</th><th>Ratio (multiplicador de frecuencia)</th><th>Analogía ADN (isomorfismo)</th><th>Origen</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>L1</td><td>0.961</td><td>Citosina (C)</td><td>423 Hz / 440 Hz</td></tr>
+                        <tr><td>L2</td><td>0.939</td><td>Timina (T)</td><td>413 Hz / 440 Hz (arrastre 10 Hz)</td></tr>
+                        <tr><td>R1</td><td>0.986</td><td>Adenina (A)</td><td>433.8 Hz / 440 Hz (complemento)</td></tr>
+                        <tr><td>R2</td><td>1.100</td><td>Guanina (G)</td><td>483.8 Hz / 440 Hz (arrastre 50 Hz)</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>🎛️ 4. Parámetros personalizables (acoplamiento al usuario)</h2>
+                <p>Cada uno de los 4 canales procesados (<strong>L1, L2, R1, R2</strong>) puede ajustarse
+                     individualmente con los siguientes controles. El audio original <strong>no</strong> recibe 
+                     estos ajustes (se mantiene neutro).
+                    <br>
+                    Los filtros paso alto y paso bajo se aplican al final, a los 5 archivos de audio, a menos que 
+                    se requiera implementar frecuencias fuera de estos rangos.    
+                </p>
+                
+                <table>
+                    <thead><tr><th>Parámetro</th><th>Rango / valores</th><th>Descripción</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="badge">Ganancia</span></td><td>-∞ a 0 dB (por defecto -6 dB o -12 dB)</td><td>Atenuación aplicada al canal procesado. El original no se atenúa.</td></tr>
+                        <tr><td><span class="badge">Offset temporal</span></td><td>0 … t (ms) (retardos progresivos configurables)</td><td>Retardo al inicio del canal para crear espacialización, evitar enmascaramiento temporal y generar una estructura de autosimilitud fractal en el dominio del tiempo.</td></tr>
+                        <tr><td><span class="badge">Fase</span></td><td>0° o 180°</td><td>Inversión de fase para crear cancelación o refuerzo.</td></tr>
+                    </tbody>
+                </table>
+
+                <h2>🧩 5. Explicación paso a paso del algoritmo</h2>
+                
+                <div class="step">
+                    <div class="step-title">Paso 0 – Carga y preprocesado</div>
+                    <p>Se lee el archivo de audio y se convierte a una frecuencia de muestreo común (p.ej. 44100 Hz). Se mantiene en formato de punto flotante para evitar pérdida de calidad.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 1 – Separación de canales y duplicación</div>
+                    <p>Del estéreo se obtienen dos señales monofónicas: <strong>L(t)</strong> (canal izquierdo) y <strong>R(t)</strong> (canal derecho).  
+                    Cada una se duplica para obtener cuatro señales idénticas:  
+                    \( L_1(t) = L_2(t) = L(t) \) y \( R_1(t) = R_2(t) = R(t) \). Si la fuente es monofónica, el único canal se copia cuatro veces para alimentar L1, L2, R1 y R2.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 2 – Pitch shift (reasignación de frecuencia)</div>
+                    <p>A cada señal se le aplica un factor de reescalado de frecuencia multiplicando su contenido espectral por el ratio correspondiente.  
+                    Se utiliza un algoritmo de pitch shift de alta calidad (tipo <em>Rubber Band</em> o <em>SoundTouch</em>) que preserva la duración original.  
+                    Ejemplo: \( L_1'(t) = \text{pitch\_shift}(L(t),\, \text{ratio}=0.961) \).</p>
+                    <div class="formula">\( f_{\text{nueva}} = f_{\text{original}} \times \text{ratio} \)</div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 3 – Aplicación de ganancia negativa</div>
+                    <p>Cada señal procesada se multiplica por un factor de amplitud lineal equivalente a la atenuación en dB:</p>
+                    <div class="formula">\( A_{\text{lineal}} = 10^{\frac{\text{dB}}{20}} \)</div>
+                    <p>Ejemplo: -12 dB → factor ≈ 0.251. El audio original no se modifica.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 4 – Filtros (pasa altos, pasa bajos, campana)</div>
+                    <p>Se aplican a los 4 canales procesados (no al original) en el orden: HPF → LPF → campana (opcional).</p>
+                    <ul>
+                        <li><strong>HPF</strong> (89 Hz, 12 dB/oct): elimina subgraves y DC offset.</li>
+                        <li><strong>LPF</strong> (17.7 kHz, 12 dB/oct): suaviza el espectro y elimina frecuencias ultrasónicas.</li>
+                        <li><strong>Campana</strong>: refuerzo positivo en frecuencias diana (p.ej. 396 Hz, 693 Hz, etc.).</li>
+                    </ul>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 5 – Offset temporal (inicio escalonado)</div>
+                    <p>Cada canal procesado se desplaza en el tiempo añadiendo silencio al principio:  
+                    \( L_1''(t) = L_1'(t - \tau_1) \) para \( t \ge \tau_1 \), y cero en otro caso.  
+                    Los valores de \( \tau_i \) se eligen como una serie creciente (ej. 0, 2, 3, 5, 8… segundos) para distribuir las capas en el tiempo y enriquecer la textura sin solapamientos bruscos. Esta progresión, combinada con los ratios de frecuencia, genera una estructura de <strong>autosimilitud temporal</strong> que refleja principios de geometría fractal aplicados al procesamiento acústico (ver McDee‑11).</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 6 – Inversión de fase (opcional)</div>
+                    <p>Si se selecciona fase 180°, se multiplica la señal por -1: \( L_1'''(t) = - L_1''(t) \). Esto permite efectos de cancelación o refuerzo en la mezcla final.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 7 – Mezcla estéreo</div>
+                    <p>La salida estéreo se construye sumando:</p>
+                    <ul>
+                        <li><strong>Canal izquierdo de salida</strong> = \( L_{\text{original}}(t) + L_1'''(t) + L_2'''(t) \)</li>
+                        <li><strong>Canal derecho de salida</strong> = \( R_{\text{original}}(t) + R_1'''(t) + R_2'''(t) \)</li>
+                    </ul>
+                    <p>El audio original se mantiene sin procesar (ganancia 0 dB) para conservar la intención musical/emocional de la pista fuente.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-title">Paso 8 – Normalización y exportación</div>
+                    <p>Se busca el valor absoluto máximo de la señal mezclada y se escala todo el archivo para que el pico alcance 0 dBFS (sin saturación). Luego se guarda como WAV (o MP3) con la misma frecuencia de muestreo que la entrada.</p>
+                    <div class="formula">\( x_{\text{norm}}(t) = \frac{x(t)}{\max(|x(t)|)} \)</div>
+                </div>
+
+                <h2>📂 6. Relación con documentos anteriores</h2>
+                <ul>
+                    <li><strong><code>dsp_solfeggio2.pdf</code></strong>: Tablas de frecuencias, ratios y la idea de los cuatro archivos monofónicos.</li>
+                    <li><strong><code>biotuneRn9.html</code> / <code>biotuneRn10.html</code></strong>: Interfaz de usuario, registro de estado consciente y recomendación de frecuencias. El algoritmo de procesado que aquí se especifica es el backend que debería sustituir la simple reproducción de archivos.</li>
+                    <li><strong><code>parametrization_guide.html</code></strong>: Muestra los ratios y la posibilidad de personalizar ganancias, offsets y fases.</li>
+                    <li><strong>McDee‑11 / NewroSTaiR-11</strong>: El marco teórico de coherencia, atractores de fase y desfase controlado. Los ratios fijos son los <strong>atractores</strong>; los ajustes de usuario son el <strong>acoplamiento</strong>.</li>
+                </ul>
+
+                <h2>🖥️ 7. Implementación recomendada</h2>
+                <p>Dado que el pitch shift de alta calidad y los filtros IIR son computacionalmente intensivos, la mejor estrategia es un <strong>procesado offline</strong> (no en tiempo real). Se puede escribir un script en Python que:</p>
+                <ul>
+                    <li>Use <code>librosa</code> o <code>soundfile</code> para I/O.</li>
+                    <li>Use <code>pyrubberband</code> (wrapper de Rubber Band) para el pitch shift.</li>
+                    <li>Use <code>scipy.signal</code> para los filtros.</li>
+                    <li>Mezcle y normalice con <code>numpy</code>.</li>
+                </ul>
+                <p>Posteriormente, este motor puede ser invocado desde una interfaz web (backend Flask/FastAPI) que reciba el archivo original y los parámetros del usuario (volumen, offsets, fase, etc.) y devuelva el archivo procesado.</p>
+
+                <div class="note">
+                    <strong>🧠 Nota final:</strong> Este algoritmo no “genera” nueva música, sino que <strong>reprograma</strong> la existente aplicando una transformación basada en los atractores de fase de McDee‑11. El oyente sigue reconociendo la canción original, pero su percepción se ve modulada por las capas desplazadas, creando una experiencia de coherencia aumentada.
+                </div>
+
+                <footer>
+                    Documento de especificación · NewroSTaiR-11 · Mayo 2026<br>
+                    Basado en la evolución de BioTuner y los fundamentos de McDee‑11.
+                </footer>
+            </div>
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center; margin:15px 0 5px 0;">
+                <img src="../img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+            </div>
+            <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>NewroSTaiR-11</strong></p>
+            <hr>
+            <div class="folder" style="margin-bottom:1rem;">
+                <div class="module-row">
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
+                    <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
+                </div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">🧬 NewroSync-11</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem; margin-top:.9rem;">​🎶​🎚️​ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️​ Audio en Youtube</a>
+            </div>
+            <div class="back-button">
+                <a href="https://www.tiktok.com/@atresicoaureo">🎶​⏯️​ Audio en TikTok</a>
+            </div>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
+        </aside>
+    </div>
+
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
+            </div>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">01 · Origen, Misión y Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">02 · Propiedad Intelectual</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice PI</a></li>
+                                <li><a href="McDee11-NFC.html">📐 McDee-11 (Completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li></ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center; margin:10px 0;"><img src="../img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:120px; border-radius:12px;"></div>
+            <p style="font-size:0.8rem; text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <div class="folder" style="margin-bottom:0.5rem;">
+                <div class="module-row">
+                    <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span>
+                    <span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span>
+                </div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#">🧬 NewroSync-11</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a>
+            </div>
+            <div class="back-button">
+                <a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a>
+            </div>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            function bindToggles() {
+                document.querySelectorAll('.module-toggle').forEach(toggle => {
+                    toggle.removeEventListener('click', handleToggleClick);
+                    toggle.removeEventListener('keydown', handleToggleKey);
+                    toggle.addEventListener('click', handleToggleClick);
+                    toggle.addEventListener('keydown', handleToggleKey);
+                });
+            }
+            function handleToggleClick(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                const folder = this.closest('.folder');
+                if (folder) folder.classList.toggle('open');
+            }
+            function handleToggleKey(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const folder = this.closest('.folder');
+                    if (folder) folder.classList.toggle('open');
+                }
+            }
+            bindToggles();
+
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    const folders = tree.querySelectorAll('.folder');
+                    folders.forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) {
+                            elemento.classList.add('open');
+                            elemento = elemento.parentElement.closest('.folder');
+                        }
+                    } else if (nombreArchivo === 'index.html' || nombreArchivo === 'index-tempo.html' || nombreArchivo === '') {
+                        const portalFolder = tree.querySelector('.folder');
+                        if (portalFolder) {
+                            portalFolder.classList.add('open');
+                            const portalLink = portalFolder.querySelector('.module-link');
+                            if (portalLink) portalLink.classList.add('current-page');
+                        }
+                    }
+                });
+            }
+            actualizarArbolSegunPagina();
+
+            const menuLeft = document.getElementById('menuLeft');
+            const menuRight = document.getElementById('menuRight');
+            const btnLeft = document.getElementById('menuLeftBtn');
+            const btnRight = document.getElementById('menuRightBtn');
+            function closeAll() {
+                menuLeft.classList.remove('visible');
+                menuRight.classList.remove('visible');
+                localStorage.setItem('menuLeftState', 'hidden');
+                localStorage.setItem('menuRightState', 'hidden');
+            }
+            function toggleMenu(menu, btn, storageKey) {
+                const isVisible = menu.classList.contains('visible');
+                if (!isVisible) { closeAll(); menu.classList.add('visible'); localStorage.setItem(storageKey, 'visible'); }
+                else { menu.classList.remove('visible'); localStorage.setItem(storageKey, 'hidden'); }
+            }
+            if (localStorage.getItem('menuLeftState') === 'visible') menuLeft.classList.add('visible');
+            if (localStorage.getItem('menuRightState') === 'visible') menuRight.classList.add('visible');
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuLeft, btnLeft, 'menuLeftState'); });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuRight, btnRight, 'menuRightState'); });
+            document.addEventListener('click', (event) => {
+                if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll();
+            });
+
+            // VOZ
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playPauseLabel = document.getElementById('playPauseLabel');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const voiceStatus = document.getElementById('voiceStatus');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+
+            const textoIntro = `NewroSync-11: Especificación del algoritmo de procesado acústico. Un documento que describe el flujo de procesamiento de audio basado en los atractores de fase de McDee-11.`;
+            const textoCompleto = `NewroSync-11 procesa una pista de audio añadiendo cuatro capas desplazadas con ratios C, T, A, G, ganancia negativa, filtros, offset temporal y fase, para crear una experiencia de reprogramación por coherencia de fase. El algoritmo consta de ocho pasos: carga, separación de canales, pitch shift, ganancia, filtros, offset, fase, mezcla y normalización.`;
+            const textoTodo = textoIntro + ' ' + textoCompleto;
+
+            function obtenerTextoActual() {
+                const scope = scopeSelect.value;
+                if (scope === 'intro') return textoIntro;
+                else if (scope === 'completo') return textoCompleto;
+                else return textoTodo;
+            }
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces || voces.length === 0) return false;
+                const spanishVoices = voces.filter(v => v.lang.startsWith('es'));
+                const esES = spanishVoices.filter(v => v.lang === 'es-ES');
+                const esLat = spanishVoices.filter(v => v.lang !== 'es-ES');
+                function elegirVoz(lista, genero) {
+                    const patrones = { female: ['female', 'mujer'], male: ['male', 'hombre'] };
+                    const filtrada = lista.filter(v => patrones[genero].some(p => v.name.toLowerCase().includes(p)));
+                    if (filtrada.length) return filtrada.find(v => v.localService) || filtrada[0];
+                    return lista[0] || null;
+                }
+                voiceMap = {
+                    fem_es: elegirVoz(esES, 'female'), fem_lat: elegirVoz(esLat, 'female'),
+                    masc_es: elegirVoz(esES, 'male'), masc_lat: elegirVoz(esLat, 'male')
+                };
+                for (const [key, voz] of Object.entries(voiceMap)) {
+                    const option = voiceSelect.querySelector(`option[value="${key}"]`);
+                    if (option) {
+                        option.disabled = !voz;
+                        option.textContent = option.textContent.replace(' (no disponible)', '') + (voz ? '' : ' (no disponible)');
+                    }
+                }
+                if (!voiceMap[voiceSelect.value]) {
+                    const primera = Object.entries(voiceMap).find(([, v]) => v);
+                    if (primera) { voiceSelect.value = primera[0]; selectedVoice = primera[1]; }
+                } else selectedVoice = voiceMap[voiceSelect.value];
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible';
+                return true;
+            }
+            function actualizarInterfaz(estado, textoBoton) {
+                playPauseBtn.querySelector('span:first-child').textContent = textoBoton;
+                if (estado === 'reproduciendo') { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; }
+                else if (estado === 'pausado') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; }
+                else { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; }
+            }
+            construirVoiceMap();
+            synth.onvoiceschanged = construirVoiceMap;
+            voiceSelect.addEventListener('change', () => {
+                if (voiceMap[voiceSelect.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶');
+                }
+            });
+            function crearNuevaUtterance() {
+                const u = new SpeechSynthesisUtterance(obtenerTextoActual());
+                if (selectedVoice) { u.voice = selectedVoice; u.lang = selectedVoice.lang; }
+                u.rate = 0.95; u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo', '⏸️'); voiceStatus.textContent = 'Reproduciendo...'; };
+                u.onend = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Listo'; };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado', '▶'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo', '⏸️'); };
+                return u;
+            }
+            playPauseBtn.addEventListener('click', () => {
+                if (!isSpeaking && !isPaused) {
+                    if (synth.speaking) synth.cancel();
+                    if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz'; return; }
+                    utterance = crearNuevaUtterance();
+                    synth.speak(utterance);
+                } else if (isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume();
+            });
+            stopBtn.addEventListener('click', () => {
+                if (synth.speaking) synth.cancel();
+                isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Detenido';
+            });
+            scopeSelect.addEventListener('change', () => {
+                if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); }
+            });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+        })();
+    </script>
+</body>
+</html>
