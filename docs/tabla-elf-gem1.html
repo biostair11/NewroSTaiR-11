@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matriz Central de Calibración Completa - Método DSP</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #faf9f8;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #1e2a2f;
+      padding: 2rem 1.5rem;
+    }
+    .container {
+      max-width: 1350px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: #1f3b3c;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 1.05rem;
+      color: #4c6a6e;
+      margin-bottom: 2rem;
+      padding-left: 0.75rem;
+      border-left: 3px solid #9bbf3a;
+    }
+    p {
+      margin-bottom: 1.2rem;
+      text-align: justify;
+    }
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 0.75rem;
+      border: 1px solid #e2e6e7;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background-color: #f4f7f6;
+      color: #1d4a4a;
+      padding: 1rem 0.5rem;
+      font-weight: 600;
+      border-bottom: 2px solid #cbdcd9;
+      text-align: center;
+      line-height: 1.3;
+    }
+    td {
+      padding: 0.8rem 0.5rem;
+      border-bottom: 1px solid #dee6e4;
+      text-align: center;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .fila-ejemplo {
+      background-color: #fffde6 !important;
+      font-weight: 500;
+    }
+    tr:hover td {
+      background-color: #f9fefc;
+    }
+    .nota-sistemas {
+      background-color: #f0f4f2;
+      padding: 1.2rem;
+      border-radius: 0.75rem;
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+    }
+    .nota-sistemas strong {
+      color: #2c6e6b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Matriz Central de Correspondencias Espectrales</h1>
+  <div class="subtitle">Especificación técnica completa de calibración y mapeo de atractores lineales (Fijado a 440 Hz)</div>
+  
+  <p>La siguiente tabla constituye la especificación analítica integral del sistema de frecuencias. Cada fila representa un nodo operativo donde se han calculado de forma exacta los atractores de fase, las componentes de modulación por sustracción y adición basándose en la constante biológica de 11 Hz, y los coeficientes relacionales de escala con respecto al entorno patrón de 440 Hz.</p>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Frecuencia Complemento (Hz)</th>
+          <th>Nota Musical</th>
+          <th>Frecuencia Original (Hz)</th>
+          <th>Frecuencia Desplazada ELFO</th>
+          <th>Arrastre Binaural (Hz)</th>
+          <th>Frec Desplazada a ELFAB</th>
+          <th>Frec Complemento Hz (Swap)</th>
+          <th>ELFC (Hz)</th>
+          <th>ELFAC (Hz)</th>
+          <th>RATIO ELFO</th>
+          <th>RATIO ELFC</th>
+          <th>RATIO ELFAB</th>
+          <th>RATIO ELFAC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>741</td>
+          <td>—</td>
+          <td>147</td>
+          <td>416.1</td>
+          <td>11</td>
+          <td>405.1</td>
+          <td>741</td>
+          <td>435.0</td>
+          <td>446.0</td>
+          <td>0.946</td>
+          <td>0.989</td>
+          <td>0.921</td>
+          <td>1.014</td>
+        </tr>
+        <tr>
+          <td>471</td>
+          <td>—</td>
+          <td>174</td>
+          <td>417.0</td>
+          <td>11</td>
+          <td>406.0</td>
+          <td>471</td>
+          <td>427.8</td>
+          <td>438.8</td>
+          <td>0.948</td>
+          <td>0.972</td>
+          <td>0.923</td>
+          <td>0.997</td>
+        </tr>
+        <tr>
+          <td>852</td>
+          <td>Ut</td>
+          <td>258</td>
+          <td>419.1</td>
+          <td>11</td>
+          <td>408.1</td>
+          <td>852</td>
+          <td>438.0</td>
+          <td>449.0</td>
+          <td>0.953</td>
+          <td>0.995</td>
+          <td>0.928</td>
+          <td>1.020</td>
+        </tr>
+        <tr>
+          <td>582</td>
+          <td>Re</td>
+          <td>285</td>
+          <td>420.0</td>
+          <td>11</td>
+          <td>409.0</td>
+          <td>582</td>
+          <td>430.8</td>
+          <td>441.8</td>
+          <td>0.955</td>
+          <td>0.979</td>
+          <td>0.930</td>
+          <td>1.004</td>
+        </tr>
+        <tr>
+          <td>963</td>
+          <td>—</td>
+          <td>369</td>
+          <td>422.1</td>
+          <td>11</td>
+          <td>411.1</td>
+          <td>963</td>
+          <td>441.0</td>
+          <td>452.0</td>
+          <td>0.960</td>
+          <td>1.002</td>
+          <td>0.934</td>
+          <td>1.027</td>
+        </tr>
+        <tr class="fila-ejemplo">
+          <td>693</td>
+          <td>Mi</td>
+          <td>396</td>
+          <td>423.0</td>
+          <td>11</td>
+          <td>412.0</td>
+          <td>693</td>
+          <td>433.8</td>
+          <td>444.8</td>
+          <td>0.961</td>
+          <td>0.986</td>
+          <td>0.936</td>
+          <td>1.011</td>
+        </tr>
+        <tr>
+          <td>714</td>
+          <td>—</td>
+          <td>417</td>
+          <td>426.0</td>
+          <td>11</td>
+          <td>415.0</td>
+          <td>714</td>
+          <td>434.1</td>
+          <td>445.1</td>
+          <td>0.968</td>
+          <td>0.987</td>
+          <td>0.943</td>
+          <td>1.012</td>
+        </tr>
+        <tr>
+          <td>174</td>
+          <td>Fa</td>
+          <td>471</td>
+          <td>427.8</td>
+          <td>11</td>
+          <td>416.8</td>
+          <td>174</td>
+          <td>417.0</td>
+          <td>428.0</td>
+          <td>0.972</td>
+          <td>0.948</td>
+          <td>0.947</td>
+          <td>0.973</td>
+        </tr>
+        <tr>
+          <td>825</td>
+          <td>—</td>
+          <td>528</td>
+          <td>429.0</td>
+          <td>11</td>
+          <td>418.0</td>
+          <td>825</td>
+          <td>437.1</td>
+          <td>448.1</td>
+          <td>0.975</td>
+          <td>0.993</td>
+          <td>0.950</td>
+          <td>1.018</td>
+        </tr>
+        <tr>
+          <td>285</td>
+          <td>—</td>
+          <td>582</td>
+          <td>430.8</td>
+          <td>11</td>
+          <td>419.8</td>
+          <td>285</td>
+          <td>420.0</td>
+          <td>431.0</td>
+          <td>0.979</td>
+          <td>0.955</td>
+          <td>0.954</td>
+          <td>0.980</td>
+        </tr>
+        <tr>
+          <td>936</td>
+          <td>Sol</td>
+          <td>639</td>
+          <td>432.0</td>
+          <td>11</td>
+          <td>421.0</td>
+          <td>936</td>
+          <td>440.1</td>
+          <td>451.1</td>
+          <td>0.982</td>
+          <td>1.000</td>
+          <td>0.957</td>
+          <td>1.025</td>
+        </tr>
+        <tr>
+          <td>396</td>
+          <td>—</td>
+          <td>693</td>
+          <td>433.8</td>
+          <td>11</td>
+          <td>422.8</td>
+          <td>396</td>
+          <td>423.0</td>
+          <td>434.0</td>
+          <td>0.986</td>
+          <td>0.961</td>
+          <td>0.961</td>
+          <td>0.986</td>
+        </tr>
+        <tr>
+          <td>417</td>
+          <td>La</td>
+          <td>714</td>
+          <td>434.1</td>
+          <td>11</td>
+          <td>423.1</td>
+          <td>417</td>
+          <td>426.0</td>
+          <td>437.0</td>
+          <td>0.987</td>
+          <td>0.968</td>
+          <td>0.962</td>
+          <td>0.993</td>
+        </tr>
+        <tr>
+          <td>147</td>
+          <td>—</td>
+          <td>741</td>
+          <td>435.0</td>
+          <td>11</td>
+          <td>424.0</td>
+          <td>147</td>
+          <td>416.1</td>
+          <td>427.1</td>
+          <td>0.989</td>
+          <td>0.946</td>
+          <td>0.964</td>
+          <td>0.971</td>
+        </tr>
+        <tr>
+          <td>528</td>
+          <td>Si</td>
+          <td>825</td>
+          <td>437.1</td>
+          <td>11</td>
+          <td>426.1</td>
+          <td>528</td>
+          <td>429.0</td>
+          <td>440.0</td>
+          <td>0.993</td>
+          <td>0.975</td>
+          <td>0.968</td>
+          <td>1.000</td>
+        </tr>
+        <tr>
+          <td>258</td>
+          <td>—</td>
+          <td>852</td>
+          <td>438.0</td>
+          <td>11</td>
+          <td>427.0</td>
+          <td>258</td>
+          <td>419.1</td>
+          <td>430.1</td>
+          <td>0.995</td>
+          <td>0.953</td>
+          <td>0.970</td>
+          <td>0.978</td>
+        </tr>
+        <tr>
+          <td>639</td>
+          <td>—</td>
+          <td>936</td>
+          <td>440.1</td>
+          <td>11</td>
+          <td>429.1</td>
+          <td>639</td>
+          <td>432.0</td>
+          <td>443.1</td>
+          <td>1.000</td>
+          <td>0.982</td>
+          <td>0.975</td>
+          <td>1.007</td>
+        </tr>
+        <tr>
+          <td>369</td>
+          <td>—</td>
+          <td>963</td>
+          <td>441.0</td>
+          <td>11</td>
+          <td>430.0</td>
+          <td>369</td>
+          <td>422.1</td>
+          <td>433.1</td>
+          <td>1.002</td>
+          <td>0.960</td>
+          <td>0.977</td>
+          <td>0.984</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="nota-sistemas">
+    <p><strong>Nota analítica sobre la consistencia matemática:</strong> Toda la matriz conserva la simetría fractal del modelo. Observa cómo el valor ELFC se deriva buscando el equivalente lineal de la frecuencia complemento obtenida mediante inversión posicional (Swap), manteniendo un comportamiento predecible y balanceado en todo el espectro.</p>
+  </div>
+</div>
+
+</body>
+</html>
