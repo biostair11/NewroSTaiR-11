@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>elipso · Nivel 0 · Cookies · Registro · Miniaturas</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* --- Estilos base (fusión) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f5f3f0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            color: #1f36b9;
+            line-height: 1.7;
+        }
+        .main-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr 260px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            gap: 20px;
+        }
+        .sidebar-left, .sidebar-right {
+            background-color: #f0efea;
+            border-radius: 25px;
+            padding: 1.5rem 1.2rem;
+            margin-top: 2rem;
+            max-height: calc(100vh - 40px);
+            position: sticky;
+            top: 20px;
+            overflow-y: auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #ddd9d2;
+        }
+        .sidebar-left h2, .sidebar-right h2 {
+            font-size: 1.3rem;
+            color: #597092;
+            border-bottom: 1px solid #c4bcb0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .sidebar-left ul, .sidebar-right ul {
+            list-style: none;
+        }
+        .sidebar-left li, .sidebar-right li {
+            margin-bottom: 0.6rem;
+        }
+        .sidebar-left a, .sidebar-right a {
+            color: #1825d171;
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+        .sidebar-left a:hover, .sidebar-right a:hover {
+            background-color: #e3dfd7;
+            color: #2b5e4f;
+        }
+        .content {
+            background-color: #ffffff;
+            border: 1px solid #ddd9d2;
+            border-radius: 28px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            margin: 2rem 0;
+        }
+        .header-imagen {
+            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('wait.png');
+            background-size: cover;
+            background-position: center 30%;
+            padding: 3rem 2rem;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid #ddd9d2;
+        }
+        .header-imagen h1 {
+            font-size: 2.2rem;
+            font-weight: 450;
+            color: #FFFFF0;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.9);
+            margin-bottom: 0.5rem;
+        }
+        .header-imagen p {
+            font-size: 1.1rem;
+            color: #FDF6ED;
+            text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
+            font-style: italic;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .badge {
+            display: inline-block;
+            background: #4d6a5f;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        .nota-cafe {
+            background-color: #fef6e9;
+            border-left: 6px solid #d4a373;
+            padding: 1.3rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #4d3e30;
+        }
+        .definition {
+            background: #e6f3e6;
+            border-left: 6px solid #2e7d32;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .axiom {
+            background: #fff3e0;
+            border-left: 6px solid #e67e22;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .image-placeholder {
+            background-color: #f0f0f0;
+            border: 2px dashed #aaa;
+            border-radius: 16px;
+            padding: 2rem 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            transition: background 0.2s;
+        }
+        .image-placeholder:hover {
+            background-color: #e6e6e6;
+            border-color: #6a0dad;
+        }
+        .image-placeholder::before {
+            content: "🖼️ ";
+            font-size: 1.2rem;
+        }
+        .hash {
+            font-family: 'Courier New', monospace;
+            background: #edebe9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            word-break: break-all;
+        }
+        hr {
+            border: none;
+            border-top: 2px dotted #c9beb2;
+            margin: 2rem 0;
+        }
+
+        /* --- Estilos de la cuadrícula adaptativa --- */
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .modulo {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem 1.2rem;
+            box-shadow: 0 12px 28px -8px rgba(55, 32, 90, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(2px);
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .modulo h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.2rem;
+            color: #2c1c47;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .modulo h2 span {
+            font-size: 1rem;
+            background: #ece6ff;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            color: #4f378a;
+            font-weight: 400;
+        }
+        .enlace-lista {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.9rem;
+        }
+        .enlace-lista li a {
+            text-decoration: none;
+            color: #1e0f3a;
+            font-weight: 450;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.2s;
+        }
+        .enlace-lista li a:hover {
+            border-bottom-color: #9b7fd3;
+            color: #4f2d8f;
+        }
+        /* Miniaturas (favicons) */
+        .enlace-lista li a img.favicon {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            background: #f0f0f0;
+        }
+
+        /* Módulo expandible */
+        .modulo-expandible {
+            background: #fdfaff;
+            border-left: 4px solid #b28aff;
+            transition: all 0.4s ease;
+        }
+        .modulo-expandible.expandido {
+            background: #f2eaff;
+            border-left-width: 8px;
+            border-left-color: #8f5eff;
+            box-shadow: 0 18px 30px -8px #ac94e0;
+            transform: scale(1.02);
+        }
+        .subtemas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 1.2rem;
+        }
+        .subtema-btn {
+            background: #e8deff;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #3b2870;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            border: 1px solid transparent;
+        }
+        .subtema-btn:hover {
+            background: #d8c8ff;
+            border-color: #b28aff;
+            transform: translateY(-2px);
+        }
+        .contador-info {
+            font-size: 0.8rem;
+            color: #6e53a3;
+            margin-top: 0.5rem;
+            border-top: 1px dashed #cdbef0;
+            padding-top: 0.8rem;
+        }
+
+        /* Indicador de memoria (círculo violeta) y sección de intereses */
+        .memoria-indicador {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: rgba(106, 66, 155, 0.08);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(106, 66, 155, 0.2);
+            margin-top: 1rem;
+        }
+        .circulo-violeta {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #9b7fd3;
+            box-shadow: 0 0 8px #b79eff;
+            transition: all 0.2s ease;
+        }
+        .circulo-violeta.activo {
+            background: #7d3cff;
+            box-shadow: 0 0 14px #8f5eff;
+        }
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 180px;
+            background-color: #2b1b3e;
+            color: #f0e9ff;
+            text-align: center;
+            border-radius: 24px;
+            padding: 0.6rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -90px;
+            opacity: 0;
+            transition: opacity 0.2s;
+            font-size: 0.8rem;
+            font-weight: 300;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .reset-btn {
+            background: none;
+            border: 1px solid #cdb9ff;
+            color: #4a2c7a;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .reset-btn:hover {
+            background: #e3d6ff;
+            border-color: #9b7fd3;
+        }
+
+        /* Sección de temas de interés generada por cookies */
+        .intereses-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .interes-tag {
+            background: #d9c9ff;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #2b1b4e;
+            border: 1px solid #b39ddb;
+        }
+
+        /* Módulo de registro y redes sociales */
+        .registro-modulo {
+            background: #e8e2d8;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 1px solid #c9beb2;
+        }
+        .registro-modulo h3 {
+            color: #2b5e4f;
+            margin-bottom: 0.8rem;
+        }
+        .btn-registro {
+            background: #4d6a5f;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0.3rem;
+            border: 1px solid #2b5e4f;
+            transition: background 0.2s;
+        }
+        .btn-registro:hover {
+            background: #2b5e4f;
+        }
+        .redes-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .redes-icons a {
+            font-size: 2rem;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .redes-icons a:hover {
+            opacity: 1;
+        }
+
+        /* Área de consulta */
+        .input-area {
+            background: #f0efea;
+            border-radius: 32px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border: 1px solid #d0c2b0;
+        }
+        .input-area textarea {
+            width: 100%;
+            background: white;
+            border: 1px solid #c4bcb0;
+            border-radius: 24px;
+            padding: 1rem 1.5rem;
+            font-family: 'Georgia', serif;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            margin-bottom: 1rem;
+        }
+        .input-area button {
+            background: #4d6a5f;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            border: 1px solid #2b5e4f;
+        }
+        .input-area button:hover {
+            background: #2b5e4f;
+        }
+
+        /* Menús flotantes para móvil */
+        .menu-flotante-left, .menu-flotante-right {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            z-index: 1000;
+        }
+        .menu-flotante-left { left: 20px; }
+        .menu-flotante-right { right: 20px; }
+        .menu-flotante-btn {
+            background-color: #4d6a5f;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 60px;
+            height: 60px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.2;
+        }
+        .menu-desplegable {
+            display: none;
+            position: absolute;
+            bottom: 70px;
+            background-color: #f0efea;
+            border-radius: 20px;
+            padding: 1.2rem;
+            width: 220px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            border: 1px solid #c4bcb0;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .menu-desplegable.left { left: 0; }
+        .menu-desplegable.right { right: 0; }
+        .menu-desplegable.visible { display: block; }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-left, .sidebar-right {
+                display: none;
+            }
+            .menu-flotante-left, .menu-flotante-right {
+                display: block;
+            }
+        }
+
+        .firma {
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #b0a99f;
+            font-size: 0.9rem;
+            color: #4f4a45;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header con imagen y título -->
+    <header class="header-imagen">
+        <span class="badge">🌐 NIVEL 0 · COOKIES · REGISTRO</span>
+        <h1>elipso</h1>
+        <p>Cuadrícula adaptativa · Tus intereses en cookies · Únete para más</p>
+    </header>
+
+    <!-- Grid principal de tres columnas -->
+    <div class="main-grid">
+        <!-- COLUMNA IZQUIERDA: Información + intereses desde cookies -->
+        <aside class="sidebar-left">
+            <h2>🌀 Sobre la red</h2>
+            <div class="definition" style="margin-top:0;">
+                <strong>Memoria por cookies</strong><br>
+                <small>Guardamos tus clics de forma anónima para adaptar la cuadrícula</small>
+            </div>
+            <!-- Indicador de memoria (círculo violeta) -->
+            <div class="memoria-indicador">
+                <div class="circulo-violeta" id="circuloMemoria" title="Memoria local activa"></div>
+                <div class="tooltip">
+                    <span class="memoria-texto">🍪 memoria por cookies</span>
+                    <span class="tooltip-text" id="tooltipMemoria">Intereses guardados en cookies:</span>
+                </div>
+                <button class="reset-btn" id="resetMemoria">⟲ reiniciar cookies</button>
+            </div>
+
+            <!-- Sección de temas de interés generada por cookies -->
+            <h2 style="margin-top:1.5rem;">🔥 Tus temas de interés</h2>
+            <div id="interesesTags" class="intereses-tags">
+                <!-- Se llenará con JavaScript -->
+            </div>
+            <p style="font-size:0.8rem; color:#6b5a8a; margin-top:0.5rem;">(basado en tus clics en subtemas)</p>
+            <hr>
+
+            <h2>📊 Nodos activos</h2>
+            <p><span style="font-weight:bold;">312</span> nodos en total<br><span style="font-weight:bold;">18</span> nuevos hoy</p>
+            <hr>
+            <h2>📋 Niveles de acceso</h2>
+            <p><strong style="color:#7d3cff;">L0 · Memoria cookies</strong> (actual)<br>Observación anónima, cuadrícula adaptativa.</p>
+            <p><strong>L1 · Consulta pública</strong><br>Nodos temáticos, sin registro.</p>
+            <p><strong>L2 · Participación</strong><br>Registro, cromatografía personal.</p>
+        </aside>
+
+        <!-- COLUMNA CENTRAL: Cuadrícula adaptativa y contenido -->
+        <main class="content">
+            <!-- Área de consulta -->
+            <div class="input-area">
+                <h3 style="margin-bottom:1rem; color:#2b5e4f;">✍️ Qué quieres explorar?</h3>
+                <textarea placeholder="Ej: 'Observé que en diferentes culturas aparece el mismo patrón...'"></textarea>
+                <button>Enviar consulta</button>
+            </div>
+
+            <!-- Cuadrícula adaptativa con miniaturas (favicons) -->
+            <h2 style="margin-bottom:1rem;">📰 Cuadrícula adaptativa</h2>
+            <div class="topic-grid">
+                <!-- Módulo Actualidad -->
+                <div class="modulo">
+                    <h2>📰 Actualidad <span>en directo</span></h2>
+                    <ul class="enlace-lista" id="actualidad-links">
+                        <!-- Los favicons se cargarán con JS o se ponen manualmente -->
+                    </ul>
+                </div>
+
+                <!-- Módulo Ciencia -->
+                <div class="modulo">
+                    <h2>🔬 Ciencia <span>investigación</span></h2>
+                    <ul class="enlace-lista" id="ciencia-links"></ul>
+                </div>
+
+                <!-- Módulo Cultura base -->
+                <div class="modulo">
+                    <h2>🎭 Cultura <span>general</span></h2>
+                    <ul class="enlace-lista" id="cultura-links"></ul>
+                </div>
+
+                <!-- Módulo Cultura y Otros (expandible por interés) -->
+                <div class="modulo modulo-expandible" id="moduloExpandible">
+                    <h2>🌀 Cultura y Otros <span>+interés</span></h2>
+                    <div class="subtemas">
+                        <button class="subtema-btn" data-tema="jazz">🎺 Jazz</button>
+                        <button class="subtema-btn" data-tema="astro">🔭 Astronomía</button>
+                        <button class="subtema-btn" data-tema="poesia">✍️ Poesía</button>
+                    </div>
+                    <ul class="enlace-lista" id="enlacesCultura">
+                        <!-- Se llenará con JS -->
+                    </ul>
+                    <div class="contador-info" id="contadorDisplay">
+                        📊 <span id="jazzCount">0</span> jazz · <span id="astroCount">0</span> astro · <span id="poesiaCount">0</span> poesía
+                    </div>
+                    <p style="font-size:0.75rem; color:#9a89b5; margin-top:0.5rem;">
+                        <i>Haz clic en los botones o en los enlaces para simular interés. Con 3 clics en un tema, el módulo se expande.</i>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Nodos recientes -->
+            <h2 style="margin-top:2rem;">🕒 Nodos recientes</h2>
+            <div class="nota-cafe" style="padding:1rem 1.5rem;">
+                <p><strong>🧠 "La ley de correspondencia en la arquitectura medieval"</strong> · hace 2h · Cosmovisiones</p>
+                <p><strong>🌌 "Paralelismos entre el hermetismo y la física cuántica"</strong> · hace 5h · Cosmovisiones</p>
+                <p><strong>📡 "Últimos hallazgos del telescopio James Webb"</strong> · hace 1d · Ciencia</p>
+                <p><strong>🏛️ "El concepto de 'ágora' en la Grecia clásica"</strong> · hace 2d · Historia</p>
+            </div>
+
+            <div class="image-placeholder">Visualización de la red de nodos por afinidad temática</div>
+
+            <div class="firma">
+                <span class="hash">🔍 312 nodos · 18 nuevos · 12 visitantes ahora</span>
+            </div>
+        </main>
+
+        <!-- COLUMNA DERECHA: Registro, redes y documentos -->
+        <aside class="sidebar-right">
+            <h2>🔐 Ingreso / Registro</h2>
+            <div class="registro-modulo">
+                <h3>🌟 Únete a elipso</h3>
+                <p style="margin-bottom:1rem;">Accede a tu hipercubo personal y sincroniza tus intereses entre dispositivos.</p>
+                <button class="btn-registro">Iniciar sesión</button>
+                <button class="btn-registro">Registrarse</button>
+                <div style="margin:1.5rem 0 0.5rem;">o conéctate con:</div>
+                <div class="redes-icons">
+                    <a href="#" style="color:#1DA1F2;">🐦</a>
+                    <a href="#" style="color:#4267B2;">👤</a>
+                    <a href="#" style="color:#DB4437;">📧</a>
+                </div>
+                <p style="font-size:0.8rem; margin-top:1rem;">✅ Ventajas: sincronización, nodos privados, cromatografía personal.</p>
+            </div>
+
+            <h2>📘 Manual de Integridad</h2>
+            <div class="axiom" style="padding:0.8rem;">
+                <strong>Prueba 1:</strong> No prescripción. El sistema describe, no juzga.
+            </div>
+            <div class="axiom" style="padding:0.8rem; margin-top:0.5rem;">
+                <strong>Prueba 5:</strong> Soberanía de alias. Cada entorno aislado.
+            </div>
+            <hr>
+            <h2>🔗 Protocolo PIAE</h2>
+            <p style="font-size:0.9rem;">Handshake para agentes externos:</p>
+            <pre style="background:#e3dfd7; padding:0.5rem; border-radius:8px; font-size:0.75rem;">{identidad: "descriptiva"}</pre>
+            <hr>
+            <h2>📄 Documentos</h2>
+            <ul>
+                <li><a href="#">📜 Manifiesto del RCA</a></li>
+                <li><a href="#">🧬 Marco teórico (NewroSTaiR)</a></li>
+                <li><a href="#">🌀 Explorar por temáticas</a></li>
+                <li><a href="#">📊 Estadísticas de la red</a></li>
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Menús flotantes para móvil -->
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Info</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <ul>
+                <li><a href="#">Sobre la red</a></li>
+                <li><a href="#">Niveles de acceso</a></li>
+                <li><a href="#">Estadísticas</a></li>
+                <li><a href="#">Manual de integridad</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn">📚<br><small>Temas</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <ul>
+                <li><a href="#">Historia</a></li>
+                <li><a href="#">Religión</a></li>
+                <li><a href="#">Cosmovisiones</a></li>
+                <li><a href="#">Noticias</a></li>
+                <li><a href="#">Ciencia</a></li>
+                <li><a href="#">Arte</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // --- Funciones para manejo de cookies ---
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+
+            // Inicializar intereses desde cookie o por defecto
+            let intereses = { jazz: 0, astro: 0, poesia: 0 };
+            const cookieIntereses = getCookie('elipso_intereses');
+            if (cookieIntereses) {
+                try {
+                    intereses = JSON.parse(cookieIntereses);
+                } catch (e) {
+                    // si hay error, usar valores por defecto
+                }
+            }
+
+            // Elementos del DOM
+            const circulo = document.getElementById('circuloMemoria');
+            const tooltipSpan = document.getElementById('tooltipMemoria');
+            const moduloEx = document.getElementById('moduloExpandible');
+            const btnJazz = document.querySelector('[data-tema="jazz"]');
+            const btnAstro = document.querySelector('[data-tema="astro"]');
+            const btnPoesia = document.querySelector('[data-tema="poesia"]');
+            const spanJazz = document.getElementById('jazzCount');
+            const spanAstro = document.getElementById('astroCount');
+            const spanPoesia = document.getElementById('poesiaCount');
+            const resetBtn = document.getElementById('resetMemoria');
+            const interesesTags = document.getElementById('interesesTags');
+
+            // Función para guardar cookies y actualizar UI
+            function guardarCookies() {
+                setCookie('elipso_intereses', JSON.stringify(intereses), 30); // 30 días
+            }
+
+            // Actualizar toda la interfaz (contadores, clase expandido, círculo, tags)
+            function actualizarUI() {
+                spanJazz.textContent = intereses.jazz;
+                spanAstro.textContent = intereses.astro;
+                spanPoesia.textContent = intereses.poesia;
+
+                tooltipSpan.innerHTML = `🍪 Intereses: jazz ${intereses.jazz} · astronomía ${intereses.astro} · poesía ${intereses.poesia}`;
+
+                const algunExpandido = intereses.jazz >= 3 || intereses.astro >= 3 || intereses.poesia >= 3;
+                if (algunExpandido) {
+                    moduloEx.classList.add('expandido');
+                    circulo.classList.add('activo');
+                } else {
+                    moduloEx.classList.remove('expandido');
+                    circulo.classList.remove('activo');
+                }
+
+                // Actualizar tags de intereses
+                interesesTags.innerHTML = '';
+                for (let [tema, valor] of Object.entries(intereses)) {
+                    if (valor > 0) {
+                        const tag = document.createElement('span');
+                        tag.className = 'interes-tag';
+                        tag.textContent = `${tema === 'jazz' ? '🎺 Jazz' : tema === 'astro' ? '🔭 Astronomía' : '✍️ Poesía'} (${valor})`;
+                        interesesTags.appendChild(tag);
+                    }
+                }
+                if (interesesTags.children.length === 0) {
+                    interesesTags.innerHTML = '<span style="color:#9a89b5;">Aún no hay intereses</span>';
+                }
+
+                guardarCookies();
+            }
+
+            // Incrementar un tema
+            function incrementar(tema) {
+                if (intereses.hasOwnProperty(tema)) {
+                    intereses[tema] += 1;
+                    actualizarUI();
+                }
+            }
+
+            // Event listeners para botones
+            btnJazz.addEventListener('click', () => incrementar('jazz'));
+            btnAstro.addEventListener('click', () => incrementar('astro'));
+            btnPoesia.addEventListener('click', () => incrementar('poesia'));
+
+            // Reset
+            resetBtn.addEventListener('click', () => {
+                intereses = { jazz: 0, astro: 0, poesia: 0 };
+                actualizarUI();
+            });
+
+            // --- Cargar enlaces con miniaturas (favicons) ---
+            const enlacesPorCategoria = {
+                actualidad: [
+                    { nombre: 'BBC Mundo', url: 'https://www.bbc.com/mundo' },
+                    { nombre: 'El País', url: 'https://elpais.com/' },
+                    { nombre: 'Reuters', url: 'https://www.reuters.com/' },
+                    { nombre: 'Le Monde', url: 'https://www.lemonde.fr/' }
+                ],
+                ciencia: [
+                    { nombre: 'Nature', url: 'https://www.nature.com/' },
+                    { nombre: 'Science', url: 'https://www.science.org/' },
+                    { nombre: 'NASA', url: 'https://www.nasa.gov/' },
+                    { nombre: 'New Scientist', url: 'https://www.newscientist.com/' }
+                ],
+                cultura: [
+                    { nombre: 'British Museum', url: 'https://www.britishmuseum.org/' },
+                    { nombre: 'Filarmónica', url: 'https://www.filarmonica.org/' },
+                    { nombre: 'Artsy', url: 'https://www.artsy.net/' },
+                    { nombre: 'Poetry Foundation', url: 'https://www.poetryfoundation.org/' }
+                ],
+                culturaOtros: [
+                    { nombre: 'Apollo Theater (Jazz)', url: 'https://www.apollotheater.org/', tema: 'jazz' },
+                    { nombre: 'Observatorio Europeo Austral', url: 'https://www.eso.org/public/spain/', tema: 'astro' },
+                    { nombre: 'Academy of American Poets', url: 'https://poets.org/', tema: 'poesia' }
+                ]
+            };
+
+            function crearEnlaceConFavicon(item, temaAsociado = null) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.target = '_blank';
+                a.rel = 'noopener';
+                const img = document.createElement('img');
+                img.className = 'favicon';
+                img.src = `https://www.google.com/s2/favicons?domain=${new URL(item.url).hostname}&sz=16`;
+                img.alt = 'favicon';
+                img.onerror = () => { img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Ccircle cx=\'8\' cy=\'8\' r=\'8\' fill=\'%23ddd\'/%3E%3C/svg%3E'; };
+                a.appendChild(img);
+                a.appendChild(document.createTextNode(' ' + item.nombre));
+                li.appendChild(a);
+
+                // Si tiene tema asociado, al hacer clic incrementamos
+                if (temaAsociado) {
+                    a.addEventListener('click', (e) => {
+                        // No prevenimos, solo incrementamos
+                        incrementar(temaAsociado);
+                    });
+                }
+                return li;
+            }
+
+            function cargarEnlaces() {
+                const actualidadList = document.getElementById('actualidad-links');
+                enlacesPorCategoria.actualidad.forEach(item => actualidadList.appendChild(crearEnlaceConFavicon(item)));
+
+                const cienciaList = document.getElementById('ciencia-links');
+                enlacesPorCategoria.ciencia.forEach(item => cienciaList.appendChild(crearEnlaceConFavicon(item)));
+
+                const culturaList = document.getElementById('cultura-links');
+                enlacesPorCategoria.cultura.forEach(item => culturaList.appendChild(crearEnlaceConFavicon(item)));
+
+                const culturaOtrosList = document.getElementById('enlacesCultura');
+                enlacesPorCategoria.culturaOtros.forEach(item => culturaOtrosList.appendChild(crearEnlaceConFavicon(item, item.tema)));
+            }
+
+            // Inicializar
+            cargarEnlaces();
+            actualizarUI();
+
+            // Menús flotantes
+            function initMenu(btnId, menuId, storageKey) {
+                const btn = document.getElementById(btnId);
+                const menu = document.getElementById(menuId);
+                if (!btn || !menu) return;
+                const saved = getCookie(storageKey);
+                if (saved === 'visible') menu.classList.add('visible');
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menu.classList.toggle('visible');
+                    setCookie(storageKey, menu.classList.contains('visible') ? 'visible' : 'hidden', 30);
+                });
+                document.addEventListener('click', function() { menu.classList.remove('visible'); setCookie(storageKey, 'hidden', 30); });
+                menu.addEventListener('click', function(e) { e.stopPropagation(); });
+            }
+            initMenu('menuLeftBtn', 'menuLeft', 'menuLeftState');
+            initMenu('menuRightBtn', 'menuRight', 'menuRightState');
+        })();
+    </script>
+</body>
+</html>
