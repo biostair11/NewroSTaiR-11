@@ -41,11 +41,10 @@
         .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
         .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
         .header-text-block { text-align:center; color:white; flex:1; }
-        .header-text-block h1 { font-size:3.5rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
-        .header-text-block p { font-size:1.6rem; color:#bbdfec; margin:0.2rem 0; }
- 
+        .header-text-block h1 { font-size:3rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.1rem; color:#bbdfec; margin:0.2rem 0; }
         .header-text-block .accesibilidad-header-text {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #ffffff;
             margin-top: 0.8rem;
             line-height: 1.6;
@@ -61,11 +60,6 @@
 
         .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
         section[id], div[id], section.modulo { scroll-margin-top:100px; }
-
-        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
-        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
-        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
-        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
 
         .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
         .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
@@ -85,7 +79,6 @@
         .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
         .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
 
-        /* Botón volver atrás */
         .back-button {
             display:block;
             text-align:center;
@@ -117,7 +110,6 @@
         }
         @media (max-width:700px) {
             .content { padding:1.2rem; }
-            .formula { font-size:1rem; padding:0.8rem; }
         }
         @media (max-width:600px) {
             .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
@@ -224,13 +216,14 @@
                         <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
                         <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
                         <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="metodo-dsp-fc-dtp.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
                     </ul>
                 </li>
                 <li class="folder open">
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <!-- Biblioteca de Sincronía como carpeta fija -->
                 <li class="folder open" id="biblio-sync-folder">
                     <div class="module-row">
                         <span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblioteca de Sincronía</span>
@@ -405,6 +398,14 @@
                 <abbr title="Concepto central de NewroSTaiR‑11: la intención humana como dimensión fundamental medible y optimizable que unifica física, neurociencia e ingeniería de control.">Cuerda 12</abbr>.
             </p>
 
+            <!-- NUEVA REFERENCIA: CRITICALIDAD AUTOORGANIZADA -->
+            <div class="referencia" id="bak-tang-wiesenfeld">
+                <p class="ref-cita">Bak, P., Tang, C., & Wiesenfeld, K. (1987). Self-organized criticality: An explanation of 1/f noise. <em>Physical Review Letters</em>, 59(4), 381.</p>
+                <p class="ref-vinculo">
+                    🌀 Artículo seminal que demuestra cómo los sistemas complejos (montones de arena, terremotos, actividad cerebral) alcanzan espontáneamente un estado crítico donde surgen leyes de potencia y avalanchas. Base teórica para entender el <strong>acoplamiento entre escalas</strong> y la justificación de las progresiones fractales en el método DSP.
+                </p>
+            </div>
+
             <div class="referencia" id="lorenz">
                 <p class="ref-cita">Lorenz, E. N. (1963). Deterministic nonperiodic flow. <em>Journal of the Atmospheric Sciences</em>, 20(2), 130–141.</p>
                 <p class="ref-vinculo">
@@ -478,6 +479,30 @@
             <p class="eje-description">
                 🧠 Plasticidad cerebral, coherencia interhemisférica y procesamiento de la simetría. El ancla biológica de la rehabilitación post‑ictus y la arquitectura de doble lazo.
             </p>
+
+            <!-- NUEVA REFERENCIA: FFR -->
+            <div class="referencia" id="ffr">
+                <p class="ref-cita">Galambos, R., Makeig, S., & Talmachoff, P. J. (1981). A 40-Hz auditory potential recorded from the human scalp. <em>Proceedings of the National Academy of Sciences</em>, 78(4), 2643–2647.</p>
+                <p class="ref-vinculo">
+                    🔊 Estudio pionero que demuestra la capacidad del cerebro humano para seguir frecuencias de estímulos auditivos periódicos, generando potenciales evocados en fase (<strong>Frequency Following Response</strong>). Base neurofisiológica del arrastre binaural y de la respuesta a estímulos rítmicos, utilizada en el método DSP.
+                </p>
+            </div>
+
+            <!-- NUEVA REFERENCIA: Ruido café -->
+            <div class="referencia" id="ruido-cafe">
+                <p class="ref-cita">Szendro, P., Vincze, G., & Szasz, A. (2001). Pink-noise behaviour of the human electroencephalogram. <em>Physical Review E</em>, 64(5), 051912.</p>
+                <p class="ref-vinculo">
+                    🎛️ Investiga cómo el ruido rosa y el <strong>ruido café (1/f²)</strong> aparecen en registros electroencefalográficos y cómo ciertos estímulos acústicos con estas propiedades pueden inducir estados de calma y concentración. Fundamenta el uso del ruido café como capa de anclaje subconsciente en el pipeline DSP.
+                </p>
+            </div>
+
+            <!-- NUEVA REFERENCIA: Percepción fractal -->
+            <div class="referencia" id="percepcion-fractal">
+                <p class="ref-cita">Taylor, R. P. (2006). Reduction of physiological stress using fractal art and architecture. <em>Leonardo</em>, 39(3), 245–251.</p>
+                <p class="ref-vinculo">
+                    🧠 Investigación que muestra cómo la exposición a patrones fractales (presentes en la naturaleza) reduce el estrés y activa regiones cerebrales asociadas al placer estético. Apoya la hipótesis de que el cerebro está “sintonizado” con la autosimilitud, reforzando la justificación de las secuencias fractales en el método DSP.
+                </p>
+            </div>
 
             <div class="referencia" id="hebb">
                 <p class="ref-cita">Hebb, D. O. (1949). <em>The Organization of Behavior: A Neuropsychological Theory</em>. Nueva York: Wiley.</p>
@@ -595,6 +620,22 @@
             <p class="eje-description">
                 ⚙️ Control adaptativo, procesamiento digital de señales e interacción humano‑máquina. El puente entre la teoría dinámica y la implementación en tiempo real del ecosistema McDee‑11.
             </p>
+
+            <!-- NUEVA REFERENCIA: Sonidos de objetos geométricos -->
+            <div class="referencia" id="sonidos-geometricos">
+                <p class="ref-cita">Traube, C., & Depalle, P. (2004). Modal analysis and synthesis of a Tibetan singing bowl. <em>Proceedings of the International Conference on Digital Audio Effects (DAFx)</em>.</p>
+                <p class="ref-vinculo">
+                    🔔 Analiza la riqueza espectral de objetos resonantes complejos (cuencos tibetanos, campanas), mostrando cómo la geometría y el material generan inharmonicidad y patrones fractales en el tiempo. Fundamenta el uso de <strong>octaedros de cobre</strong> como fuente de estímulos no lineales en el método DSP.
+                </p>
+            </div>
+
+            <!-- NUEVA REFERENCIA: Ritmos fractales en la música -->
+            <div class="referencia" id="ritmos-fractales">
+                <p class="ref-cita">Estudio sobre el baterista Jeff Porcaro (Toto) – Max Planck Institute.</p>
+                <p class="ref-vinculo">
+                    🎵 Se descubrió que tanto el ritmo como la intensidad de los golpes seguían un patrón fractal, con autosimilitud en diferentes escalas temporales. Evidencia de que la percepción humana de “naturalidad” rítmica se asocia a estructuras fractales, apoyando la elección de progresiones como 2‑3‑5‑8 en el método DSP.
+                </p>
+            </div>
 
             <div class="referencia" id="wiener">
                 <p class="ref-cita">Wiener, N. (1948). <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Cambridge: MIT Press.</p>
@@ -864,7 +905,10 @@
                 </li>
                 <li class="folder open">
                     <div class="module-row"><a href="Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
-                    <ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li></ul>
+                    <ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="metodo-dsp-fc-dtp.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
+                    </ul>
                 </li>
                 <li class="folder open">
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
@@ -1045,7 +1089,7 @@
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
             const textoIntro = `Biblioteca de Sincronía del proyecto NewroSTaiR-11. Una genealogía intelectual estructurada en seis ejes temáticos: Física y Sistemas Dinámicos, Neurociencia e Integración Bilateral, Ingeniería de Control y Sistemas Híbridos, Filosofía de la Biología y Biosemiótica, I+D y Ciencias Modernas, y Humanidades, Filosofía y Tradiciones Sapienciales.`;
-            const textoCompleto = `Eje 1: Física, Geometría y Sistemas Dinámicos, con referencias a Lorenz, Poincaré, Arnold, Strogatz, Abraham y Shaw, Kuramoto, Dirac y Smale. Eje 2: Neurociencia e Integración Bilateral, con Hebb, Gazzaniga, Taub, Swinnen, Merzenich, Wolpert, Tognoli y Kelso, y nuevas referencias sobre autoestimulación sensoriomotora de Shore, Lenhardt, Oohashi, Lundberg y Westman. Eje 3: Ingeniería de Control y Sistemas Híbridos, con Wiener, Åström y Murray, Kalman, Kuramoto edición revisada, Oppenheim y Schafer, Asimov, y Lee y Seshia. Eje 4: Filosofía de la Biología y Biosemiótica, con Maturana y Varela, Hoffmeyer, Thompson, Uexküll y Oyama. Eje 5: I+D y Ciencias Modernas, con Holland, Benkler y Floridi. Eje 6: Humanidades, Filosofía y Tradiciones Sapienciales, con Merleau-Ponty, Zhuangzi y Kandinsky.`;
+            const textoCompleto = `Eje 1: Física, Geometría y Sistemas Dinámicos, con referencias a Bak-Tang-Wiesenfeld, Lorenz, Poincaré, Arnold, Strogatz, Abraham y Shaw, Kuramoto, Dirac y Smale. Eje 2: Neurociencia e Integración Bilateral, con FFR, ruido café, percepción fractal, Hebb, Gazzaniga, Taub, Swinnen, Merzenich, Wolpert, Tognoli y Kelso, y autoestimulación sensoriomotora. Eje 3: Ingeniería de Control y Sistemas Híbridos, con sonidos de objetos geométricos, ritmos fractales, Wiener, Åström, Kalman, Kuramoto, Oppenheim, Asimov y Lee. Eje 4: Filosofía de la Biología y Biosemiótica. Eje 5: I+D y Ciencias Modernas. Eje 6: Humanidades.`;
 
             function obtenerTextoActual() {
                 const scope = scopeSelect.value;
