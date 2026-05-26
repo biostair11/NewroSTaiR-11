@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="theme-color" content="#0d1117" />
+  <title>NewroPhome-11 · Estabilidad del Hogar</title>
+  <style>
+    /* ========== ESTILOS ========== */
+    :root {
+      --bg-color: #0d1117;
+      --panel-bg: rgba(22, 27, 34, 0.85);
+      --border-color: rgba(48, 54, 61, 0.8);
+      --text-main: #c9d1d9;
+      --text-muted: #8b949e;
+      --status-al-dia: #2ea043;
+      --status-pendiente: #d29922;
+      --status-proximo: #d29922;
+      --status-urgente: #f0883e;
+      --status-vencido: #f85149;
+      --filter-highlight: rgba(31, 111, 235, 0.5);
+      --shadow: 0 4px 16px rgba(0,0,0,0.4);
+      --cancelar-color: #4a6fa5;
+      --skip-btn-bg: #1f6feb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      overscroll-behavior: none;
+    }
+
+    .lock-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-color);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      z-index: 1000; gap: 16px;
+    }
+    .lock-screen.hidden { display: none; }
+    .lock-screen h2 { color: var(--text-main); }
+    .lock-screen input {
+      background: var(--panel-bg); border: 1px solid var(--border-color);
+      color: var(--text-main); padding: 10px 16px; border-radius: 12px;
+      font-size: 16px; text-align: center; width: 200px; margin: 4px 0;
+    }
+    .lock-screen button {
+      background: var(--status-al-dia); border: none;
+      color: white; padding: 10px 24px; border-radius: 12px;
+      font-size: 16px; cursor: pointer; width: 220px; /* mismo ancho */
+    }
+    .lock-screen .error-msg { color: var(--status-vencido); font-size: 14px; min-height: 20px; }
+    .lock-screen .blocked-msg { color: var(--status-proximo); font-size: 14px; }
+
+    /* Botón "No necesito clave" destacado */
+    .skip-btn {
+      background: var(--skip-btn-bg);
+      border: none;
+      color: white;
+      padding: 10px 24px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      width: 220px;
+      margin-top: 8px;
+      transition: background 0.2s;
+    }
+    .skip-btn:hover {
+      background: #388bfd;
+    }
+
+    .reset-btn {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 220px;
+    }
+
+    .app-layout {
+      width: 100%; max-width: 1000px;
+      display: flex; gap: 24px; flex-direction: column; padding: 16px;
+    }
+
+    /* Header siempre horizontal */
+    .app-header {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 16px;
+      z-index: 60;
+      width: 100%;
+    }
+    .header-logo {
+      width: 40%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .header-logo img.logo-header,
+    .header-logo span.logo-header {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid var(--border-color);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--panel-bg);
+      font-size: 22px;
+    }
+    .header-title {
+      width: 35%;
+      text-align: center;
+      font-weight: 700;
+      font-size: clamp(1rem, 4vw, 1.3rem);
+      color: var(--text-main);
+    }
+    .header-title span {
+      background: linear-gradient(135deg, #58a6ff, #bc8cff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .header-actions {
+      width: 25%;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .header-icon-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 8px;
+      transition: background 0.2s;
+      line-height: 1;
+    }
+    .header-icon-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+
+    .categorias-titulo {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 8px 8px;
+      color: var(--text-muted);
+    }
+
+    .status-grid {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;
+      background: var(--panel-bg); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 16px; backdrop-filter: blur(8px);
+      position: sticky; top: 100px; z-index: 50;
+    }
+
+    .grid-item {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text-muted); transition: all 0.3s ease;
+      cursor: pointer; padding: 8px 4px; border-radius: 12px; text-align: center;
+      position: relative;
+    }
+    .grid-item:hover { background: rgba(255,255,255,0.05); }
+
+    .grid-icon {
+      font-size: 28px; padding: 8px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.03); display: flex; align-items: center;
+      justify-content: center; border: 1px solid transparent; transition: all 0.3s ease;
+      width: 48px; height: 48px;
+    }
+
+    /* Colores de íconos de categoría */
+    .grid-icon.estado-al-dia { background-color: var(--status-al-dia); border-color: var(--status-al-dia); color: white; }
+    .grid-icon.estado-pendiente { background-color: var(--status-pendiente); border-color: var(--status-pendiente); color: white; }
+    .grid-icon.estado-proximo { background-color: var(--status-proximo); border-color: var(--status-proximo); color: white; }
+    .grid-icon.estado-urgente { background-color: var(--status-urgente); border-color: var(--status-urgente); color: white; }
+    .grid-icon.estado-vencido { background-color: var(--status-vencido); border-color: var(--status-vencido); color: white; }
+
+    .grid-item.active-filter .grid-icon {
+      border-color: var(--filter-highlight);
+      box-shadow: 0 0 12px rgba(31, 111, 235, 0.3);
+    }
+    .grid-item.new-category .grid-icon {
+      border: 1px dashed var(--border-color);
+      background: transparent; font-size: 22px;
+    }
+
+    .delete-cat-btn {
+      position: absolute; top: -6px; right: -6px;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(255,255,255,0.1); border: 1px solid var(--border-color);
+      color: var(--text-muted); font-size: 12px; line-height: 1;
+      display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 2;
+    }
+    .grid-item:hover .delete-cat-btn { display: flex; }
+    .delete-cat-btn:hover { background: var(--status-vencido); color: white; }
+
+    .grid-name {
+      font-weight: 500; max-width: 80px; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    .action-popup, .card-action-popup {
+      position: fixed;
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 8px;
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 70;
+      white-space: nowrap;
+      min-width: 200px;
+    }
+    .action-popup button, .card-action-popup button {
+      background: none; border: none; color: var(--text-main);
+      padding: 8px 12px; font-size: 13px; text-align: left;
+      cursor: pointer; border-radius: 8px; width: 100%;
+      transition: background 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .action-popup button:hover, .card-action-popup button:hover { background: rgba(255,255,255,0.1); }
+
+    .filter-indicator {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; color: var(--text-muted); padding: 8px 0;
+    }
+    .filter-indicator strong { color: var(--text-main); }
+    .filter-clear-btn {
+      background: none; border: 1px solid var(--border-color);
+      color: var(--text-muted); padding: 2px 8px; border-radius: 12px;
+      font-size: 12px; cursor: pointer;
+    }
+
+    .cards-section { scroll-margin-top: 140px; }
+    .cards-grid { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+    .service-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 8px 12px;
+      backdrop-filter: blur(8px);
+      align-items: center;
+    }
+    .cell-title {
+      grid-column: 1;
+      grid-row: 1;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .cell-status {
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cell-cancelar {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+    }
+    .cell-codigo {
+      grid-column: 1;
+      grid-row: 2;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .cell-vencimiento {
+      grid-column: 2;
+      grid-row: 2;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .cell-valor {
+      grid-column: 3;
+      grid-row: 2;
+      font-size: 14px;
+      color: var(--text-muted);
+      text-align: right;
+    }
+    .cell-add {
+      grid-column: 1;
+      grid-row: 3;
+    }
+    .cell-update {
+      grid-column: 2;
+      grid-row: 3;
+      justify-self: center;
+    }
+    .cell-delete {
+      grid-column: 3;
+      grid-row: 3;
+      justify-self: end;
+    }
+
+    /* Badges */
+    .status-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-weight: 500;
+      color: #ffffff;
+      border: none;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .badge-al-dia { background-color: var(--status-al-dia); }
+    .badge-pendiente { background-color: var(--status-pendiente); }
+    .badge-proximo { background-color: var(--status-proximo); }
+    .badge-urgente { background-color: var(--status-urgente); }
+    .badge-vencido { background-color: var(--status-vencido); }
+
+    .btn {
+      background: rgba(255,255,255,0.08); border: 1px solid var(--border-color);
+      color: var(--text-main); padding: 6px 12px; border-radius: 8px;
+      font-size: 12px; cursor: pointer; transition: all 0.2s;
+      white-space: nowrap; width: 100%; text-align: center;
+    }
+    .btn:hover { background: rgba(255,255,255,0.15); }
+    .btn.primary { background: var(--status-al-dia); border-color: var(--status-al-dia); color: white; }
+    .btn.marcar-cancelada {
+      background: var(--cancelar-color);
+      border-color: var(--cancelar-color);
+      color: white;
+    }
+    .btn.danger { color: var(--status-vencido); }
+    .btn:disabled { opacity: 0.4; filter: grayscale(80%); cursor: not-allowed; pointer-events: none; }
+
+    .data-review-overlay, .clave-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); backdrop-filter: blur(4px);
+      z-index: 400; display: none; align-items: center; justify-content: center;
+    }
+    .data-review-overlay.active, .clave-overlay.active { display: flex; }
+    .data-review-card, .clave-card {
+      background: var(--panel-bg); border: 1px solid var(--border-color);
+      border-radius: 16px; padding: 24px; width: 90%; max-width: 400px;
+      max-height: 80vh; overflow-y: auto; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .data-review-card h3, .clave-card h3 { text-align: center; margin-bottom: 8px; }
+    .data-review-card label, .clave-card label {
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: 14px; color: var(--text-muted);
+    }
+    .data-review-card input, .clave-card input {
+      background: var(--panel-bg); border: 1px solid var(--border-color);
+      color: var(--text-main); padding: 8px 12px; border-radius: 8px; font-size: 14px;
+    }
+    .data-review-card input:disabled { opacity: 0.6; background: rgba(255,255,255,0.03); font-style: italic; }
+    .data-review-card .review-buttons, .clave-card .clave-buttons {
+      display: flex; gap: 8px; justify-content: flex-end; margin-top: 8px;
+    }
+
+    .desktop-sidebar { display: none; width: 320px; flex-shrink: 0; }
+    .upload-zone {
+      background: var(--panel-bg); border: 2px dashed var(--border-color);
+      border-radius: 16px; padding: 32px 24px; text-align: center;
+      backdrop-filter: blur(8px); position: sticky; top: 16px;
+    }
+    .upload-zone p { margin: 8px 0 0; font-size: 14px; color: var(--text-muted); }
+
+    .toast {
+      position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
+      background: var(--panel-bg); border: 1px solid var(--border-color);
+      padding: 12px 24px; border-radius: 32px; backdrop-filter: blur(16px);
+      box-shadow: var(--shadow); z-index: 200; animation: fadeInOut 5s ease forwards;
+      font-size: 14px; color: var(--text-main);
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      10% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Footer */
+    .app-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid var(--border-color);
+      margin-top: 24px;
+      backdrop-filter: blur(8px);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .footer-left { width: 25%; display: flex; justify-content: flex-start; }
+    .footer-right { width: 25%; display: flex; justify-content: flex-end; }
+    .footer-center { width: 50%; text-align: center; }
+    .footer-left a, .footer-right a { display: inline-block; transition: opacity 0.2s; }
+    .footer-left a:hover, .footer-right a:hover { opacity: 0.8; }
+    .footer-left img, .footer-right img {
+      width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-color);
+    }
+    .footer-center a {
+      color: var(--text-main); text-decoration: none; font-weight: 500; transition: color 0.2s;
+    }
+    .footer-center a:hover { color: #58a6ff; }
+
+    @media (max-width: 600px) {
+      .status-grid { grid-template-columns: repeat(3, 1fr); top: 130px; }
+      .grid-icon { width: 40px; height: 40px; font-size: 22px; }
+      .grid-name { font-size: 11px; max-width: 60px; }
+      .app-header { padding: 6px 12px; }
+      .header-logo { width: 40%; }
+      .header-logo img.logo-header, .header-logo span.logo-header { width: 32px; height: 32px; font-size: 18px; }
+      .header-title { width: 35%; font-size: 1rem; }
+      .header-actions { width: 25%; gap: 8px; }
+      .header-icon-btn { font-size: 22px; padding: 2px; }
+      .app-footer { flex-direction: row; padding: 12px 8px; }
+      .footer-left, .footer-right { width: 25%; }
+      .footer-center { width: 50%; font-size: 12px; }
+      .footer-left img, .footer-right img { width: 28px; height: 28px; }
+      .service-card { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .cell-title { grid-column: 1 / -1; grid-row: 1; justify-self: start; text-align: left; }
+      .cell-status { grid-column: 1; grid-row: 2; justify-self: start; text-align: left; }
+      .cell-cancelar { grid-column: 2; grid-row: 2; justify-self: end; text-align: right; }
+      .cell-codigo { grid-column: 1; grid-row: 3; justify-self: start; text-align: left; }
+      .cell-vencimiento { grid-column: 2; grid-row: 3; justify-self: end; text-align: right; }
+      .cell-valor { grid-column: 1; grid-row: 4; justify-self: start; text-align: left; }
+      .cell-add { grid-column: 1; grid-row: 5; justify-self: start; }
+      .cell-update { grid-column: 2; grid-row: 4; justify-self: end; }
+      .cell-delete { grid-column: 2; grid-row: 5; justify-self: end; }
+    }
+
+    @media (min-width: 768px) {
+      .app-layout { flex-direction: row; }
+      .desktop-sidebar { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="lock-screen" id="lockScreen">
+  <h2>🔒 NewroPhome-11</h2>
+  <div id="lockForm">
+    <p id="lockMessage" style="color:var(--text-muted);">Crea una clave de acceso</p>
+    <input type="password" id="passwordInput" placeholder="Clave" maxlength="20" autocomplete="off" />
+    <input type="password" id="confirmPasswordInput" placeholder="Confirmar clave" style="display:none;" maxlength="20" autocomplete="off" />
+    <div class="error-msg" id="errorMsg"></div>
+    <button id="unlockBtn">Crear</button>
+    <button class="skip-btn" id="skipLockBtn" style="display:none;">Entrar sin clave</button>
+    <p class="blocked-msg" id="blockedMsg" style="display:none;"></p>
+  </div>
+  <button class="reset-btn" id="resetAppBtn">Reiniciar aplicación</button>
+</div>
+
+<div class="app-layout" id="appLayout" style="display:none;">
+  <div class="cards-grid">
+    <div class="app-header">
+      <div class="header-logo">
+        <img src="img/logo_newrophome.png" alt="Logo" class="logo-header"
+             onerror="this.outerHTML='<span class=logo-header>🏠</span>'" />
+      </div>
+      <div class="header-title">
+        <span>NewroPhome-11</span>
+      </div>
+      <div class="header-actions">
+        <button class="header-icon-btn" id="headerClaveBtn" title="Establecer clave">🔑</button>
+        <button class="header-icon-btn" id="headerSalirBtn" title="Salir">🚪</button>
+      </div>
+    </div>
+
+    <h3 class="categorias-titulo">📂 Categorías</h3>
+    <div class="status-grid" id="gridContainer"></div>
+
+    <div id="filterIndicator" class="filter-indicator"></div>
+    <div class="cards-section" id="cardsSection">
+      <div id="cardsContainer"></div>
+    </div>
+  </div>
+  <div class="desktop-sidebar">
+    <div class="upload-zone" id="desktopDropZone">
+      <div style="font-size: 40px; margin-bottom: 12px;">📥</div>
+      <strong>Arrastra tu factura aquí</strong>
+      <p>Para documentos completos (imagen o PDF)</p>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <div class="footer-left">
+      <a href="https://biostair11.github.io/NewroSTaiR-11/index.html" target="_blank" rel="noopener" title="NewroSTaiR-11">
+        <img src="img/logo_newrostair.png" alt="NewroSTaiR-11" onerror="this.outerHTML='🧠'" />
+      </a>
+    </div>
+    <div class="footer-center">
+      Conoce el proyecto que impulsa esta herramienta:<br>
+      <a href="https://biostair11.github.io/NewroSTaiR-11/index.html" target="_blank" rel="noopener">
+        🌐 NewroSTaiR-11 · Estabilidad del Hogar
+      </a>
+    </div>
+    <div class="footer-right">
+      <a href="https://biostair11.github.io/NewroSTaiR-11/elipso/elipso.html" target="_blank" rel="noopener" title="Elipso">
+        <img src="img/logo_elipso.png" alt="Elipso" onerror="this.outerHTML='⚡'" />
+      </a>
+    </div>
+  </footer>
+</div>
+
+<div class="data-review-overlay" id="dataReviewOverlay">
+  <div class="data-review-card">
+    <h3>📋 Datos de la factura</h3>
+    <label>Empresa <input type="text" id="reviewEmpresa" placeholder="Ej: Empresa de Energía" /></label>
+    <label>Contrato / ID <input type="text" id="reviewContrato" placeholder="Número de contrato" /></label>
+    <label>Valor a pagar <input type="number" id="reviewValor" placeholder="0" min="0" /></label>
+    <label>Fecha de expedición <input type="date" id="reviewFechaExp" /></label>
+    <label>Fecha límite de pago <input type="date" id="reviewFechaPago" /></label>
+    <label>Periodicidad (días) <input type="number" id="reviewLatencia" placeholder="30" min="1" value="30" /></label>
+    <div class="review-buttons">
+      <button class="btn danger" id="reviewCancelBtn">Cancelar</button>
+      <button class="btn primary" id="reviewConfirmBtn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<div class="clave-overlay" id="claveOverlay">
+  <div class="clave-card">
+    <h3 id="claveTitulo">🔑 Gestionar clave</h3>
+    <div id="claveActualGrupo" style="display: none;">
+      <label>Clave actual <input type="password" id="claveActualInput" placeholder="Ingresa tu clave actual" maxlength="20" autocomplete="off" /></label>
+      <div class="error-msg" id="claveErrorActual" style="color:var(--status-vencido); font-size: 14px; min-height: 20px;"></div>
+    </div>
+    <div id="claveNuevaGrupo">
+      <label>Nueva clave <input type="password" id="claveNuevaInput" placeholder="Mín. 4 caracteres" maxlength="20" autocomplete="off" /></label>
+      <label>Confirmar nueva clave <input type="password" id="claveConfirmInput" placeholder="Repite la clave" maxlength="20" autocomplete="off" /></label>
+      <div class="error-msg" id="claveErrorNueva" style="color:var(--status-vencido); font-size: 14px; min-height: 20px;"></div>
+    </div>
+    <div class="clave-buttons">
+      <button class="btn danger" id="claveEliminarBtn" style="display: none;">🗑️ Eliminar clave</button>
+      <button class="btn" id="claveCancelarBtn">Cancelar</button>
+      <button class="btn primary" id="claveGuardarBtn">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" id="hiddenFileInput" accept="image/*,.pdf" style="display: none" />
+<input type="file" id="importFileInput" accept=".json" style="display: none" />
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    try { iniciarAplicacion(); } catch (error) {
+      console.error('Error al iniciar la aplicación:', error);
+      alert('Ocurrió un error al cargar la aplicación. Por favor, recarga la página.');
+      document.getElementById('lockScreen').style.display = 'flex';
+    }
+  });
+
+  function iniciarAplicacion() {
+    const LOCK_KEY = 'app_lock_hash', ATTEMPTS_KEY = 'app_lock_attempts', BLOCK_TIME_KEY = 'app_lock_block_until';
+    const SKIP_VALUE = '__SKIP__', MAX_ATTEMPTS = 3, BLOCK_MINUTES = 5;
+
+    let appUnlocked = false, filtroCategoriaId = null, currentData = null, pendingAction = null, reviewData = null;
+    let ultimoRespaldo = Date.now(), ultimoRespaldoJSON = null, autoBackupInterval = null;
+
+    const datosIniciales = {
+      categorias: [
+        { id: 'cat1', nombre: 'Agua', icono: '🚰', servicios: [
+          { id: 's1', servicio: 'Demo Acueducto principal', codigo: '1002345', vencimiento: '2026-06-05', valor: 85000, estado: 'proximo', tieneDocumento: false, latencia: 30, history: ['pagado','pagado','proximo'] }
+        ]},
+        { id: 'cat2', nombre: 'Energía', icono: '⚡', servicios: [
+          { id: 's2', servicio: 'Demo Energía hogar', codigo: '2045678', vencimiento: '2026-06-10', valor: 128000, estado: 'proximo', tieneDocumento: false, latencia: 30, history: ['pagado','pagado','pagado','proximo'] }
+        ]},
+        { id: 'cat3', nombre: 'Gas', icono: '🔥', servicios: [
+          { id: 's3', servicio: 'Demo Gas natural', codigo: '3098765', vencimiento: '2026-06-15', valor: 45000, estado: 'proximo', tieneDocumento: false, latencia: 60, history: ['pagado','pagado','proximo','proximo'] }
+        ]},
+        { id: 'cat4', nombre: 'Teléfono y TV', icono: '📺', servicios: [
+          { id: 's4', servicio: 'Demo Paquete triple', codigo: '4056789', vencimiento: '2026-06-20', valor: 120000, estado: 'proximo', tieneDocumento: false, latencia: 30, history: ['pagado','pagado','pagado','proximo'] }
+        ]},
+        { id: 'cat5', nombre: 'Móvil', icono: '📱', servicios: [
+          { id: 's5', servicio: 'Demo Línea principal', codigo: '5067891', vencimiento: '2026-06-18', valor: 60000, estado: 'proximo', tieneDocumento: false, latencia: 30, history: ['pagado','pagado','proximo','proximo'] }
+        ]}
+      ]
+    };
+
+    const STORAGE_CONFIG = {
+      dbName: 'NewroPhomeDB',
+      dbVersion: 1,
+      storeName: 'app_data',
+      dataKey: 'global_state'
+    };
+
+    let dbPromise = null;
+
+    function inicializarBaseDatos() {
+      if (dbPromise) return dbPromise;
+
+      dbPromise = new Promise((resolve, reject) => {
+        const request = indexedDB.open(STORAGE_CONFIG.dbName, STORAGE_CONFIG.dbVersion);
+
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(STORAGE_CONFIG.storeName)) {
+            db.createObjectStore(STORAGE_CONFIG.storeName);
+          }
+        };
+
+        request.onsuccess = (event) => {
+          const db = event.target.result;
+          db.onclose = () => { dbPromise = null; };
+          resolve(db);
+        };
+
+        request.onerror = (event) => reject(event.target.error);
+        request.onblocked = () => console.warn('IndexedDB bloqueada.');
+      });
+
+      return dbPromise;
+    }
+
+    function ejecutarTransaccion(mode, callback) {
+      return inicializarBaseDatos().then(db => {
+        return new Promise((resolve, reject) => {
+          const transaction = db.transaction(STORAGE_CONFIG.storeName, mode);
+          const store = transaction.objectStore(STORAGE_CONFIG.storeName);
+          const request = callback(store);
+
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = (event) => reject(event.target.error);
+          transaction.onerror = (event) => reject(event.target.error);
+        });
+      });
+    }
+
+    async function cargarDatos() {
+      try {
+        const datos = await ejecutarTransaccion('readonly', store =>
+          store.get(STORAGE_CONFIG.dataKey)
+        );
+        if (datos && datos.categorias) {
+          return datos;
+        } else {
+          const iniciales = JSON.parse(JSON.stringify(datosIniciales));
+          await guardarDatos(iniciales);
+          return iniciales;
+        }
+      } catch (error) {
+        console.error('Error al cargar datos, usando respaldo:', error);
+        return JSON.parse(JSON.stringify(datosIniciales));
+      }
+    }
+
+    async function guardarDatos(data) {
+      try {
+        await ejecutarTransaccion('readwrite', store =>
+          store.put(data, STORAGE_CONFIG.dataKey)
+        );
+        ultimoRespaldoJSON = JSON.stringify(data, null, 2);
+        ultimoRespaldo = Date.now();
+      } catch (error) {
+        console.error('Error al guardar datos:', error);
+        mostrarToast('❌ Error al guardar los datos.');
+        throw error;
+      }
+    }
+
+    window.addEventListener('pagehide', async () => {
+      if (dbPromise) {
+        const db = await dbPromise;
+        db.close();
+        dbPromise = null;
+      }
+    });
+
+    async function hashPassword(password) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(password);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return Array.from(new Uint8Array(hash))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+    }
+
+    function getStoredHash() { return localStorage.getItem(LOCK_KEY); }
+    function setStoredHash(val) { localStorage.setItem(LOCK_KEY, val); }
+    function getAttempts() { return parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0'); }
+    function setAttempts(val) { localStorage.setItem(ATTEMPTS_KEY, val.toString()); }
+    function getBlockUntil() { return localStorage.getItem(BLOCK_TIME_KEY); }
+    function setBlockUntil(isoString) { localStorage.setItem(BLOCK_TIME_KEY, isoString); }
+    function clearBlockData() { localStorage.removeItem(ATTEMPTS_KEY); localStorage.removeItem(BLOCK_TIME_KEY); }
+
+    function checkBlocked() {
+      const blockUntil = getBlockUntil();
+      if (!blockUntil) return false;
+      if (new Date() < new Date(blockUntil)) return true;
+      clearBlockData(); return false;
+    }
+
+    function updateBlockUI() {
+      const blockUntil = getBlockUntil();
+      if (!blockUntil) return;
+      const diff = Math.max(0, new Date(blockUntil) - new Date());
+      if (diff === 0) { clearBlockData(); initLock(); return; }
+      const minutes = Math.floor(diff / 60000), seconds = Math.floor((diff % 60000) / 1000);
+      blockedMsg.style.display = 'block';
+      blockedMsg.textContent = `⏳ Demasiados intentos. Espera ${minutes}m ${seconds}s.`;
+      lockForm.style.display = 'none';
+      setTimeout(updateBlockUI, 1000);
+    }
+
+    function initLock() {
+      const storedHash = getStoredHash();
+      if (!storedHash) {
+        lockMessage.textContent = 'Crea una clave de acceso';
+        unlockBtn.textContent = 'Crear';
+        unlockBtn.style.display = 'block';
+        skipLockBtn.style.display = 'block';  // Se muestra el botón de omitir
+        passwordInput.style.display = 'block';
+        confirmPasswordInput.style.display = 'block';
+        errorMsg.textContent = '';
+        blockedMsg.style.display = 'none';
+        lockForm.style.display = 'block';
+        unlockBtn.onclick = createPassword;
+        skipLockBtn.onclick = skipPassword;
+        passwordInput.value = ''; confirmPasswordInput.value = '';
+      } else if (storedHash === SKIP_VALUE) {
+        unlockApp();
+      } else {
+        if (checkBlocked()) { lockForm.style.display = 'none'; updateBlockUI(); return; }
+        lockMessage.textContent = 'Introduce tu clave';
+        unlockBtn.textContent = 'Entrar';
+        unlockBtn.style.display = 'block';
+        skipLockBtn.style.display = 'none';
+        passwordInput.style.display = 'block';
+        confirmPasswordInput.style.display = 'none';
+        errorMsg.textContent = '';
+        blockedMsg.style.display = 'none';
+        lockForm.style.display = 'block';
+        unlockBtn.onclick = checkPassword;
+        passwordInput.value = '';
+        if (getAttempts() > 0) errorMsg.textContent = `Intentos restantes: ${MAX_ATTEMPTS - getAttempts()}`;
+      }
+    }
+
+    async function createPassword() {
+      const pass = passwordInput.value.trim(), confirm = confirmPasswordInput.value.trim();
+      if (pass.length < 4) { errorMsg.textContent = 'La clave debe tener al menos 4 caracteres'; return; }
+      if (pass !== confirm) { errorMsg.textContent = 'Las claves no coinciden'; passwordInput.value = ''; confirmPasswordInput.value = ''; return; }
+      const hash = await hashPassword(pass);
+      setStoredHash(hash); clearBlockData(); unlockApp();
+    }
+
+    function skipPassword() { setStoredHash(SKIP_VALUE); clearBlockData(); unlockApp(); }
+
+    async function checkPassword() {
+      const pass = passwordInput.value.trim();
+      const storedHash = getStoredHash();
+      const hash = await hashPassword(pass);
+      if (hash === storedHash) { clearBlockData(); unlockApp(); }
+      else {
+        let attempts = getAttempts() + 1; setAttempts(attempts);
+        const remaining = MAX_ATTEMPTS - attempts;
+        if (remaining <= 0) {
+          setBlockUntil(new Date(Date.now() + BLOCK_MINUTES * 60000).toISOString());
+          errorMsg.textContent = ''; passwordInput.value = ''; initLock();
+        } else {
+          errorMsg.textContent = `Clave incorrecta. Intentos restantes: ${remaining}`;
+          passwordInput.value = '';
+        }
+      }
+    }
+
+    const lockScreen = document.getElementById('lockScreen'), appLayout = document.getElementById('appLayout');
+    const passwordInput = document.getElementById('passwordInput'), confirmPasswordInput = document.getElementById('confirmPasswordInput');
+    const unlockBtn = document.getElementById('unlockBtn'), skipLockBtn = document.getElementById('skipLockBtn');
+    const lockMessage = document.getElementById('lockMessage'), errorMsg = document.getElementById('errorMsg'), blockedMsg = document.getElementById('blockedMsg');
+    const lockForm = document.getElementById('lockForm'), resetAppBtn = document.getElementById('resetAppBtn');
+    const gridContainer = document.getElementById('gridContainer'), filterIndicator = document.getElementById('filterIndicator');
+    const cardsContainer = document.getElementById('cardsContainer'), hiddenFileInput = document.getElementById('hiddenFileInput');
+    const importFileInput = document.getElementById('importFileInput'), dropZone = document.getElementById('desktopDropZone');
+    const dataReviewOverlay = document.getElementById('dataReviewOverlay');
+    const headerClaveBtn = document.getElementById('headerClaveBtn'), headerSalirBtn = document.getElementById('headerSalirBtn');
+
+    const claveOverlay = document.getElementById('claveOverlay'), claveActualGrupo = document.getElementById('claveActualGrupo');
+    const claveActualInput = document.getElementById('claveActualInput'), claveErrorActual = document.getElementById('claveErrorActual');
+    const claveNuevaInput = document.getElementById('claveNuevaInput'), claveConfirmInput = document.getElementById('claveConfirmInput');
+    const claveErrorNueva = document.getElementById('claveErrorNueva'), claveGuardarBtn = document.getElementById('claveGuardarBtn');
+    const claveCancelarBtn = document.getElementById('claveCancelarBtn'), claveEliminarBtn = document.getElementById('claveEliminarBtn');
+    const claveTitulo = document.getElementById('claveTitulo');
+
+    function unlockApp() {
+      appUnlocked = true; lockScreen.classList.add('hidden'); appLayout.style.display = 'flex';
+      actualizarTextoBotonClave(); iniciarApp(); iniciarAutoBackup();
+    }
+
+    function actualizarTextoBotonClave() {}
+
+    function mostrarModalClave() {
+      const stored = getStoredHash(), hayClave = stored && stored !== SKIP_VALUE;
+      claveTitulo.textContent = hayClave ? 'Cambiar clave de acceso' : 'Crear clave de acceso';
+      claveActualGrupo.style.display = hayClave ? 'block' : 'none';
+      claveEliminarBtn.style.display = hayClave ? 'inline-flex' : 'none';
+      claveActualInput.value = ''; claveNuevaInput.value = ''; claveConfirmInput.value = '';
+      claveErrorActual.textContent = ''; claveErrorNueva.textContent = '';
+      claveOverlay.classList.add('active');
+      if (hayClave) claveActualInput.focus(); else claveNuevaInput.focus();
+    }
+
+    function cerrarModalClave() { claveOverlay.classList.remove('active'); }
+
+    claveGuardarBtn.addEventListener('click', async () => {
+      const stored = getStoredHash(), hayClave = stored && stored !== SKIP_VALUE;
+      if (hayClave) {
+        const actual = claveActualInput.value.trim();
+        const hashActual = await hashPassword(actual);
+        if (hashActual !== stored) { claveErrorActual.textContent = 'Clave actual incorrecta'; claveActualInput.value = ''; return; }
+        claveErrorActual.textContent = '';
+      }
+      const nueva = claveNuevaInput.value.trim(), confirm = claveConfirmInput.value.trim();
+      if (nueva.length < 4) { claveErrorNueva.textContent = 'La clave debe tener al menos 4 caracteres'; return; }
+      if (nueva !== confirm) { claveErrorNueva.textContent = 'Las claves no coinciden'; claveNuevaInput.value = ''; claveConfirmInput.value = ''; return; }
+      const hashNueva = await hashPassword(nueva);
+      setStoredHash(hashNueva);
+      mostrarToast(hayClave ? '🔑 Clave cambiada exitosamente' : '🔑 Clave creada exitosamente');
+      cerrarModalClave();
+    });
+
+    claveEliminarBtn.addEventListener('click', async () => {
+      if (confirm('¿Estás seguro de eliminar la clave de acceso? La aplicación quedará sin protección.')) {
+        const stored = getStoredHash();
+        if (stored && stored !== SKIP_VALUE) {
+          const actual = claveActualInput.value.trim();
+          const hashActual = await hashPassword(actual);
+          if (hashActual !== stored) { claveErrorActual.textContent = 'Clave actual incorrecta'; claveActualInput.value = ''; return; }
+        }
+        setStoredHash(SKIP_VALUE);
+        mostrarToast('🔓 Clave eliminada. La aplicación ahora no solicitará clave.');
+        cerrarModalClave();
+      }
+    });
+
+    claveCancelarBtn.addEventListener('click', cerrarModalClave);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && claveOverlay.classList.contains('active')) cerrarModalClave(); });
+    headerClaveBtn.addEventListener('click', mostrarModalClave);
+
+    // 👉 BOTÓN DE SALIR LIMPIO
+    headerSalirBtn.addEventListener('click', () => {
+      window.close();
+    });
+
+    resetAppBtn.addEventListener('click', () => {
+      if (confirm('¿Borrar todos los datos y reiniciar? Se eliminarán categorías, facturas y configuración de acceso.')) {
+        localStorage.clear(); location.reload();
+      }
+    });
+
+    passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') unlockBtn.click(); });
+    confirmPasswordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') unlockBtn.click(); });
+
+    function iniciarAutoBackup() {
+      if (autoBackupInterval) clearInterval(autoBackupInterval);
+      autoBackupInterval = setInterval(async () => {
+        if (appUnlocked) {
+          const data = await cargarDatos();
+          ultimoRespaldoJSON = JSON.stringify(data, null, 2);
+          ultimoRespaldo = Date.now();
+          console.log('Respaldo en memoria actualizado.');
+        }
+      }, 5 * 60 * 1000);
+    }
+
+    function calcularEstado(servicio) {
+      if (servicio.estado === 'pagado') return 'al_dia';
+      const hoy = new Date();
+      const vencimiento = new Date(servicio.vencimiento + 'T00:00:00');
+      const diferenciaDias = Math.ceil((vencimiento - hoy) / (1000 * 60 * 60 * 24));
+      if (diferenciaDias < 0) return 'vencido';
+      if (diferenciaDias <= 3) return 'urgente';
+      if (diferenciaDias <= 15) return 'proximo';
+      return 'pendiente';
+    }
+
+    function actualizarEstados(data) {
+      const hoy = new Date().toISOString().split('T')[0];
+      let cambiado = false;
+      
+      if (!data || !data.categorias) return data;
+
+      data.categorias.forEach(cat => {
+        if (!cat.servicios) return;
+        cat.servicios.forEach(s => {
+          if (s.estado === 'pagado') return;
+          if (s.vencimiento < hoy && s.estado !== 'vencido') {
+            s.estado = 'vencido';
+            if (!s.history) s.history = [];
+            s.history.push('vencido');
+            if (s.history.length > 4) s.history.shift();
+            cambiado = true;
+          }
+        });
+      });
+      
+      return data;
+    }
+
+    function obtenerEstadoCategoria(categoria) {
+      if (!categoria.servicios.length) return null;
+      const prioridad = { 'vencido': 5, 'urgente': 4, 'proximo': 3, 'pendiente': 2, 'al_dia': 1 };
+      let peorEstado = 'al_dia';
+      let maxPrioridad = 1;
+      categoria.servicios.forEach(s => {
+        const estado = calcularEstado(s);
+        const prio = prioridad[estado] || 0;
+        if (prio > maxPrioridad) {
+          maxPrioridad = prio;
+          peorEstado = estado;
+        }
+      });
+      return peorEstado;
+    }
+
+    function verificarRecordatorios() {
+      const data = currentData;
+      if (!data) return;
+      let proximos = [];
+      data.categorias.forEach(cat => {
+        cat.servicios.forEach(s => {
+          const estadoCalc = calcularEstado(s);
+          if (estadoCalc === 'urgente' || estadoCalc === 'proximo') {
+            proximos.push(`${cat.icono} ${s.servicio}`);
+          }
+        });
+      });
+      if (proximos.length) mostrarToast(`⏰ Próximos vencimientos: ${proximos.join(', ')}`);
+    }
+
+    function posicionarPopup(popup, triggerElement) {
+      if (!popup || !triggerElement) return;
+      const triggerRect = triggerElement.getBoundingClientRect(), popupRect = popup.getBoundingClientRect();
+      const windowWidth = window.innerWidth, windowHeight = window.innerHeight, gap = 8;
+      let top = triggerRect.bottom + gap, left = triggerRect.left + triggerRect.width / 2 - popupRect.width / 2;
+      if (top + popupRect.height > windowHeight - 10) top = triggerRect.top - popupRect.height - gap;
+      if (left < 10) left = 10;
+      if (left + popupRect.width > windowWidth - 10) left = windowWidth - popupRect.width - 10;
+      popup.style.top = top + 'px'; popup.style.left = left + 'px';
+    }
+
+    function cerrarTodosPopups() { document.querySelectorAll('.card-action-popup, .action-popup').forEach(p => p.style.display = 'none'); }
+
+    function mostrarToast(mensaje, duracion = 5000) {
+      const toast = document.createElement('div'); toast.className = 'toast'; toast.textContent = mensaje;
+      document.body.appendChild(toast); setTimeout(() => toast.remove(), duracion);
+    }
+
+    function renderGrid(data) {
+      currentData = data;
+      let html = data.categorias.map(cat => {
+        const estadoCategoria = obtenerEstadoCategoria(cat);
+        let iconoClass = '';
+        if (estadoCategoria) {
+          iconoClass = 'estado-' + estadoCategoria;
+        }
+        let claseItem = 'grid-item';
+        if (filtroCategoriaId === cat.id) claseItem += ' active-filter';
+        return `<div class="${claseItem}" data-cat-id="${cat.id}">
+          <div class="delete-cat-btn" data-cat-id="${cat.id}">✕</div>
+          <div class="grid-icon ${iconoClass}">${cat.icono}</div>
+          <div class="grid-name">${cat.nombre}</div>
+        </div>`;
+      }).join('');
+      html += `<div class="grid-item new-category" id="btnNuevaCategoria">
+        <div class="grid-icon">＋</div><div class="grid-name">Nuevo</div>
+        <div class="action-popup" id="nuevoPopup"></div>
+      </div>`;
+      gridContainer.innerHTML = html;
+      gridContainer.querySelectorAll('.grid-item[data-cat-id]').forEach(item => {
+        item.addEventListener('click', (e) => { if (e.target.classList.contains('delete-cat-btn')) return; alternarFiltro(item.dataset.catId); });
+      });
+      gridContainer.querySelectorAll('.delete-cat-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); eliminarCategoria(btn.dataset.catId); });
+      });
+      configurarPopupNuevo();
+    }
+
+    function configurarPopupNuevo() {
+      const popup = document.getElementById('nuevoPopup'), btnNuevo = document.getElementById('btnNuevaCategoria');
+      if (!popup || !btnNuevo) return;
+      btnNuevo.addEventListener('click', (e) => {
+        e.stopPropagation(); const estaVisible = popup.style.display === 'flex';
+        cerrarTodosPopups();
+        if (!estaVisible) {
+          popup.innerHTML = `
+            <button class="popup-export-btn">💾 Guardar respaldo</button>
+            <button class="popup-import-btn">📂 Cargar respaldo</button>
+            <hr style="border-color:var(--border-color); margin: 4px 0;">
+            <button id="popupAgregarCat">＋ Agregar categoría</button>
+          `;
+          popup.querySelector('.popup-export-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; exportarDatos(); };
+          popup.querySelector('.popup-import-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; importFileInput.click(); };
+          popup.querySelector('#popupAgregarCat').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; agregarNuevaCategoria(); };
+          popup.style.display = 'flex'; posicionarPopup(popup, btnNuevo);
+        }
+      });
+    }
+
+    async function agregarNuevaCategoria() {
+      const nombre = prompt('Nombre de la nueva categoría:'); if (!nombre || !nombre.trim()) return;
+      const icono = prompt('Ícono (puedes usar emojis del teclado):', '📄');
+      const data = await cargarDatos();
+      const nuevaCat = { id: 'cat_' + Date.now(), nombre: nombre.trim(), icono: icono || '📄', servicios: [] };
+      data.categorias.push(nuevaCat); await guardarDatos(data); refrescarInterfaz();
+      mostrarToast(`📁 Categoría "${nombre}" creada`);
+      setTimeout(() => { if (confirm('¿Deseas añadir una factura en esta nueva categoría?')) { pendingAction = { mode: 'agregar', catId: nuevaCat.id }; abrirFormularioManual(); } }, 500);
+    }
+
+    async function eliminarCategoria(catId) {
+      if (!confirm('¿Eliminar esta categoría y todos sus servicios?')) return;
+      const data = await cargarDatos(); data.categorias = data.categorias.filter(c => c.id !== catId);
+      await guardarDatos(data); if (filtroCategoriaId === catId) filtroCategoriaId = null;
+      refrescarInterfaz(); mostrarToast('🗑️ Categoría eliminada');
+    }
+
+    function alternarFiltro(catId) {
+      filtroCategoriaId = (filtroCategoriaId === catId) ? null : catId;
+      refrescarInterfaz(); document.getElementById('cardsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function limpiarFiltro() { if (filtroCategoriaId !== null) { filtroCategoriaId = null; refrescarInterfaz(); } }
+
+    function renderFilterIndicator(data) {
+      if (filtroCategoriaId) {
+        const cat = data.categorias.find(c => c.id === filtroCategoriaId);
+        if (cat) {
+          filterIndicator.innerHTML = `Mostrando: <strong>${cat.icono} ${cat.nombre}</strong> <button class="filter-clear-btn" id="clearFilterBtn">✕ Mostrar todos</button>`;
+          document.getElementById('clearFilterBtn').addEventListener('click', limpiarFiltro);
+          return;
+        }
+      }
+      filterIndicator.innerHTML = '';
+    }
+
+    function renderCards(data) {
+      let servicios = [];
+      data.categorias.forEach(cat => { cat.servicios.forEach(s => servicios.push({ ...s, catId: cat.id, catNombre: cat.nombre, catIcono: cat.icono })); });
+      if (filtroCategoriaId) servicios = servicios.filter(s => s.catId === filtroCategoriaId);
+      if (!servicios.length) {
+        cardsContainer.innerHTML = '<p style="text-align:center; color:var(--text-muted); padding:40px;">No hay servicios en esta categoría.</p>';
+        return;
+      }
+
+      cardsContainer.innerHTML = servicios.map(s => {
+        const estadoCalculado = calcularEstado(s);
+        const badgeClass = {
+          'al_dia': 'badge-al-dia',
+          'pendiente': 'badge-pendiente',
+          'proximo': 'badge-proximo',
+          'urgente': 'badge-urgente',
+          'vencido': 'badge-vencido'
+        }[estadoCalculado] || 'badge-pendiente';
+        const badgeText = {
+          'al_dia': '🟢 Al día',
+          'pendiente': '🟡 Pendiente',
+          'proximo': '⚠️ Próximo',
+          'urgente': '🟠 Urgente',
+          'vencido': '🔴 Vencido'
+        }[estadoCalculado] || 'Pendiente';
+        const vencimientoFormateado = new Date(s.vencimiento + 'T00:00:00').toLocaleDateString('es-CO', { day:'numeric', month:'short' });
+        const cancelarDisabled = s.estado === 'pagado' ? 'disabled' : '';
+        const actualizarDisabled = s.estado !== 'pagado' ? 'disabled' : '';
+        return `
+          <div class="service-card" data-service-id="${s.id}" data-cat-id="${s.catId}">
+            <div class="cell-title" title="Click para editar nombre">${s.catIcono} ${s.servicio}</div>
+            <div class="cell-status">
+              <span class="status-badge ${badgeClass}">${badgeText}</span>
+            </div>
+            <div class="cell-cancelar">
+              <button class="btn marcar-cancelada" data-action="pagar" data-service-id="${s.id}" data-cat-id="${s.catId}" ${cancelarDisabled}>📌 Marcar como cancelada</button>
+            </div>
+            <div class="cell-codigo">Código: <strong>${s.codigo}</strong></div>
+            <div class="cell-vencimiento">Vence: <strong>${vencimientoFormateado}</strong></div>
+            <div class="cell-valor">Valor: <strong>$${s.valor.toLocaleString('es-CO')}</strong></div>
+            <div class="cell-add">
+              <button class="btn secondary" data-action="agregar-factura" data-cat-id="${s.catId}">＋ Añadir factura</button>
+            </div>
+            <div class="cell-update">
+              <button class="btn" data-action="actualizar" data-service-id="${s.id}" data-cat-id="${s.catId}" ${actualizarDisabled}>🔄 Actualizar</button>
+            </div>
+            <div class="cell-delete">
+              <button class="btn danger" data-action="eliminar" data-service-id="${s.id}" data-cat-id="${s.catId}">🗑️ Eliminar</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      const catsConBoton = new Set(servicios.map(s => s.catId));
+      catsConBoton.forEach(catId => {
+        if (!document.querySelector(`.card-action-popup[data-cat-id="${catId}"]`)) {
+          const popup = document.createElement('div'); popup.className = 'card-action-popup'; popup.setAttribute('data-cat-id', catId);
+          popup.innerHTML = `<button class="popup-upload-btn">📄 Subir archivo o foto</button><button class="popup-manual-btn">✏️ Ingresar manualmente</button>`;
+          document.body.appendChild(popup);
+        }
+      });
+      servicios.forEach(s => {
+        if (s.estado === 'pagado') {
+          if (!document.querySelector(`.card-action-popup[data-service-id="${s.id}"]`)) {
+            const popup = document.createElement('div'); popup.className = 'card-action-popup'; popup.setAttribute('data-service-id', s.id);
+            popup.innerHTML = `<button class="popup-upload-btn">📄 Subir archivo o foto</button><button class="popup-manual-btn">✏️ Ingresar manualmente</button>`;
+            document.body.appendChild(popup);
+          }
+        }
+      });
+
+      cardsContainer.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation(); if (btn.disabled) return;
+          const action = btn.dataset.action, serviceId = btn.dataset.serviceId, catId = btn.dataset.catId;
+          if (action === 'agregar-factura') {
+            cerrarTodosPopups(); pendingAction = { mode: 'agregar', catId, serviceId: null };
+            const popup = document.querySelector(`.card-action-popup[data-cat-id="${catId}"]`);
+            if (popup) {
+              popup.style.display = 'flex'; posicionarPopup(popup, btn);
+              popup.querySelector('.popup-upload-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; abrirSelectorArchivo(catId, null); };
+              popup.querySelector('.popup-manual-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; abrirFormularioManual(); };
+            }
+          } else if (action === 'actualizar') {
+            cerrarTodosPopups(); pendingAction = { mode: 'actualizar', catId, serviceId };
+            const popup = document.querySelector(`.card-action-popup[data-service-id="${serviceId}"]`);
+            if (popup) {
+              popup.style.display = 'flex'; posicionarPopup(popup, btn);
+              popup.querySelector('.popup-upload-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; abrirSelectorArchivo(catId, serviceId); };
+              popup.querySelector('.popup-manual-btn').onclick = (ev) => { ev.stopPropagation(); popup.style.display = 'none'; abrirFormularioManual(); };
+            }
+          } else if (action === 'pagar') {
+            if (confirm('¿Confirmas que deseas marcar esta factura como cancelada?')) marcarPagado(catId, serviceId);
+          } else if (action === 'eliminar') {
+            eliminarServicio(catId, serviceId);
+          }
+        });
+      });
+
+      cardsContainer.querySelectorAll('.cell-title').forEach(title => {
+        title.addEventListener('click', () => {
+          const card = title.closest('.service-card');
+          const catId = card.dataset.catId, serviceId = card.dataset.serviceId;
+          editarNombreServicio(catId, serviceId);
+        });
+      });
+    }
+
+    async function editarNombreServicio(catId, serviceId) {
+      const data = await cargarDatos(); const cat = data.categorias.find(c => c.id === catId);
+      if (!cat) return; const s = cat.servicios.find(s => s.id === serviceId);
+      if (!s) return; const nuevoNombre = prompt('Editar nombre del servicio:', s.servicio);
+      if (nuevoNombre && nuevoNombre.trim()) { s.servicio = nuevoNombre.trim(); await guardarDatos(data); refrescarInterfaz(); mostrarToast(`✏️ Servicio renombrado a "${s.servicio}"`); }
+    }
+
+    function abrirSelectorArchivo(catId, serviceId = null) {
+      hiddenFileInput.setAttribute('data-cat-id', catId);
+      if (serviceId) hiddenFileInput.setAttribute('data-service-id', serviceId);
+      else hiddenFileInput.removeAttribute('data-service-id');
+      hiddenFileInput.click();
+    }
+
+    hiddenFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0]; if (!file) return;
+      const catId = hiddenFileInput.getAttribute('data-cat-id') || null, serviceId = hiddenFileInput.getAttribute('data-service-id') || null;
+      const datos = simularExtraccion(file.name);
+      mostrarRevisionDatos(datos, catId, serviceId || null, pendingAction ? pendingAction.mode : 'agregar');
+      hiddenFileInput.removeAttribute('data-cat-id'); hiddenFileInput.removeAttribute('data-service-id'); e.target.value = '';
+    });
+
+    function abrirFormularioManual() {
+      const datos = { empresa: '', contrato: '', valor: '', fechaExp: '', fechaPago: '', latencia: '30' };
+      mostrarRevisionDatos(datos, pendingAction ? pendingAction.catId : (filtroCategoriaId || 'general'), pendingAction ? pendingAction.serviceId : null, pendingAction ? pendingAction.mode : 'agregar');
+    }
+
+    function mostrarRevisionDatos(datos, catId, serviceId, mode) {
+      reviewData = { ...datos, catId, serviceId, mode };
+      const data = currentData;
+      const cat = data ? data.categorias.find(c => c.id === catId) : null;
+      const servicioExistente = cat ? cat.servicios.find(s => s.id === serviceId) : null;
+      const esActualizacion = (mode === 'actualizar' && servicioExistente);
+      document.getElementById('reviewEmpresa').disabled = esActualizacion;
+      document.getElementById('reviewContrato').disabled = esActualizacion;
+      if (esActualizacion) {
+        document.getElementById('reviewEmpresa').value = servicioExistente.servicio;
+        document.getElementById('reviewContrato').value = servicioExistente.codigo;
+        document.getElementById('reviewLatencia').value = servicioExistente.latencia || 30;
+      } else {
+        document.getElementById('reviewEmpresa').value = reviewData.empresa || '';
+        document.getElementById('reviewContrato').value = reviewData.contrato || '';
+        document.getElementById('reviewLatencia').value = reviewData.latencia || 30;
+      }
+      document.getElementById('reviewValor').value = reviewData.valor || '';
+      document.getElementById('reviewFechaExp').value = reviewData.fechaExp || '';
+      document.getElementById('reviewFechaPago').value = reviewData.fechaPago || '';
+      dataReviewOverlay.classList.add('active');
+    }
+
+    function ocultarRevisionDatos() { dataReviewOverlay.classList.remove('active'); reviewData = null; }
+
+    async function confirmarDatosRevisados() {
+      if (!reviewData) return;
+      const empresa = document.getElementById('reviewEmpresa').value.trim();
+      const contrato = document.getElementById('reviewContrato').value.trim();
+      const valor = parseInt(document.getElementById('reviewValor').value) || 0;
+      const fechaPago = document.getElementById('reviewFechaPago').value;
+      const latencia = parseInt(document.getElementById('reviewLatencia').value) || 30;
+      if (!fechaPago) { mostrarToast('⚠️ Debes seleccionar una fecha límite de pago'); return; }
+      const data = await cargarDatos();
+      let cat = data.categorias.find(c => c.id === reviewData.catId);
+      if (!cat && reviewData.catId === 'general') {
+        if (data.categorias.length > 0) cat = data.categorias[0];
+        else { cat = { id: 'cat_general', nombre: 'General', icono: '📄', servicios: [] }; data.categorias.push(cat); }
+        reviewData.catId = cat.id;
+      }
+      if (!cat) { mostrarToast('❌ Error: Categoría no encontrada'); ocultarRevisionDatos(); return; }
+      if (reviewData.mode === 'agregar') {
+        const nuevoServicio = {
+          id: 's_' + Date.now(), servicio: empresa || 'Servicio',
+          codigo: contrato || Math.floor(1000000+Math.random()*9000000).toString(),
+          vencimiento: fechaPago, valor: valor || Math.floor((Math.random()*200)+30)*1000,
+          estado: 'proximo', tieneDocumento: true, latencia: latencia, history: ['proximo']
+        };
+        cat.servicios.push(nuevoServicio);
+      } else if (reviewData.mode === 'actualizar') {
+        const s = cat.servicios.find(s => s.id === reviewData.serviceId);
+        if (s) {
+          s.valor = valor || s.valor; s.vencimiento = fechaPago || s.vencimiento;
+          s.latencia = latencia;
+          s.estado = 'proximo'; s.history.push('proximo');
+          if (s.history.length > 4) s.history.shift(); s.tieneDocumento = true;
+        }
+      }
+      await guardarDatos(data);
+      refrescarInterfaz();
+      mostrarToast(reviewData.mode === 'agregar' ? `✅ Factura añadida a ${cat.nombre}` : `🔄 Factura actualizada`);
+      ocultarRevisionDatos(); pendingAction = null;
+    }
+
+    document.getElementById('reviewConfirmBtn').addEventListener('click', confirmarDatosRevisados);
+    document.getElementById('reviewCancelBtn').addEventListener('click', () => { ocultarRevisionDatos(); pendingAction = null; });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && dataReviewOverlay.classList.contains('active')) { ocultarRevisionDatos(); pendingAction = null; } });
+
+    function simularExtraccion(nombreArchivo = '') {
+      const empresas = ['Energía', 'Agua', 'Gas', 'Telecomunicaciones', 'Internet'];
+      const empresa = empresas[Math.floor(Math.random() * empresas.length)];
+      const contrato = Math.floor(1000000+Math.random()*9000000).toString();
+      const valor = Math.floor((Math.random()*200)+30)*1000;
+      const hoy = new Date(); const fechaExp = hoy.toISOString().split('T')[0];
+      const fechaPago = new Date(hoy.getTime() + 15 * 86400000).toISOString().split('T')[0];
+      return { empresa, contrato, valor, fechaExp, fechaPago, latencia: 30 };
+    }
+
+    async function marcarPagado(catId, serviceId) {
+      const data = await cargarDatos(); const cat = data.categorias.find(c => c.id === catId);
+      if (!cat) return; const s = cat.servicios.find(s => s.id === serviceId);
+      if (!s) return; s.estado = 'pagado'; s.history.push('pagado');
+      if (s.history.length > 4) s.history.shift(); await guardarDatos(data); refrescarInterfaz(); mostrarToast('✅ Factura marcada como cancelada');
+    }
+
+    async function eliminarServicio(catId, serviceId) {
+      if (!confirm('¿Eliminar este servicio?')) return;
+      const data = await cargarDatos(); const cat = data.categorias.find(c => c.id === catId);
+      if (!cat) return; cat.servicios = cat.servicios.filter(s => s.id !== serviceId);
+      await guardarDatos(data); if (filtroCategoriaId === catId && cat.servicios.length === 0) filtroCategoriaId = null;
+      refrescarInterfaz(); mostrarToast('🗑️ Servicio eliminado');
+    }
+
+    async function exportarDatos(forzarDescarga = false) {
+      if (ultimoRespaldoJSON) {
+        const blob = new Blob([ultimoRespaldoJSON], { type: 'application/json' });
+        const nombreArchivo = `respaldo_hogar_${new Date().toISOString().slice(0,10)}.json`;
+        descargarArchivo(blob, nombreArchivo);
+      } else {
+        mostrarToast('Aún no hay datos para exportar.');
+      }
+    }
+
+    function descargarArchivo(blob, nombre) {
+      const url = URL.createObjectURL(blob); const a = document.createElement('a');
+      a.href = url; a.download = nombre; document.body.appendChild(a); a.click();
+      document.body.removeChild(a); URL.revokeObjectURL(url);
+      mostrarToast('💾 Archivo descargado. Guárdalo en un lugar seguro.');
+    }
+
+    importFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0]; if (!file) return;
+      if (file.size > 10 * 1024 * 1024) {
+        mostrarToast('El archivo es demasiado grande (máx. 10 MB).');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = async (event) => {
+        try {
+          const datos = JSON.parse(event.target.result);
+          if (!datos.categorias || !Array.isArray(datos.categorias)) throw new Error('Formato inválido');
+          if (confirm('¿Reemplazar todos los datos actuales con el respaldo cargado?')) {
+            await guardarDatos(datos);
+            refrescarInterfaz();
+            mostrarToast('📂 Datos restaurados correctamente');
+          }
+        } catch (err) { mostrarToast('❌ Archivo no válido.'); }
+      };
+      reader.readAsText(file); e.target.value = '';
+    });
+
+    ['dragenter','dragover','dragleave','drop'].forEach(ev => dropZone.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); }));
+    dropZone.addEventListener('dragover', () => dropZone.classList.add('dragover'));
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', (e) => {
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) {
+        const file = e.dataTransfer.files[0];
+        const catId = filtroCategoriaId || (currentData?.categorias[0]?.id || 'general');
+        const datos = simularExtraccion(file.name);
+        pendingAction = { mode: 'agregar', catId, serviceId: null };
+        mostrarRevisionDatos(datos, catId, null, 'agregar');
+      }
+    });
+    dropZone.addEventListener('click', () => {
+      const catId = filtroCategoriaId || (currentData?.categorias[0]?.id || 'general');
+      hiddenFileInput.setAttribute('data-cat-id', catId); hiddenFileInput.removeAttribute('data-service-id');
+      hiddenFileInput.click();
+    });
+
+    function recordarRespaldoSiNecesario() {
+      const ahora = Date.now();
+      if ((ahora - ultimoRespaldo) > 7 * 86400000) { mostrarToast('💡 Han pasado más de 7 días desde tu último respaldo. Considera guardar una copia.'); ultimoRespaldo = ahora; }
+    }
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#btnNuevaCategoria') && !e.target.closest('.card-action-popup') && !e.target.closest('[data-action="agregar-factura"]') && !e.target.closest('[data-action="actualizar"]') && !e.target.closest('.data-review-overlay')) cerrarTodosPopups();
+    });
+
+    async function refrescarInterfaz() {
+      if (!appUnlocked) return;
+      document.querySelectorAll('.card-action-popup').forEach(p => p.remove());
+      let data = await cargarDatos();
+      if (!data || !data.categorias) data = JSON.parse(JSON.stringify(datosIniciales));
+      data = actualizarEstados(data);
+      await guardarDatos(data);
+      currentData = data;
+      renderGrid(data);
+      renderFilterIndicator(data);
+      renderCards(data);
+    }
+
+    async function iniciarApp() {
+      try {
+        currentData = await cargarDatos();
+        if (!currentData || !currentData.categorias) {
+          currentData = JSON.parse(JSON.stringify(datosIniciales));
+          await guardarDatos(currentData);
+        }
+        refrescarInterfaz();
+        setTimeout(recordarRespaldoSiNecesario, 3000);
+        verificarRecordatorios();
+      } catch (error) {
+        console.error('Error en iniciarApp:', error);
+        mostrarToast('❌ Error al cargar los datos. Intenta recargar.');
+      }
+    }
+
+    initLock();
+  }
+</script>
+</body>
+</html>
