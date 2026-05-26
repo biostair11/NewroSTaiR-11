@@ -1,167 +1,203 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>elipso · Nivel 0 · Cookies · Registro · Miniaturas</title>
+    <title>elipso · Nivel 0 · Cookies · Registro · NewroSTaiR-11</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* --- Estilos base (fusión) --- */
-        * {
-            margin: 0;
-            padding: 0;
+        /* ===== PLANTILLA UNIFICADA (NO MODIFICAR) ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        /* ----- HEADER (diseño base) ----- */
+        .header-new {
+            background-color: #0d2c6c;
+            color: #ffffff;
+            padding: 20px 15px;
+            font-family: Arial, sans-serif;
+            text-align: center;
             box-sizing: border-box;
         }
-        body {
-            background-color: #f5f3f0;
-            font-family: 'Georgia', 'Times New Roman', serif;
-            color: #1f36b9;
-            line-height: 1.7;
-        }
-        .main-grid {
-            display: grid;
-            grid-template-columns: 260px 1fr 260px;
-            max-width: 1400px;
+        .header-table {
+            display: table;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            gap: 20px;
         }
-        .sidebar-left, .sidebar-right {
-            background-color: #f0efea;
-            border-radius: 25px;
-            padding: 1.5rem 1.2rem;
-            margin-top: 2rem;
-            max-height: calc(100vh - 40px);
-            position: sticky;
-            top: 20px;
-            overflow-y: auto;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            border: 1px solid #ddd9d2;
+        .header-cell {
+            display: table-cell;
+            vertical-align: middle;
         }
-        .sidebar-left h2, .sidebar-right h2 {
-            font-size: 1.3rem;
-            color: #597092;
-            border-bottom: 1px solid #c4bcb0;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1rem;
+        .header-cell-left {
+            width: 20%;
+            text-align: left;
         }
-        .sidebar-left ul, .sidebar-right ul {
-            list-style: none;
-        }
-        .sidebar-left li, .sidebar-right li {
-            margin-bottom: 0.6rem;
-        }
-        .sidebar-left a, .sidebar-right a {
-            color: #1825d171;
-            text-decoration: none;
-            font-size: 0.95rem;
-            display: block;
-            padding: 0.3rem 0.6rem;
-            border-radius: 20px;
-            transition: background 0.2s;
-        }
-        .sidebar-left a:hover, .sidebar-right a:hover {
-            background-color: #e3dfd7;
-            color: #2b5e4f;
-        }
-        .content {
-            background-color: #ffffff;
-            border: 1px solid #ddd9d2;
-            border-radius: 28px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
-            margin: 2rem 0;
-        }
-        .header-imagen {
-            background-image: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('wait.png');
-            background-size: cover;
-            background-position: center 30%;
-            padding: 3rem 2rem;
+        .header-cell-center {
+            width: 60%;
             text-align: center;
-            color: white;
-            border-bottom: 1px solid #ddd9d2;
+            padding: 0 15px;
         }
-        .header-imagen h1 {
-            font-size: 2.2rem;
-            font-weight: 450;
-            color: #FFFFF0;
-            text-shadow: 3px 3px 12px rgba(0,0,0,0.9);
-            margin-bottom: 0.5rem;
+        .header-cell-right {
+            width: 20%;
+            text-align: right;
         }
-        .header-imagen p {
-            font-size: 1.1rem;
-            color: #FDF6ED;
-            text-shadow: 1px 1px 6px rgba(0,0,0,0.8);
-            font-style: italic;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .badge {
+        .logo-wrapper {
+            background-color: #ffffff;
+            padding: 5px;
+            border-radius: 8px;
             display: inline-block;
-            background: #4d6a5f;
-            color: white;
-            padding: 2px 10px;
-            border-radius: 20px;
-            font-size: 0.8em;
+            box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+        }
+        .logo-wrapper img {
+            width: 70px;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+        .header-new h1 {
+            margin: 0;
+            font-size: 24pt;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        .header-new .subtitulo {
+            margin: 5px 0 10px 0;
+            font-size: 11pt;
+            font-weight: normal;
+            color: #e0e6ed;
+        }
+        .accesibilidad-header-text {
+            font-size: 10pt;
+            line-height: 1.4;
             margin-bottom: 10px;
         }
-        .nota-cafe {
-            background-color: #fef6e9;
-            border-left: 6px solid #d4a373;
-            padding: 1.3rem 2rem;
-            margin: 2rem 0;
-            border-radius: 0 12px 12px 0;
-            font-style: italic;
-            color: #4d3e30;
+        .header-nav-quick {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 5px;
         }
-        .definition {
-            background: #e6f3e6;
-            border-left: 6px solid #2e7d32;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
+        .header-nav-quick a {
+            color: rgba(255,245,235,0.8);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
         }
-        .axiom {
-            background: #fff3e0;
-            border-left: 6px solid #e67e22;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            border-radius: 0 12px 12px 0;
+        .header-nav-quick a:hover {
+            color: white;
         }
-        .image-placeholder {
-            background-color: #f0f0f0;
-            border: 2px dashed #aaa;
-            border-radius: 16px;
-            padding: 2rem 1rem;
-            margin: 2rem 0;
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            transition: background 0.2s;
+        .header-nav-quick img {
+            height: 20px;
+            vertical-align: middle;
         }
-        .image-placeholder:hover {
-            background-color: #e6e6e6;
-            border-color: #6a0dad;
-        }
-        .image-placeholder::before {
-            content: "🖼️ ";
-            font-size: 1.2rem;
-        }
-        .hash {
-            font-family: 'Courier New', monospace;
-            background: #edebe9;
-            padding: 0.2rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            word-break: break-all;
-        }
-        hr {
-            border: none;
-            border-top: 2px dotted #c9beb2;
-            margin: 2rem 0;
+        .header-divider {
+            border-bottom: 1px solid #4a69a8;
+            max-width: 80%;
+            margin: 15px auto 0 auto;
         }
 
-        /* --- Estilos de la cuadrícula adaptativa --- */
+        /* Responsividad header móvil */
+        @media (max-width: 600px) {
+            .header-new {
+                padding: 6px 4px;
+            }
+            .header-table {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+            .header-cell-left,
+            .header-cell-center,
+            .header-cell-right {
+                display: table-cell !important;
+                width: auto !important;
+                text-align: center !important;
+                padding: 0 2px !important;
+                vertical-align: middle !important;
+            }
+            .header-cell-left {
+                width: 22% !important;
+                text-align: left !important;
+            }
+            .header-cell-center {
+                width: 56% !important;
+                padding: 0 2px !important;
+            }
+            .header-cell-right {
+                width: 22% !important;
+                text-align: right !important;
+            }
+            .logo-wrapper {
+                padding: 2px;
+            }
+            .logo-wrapper img {
+                width: 38px;
+            }
+            .header-new h1 {
+                font-size: 14pt;
+                margin: 0;
+                line-height: 1.2;
+            }
+            .header-new .subtitulo {
+                font-size: 7pt;
+                margin: 2px 0 0 0;
+            }
+            .accesibilidad-header-text {
+                font-size: 6.5pt;
+                line-height: 1.2;
+                margin: 3px 0 0 0;
+                white-space: normal;
+                display: block;
+            }
+            .header-nav-quick {
+                display: none;
+            }
+            .header-divider {
+                margin: 5px auto 0 auto;
+                max-width: 95%;
+            }
+        }
+
+        /* Estilos propios de Elipso (adaptados a la plantilla) */
+        .content {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            margin: 2rem 0;
+        }
         .topic-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -174,7 +210,6 @@
             padding: 1.5rem 1.2rem;
             box-shadow: 0 12px 28px -8px rgba(55, 32, 90, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(2px);
             transition: all 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.1);
             display: flex;
             flex-direction: column;
@@ -187,6 +222,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            border-bottom: none;
+            padding-bottom: 0;
         }
         .modulo h2 span {
             font-size: 1rem;
@@ -216,15 +253,12 @@
             border-bottom-color: #9b7fd3;
             color: #4f2d8f;
         }
-        /* Miniaturas (favicons) */
         .enlace-lista li a img.favicon {
             width: 16px;
             height: 16px;
             border-radius: 3px;
             background: #f0f0f0;
         }
-
-        /* Módulo expandible */
         .modulo-expandible {
             background: #fdfaff;
             border-left: 4px solid #b28aff;
@@ -268,8 +302,6 @@
             border-top: 1px dashed #cdbef0;
             padding-top: 0.8rem;
         }
-
-        /* Indicador de memoria (círculo violeta) y sección de intereses */
         .memoria-indicador {
             display: flex;
             align-items: center;
@@ -336,8 +368,6 @@
             background: #e3d6ff;
             border-color: #9b7fd3;
         }
-
-        /* Sección de temas de interés generada por cookies */
         .intereses-tags {
             display: flex;
             flex-wrap: wrap;
@@ -352,8 +382,6 @@
             color: #2b1b4e;
             border: 1px solid #b39ddb;
         }
-
-        /* Módulo de registro y redes sociales */
         .registro-modulo {
             background: #e8e2d8;
             border-radius: 24px;
@@ -396,8 +424,6 @@
         .redes-icons a:hover {
             opacity: 1;
         }
-
-        /* Área de consulta */
         .input-area {
             background: #f0efea;
             border-radius: 32px;
@@ -431,118 +457,246 @@
         .input-area button:hover {
             background: #2b5e4f;
         }
-
-        /* Menús flotantes para móvil */
-        .menu-flotante-left, .menu-flotante-right {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            z-index: 1000;
+        .image-placeholder {
+            background-color: #f0f0f0;
+            border: 2px dashed #aaa;
+            border-radius: 16px;
+            padding: 2rem 1rem;
+            margin: 2rem 0;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            transition: background 0.2s;
         }
-        .menu-flotante-left { left: 20px; }
-        .menu-flotante-right { right: 20px; }
-        .menu-flotante-btn {
-            background-color: #4d6a5f;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            width: 60px;
-            height: 60px;
+        .image-placeholder:hover {
+            background-color: #e6e6e6;
+            border-color: #6a0dad;
+        }
+        .image-placeholder::before {
+            content: "🖼️ ";
             font-size: 1.2rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            line-height: 1.2;
         }
-        .menu-desplegable {
-            display: none;
-            position: absolute;
-            bottom: 70px;
-            background-color: #f0efea;
-            border-radius: 20px;
-            padding: 1.2rem;
-            width: 220px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            border: 1px solid #c4bcb0;
-            max-height: 60vh;
-            overflow-y: auto;
+        .hash {
+            font-family: 'Courier New', monospace;
+            background: #edebe9;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            word-break: break-all;
         }
-        .menu-desplegable.left { left: 0; }
-        .menu-desplegable.right { right: 0; }
-        .menu-desplegable.visible { display: block; }
-
-        @media (max-width: 900px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-            .sidebar-left, .sidebar-right {
-                display: none;
-            }
-            .menu-flotante-left, .menu-flotante-right {
-                display: block;
-            }
+        .nota-cafe {
+            background-color: #fef6e9;
+            border-left: 6px solid #d4a373;
+            padding: 1.3rem 2rem;
+            margin: 2rem 0;
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            color: #4d3e30;
+        }
+        .definition {
+            background: #e6f3e6;
+            border-left: 6px solid #2e7d32;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
+        }
+        .axiom {
+            background: #fff3e0;
+            border-left: 6px solid #e67e22;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 12px 12px 0;
         }
 
-        .firma {
-            margin-top: 2.5rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid #b0a99f;
-            font-size: 0.9rem;
-            color: #4f4a45;
-            text-align: right;
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:nowrap; white-space:nowrap; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+
+        .back-button {
+            display:block;
+            text-align:center;
+            margin-bottom:1rem;
+        }
+        .back-button a {
+            display:inline-block;
+            background:#e6edf4;
+            color:#1a4d6b;
+            text-decoration:none;
+            font-weight:600;
+            padding:0.5rem 1rem;
+            border-radius:30px;
+            border:1px solid #cbdae6;
+            font-size:0.85rem;
+            transition:background 0.2s, border-color 0.2s;
+        }
+        .back-button a:hover {
+            background:#d4e0ea;
+            border-color:#9eb4c8;
+            color:#0a3146;
+        }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); }
+        }
+        @media (max-width:700px) {
+            .content { padding:1.2rem; }
+        }
+        @media (max-width:600px) {
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; }
+            .voice-btn { font-size:0.7rem; min-width:45px; }
+            .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; }
         }
     </style>
 </head>
-<body>
+<body id="top">
 
-    <!-- Header con imagen y título -->
-    <header class="header-imagen">
-        <span class="badge">🌐 NIVEL 0 · COOKIES · REGISTRO</span>
-        <h1>elipso</h1>
-        <p>Cuadrícula adaptativa · Tus intereses en cookies · Únete para más</p>
+    <!-- Barra de voz flotante -->
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="intro">📖 Introducción</option>
+            <option value="completo">📄 Plantilla</option>
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <!-- Header unificado (igual que en la plantilla) -->
+    <header class="header-new">
+        <div class="header-table">
+            <div class="header-cell header-cell-left">
+                <div class="logo-wrapper">
+                    <a href="../index.html">
+                        <img src="../img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio">
+                    </a>
+                </div>
+            </div>
+            <div class="header-cell header-cell-center">
+                <h1>NewroSTaiR-11</h1>
+                <div class="subtitulo">Conocimiento Colaborativo Complementario</div>
+                <div class="accesibilidad-header-text">
+                    Este sitio web integra iconos semánticos como anclajes cognitivos. 🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas.
+                </div>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube">
+                        <img src="../img/youtube-icon.png" alt="YouTube"> YouTube
+                    </a>
+                    <a href="../index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo" title="TikTok">
+                        <img src="../img/tiktok-icon.jpg" alt="TikTok"> TikTok
+                    </a>
+                </nav>
+            </div>
+            <div class="header-cell header-cell-right">
+                <div class="logo-wrapper">
+                    <a href="../elipso/elipso.html">
+                        <img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="header-divider"></div>
     </header>
 
     <!-- Grid principal de tres columnas -->
     <div class="main-grid">
-        <!-- COLUMNA IZQUIERDA: Información + intereses desde cookies -->
-        <aside class="sidebar-left">
-            <h2>🌀 Sobre la red</h2>
-            <div class="definition" style="margin-top:0;">
-                <strong>Memoria por cookies</strong><br>
-                <small>Guardamos tus clics de forma anónima para adaptar la cuadrícula</small>
+        <!-- Sidebar izquierdo: Mapa del sitio (igual que en la plantilla) -->
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
             </div>
-            <!-- Indicador de memoria (círculo violeta) -->
-            <div class="memoria-indicador">
-                <div class="circulo-violeta" id="circuloMemoria" title="Memoria local activa"></div>
-                <div class="tooltip">
-                    <span class="memoria-texto">🍪 memoria por cookies</span>
-                    <span class="tooltip-text" id="tooltipMemoria">Intereses guardados en cookies:</span>
-                </div>
-                <button class="reset-btn" id="resetMemoria">⟲ reiniciar cookies</button>
-            </div>
-
-            <!-- Sección de temas de interés generada por cookies -->
-            <h2 style="margin-top:1.5rem;">🔥 Tus temas de interés</h2>
-            <div id="interesesTags" class="intereses-tags">
-                <!-- Se llenará con JavaScript -->
-            </div>
-            <p style="font-size:0.8rem; color:#6b5a8a; margin-top:0.5rem;">(basado en tus clics en subtemas)</p>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row">
+                        <a href="../index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="../metodo-dsp-fc-dtp.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="../Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder">
+                    <div class="module-row">
+                        <a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span>
+                    </div>
+                    <ul class="submenu" id="biblio-submenu">
+                        <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+            </ul>
             <hr>
-
-            <h2>📊 Nodos activos</h2>
-            <p><span style="font-weight:bold;">312</span> nodos en total<br><span style="font-weight:bold;">18</span> nuevos hoy</p>
-            <hr>
-            <h2>📋 Niveles de acceso</h2>
-            <p><strong style="color:#7d3cff;">L0 · Memoria cookies</strong> (actual)<br>Observación anónima, cuadrícula adaptativa.</p>
-            <p><strong>L1 · Consulta pública</strong><br>Nodos temáticos, sin registro.</p>
-            <p><strong>L2 · Participación</strong><br>Registro, cromatografía personal.</p>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>elipso · Nivel 0</strong></p>
         </aside>
 
-        <!-- COLUMNA CENTRAL: Cuadrícula adaptativa y contenido -->
+        <!-- Contenido principal de Elipso (adaptado) -->
         <main class="content">
+            <!-- Badge propio de Elipso -->
+            <div style="text-align:center; margin-bottom:1rem;">
+                <span class="badge" style="background:#4d6a5f;">🌐 NIVEL 0 · COOKIES · REGISTRO</span>
+            </div>
+
             <!-- Área de consulta -->
             <div class="input-area">
                 <h3 style="margin-bottom:1rem; color:#2b5e4f;">✍️ Qué quieres explorar?</h3>
@@ -550,30 +704,21 @@
                 <button>Enviar consulta</button>
             </div>
 
-            <!-- Cuadrícula adaptativa con miniaturas (favicons) -->
-            <h2 style="margin-bottom:1rem;">📰 Cuadrícula adaptativa</h2>
+            <!-- Cuadrícula adaptativa -->
+            <h2>📰 Cuadrícula adaptativa</h2>
             <div class="topic-grid">
-                <!-- Módulo Actualidad -->
                 <div class="modulo">
                     <h2>📰 Actualidad <span>en directo</span></h2>
-                    <ul class="enlace-lista" id="actualidad-links">
-                        <!-- Los favicons se cargarán con JS o se ponen manualmente -->
-                    </ul>
+                    <ul class="enlace-lista" id="actualidad-links"></ul>
                 </div>
-
-                <!-- Módulo Ciencia -->
                 <div class="modulo">
                     <h2>🔬 Ciencia <span>investigación</span></h2>
                     <ul class="enlace-lista" id="ciencia-links"></ul>
                 </div>
-
-                <!-- Módulo Cultura base -->
                 <div class="modulo">
                     <h2>🎭 Cultura <span>general</span></h2>
                     <ul class="enlace-lista" id="cultura-links"></ul>
                 </div>
-
-                <!-- Módulo Cultura y Otros (expandible por interés) -->
                 <div class="modulo modulo-expandible" id="moduloExpandible">
                     <h2>🌀 Cultura y Otros <span>+interés</span></h2>
                     <div class="subtemas">
@@ -581,10 +726,8 @@
                         <button class="subtema-btn" data-tema="astro">🔭 Astronomía</button>
                         <button class="subtema-btn" data-tema="poesia">✍️ Poesía</button>
                     </div>
-                    <ul class="enlace-lista" id="enlacesCultura">
-                        <!-- Se llenará con JS -->
-                    </ul>
-                    <div class="contador-info" id="contadorDisplay">
+                    <ul class="enlace-lista" id="enlacesCultura"></ul>
+                    <div class="contador-info">
                         📊 <span id="jazzCount">0</span> jazz · <span id="astroCount">0</span> astro · <span id="poesiaCount">0</span> poesía
                     </div>
                     <p style="font-size:0.75rem; color:#9a89b5; margin-top:0.5rem;">
@@ -595,7 +738,7 @@
 
             <!-- Nodos recientes -->
             <h2 style="margin-top:2rem;">🕒 Nodos recientes</h2>
-            <div class="nota-cafe" style="padding:1rem 1.5rem;">
+            <div class="nota-cafe">
                 <p><strong>🧠 "La ley de correspondencia en la arquitectura medieval"</strong> · hace 2h · Cosmovisiones</p>
                 <p><strong>🌌 "Paralelismos entre el hermetismo y la física cuántica"</strong> · hace 5h · Cosmovisiones</p>
                 <p><strong>📡 "Últimos hallazgos del telescopio James Webb"</strong> · hace 1d · Ciencia</p>
@@ -609,9 +752,8 @@
             </div>
         </main>
 
-        <!-- COLUMNA DERECHA: Registro, redes y documentos -->
-        <aside class="sidebar-right">
-            <h2>🔐 Ingreso / Registro</h2>
+        <!-- Sidebar derecho (original de Elipso, con registro y manual) -->
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
             <div class="registro-modulo">
                 <h3>🌟 Únete a elipso</h3>
                 <p style="margin-bottom:1rem;">Accede a tu hipercubo personal y sincroniza tus intereses entre dispositivos.</p>
@@ -639,44 +781,71 @@
             <pre style="background:#e3dfd7; padding:0.5rem; border-radius:8px; font-size:0.75rem;">{identidad: "descriptiva"}</pre>
             <hr>
             <h2>📄 Documentos</h2>
-            <ul>
+            <ul style="list-style: none; padding-left: 0;">
                 <li><a href="#">📜 Manifiesto del RCA</a></li>
                 <li><a href="#">🧬 Marco teórico (NewroSTaiR)</a></li>
                 <li><a href="#">🌀 Explorar por temáticas</a></li>
                 <li><a href="#">📊 Estadísticas de la red</a></li>
             </ul>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
         </aside>
     </div>
 
     <!-- Menús flotantes para móvil -->
     <div class="menu-flotante-left">
-        <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Info</small></button>
+        <button class="menu-flotante-btn" id="menuLeftBtn">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
-            <ul>
-                <li><a href="#">Sobre la red</a></li>
-                <li><a href="#">Niveles de acceso</a></li>
-                <li><a href="#">Estadísticas</a></li>
-                <li><a href="#">Manual de integridad</a></li>
+            <div class="back-button">
+                <a href="#" onclick="history.back(); return false;">⬅️ Volver atrás</a>
+            </div>
+            <ul class="tree">
+                <!-- Aquí se puede incluir una versión simplificada del árbol, pero por brevedad replicamos el mismo contenido que en el sidebar izquierdo -->
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 NewroSTaiR-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../MVO/OSD.html">01 · Origen, Misión y Visión</a></li>
+                        <li><a href="../PI&FT.html">02 · Propiedad Intelectual</a></li>
+                        <li><a href="../03-Investigacion-y-Desarrollo.html">03 · I+D</a></li>
+                        <li><a href="../04-Modelo-de-Negocio.html">04 · Modelo de negocio</a></li>
+                        <li><a href="../Humanidades.html">05 · Humanidades</a></li>
+                        <li><a href="../06-Historia-Neuroplasticidad.html">06 · Historia</a></li>
+                        <li><a href="../07-Era-Humano-IA.html">07 · Humano-IA</a></li>
+                        <li><a href="../08-Comunidad.html">08 · Comunidad</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="../Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
+                </li>
             </ul>
         </div>
     </div>
     <div class="menu-flotante-right">
-        <button class="menu-flotante-btn" id="menuRightBtn">📚<br><small>Temas</small></button>
+        <button class="menu-flotante-btn" id="menuRightBtn">⚙️<br><small>Docs</small></button>
         <div class="menu-desplegable right" id="menuRight">
-            <ul>
-                <li><a href="#">Historia</a></li>
-                <li><a href="#">Religión</a></li>
-                <li><a href="#">Cosmovisiones</a></li>
-                <li><a href="#">Noticias</a></li>
-                <li><a href="#">Ciencia</a></li>
-                <li><a href="#">Arte</a></li>
-            </ul>
+            <div style="text-align:center; margin:10px 0;"><img src="../img/qr_newrostair.png" alt="QR NewroSTaiR" style="width:120px; border-radius:12px;"></div>
+            <p style="font-size:0.8rem; text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <div class="back-button">
+                <a href="#top">⬆️ Volver arriba</a>
+            </div>
         </div>
     </div>
 
     <script>
         (function() {
-            // --- Funciones para manejo de cookies ---
+            // ========== FUNCIONES PARA COOKIES (sistema de intereses de Elipso) ==========
             function setCookie(name, value, days) {
                 let expires = "";
                 if (days) {
@@ -686,7 +855,6 @@
                 }
                 document.cookie = name + "=" + (value || "") + expires + "; path=/";
             }
-
             function getCookie(name) {
                 const nameEQ = name + "=";
                 const ca = document.cookie.split(';');
@@ -698,18 +866,14 @@
                 return null;
             }
 
-            // Inicializar intereses desde cookie o por defecto
             let intereses = { jazz: 0, astro: 0, poesia: 0 };
             const cookieIntereses = getCookie('elipso_intereses');
             if (cookieIntereses) {
                 try {
                     intereses = JSON.parse(cookieIntereses);
-                } catch (e) {
-                    // si hay error, usar valores por defecto
-                }
+                } catch(e) {}
             }
 
-            // Elementos del DOM
             const circulo = document.getElementById('circuloMemoria');
             const tooltipSpan = document.getElementById('tooltipMemoria');
             const moduloEx = document.getElementById('moduloExpandible');
@@ -722,46 +886,41 @@
             const resetBtn = document.getElementById('resetMemoria');
             const interesesTags = document.getElementById('interesesTags');
 
-            // Función para guardar cookies y actualizar UI
             function guardarCookies() {
-                setCookie('elipso_intereses', JSON.stringify(intereses), 30); // 30 días
+                setCookie('elipso_intereses', JSON.stringify(intereses), 30);
             }
 
-            // Actualizar toda la interfaz (contadores, clase expandido, círculo, tags)
             function actualizarUI() {
-                spanJazz.textContent = intereses.jazz;
-                spanAstro.textContent = intereses.astro;
-                spanPoesia.textContent = intereses.poesia;
-
-                tooltipSpan.innerHTML = `🍪 Intereses: jazz ${intereses.jazz} · astronomía ${intereses.astro} · poesía ${intereses.poesia}`;
-
+                if (spanJazz) spanJazz.textContent = intereses.jazz;
+                if (spanAstro) spanAstro.textContent = intereses.astro;
+                if (spanPoesia) spanPoesia.textContent = intereses.poesia;
+                if (tooltipSpan) tooltipSpan.innerHTML = `🍪 Intereses: jazz ${intereses.jazz} · astronomía ${intereses.astro} · poesía ${intereses.poesia}`;
                 const algunExpandido = intereses.jazz >= 3 || intereses.astro >= 3 || intereses.poesia >= 3;
-                if (algunExpandido) {
-                    moduloEx.classList.add('expandido');
-                    circulo.classList.add('activo');
-                } else {
-                    moduloEx.classList.remove('expandido');
-                    circulo.classList.remove('activo');
+                if (moduloEx) {
+                    if (algunExpandido) moduloEx.classList.add('expandido');
+                    else moduloEx.classList.remove('expandido');
                 }
-
-                // Actualizar tags de intereses
-                interesesTags.innerHTML = '';
-                for (let [tema, valor] of Object.entries(intereses)) {
-                    if (valor > 0) {
-                        const tag = document.createElement('span');
-                        tag.className = 'interes-tag';
-                        tag.textContent = `${tema === 'jazz' ? '🎺 Jazz' : tema === 'astro' ? '🔭 Astronomía' : '✍️ Poesía'} (${valor})`;
-                        interesesTags.appendChild(tag);
+                if (circulo) {
+                    if (algunExpandido) circulo.classList.add('activo');
+                    else circulo.classList.remove('activo');
+                }
+                if (interesesTags) {
+                    interesesTags.innerHTML = '';
+                    for (let [tema, valor] of Object.entries(intereses)) {
+                        if (valor > 0) {
+                            const tag = document.createElement('span');
+                            tag.className = 'interes-tag';
+                            tag.textContent = `${tema === 'jazz' ? '🎺 Jazz' : tema === 'astro' ? '🔭 Astronomía' : '✍️ Poesía'} (${valor})`;
+                            interesesTags.appendChild(tag);
+                        }
+                    }
+                    if (interesesTags.children.length === 0) {
+                        interesesTags.innerHTML = '<span style="color:#9a89b5;">Aún no hay intereses</span>';
                     }
                 }
-                if (interesesTags.children.length === 0) {
-                    interesesTags.innerHTML = '<span style="color:#9a89b5;">Aún no hay intereses</span>';
-                }
-
                 guardarCookies();
             }
 
-            // Incrementar un tema
             function incrementar(tema) {
                 if (intereses.hasOwnProperty(tema)) {
                     intereses[tema] += 1;
@@ -769,18 +928,15 @@
                 }
             }
 
-            // Event listeners para botones
-            btnJazz.addEventListener('click', () => incrementar('jazz'));
-            btnAstro.addEventListener('click', () => incrementar('astro'));
-            btnPoesia.addEventListener('click', () => incrementar('poesia'));
-
-            // Reset
-            resetBtn.addEventListener('click', () => {
+            if (btnJazz) btnJazz.addEventListener('click', () => incrementar('jazz'));
+            if (btnAstro) btnAstro.addEventListener('click', () => incrementar('astro'));
+            if (btnPoesia) btnPoesia.addEventListener('click', () => incrementar('poesia'));
+            if (resetBtn) resetBtn.addEventListener('click', () => {
                 intereses = { jazz: 0, astro: 0, poesia: 0 };
                 actualizarUI();
             });
 
-            // --- Cargar enlaces con miniaturas (favicons) ---
+            // ========== CARGAR ENLACES CON MINIATURAS ==========
             const enlacesPorCategoria = {
                 actualidad: [
                     { nombre: 'BBC Mundo', url: 'https://www.bbc.com/mundo' },
@@ -815,42 +971,34 @@
                 a.rel = 'noopener';
                 const img = document.createElement('img');
                 img.className = 'favicon';
-                img.src = `https://www.google.com/s2/favicons?domain=${new URL(item.url).hostname}&sz=16`;
-                img.alt = 'favicon';
+                try {
+                    const domain = new URL(item.url).hostname;
+                    img.src = `https://www.google.com/s2/favicons?domain=${domain}&sz=16`;
+                } catch(e) {
+                    img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Ccircle cx=\'8\' cy=\'8\' r=\'8\' fill=\'%23ddd\'/%3E%3C/svg%3E';
+                }
                 img.onerror = () => { img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'16\' height=\'16\' viewBox=\'0 0 16 16\'%3E%3Ccircle cx=\'8\' cy=\'8\' r=\'8\' fill=\'%23ddd\'/%3E%3C/svg%3E'; };
                 a.appendChild(img);
                 a.appendChild(document.createTextNode(' ' + item.nombre));
                 li.appendChild(a);
-
-                // Si tiene tema asociado, al hacer clic incrementamos
                 if (temaAsociado) {
-                    a.addEventListener('click', (e) => {
-                        // No prevenimos, solo incrementamos
-                        incrementar(temaAsociado);
-                    });
+                    a.addEventListener('click', (e) => { incrementar(temaAsociado); });
                 }
                 return li;
             }
 
-            function cargarEnlaces() {
-                const actualidadList = document.getElementById('actualidad-links');
-                enlacesPorCategoria.actualidad.forEach(item => actualidadList.appendChild(crearEnlaceConFavicon(item)));
+            const actualidadList = document.getElementById('actualidad-links');
+            if (actualidadList) enlacesPorCategoria.actualidad.forEach(item => actualidadList.appendChild(crearEnlaceConFavicon(item)));
+            const cienciaList = document.getElementById('ciencia-links');
+            if (cienciaList) enlacesPorCategoria.ciencia.forEach(item => cienciaList.appendChild(crearEnlaceConFavicon(item)));
+            const culturaList = document.getElementById('cultura-links');
+            if (culturaList) enlacesPorCategoria.cultura.forEach(item => culturaList.appendChild(crearEnlaceConFavicon(item)));
+            const culturaOtrosList = document.getElementById('enlacesCultura');
+            if (culturaOtrosList) enlacesPorCategoria.culturaOtros.forEach(item => culturaOtrosList.appendChild(crearEnlaceConFavicon(item, item.tema)));
 
-                const cienciaList = document.getElementById('ciencia-links');
-                enlacesPorCategoria.ciencia.forEach(item => cienciaList.appendChild(crearEnlaceConFavicon(item)));
-
-                const culturaList = document.getElementById('cultura-links');
-                enlacesPorCategoria.cultura.forEach(item => culturaList.appendChild(crearEnlaceConFavicon(item)));
-
-                const culturaOtrosList = document.getElementById('enlacesCultura');
-                enlacesPorCategoria.culturaOtros.forEach(item => culturaOtrosList.appendChild(crearEnlaceConFavicon(item, item.tema)));
-            }
-
-            // Inicializar
-            cargarEnlaces();
             actualizarUI();
 
-            // Menús flotantes
+            // ========== MENÚS FLOTANTES ==========
             function initMenu(btnId, menuId, storageKey) {
                 const btn = document.getElementById(btnId);
                 const menu = document.getElementById(menuId);
@@ -867,6 +1015,106 @@
             }
             initMenu('menuLeftBtn', 'menuLeft', 'menuLeftState');
             initMenu('menuRightBtn', 'menuRight', 'menuRightState');
+
+            // ========== VOZ (SINTESIS) ==========
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playPauseLabel = document.getElementById('playPauseLabel');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const voiceStatus = document.getElementById('voiceStatus');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+
+            const textoIntro = `Bienvenido a Elipso, nivel cero. Cuadrícula adaptativa basada en cookies. Explora los nodos temáticos.`;
+            const textoCompleto = `Aquí puedes consultar actualidad, ciencia, cultura y temas de interés. Haz clic en los botones de jazz, astronomía o poesía para expandir el módulo.`;
+
+            function obtenerTextoActual() {
+                const scope = scopeSelect.value;
+                if (scope === 'intro') return textoIntro;
+                else if (scope === 'completo') return textoCompleto;
+                else return textoIntro + ' ' + textoCompleto;
+            }
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces || voces.length === 0) return false;
+                const spanishVoices = voces.filter(v => v.lang.startsWith('es'));
+                const esES = spanishVoices.filter(v => v.lang === 'es-ES');
+                const esLat = spanishVoices.filter(v => v.lang !== 'es-ES');
+                function elegirVoz(lista, genero) {
+                    const patrones = { female: ['female', 'mujer'], male: ['male', 'hombre'] };
+                    const filtrada = lista.filter(v => patrones[genero].some(p => v.name.toLowerCase().includes(p)));
+                    if (filtrada.length) return filtrada.find(v => v.localService) || filtrada[0];
+                    return lista[0] || null;
+                }
+                voiceMap = {
+                    fem_es: elegirVoz(esES, 'female'), fem_lat: elegirVoz(esLat, 'female'),
+                    masc_es: elegirVoz(esES, 'male'), masc_lat: elegirVoz(esLat, 'male')
+                };
+                for (const [key, voz] of Object.entries(voiceMap)) {
+                    const option = voiceSelect.querySelector(`option[value="${key}"]`);
+                    if (option) {
+                        option.disabled = !voz;
+                        option.textContent = option.textContent.replace(' (no disponible)', '') + (voz ? '' : ' (no disponible)');
+                    }
+                }
+                if (!voiceMap[voiceSelect.value]) {
+                    const primera = Object.entries(voiceMap).find(([, v]) => v);
+                    if (primera) { voiceSelect.value = primera[0]; selectedVoice = primera[1]; }
+                } else selectedVoice = voiceMap[voiceSelect.value];
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible';
+                return true;
+            }
+            function actualizarInterfaz(estado, textoBoton) {
+                if (!playPauseBtn) return;
+                playPauseBtn.querySelector('span:first-child').textContent = textoBoton;
+                if (estado === 'reproduciendo') { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; }
+                else if (estado === 'pausado') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; }
+                else { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; }
+            }
+            construirVoiceMap();
+            if (synth) synth.onvoiceschanged = construirVoiceMap;
+            if (voiceSelect) voiceSelect.addEventListener('change', () => {
+                if (voiceMap[voiceSelect.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶');
+                }
+            });
+            function crearNuevaUtterance() {
+                const u = new SpeechSynthesisUtterance(obtenerTextoActual());
+                if (selectedVoice) { u.voice = selectedVoice; u.lang = selectedVoice.lang; }
+                u.rate = 0.95; u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo', '⏸️'); voiceStatus.textContent = 'Reproduciendo...'; };
+                u.onend = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Listo'; };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado', '▶'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo', '⏸️'); };
+                return u;
+            }
+            if (playPauseBtn) {
+                playPauseBtn.addEventListener('click', () => {
+                    if (!isSpeaking && !isPaused) {
+                        if (synth.speaking) synth.cancel();
+                        if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz'; return; }
+                        utterance = crearNuevaUtterance();
+                        synth.speak(utterance);
+                    } else if (isSpeaking && !isPaused) synth.pause();
+                    else if (isSpeaking && isPaused) synth.resume();
+                });
+            }
+            if (stopBtn) {
+                stopBtn.addEventListener('click', () => {
+                    if (synth.speaking) synth.cancel();
+                    isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Detenido';
+                });
+            }
+            if (scopeSelect) {
+                scopeSelect.addEventListener('change', () => {
+                    if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); }
+                });
+            }
+            window.addEventListener('beforeunload', () => { if (synth && synth.speaking) synth.cancel(); });
         })();
     </script>
 </body>
