@@ -194,6 +194,7 @@
                 <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
             </div>
             <h4>🗺️ Mini‑mapa del sitio</h4>
+            <!-- ===== MENÚ IZQUIERDO ACTUALIZADO (COPIADO DEL INDEX.HTML) ===== -->
             <ul class="tree">
                 <li class="folder open">
                     <div class="module-row">
@@ -210,12 +211,24 @@
                                 <li><a href="sonificacion.html">🎵 Sonificación</a></li>
                             </ul>
                         </li>
-                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <!-- CARPETA I+D CON SUBMENÚ (AHORA ABIERTA) -->
+                        <li class="folder open">
+                            <div class="module-row">
+                                <a href="i+d.html" class="module-link">03 · 🔎 I+D</a>
+                                <span class="module-toggle"></span>
+                            </div>
+                            <ul class="submenu">
+                                <li><a href="i+d.html">📋 Índice I+D</a></li>
+                                <li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                                <li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="04-modelo-de-negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                     </ul>
                 </li>
                 <li class="folder open">
@@ -224,15 +237,19 @@
                         <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
                         <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
                         <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                        <li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                        <li><a href="i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li>
                         <li><a href="docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
-                        <li><a href="metodo-dsp-fc-dtp.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
+                        <li><a href="i+d.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
                     </ul>
                 </li>
                 <li class="folder open">
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <!-- 📚 Carpeta de la Biblioteca (ahora plegable normalmente) -->
+                <!-- 📚 Carpeta de la Biblioteca -->
                 <li class="folder" id="biblio-sync-folder">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
@@ -245,6 +262,16 @@
                         <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
                         <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
                         <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <!-- 🖼️ NUEVA CARPETA: GALERÍA MULTIMEDIA -->
+                <li class="folder" id="galeria-folder">
+                    <div class="module-row">
+                        <a href="i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span>
+                    </div>
+                    <ul class="submenu" id="galeria-submenu">
+                        <li><a href="galeria.html">🖼️ Ver galería completa</a></li>
                     </ul>
                 </li>
             </ul>
@@ -301,6 +328,7 @@
         </aside>
     </div>
 
+    <!-- ===== MENÚS FLOTANTES CON LA MISMA ESTRUCTURA DEL INDEX ===== -->
     <div class="menu-flotante-left">
         <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
@@ -320,12 +348,20 @@
                                 <li><a href="sonificacion.html">🎵 Sonificación</a></li>
                             </ul>
                         </li>
-                        <li class="folder"><div class="module-row"><a href="03-Investigacion-y-Desarrollo.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="04-Modelo-de-Negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open">
+                            <div class="module-row"><a href="i+d.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="i+d.html">📋 Índice I+D</a></li>
+                                <li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                                <li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="04-modelo-de-negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="08-Comunidad.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
                     </ul>
                 </li>
                 <li class="folder open">
@@ -334,15 +370,19 @@
                         <li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
                         <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
                         <li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                        <li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                        <li><a href="i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li>
                         <li><a href="docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
-                        <li><a href="metodo-dsp-fc-dtp.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
+                        <li><a href="metodo-dsp-fc-dtp.html">🎛️ Método DSP</a></li>
                     </ul>
                 </li>
                 <li class="folder open">
                     <div class="module-row"><a href="Principios-Redes.html" class="module-link">🤝 Principios</a><span class="module-toggle"></span></div>
                     <ul class="submenu"><li><a href="Principios-Redes.html">Liderazgo Distribuido</a></li></ul>
                 </li>
-                <li class="folder">
+                <li class="folder" id="biblio-sync-folder-flotante">
                     <div class="module-row">
                         <a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a>
                         <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span>
@@ -354,6 +394,15 @@
                         <li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
                         <li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
                         <li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="galeria-folder-flotante">
+                    <div class="module-row">
+                        <a href="i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a>
+                        <span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span>
+                    </div>
+                    <ul class="submenu">
+                        <li><a href="i+d/galeria-mm.html">🖼️ Ver galería completa</a></li>
                     </ul>
                 </li>
             </ul>
@@ -407,7 +456,6 @@
                 e.preventDefault();
                 const folder = this.closest('.folder');
                 if (folder) {
-                    // Sin restricciones, todas las carpetas se pliegan/despliegan
                     folder.classList.toggle('open');
                 }
             }
@@ -423,9 +471,6 @@
             }
             bindToggles();
 
-            // La función mantenerBibliotecaAbierta ha sido eliminada.
-            // La biblioteca se comporta como cualquier otra carpeta.
-
             function actualizarArbolSegunPagina() {
                 const pathActual = window.location.pathname.replace(/\/$/, '');
                 const nombreArchivo = pathActual.split('/').pop() || 'index.html';
@@ -433,8 +478,6 @@
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     const folders = tree.querySelectorAll('.folder');
                     folders.forEach(f => {
-                        // Todas las carpetas se cierran al cambiar de página,
-                        // incluida la biblioteca.
                         f.classList.remove('open');
                     });
                     let enlaceActual = null;
@@ -448,7 +491,6 @@
                         enlaceActual.classList.add('current-page');
                         let elemento = enlaceActual.closest('.folder');
                         while (elemento) {
-                            // Se abre la cadena de carpetas necesarias
                             elemento.classList.add('open');
                             elemento = elemento.parentElement.closest('.folder');
                         }
@@ -461,7 +503,6 @@
                         }
                     }
                 });
-                // Ya no se fuerza la apertura de la biblioteca
             }
             actualizarArbolSegunPagina();
 
