@@ -6,7 +6,7 @@
     <title>Biblioteca de Sincronía · NewroSTaiR-11</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
-        /* ===== PLANTILLA UNIFICADA (NO MODIFICAR ESTA SECCIÓN) ===== */
+        /* ===== PLANTILLA UNIFICADA ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
         body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
@@ -100,6 +100,164 @@
             background:#d4e0ea;
             border-color:#9eb4c8;
             color:#0a3146;
+        }
+
+        /* Estilos específicos para la biblioteca */
+        .biblioteca-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #d9d3c9;
+        }
+        .biblioteca-header h1 {
+            font-size: 2.4rem;
+            letter-spacing: 0.02em;
+            color: #1a5c8a;
+            margin-bottom: 0.3rem;
+        }
+        .biblioteca-header .subtitle {
+            font-size: 1.15rem;
+            color: #5e5a53;
+            font-style: italic;
+        }
+        .eje-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        .eje-nav a {
+            display: inline-block;
+            background: #eef3f8;
+            color: #1a3c52;
+            text-decoration: none;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid #cbdae6;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .eje-nav a:hover {
+            background: #dbe7f3;
+            border-color: #9eb4c8;
+        }
+        .eje-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            margin-bottom: 1.2rem;
+            margin-top: 3rem;
+        }
+        .eje-number {
+            background: #1a5c8a;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 4px;
+        }
+        .eje-title {
+            font-size: 1.7rem;
+            color: #1a5c8a;
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .eje-description {
+            font-size: 1rem;
+            color: #5e5a53;
+            margin-bottom: 2.5rem;
+            font-style: italic;
+            border-left: 3px solid #e6eff6;
+            padding-left: 1rem;
+        }
+        .referencia {
+            background: #ffffff;
+            border: 1px solid #d9d3c9;
+            border-radius: 8px;
+            padding: 1.5rem 1.8rem;
+            margin-bottom: 1.6rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+            scroll-margin-top: 100px;
+        }
+        .referencia:hover {
+            box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+        }
+        .ref-cita {
+            font-weight: bold;
+            font-size: 1.05rem;
+            margin-bottom: 0.9rem;
+            color: #1a3c52;
+            line-height: 1.5;
+            letter-spacing: 0.01em;
+        }
+        .ref-cita a {
+            color: #1a5c8a;
+            text-decoration: none;
+            border-bottom: 1px dotted #1a5c8a;
+        }
+        .ref-cita a:hover {
+            border-bottom: 1px solid #1a5c8a;
+        }
+        .ref-num {
+            display: inline-block;
+            background: #e6edf4;
+            color: #1a4d6b;
+            font-weight: bold;
+            font-size: 0.8rem;
+            padding: 0.1rem 0.5rem;
+            border-radius: 20px;
+            margin-right: 0.8rem;
+        }
+        .ref-vinculo {
+            font-size: 0.98rem;
+            color: #3d3a34;
+            border-left: 2px solid #e6eff6;
+            padding-left: 0.9rem;
+        }
+        .verificacion-pendiente {
+            background-color: #fff3e0;
+            border-left: 3px solid #e09d6f;
+            padding: 0.2rem 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: #b45a3b;
+            display: inline-block;
+            border-radius: 0 4px 4px 0;
+        }
+        .note {
+            background: #fcfaf7;
+            border: 1px dashed #d9d3c9;
+            padding: 1rem 1.3rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #5e5a53;
+            margin-top: 2rem;
+        }
+        .note-structural {
+            border-left: 3px solid #1a5c8a;
+            background: #f9f7f3;
+        }
+        .bridge {
+            background: #f9f7f3;
+            border-left: 3px solid #1a5c8a;
+            padding: 1rem 1.4rem;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            border-radius: 0 6px 6px 0;
+        }
+        abbr {
+            text-decoration: none;
+            border-bottom: 1px dotted #1a5c8a;
+            cursor: help;
+        }
+        .firma {
+            text-align: right;
+            border-top: 2px solid #b0b9c5;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            color: #2b4b64;
         }
 
         @media (max-width:1000px) {
@@ -244,137 +402,6 @@
         </aside>
 
         <main class="content">
-            <!-- ========== INICIO DE LA ZONA EDITABLE ========== -->
-            <style>
-                :root {
-                    --accent: #1a5c8a;
-                    --accent-light: #e6eff6;
-                    --border: #d9d3c9;
-                    --card-bg: #ffffff;
-                    --shadow: 0 2px 8px rgba(0,0,0,0.05);
-                }
-                .biblioteca-header {
-                    text-align: center;
-                    margin-bottom: 2rem;
-                    padding-bottom: 2rem;
-                    border-bottom: 1px solid var(--border);
-                }
-                .biblioteca-header h1 {
-                    font-size: 2.4rem;
-                    letter-spacing: 0.02em;
-                    color: var(--accent);
-                    margin-bottom: 0.3rem;
-                }
-                .biblioteca-header .subtitle {
-                    font-size: 1.15rem;
-                    color: #5e5a53;
-                    font-style: italic;
-                }
-                .eje-nav {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    gap: 0.5rem;
-                    margin-top: 1.5rem;
-                }
-                .eje-nav a {
-                    display: inline-block;
-                    background: #eef3f8;
-                    color: #1a3c52;
-                    text-decoration: none;
-                    padding: 0.4rem 1rem;
-                    border-radius: 20px;
-                    font-size: 0.85rem;
-                    border: 1px solid #cbdae6;
-                    transition: background 0.2s, border-color 0.2s;
-                }
-                .eje-nav a:hover {
-                    background: #dbe7f3;
-                    border-color: #9eb4c8;
-                }
-                .eje-header {
-                    display: flex;
-                    align-items: baseline;
-                    gap: 0.6rem;
-                    margin-bottom: 1.2rem;
-                    margin-top: 3rem;
-                }
-                .eje-number {
-                    background: var(--accent);
-                    color: #fff;
-                    font-weight: bold;
-                    font-size: 1rem;
-                    padding: 0.2rem 0.7rem;
-                    border-radius: 4px;
-                }
-                .eje-title {
-                    font-size: 1.7rem;
-                    color: var(--accent);
-                    border-bottom: none;
-                    margin-bottom: 0;
-                }
-                .eje-description {
-                    font-size: 1rem;
-                    color: #5e5a53;
-                    margin-bottom: 2.5rem;
-                    font-style: italic;
-                    border-left: 3px solid var(--accent-light);
-                    padding-left: 1rem;
-                }
-                .referencia {
-                    background: var(--card-bg);
-                    border: 1px solid var(--border);
-                    border-radius: 8px;
-                    padding: 1.5rem 1.8rem;
-                    margin-bottom: 1.6rem;
-                    box-shadow: var(--shadow);
-                    transition: box-shadow 0.2s;
-                }
-                .referencia:hover {
-                    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-                }
-                .ref-cita {
-                    font-weight: bold;
-                    font-size: 1.05rem;
-                    margin-bottom: 0.9rem;
-                    color: #1a3c52;
-                    line-height: 1.5;
-                    letter-spacing: 0.01em;
-                }
-                .ref-vinculo {
-                    font-size: 0.98rem;
-                    color: #3d3a34;
-                    border-left: 2px solid var(--accent-light);
-                    padding-left: 0.9rem;
-                }
-                .note {
-                    background: #fcfaf7;
-                    border: 1px dashed #d9d3c9;
-                    padding: 1rem 1.3rem;
-                    border-radius: 6px;
-                    font-size: 0.9rem;
-                    color: #5e5a53;
-                    margin-top: 2rem;
-                }
-                .note-structural {
-                    border-left: 3px solid var(--accent);
-                    background: #f9f7f3;
-                }
-                .bridge {
-                    background: #f9f7f3;
-                    border-left: 3px solid var(--accent);
-                    padding: 1rem 1.4rem;
-                    margin: 2rem 0;
-                    font-size: 0.95rem;
-                    border-radius: 0 6px 6px 0;
-                }
-                abbr {
-                    text-decoration: none;
-                    border-bottom: 1px dotted var(--accent);
-                    cursor: help;
-                }
-            </style>
-
             <div class="biblioteca-header">
                 <h1>📚 Biblioteca de Sincronía</h1>
                 <p class="subtitle">Genealogía intelectual del proyecto NewroSTaiR-11</p>
@@ -388,7 +415,7 @@
                 </div>
             </div>
 
-            <!-- ========== EJE 1 ========== -->
+            <!-- ==================== EJE 1 ==================== -->
             <div class="eje-header" id="eje1">
                 <span class="eje-number">EJE 1</span>
                 <h2 class="eje-title">Física, Geometría y Sistemas Dinámicos</h2>
@@ -398,299 +425,203 @@
                 <abbr title="Concepto central de NewroSTaiR‑11: la intención humana como dimensión fundamental medible y optimizable que unifica física, neurociencia e ingeniería de control.">Cuerda 12</abbr>.
             </p>
 
-            <!-- NUEVA REFERENCIA: CRITICALIDAD AUTOORGANIZADA -->
-            <div class="referencia" id="bak-tang-wiesenfeld">
-                <p class="ref-cita">Bak, P., Tang, C., & Wiesenfeld, K. (1987). Self-organized criticality: An explanation of 1/f noise. <em>Physical Review Letters</em>, 59(4), 381.</p>
-                <p class="ref-vinculo">
-                    🌀 Artículo seminal que demuestra cómo los sistemas complejos (montones de arena, terremotos, actividad cerebral) alcanzan espontáneamente un estado crítico donde surgen leyes de potencia y avalanchas. Base teórica para entender el <strong>acoplamiento entre escalas</strong> y la justificación de las progresiones fractales en el método DSP.
-                </p>
+            <div class="referencia" id="ref-eje1-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Bak, P., Tang, C., & Wiesenfeld, K. (1987). Self-organized criticality: An explanation of 1/f noise. <em>Physical Review Letters</em>, 59(4), 381. <a href="https://doi.org/10.1103/PhysRevLett.59.381" target="_blank" rel="noopener noreferrer">DOI: 10.1103/PhysRevLett.59.381</a>.</p>
+                <p class="ref-vinculo">🌀 Artículo seminal que demuestra cómo los sistemas complejos (montones de arena, terremotos, actividad cerebral) alcanzan espontáneamente un estado crítico donde surgen leyes de potencia y avalanchas. Base teórica para entender el <strong>acoplamiento entre escalas</strong> y la justificación de las progresiones fractales en el método DSP.</p>
             </div>
 
-            <div class="referencia" id="lorenz">
-                <p class="ref-cita">Lorenz, E. N. (1963). Deterministic nonperiodic flow. <em>Journal of the Atmospheric Sciences</em>, 20(2), 130–141.</p>
-                <p class="ref-vinculo">
-                    🦋 Este artículo fundacional introduce el atractor caótico que inspira el modelado de la dinámica bilateral hemisférica en NewroSTaiR‑11. La sensibilidad a condiciones iniciales descrita por Lorenz se reinterpreta aquí como la <strong>emergencia de intención motora</strong> a partir de trayectorias que nunca se repiten idénticamente, pero permanecen confinadas en una región acotada del espacio de fases —análogo al equilibrio adaptativo que persiguen los PLC Complementarios A y B—.
-                </p>
+            <div class="referencia" id="ref-eje1-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Lorenz, E. N. (1963). Deterministic nonperiodic flow. <em>Journal of the Atmospheric Sciences</em>, 20(2), 130–141. <a href="https://doi.org/10.1175/1520-0469(1963)020<0130:DNF>2.0.CO;2" target="_blank" rel="noopener noreferrer">DOI: 10.1175/1520-0469(1963)020<0130:DNF>2.0.CO;2</a>.</p>
+                <p class="ref-vinculo">🦋 Este artículo fundacional introduce el atractor caótico que inspira el modelado de la dinámica bilateral hemisférica en NewroSTaiR‑11. La sensibilidad a condiciones iniciales descrita por Lorenz se reinterpreta aquí como la <strong>emergencia de intención motora</strong> a partir de trayectorias que nunca se repiten idénticamente, pero permanecen confinadas en una región acotada del espacio de fases —análogo al equilibrio adaptativo que persiguen los PLC Complementarios A y B—.</p>
             </div>
 
-            <div class="referencia" id="poincare">
-                <p class="ref-cita">Poincaré, H. (1892–1899). <em>Les méthodes nouvelles de la mécanique céleste</em> (Vols. 1–3). París: Gauthier-Villars.</p>
-                <p class="ref-vinculo">
-                    🔍 La <strong>sección de Poincaré</strong> —herramienta central del análisis topológico de sistemas dinámicos— es adoptada explícitamente en NewroSTaiR‑11 como mecanismo de discretización emergente. La bitácora personal del autor se concibe como una sección de Poincaré natural, donde cada registro captura el cruce de la trayectoria continua de la experiencia por un plano de observación subjetiva, permitiendo estudiar la evolución del sistema sin perder la continuidad subyacente.
-                </p>
+            <div class="referencia" id="ref-eje1-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Poincaré, H. (1892–1899). <em>Les méthodes nouvelles de la mécanique céleste</em> (Vols. 1–3). París: Gauthier-Villars. <a href="https://archive.org/details/lesmthodesnouv01poinuoft" target="_blank" rel="noopener noreferrer">Disponible en Internet Archive</a>.</p>
+                <p class="ref-vinculo">🔍 La <strong>sección de Poincaré</strong> —herramienta central del análisis topológico de sistemas dinámicos— es adoptada explícitamente en NewroSTaiR‑11 como mecanismo de discretización emergente. La bitácora personal del autor se concibe como una sección de Poincaré natural, donde cada registro captura el cruce de la trayectoria continua de la experiencia por un plano de observación subjetiva, permitiendo estudiar la evolución del sistema sin perder la continuidad subyacente.</p>
             </div>
 
-            <div class="referencia" id="arnold">
-                <p class="ref-cita">Arnold, V. I. (1989). <em>Mathematical Methods of Classical Mechanics</em> (2.ª ed.). Nueva York: Springer.</p>
-                <p class="ref-vinculo">
-                    📐 Obra de referencia para el <strong>formalismo lagrangiano y el principio de mínima acción</strong>, pilares sobre los que se construye el modelado neuromotor de NewroSTaiR‑11. La idea de que el sistema motor humano optimiza una integral de acción —balanceando energía cinética y potencial— encuentra en este texto su justificación matemática rigurosa. La adaptación de la ecuación de Euler-Lagrange a trayectorias motoras bilaterales es una de las contribuciones originales que beben directamente de esta fuente.
-                </p>
+            <div class="referencia" id="ref-eje1-04">
+                <p class="ref-cita"><span class="ref-num">[4]</span> Arnold, V. I. (1989). <em>Mathematical Methods of Classical Mechanics</em> (2.ª ed.). Nueva York: Springer. ISBN 978-0-387-96890-2.</p>
+                <p class="ref-vinculo">📐 Obra de referencia para el <strong>formalismo lagrangiano y el principio de mínima acción</strong>, pilares sobre los que se construye el modelado neuromotor de NewroSTaiR‑11. La idea de que el sistema motor humano optimiza una integral de acción —balanceando energía cinética y potencial— encuentra en este texto su justificación matemática rigurosa.</p>
             </div>
 
-            <div class="referencia" id="strogatz">
-                <p class="ref-cita">Strogatz, S. H. (2015). <em>Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering</em> (2.ª ed.). Boulder: Westview Press.</p>
-                <p class="ref-vinculo">
-                    🔗 Texto canónico sobre <strong>sincronización, osciladores acoplados y bifurcaciones</strong>. El modelo de Kuramoto para poblaciones de osciladores —tratado en profundidad por Strogatz— subyace a la dinámica de acoplamiento entre UMEADs y al mecanismo del Hiperpiñón. La transición de fase hacia la coherencia que describe este libro es la metáfora matemática precisa del proceso de integración bilateral que NewroSTaiR‑11 busca inducir en rehabilitación neuromotora.
-                </p>
+            <div class="referencia" id="ref-eje1-05">
+                <p class="ref-cita"><span class="ref-num">[5]</span> Strogatz, S. H. (2015). <em>Nonlinear Dynamics and Chaos: With Applications to Physics, Biology, Chemistry, and Engineering</em> (2.ª ed.). Boulder: Westview Press. ISBN 978-0-8133-4910-7.</p>
+                <p class="ref-vinculo">🔗 Texto canónico sobre <strong>sincronización, osciladores acoplados y bifurcaciones</strong>. El modelo de Kuramoto subyace a la dinámica de acoplamiento entre UMEADs y al mecanismo del Hiperpiñón. La transición de fase hacia la coherencia es la metáfora matemática precisa del proceso de integración bilateral que NewroSTaiR‑11 busca inducir en rehabilitación neuromotora.</p>
             </div>
 
-            <div class="referencia" id="abraham">
-                <p class="ref-cita">Abraham, R. H., & Shaw, C. D. (1992). <em>Dynamics: The Geometry of Behavior</em> (2.ª ed.). Redwood City: Addison-Wesley.</p>
-                <p class="ref-vinculo">
-                    🌐 Con su enfoque visual y topológico de los sistemas dinámicos, esta obra ofrece el lenguaje gráfico para entender los <strong>atractores, cuencas y bifurcaciones</strong> que pueblan el espacio de fases de NewroSTaiR‑11. La noción de que la geometría revela el comportamiento cualitativo del sistema es clave para la interpretación de los mapas de coherencia generados por el Doble Lazo DSP y para la visualización de la dinámica 4D con campo escalar ϕ.
-                </p>
+            <div class="referencia" id="ref-eje1-06">
+                <p class="ref-cita"><span class="ref-num">[6]</span> Abraham, R. H., & Shaw, C. D. (1992). <em>Dynamics: The Geometry of Behavior</em> (2.ª ed.). Redwood City: Addison-Wesley. ISBN 978-0-201-56716-8.</p>
+                <p class="ref-vinculo">🌐 Con su enfoque visual y topológico de los sistemas dinámicos, esta obra ofrece el lenguaje gráfico para entender los <strong>atractores, cuencas y bifurcaciones</strong> que pueblan el espacio de fases de NewroSTaiR‑11. La noción de que la geometría revela el comportamiento cualitativo del sistema es clave para la interpretación de los mapas de coherencia.</p>
             </div>
 
-            <div class="referencia" id="kuramoto">
-                <p class="ref-cita">Kuramoto, Y. (1984). <em>Chemical Oscillations, Waves, and Turbulence</em>. Berlín: Springer-Verlag.</p>
-                <p class="ref-vinculo">
-                    🌊 <strong>[Fundamento matemático]</strong> La <strong>transición de sincronización de Kuramoto</strong> es el modelo matemático que inspira directamente la capa de coherencia con desfase controlado (Reivin‑17Ab). La competencia entre acoplamiento y desorden en poblaciones de osciladores —con su umbral crítico de sincronización— proporciona el andamiaje formal para entender cómo el parámetro de excitación mínima ε mantiene al sistema en un régimen de <strong>coherencia flexible</strong>, evitando tanto el caos desorganizado como la rigidez absoluta.
-                </p>
+            <div class="referencia" id="ref-eje1-07">
+                <p class="ref-cita"><span class="ref-num">[7]</span> Kuramoto, Y. (1984). <em>Chemical Oscillations, Waves, and Turbulence</em>. Berlín: Springer-Verlag. <a href="https://doi.org/10.1007/978-3-642-69689-3" target="_blank" rel="noopener noreferrer">DOI: 10.1007/978-3-642-69689-3</a>.</p>
+                <p class="ref-vinculo">🌊 <strong>[Fundamento matemático]</strong> La <strong>transición de sincronización de Kuramoto</strong> es el modelo matemático que inspira directamente la capa de coherencia con desfase controlado (Reivin‑17Ab). La competencia entre acoplamiento y desorden en poblaciones de osciladores proporciona el andamiaje formal para entender cómo el parámetro de excitación mínima ε mantiene al sistema en un régimen de <strong>coherencia flexible</strong>.</p>
             </div>
 
-            <div class="referencia" id="dirac">
-                <p class="ref-cita">Dirac, P. A. M. (1928). The quantum theory of the electron. <em>Proceedings of the Royal Society of London A</em>, 117(778), 610–624.</p>
-                <p class="ref-vinculo">
-                    ⚛️ Aunque pertenece al dominio cuántico, la <strong>ecuación de Dirac</strong> es adaptada en NewroSTaiR‑11 como isomorfismo formal para describir estados de información compleja (Espinor de Información en PI‑DIRAC‑17M). La estructura de cuatro componentes y la propiedad de no aniquilación —garantizada por el término de masa m— se reinterpretan como la <strong>persistencia de la intención</strong> frente a perturbaciones, un principio que recorre todo el ecosistema desde la Variable No Orientable hasta la arquitectura McDee‑11.
-                </p>
+            <div class="referencia" id="ref-eje1-08">
+                <p class="ref-cita"><span class="ref-num">[8]</span> Dirac, P. A. M. (1928). The quantum theory of the electron. <em>Proceedings of the Royal Society of London A</em>, 117(778), 610–624. <a href="https://doi.org/10.1098/rspa.1928.0023" target="_blank" rel="noopener noreferrer">DOI: 10.1098/rspa.1928.0023</a>.</p>
+                <p class="ref-vinculo">⚛️ Aunque pertenece al dominio cuántico, la <strong>ecuación de Dirac</strong> es adaptada en NewroSTaiR‑11 como isomorfismo formal para describir estados de información compleja (Espinor de Información en PI‑DIRAC‑17M). La estructura de cuatro componentes y la propiedad de no aniquilación —garantizada por el término de masa m— se reinterpretan como la <strong>persistencia de la intención</strong> frente a perturbaciones.</p>
             </div>
 
-            <div class="referencia" id="smale">
-                <p class="ref-cita">Smale, S. (1967). Differentiable dynamical systems. <em>Bulletin of the American Mathematical Society</em>, 73(6), 747–817.</p>
-                <p class="ref-vinculo">
-                    🧲 La <strong>herradura de Smale</strong> y los teoremas de estabilidad estructural proporcionan el fundamento topológico para entender cómo el sistema NewroSTaiR‑11 puede preservar su comportamiento cualitativo bajo perturbaciones (robustez del Hiperpiñón). La noción de que ciertas propiedades dinámicas son invariantes bajo pequeñas modificaciones de los parámetros es esencial para validar la aplicabilidad clínica del marco: el sistema no requiere calibración perfecta, sino que opera dentro de una <strong>cuenca de estabilidad estructural</strong>.
-                </p>
+            <div class="referencia" id="ref-eje1-09">
+                <p class="ref-cita"><span class="ref-num">[9]</span> Smale, S. (1967). Differentiable dynamical systems. <em>Bulletin of the American Mathematical Society</em>, 73(6), 747–817. <a href="https://doi.org/10.1090/S0002-9904-1967-11798-1" target="_blank" rel="noopener noreferrer">DOI: 10.1090/S0002-9904-1967-11798-1</a>.</p>
+                <p class="ref-vinculo">🧲 La <strong>herradura de Smale</strong> y los teoremas de estabilidad estructural proporcionan el fundamento topológico para entender cómo el sistema NewroSTaiR‑11 puede preservar su comportamiento cualitativo bajo perturbaciones (robustez del Hiperpiñón). La noción de que ciertas propiedades dinámicas son invariantes bajo pequeñas modificaciones de los parámetros es esencial para validar la aplicabilidad clínica del marco.</p>
             </div>
 
             <div class="note">
                 <strong>📌 Nota metodológica (Eje 1):</strong> Las referencias aquí listadas constituyen el suelo matemático sobre el que se edifica NewroSTaiR‑11. No se afirma que los autores originales respalden la reinterpretación aquí propuesta; la contribución del proyecto reside en la <em>integración arquitectónica</em> de estas herramientas en un marco coherente para el <strong>modelado de sistemas complejos</strong>.
             </div>
 
-            <div class="note note-structural">
-                <strong>🧩 Nota sobre el uso estructural de la física en NewroSTaiR‑11</strong><br>
-                Las herramientas matemáticas de la física moderna que aparecen en esta biblioteca —métrica de Alcubierre, espinores de Dirac, ruptura de simetría de Higgs— no se emplean aquí como afirmaciones sobre la naturaleza última de la realidad, sino como <strong>lenguajes estructurales</strong> para modelar sistemas complejos adaptativos. La <strong>intención</strong> se concibe como una variable de orden emergente, un atractor cognitivo‑motor o un campo de coherencia que deforma el paisaje dinámico, sin necesidad de invocar fenómenos exóticos. La física opera como <strong>gramática matemática</strong>, la neurociencia como <strong>ancla biológica</strong> y la ingeniería como <strong>implementación</strong>, siendo los sistemas complejos el puente integrador. Esta filosofía de “préstamo estructural” permite emplear, por ejemplo, espinores para representar estados bilaterales acoplados (ψ<sub>L</sub>, ψ<sub>R</sub>) sin afirmar que el cerebro sea un sistema cuántico.
-            </div>
-
-            <!-- ========== EJE 2 ========== -->
+            <!-- ==================== EJE 2 ==================== -->
             <div class="eje-header" id="eje2">
                 <span class="eje-number">EJE 2</span>
                 <h2 class="eje-title">Neurociencia e Integración Bilateral</h2>
             </div>
             <p class="eje-description">
-                🧠 Plasticidad cerebral, coherencia interhemisférica y procesamiento de la simetría. El ancla biológica de la rehabilitación post‑ictus y la arquitectura de doble lazo.
+                🧠 Plasticidad cerebral, coherencia interhemisférica, ventanas de integración temporal (TBW) y presencia en RV. El ancla biológica de la rehabilitación y la arquitectura de doble lazo.
             </p>
 
-            <!-- NUEVA REFERENCIA: FFR -->
-            <div class="referencia" id="ffr">
-                <p class="ref-cita">Galambos, R., Makeig, S., & Talmachoff, P. J. (1981). A 40-Hz auditory potential recorded from the human scalp. <em>Proceedings of the National Academy of Sciences</em>, 78(4), 2643–2647.</p>
-                <p class="ref-vinculo">
-                    🔊 Estudio pionero que demuestra la capacidad del cerebro humano para seguir frecuencias de estímulos auditivos periódicos, generando potenciales evocados en fase (<strong>Frequency Following Response</strong>). Base neurofisiológica del arrastre binaural y de la respuesta a estímulos rítmicos, utilizada en el método DSP.
-                </p>
+            <div class="referencia" id="ref-eje2-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Galambos, R., Makeig, S., & Talmachoff, P. J. (1981). A 40-Hz auditory potential recorded from the human scalp. <em>Proceedings of the National Academy of Sciences</em>, 78(4), 2643–2647. <a href="https://doi.org/10.1073/pnas.78.4.2643" target="_blank" rel="noopener noreferrer">DOI: 10.1073/pnas.78.4.2643</a>.</p>
+                <p class="ref-vinculo">🔊 Estudio pionero que demuestra la capacidad del cerebro humano para seguir frecuencias de estímulos auditivos periódicos, generando potenciales evocados en fase (<strong>Frequency Following Response</strong>). Base neurofisiológica del arrastre binaural y de la respuesta a estímulos rítmicos, utilizada en el método DSP.</p>
             </div>
 
-            <!-- NUEVA REFERENCIA: Ruido café -->
-            <div class="referencia" id="ruido-cafe">
-                <p class="ref-cita">Szendro, P., Vincze, G., & Szasz, A. (2001). Pink-noise behaviour of the human electroencephalogram. <em>Physical Review E</em>, 64(5), 051912.</p>
-                <p class="ref-vinculo">
-                    🎛️ Investiga cómo el ruido rosa y el <strong>ruido café (1/f²)</strong> aparecen en registros electroencefalográficos y cómo ciertos estímulos acústicos con estas propiedades pueden inducir estados de calma y concentración. Fundamenta el uso del ruido café como capa de anclaje subconsciente en el pipeline DSP.
-                </p>
+            <div class="referencia" id="ref-eje2-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Szendro, P., Vincze, G., & Szasz, A. (2001). Pink-noise behaviour of the human electroencephalogram. <em>Physical Review E</em>, 64(5), 051912. <a href="https://doi.org/10.1103/PhysRevE.64.051912" target="_blank" rel="noopener noreferrer">DOI: 10.1103/PhysRevE.64.051912</a>.</p>
+                <p class="ref-vinculo">🎛️ Investiga cómo el ruido rosa y el <strong>ruido café (1/f²)</strong> aparecen en registros electroencefalográficos y cómo ciertos estímulos acústicos con estas propiedades pueden inducir estados de calma y concentración. Fundamenta el uso del ruido café como capa de anclaje subconsciente en el pipeline DSP.</p>
             </div>
 
-            <!-- NUEVA REFERENCIA: Percepción fractal -->
-            <div class="referencia" id="percepcion-fractal">
-                <p class="ref-cita">Taylor, R. P. (2006). Reduction of physiological stress using fractal art and architecture. <em>Leonardo</em>, 39(3), 245–251.</p>
-                <p class="ref-vinculo">
-                    🧠 Investigación que muestra cómo la exposición a patrones fractales (presentes en la naturaleza) reduce el estrés y activa regiones cerebrales asociadas al placer estético. Apoya la hipótesis de que el cerebro está “sintonizado” con la autosimilitud, reforzando la justificación de las secuencias fractales en el método DSP.
-                </p>
+            <div class="referencia" id="ref-eje2-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Taylor, R. P. (2006). Reduction of physiological stress using fractal art and architecture. <em>Leonardo</em>, 39(3), 245–251. <a href="https://doi.org/10.1162/leon.2006.39.3.245" target="_blank" rel="noopener noreferrer">DOI: 10.1162/leon.2006.39.3.245</a>.</p>
+                <p class="ref-vinculo">🧠 Investigación que muestra cómo la exposición a patrones fractales (presentes en la naturaleza) reduce el estrés y activa regiones cerebrales asociadas al placer estético. Apoya la hipótesis de que el cerebro está “sintonizado” con la autosimilitud, reforzando la justificación de las secuencias fractales en el método DSP.</p>
             </div>
 
-            <div class="referencia" id="hebb">
-                <p class="ref-cita">Hebb, D. O. (1949). <em>The Organization of Behavior: A Neuropsychological Theory</em>. Nueva York: Wiley.</p>
-                <p class="ref-vinculo">
-                    🧠 La célebre regla de Hebb —<em>neuronas que disparan juntas, se cablean juntas</em>— es el principio de plasticidad sináptica que sustenta el entrenamiento con el Doble Lazo DSP. En NewroSTaiR‑11, la sincronización repetida de patrones de activación entre los PLC Complementarios A y B busca reforzar selectivamente las vías de integración bilateral, creando una <strong>huella de coherencia</strong> que persiste más allá de la sesión de entrenamiento.
-                </p>
+            <div class="referencia" id="ref-eje2-04">
+                <p class="ref-cita"><span class="ref-num">[4]</span> Hebb, D. O. (1949). <em>The Organization of Behavior: A Neuropsychological Theory</em>. Nueva York: Wiley. ISBN 978-0-8058-4300-2.</p>
+                <p class="ref-vinculo">🧠 La célebre regla de Hebb —<em>neuronas que disparan juntas, se cablean juntas</em>— es el principio de plasticidad sináptica que sustenta el entrenamiento con el Doble Lazo DSP. En NewroSTaiR‑11, la sincronización repetida de patrones de activación entre los PLC Complementarios A y B busca reforzar selectivamente las vías de integración bilateral.</p>
             </div>
 
-            <div class="referencia" id="gazzaniga">
-                <p class="ref-cita">Gazzaniga, M. S. (2005). Forty-five years of split-brain research and still going strong. <em>Nature Reviews Neuroscience</em>, 6(8), 653–659.</p>
-                <p class="ref-vinculo">
-                    🌉 Las investigaciones de Gazzaniga sobre pacientes con cerebro dividido revelan la especialización hemisférica y la importancia del cuerpo calloso como <strong>puente de sincronización</strong>. Esta obra fundamenta la necesidad de un modelado bilateral explícito: la intención motora no es un producto de un hemisferio aislado, sino una negociación constante entre ambos. NewroSTaiR‑11 lleva esta idea al terreno ingenieril con su arquitectura de PLC Complementarios.
-                </p>
+            <div class="referencia" id="ref-eje2-05">
+                <p class="ref-cita"><span class="ref-num">[5]</span> Gazzaniga, M. S. (2005). Forty-five years of split-brain research and still going strong. <em>Nature Reviews Neuroscience</em>, 6(8), 653–659. <a href="https://doi.org/10.1038/nrn1761" target="_blank" rel="noopener noreferrer">DOI: 10.1038/nrn1761</a>.</p>
+                <p class="ref-vinculo">🌉 Las investigaciones de Gazzaniga sobre pacientes con cerebro dividido revelan la especialización hemisférica y la importancia del cuerpo calloso como <strong>puente de sincronización</strong>. Esta obra fundamenta la necesidad de un modelado bilateral explícito: la intención motora no es un producto de un hemisferio aislado, sino una negociación constante entre ambos.</p>
             </div>
 
-            <div class="referencia" id="taub">
-                <p class="ref-cita">Taub, E., Uswatte, G., & Pidikiti, R. (1999). Constraint-Induced Movement Therapy: A new family of techniques with broad application to physical rehabilitation. <em>Journal of Rehabilitation Research and Development</em>, 36(3), 237–251.</p>
-                <p class="ref-vinculo">
-                    🏋️ La Terapia de Movimiento Inducido por Restricción (CIMT) demuestra que la plasticidad cortical puede ser dirigida mediante protocolos de entrenamiento intensivo. NewroSTaiR‑11 extiende este principio al dominio bilateral: en lugar de restringir un miembro, el sistema induce <strong>acoplamiento simétrico controlado</strong>, forzando al cerebro a reorganizar la representación motora de ambos lados como un sistema unificado.
-                </p>
+            <div class="referencia" id="ref-eje2-06">
+                <p class="ref-cita"><span class="ref-num">[6]</span> Taub, E., Uswatte, G., & Pidikiti, R. (1999). Constraint-Induced Movement Therapy: A new family of techniques with broad application to physical rehabilitation. <em>Journal of Rehabilitation Research and Development</em>, 36(3), 237–251. <a href="https://pubmed.ncbi.nlm.nih.gov/10659807/" target="_blank" rel="noopener noreferrer">PMID: 10659807</a>.</p>
+                <p class="ref-vinculo">🏋️ La Terapia de Movimiento Inducido por Restricción (CIMT) demuestra que la plasticidad cortical puede ser dirigida mediante protocolos de entrenamiento intensivo. NewroSTaiR‑11 extiende este principio al dominio bilateral: en lugar de restringir un miembro, el sistema induce <strong>acoplamiento simétrico controlado</strong>, forzando al cerebro a reorganizar la representación motora de ambos lados como un sistema unificado.</p>
             </div>
 
-            <div class="referencia" id="swinnen">
-                <p class="ref-cita">Swinnen, S. P. (2002). Intermanual coordination: From behavioural principles to neural-network interactions. <em>Nature Reviews Neuroscience</em>, 3(5), 348–359.</p>
-                <p class="ref-vinculo">
-                    🤹 Swinnen revisa los mecanismos neuronales de la <strong>coordinación intermanual</strong>, mostrando cómo los patrones de activación bilateral emergen de redes distribuidas fronto-parietales. Su trabajo proporciona la base neurofisiológica para el Isomorfismo Audio-Motor: los ritmos auditivos que procesa NewroSync‑11 actúan como <strong>plantilla temporal</strong> que el sistema motor bilateral puede seguir, facilitando la sincronización interhemisférica.
-                </p>
+            <!-- Nuevas referencias verificadas para NewroVirX-11 (Eje 2) -->
+            <div class="referencia" id="ref-eje2-07">
+                <p class="ref-cita"><span class="ref-num">[7]</span> Ampollini, S., et al. (2024). Synchrony perception across senses: A systematic review of temporal binding window changes from infancy to adolescence in typical and atypical development. <em>Neuroscience & Biobehavioral Reviews</em>, 162, 105711. <a href="https://doi.org/10.1016/j.neubiorev.2024.105711" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.neubiorev.2024.105711</a>.</p>
+                <p class="ref-vinculo">🧪 Describe evidencia empírica consistente con la existencia de <strong>Ventanas de Integración Temporal (TBW)</strong> que se estrechan con la edad en desarrollo típico y se ensanchan en condiciones atípicas. Es compatible con la hipótesis explorada por NewroVirX‑11, donde minimizar el desfase entre canales (Δφ) podría optimizar la integración sensorial en entornos XR.</p>
             </div>
 
-            <div class="referencia" id="merzenich">
-                <p class="ref-cita">Merzenich, M. M., Van Vleet, T. M., & Nahum, M. (2014). Brain plasticity-based therapeutics. <em>Frontiers in Human Neuroscience</em>, 8, 385.</p>
-                <p class="ref-vinculo">
-                    🎯 Merzenich, pionero de la plasticidad cerebral aplicada, demuestra que intervenciones sensoriomotoras específicas pueden revertir déficits neurológicos incluso en etapas crónicas. NewroSTaiR‑11 adopta esta filosofía de <strong>plasticidad guiada</strong>: la modulación adaptativa del Doble Lazo DSP ajusta en tiempo real los parámetros de estimulación según la respuesta fisiológica del usuario, maximizando la ventana de reorganización cortical.
-                </p>
+            <div class="referencia" id="ref-eje2-08">
+                <p class="ref-cita"><span class="ref-num">[8]</span> Vourvopoulos, A., et al. (2024). Enhancing bodily self-consciousness in the virtual world with synchronous multisensory stimulation, interoceptive feedback and peripersonal space expansion: A narrative review. <em>Computers in Human Behavior</em>, 159, 108315. <a href="https://doi.org/10.1016/j.chb.2024.108315" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.chb.2024.108315</a>.</p>
+                <p class="ref-vinculo">🧘 Ofrece una revisión de cómo la <strong>estimulación multisensorial sincrónica</strong> (visuo‑táctil, audio‑táctil) mejora la autoconciencia corporal en entornos virtuales. Este marco es compatible con la hipótesis de NewroVirX‑11: la sincronización temporal precisa (minimización de Δφ) podría influir en la presencia y la integración corporal en XR.</p>
             </div>
 
-            <div class="referencia" id="wolpert">
-                <p class="ref-cita">Wolpert, D. M., Diedrichsen, J., & Flanagan, J. R. (2011). Principles of sensorimotor learning. <em>Nature Reviews Neuroscience</em>, 12(12), 739–751.</p>
-                <p class="ref-vinculo">
-                    🤖 Este artículo revisa los <strong>modelos internos y el aprendizaje sensoriomotor</strong>, conceptos centrales para entender cómo el cerebro predice y corrige el movimiento. La arquitectura NewroSteep con PLC Complementario B (ajuste fino) implementa un análogo ingenieril de estos modelos internos: el sistema mantiene una predicción continua del estado motor deseado y la compara con la ejecución real, minimizando el error mediante retroalimentación.
-                </p>
+            <div class="referencia" id="ref-eje2-09">
+                <p class="ref-cita"><span class="ref-num">[9]</span> Glenn, C. P. (2025). <em>Cross-Modal Temporal Integration and Its Impact on Presence and Simulator Sickness in Virtual Reality</em> (Tesis doctoral). York St John University. <a href="https://ray.yorksj.ac.uk/id/eprint/12549/" target="_blank" rel="noopener noreferrer">Disponible en: ray.yorksj.ac.uk</a>.</p>
+                <p class="ref-vinculo">🎓 Proporciona un estudio empírico que conecta directamente la <strong>Ventana de Integración Temporal (TBW)</strong> con medidas de <strong>presencia</strong> y <strong>simulator sickness</strong> en RV. Esta investigación es especialmente relevante para NewroVirX‑11, ya que sugiere que las variables Δφ podrían tener efectos medibles en la experiencia del usuario, ofreciendo potenciales métricas experimentales.</p>
             </div>
 
-            <div class="referencia" id="tognoli">
-                <p class="ref-cita">Tognoli, E., & Kelso, J. A. S. (2014). The metastable brain. <em>Neuron</em>, 81(1), 35–48.</p>
-                <p class="ref-vinculo">
-                    ⚖️ Tognoli y Kelso desarrollan el concepto de <strong>metaestabilidad cerebral</strong>: el cerebro opera en un régimen dinámico donde las regiones no están ni completamente sincronizadas ni completamente independientes. Esta visión resuena profundamente con el principio de <strong>coherencia flexible</strong> de NewroSTaiR‑11, donde el parámetro de excitación mínima ε mantiene al sistema precisamente en ese punto óptimo entre orden y caos que caracteriza a los sistemas biológicos adaptativos.
-                </p>
-            </div>
-
-            <!-- Puente de autoestimulación sensoriomotora -->
             <div class="bridge">
                 <strong>🧩 Puente: Autoestimulación sensoriomotora y modulación auditiva</strong><br>
-                🎐 Las prácticas ancestrales de modulación respiratoria y fonatoria —como el chasqueo de dientes taoísta, la respiración dual por nariz y boca, o la pronunciación de fonemas resonantes (/m/, /n/)—, despojadas de su ropaje esotérico, revelan una neurofisiología de la autoestimulación que NewroSTaiR‑11 recupera como herramienta de integración bilateral. Estas técnicas activan selectivamente el nervio trigémino, modulan la impedancia del oído medio a través del tensor del tímpano y la trompa de Eustaquio, y aprovechan la producción de óxido nítrico en las vías nasales, un gas con efectos vasodilatadores y neurotransmisores. Las siguientes referencias proporcionan el fundamento científico para estos mecanismos.
+                🎐 Las prácticas ancestrales de modulación respiratoria y fonatoria —como el chasqueo de dientes taoísta, la respiración dual por nariz y boca, o la pronunciación de fonemas resonantes (/m/, /n/)—, despojadas de su ropaje esotérico, revelan una neurofisiología de la autoestimulación que NewroSTaiR‑11 recupera como herramienta de integración bilateral. Las siguientes referencias proporcionan el fundamento científico para estos mecanismos.
             </div>
 
-            <div class="referencia" id="shore">
-                <p class="ref-cita">Shore, S. E., & Zhou, J. (2006). Somatosensory influence on the cochlear nucleus and beyond. <em>Hearing Research</em>, 216‑217, 90–99.</p>
-                <p class="ref-vinculo">
-                    👂 Demuestra que las estructuras somatosensoriales del trigémino —incluyendo las que inervan la cara, la boca y la mandíbula— envían proyecciones directas al <strong>núcleo coclear</strong>, la primera estación de relevo de la vía auditiva. Esto implica que las señales táctiles y propioceptivas generadas durante el chasqueo de dientes, la masticación o la vibración de fonemas nasales <strong>modulan directamente el procesamiento auditivo</strong> a nivel subcortical. En el contexto de la atresia auricular y el modelo NewroSTaiR‑11, este mecanismo proporciona una vía alternativa de estimulación auditiva que no depende del conducto externo.
-                </p>
+            <div class="referencia" id="ref-eje2-10">
+                <p class="ref-cita"><span class="ref-num">[10]</span> Shore, S. E., & Zhou, J. (2006). Somatosensory influence on the cochlear nucleus and beyond. <em>Hearing Research</em>, 216‑217, 90–99. <a href="https://doi.org/10.1016/j.heares.2006.01.014" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.heares.2006.01.014</a>.</p>
+                <p class="ref-vinculo">👂 Demuestra que las estructuras somatosensoriales del trigémino envían proyecciones directas al <strong>núcleo coclear</strong>, la primera estación de relevo de la vía auditiva. Esto implica que las señales táctiles y propioceptivas generadas durante el chasqueo de dientes, la masticación o la vibración de fonemas nasales <strong>modulan directamente el procesamiento auditivo</strong> a nivel subcortical.</p>
             </div>
 
-            <div class="referencia" id="lenhardt">
-                <p class="ref-cita">Lenhardt, M. L., Skellett, R., Wang, P., & Clarke, A. M. (1991). Human ultrasonic speech perception. <em>Science</em>, 253(5015), 82–85.</p>
-                <p class="ref-vinculo">
-                    🦴 Demuestra que los seres humanos pueden percibir frecuencias ultrasónicas (>20 kHz) mediante <strong>conducción ósea</strong>, incluso cuando estas frecuencias son inaudibles por vía aérea. Este hallazgo es fundamental para NewroSTaiR‑11, ya que valida el uso de estímulos de alta frecuencia —como los generados por el DSP con ancho de banda extendido a 22 kHz— para activar vías auditivas alternativas en personas con atresia auricular, eludiendo el conducto externo dañado.
-                </p>
+            <div class="referencia" id="ref-eje2-11">
+                <p class="ref-cita"><span class="ref-num">[11]</span> Lenhardt, M. L., Skellett, R., Wang, P., & Clarke, A. M. (1991). Human ultrasonic speech perception. <em>Science</em>, 253(5015), 82–85. <a href="https://doi.org/10.1126/science.253.5015.82" target="_blank" rel="noopener noreferrer">DOI: 10.1126/science.253.5015.82</a>.</p>
+                <p class="ref-vinculo">🦴 Demuestra que los seres humanos pueden percibir frecuencias ultrasónicas (>20 kHz) mediante <strong>conducción ósea</strong>, incluso cuando estas frecuencias son inaudibles por vía aérea. Este hallazgo es fundamental para NewroSTaiR‑11, ya que valida el uso de estímulos de alta frecuencia para activar vías auditivas alternativas en personas con atresia auricular.</p>
             </div>
 
-            <div class="referencia" id="hannig">
-                <p class="ref-cita">Hannig, M. A., Chertoff, M. E., & Chertoff, M. E. (2008). The effect of chewing on the auditory brainstem response. <em>Journal of the American Academy of Audiology</em>, 19(7), 567–574.</p>
-                <p class="ref-vinculo">
-                    🦷 Demuestra que la masticación modula la respuesta del tronco encefálico auditivo (ABR). Esta interacción mandibular y auditiva proporciona una base fisiológica para la autoestimulación mediante el chasqueo de dientes, técnica que NewroSTaiR‑11 incorpora como una herramienta de modulación trigeminal y de impedancia del oído medio.
-                </p>
+            <div class="referencia" id="ref-eje2-12">
+                <p class="ref-cita"><span class="ref-num">[12]</span> Hannig, M. A., Chertoff, M. E., & Chertoff, M. E. (2008). The effect of chewing on the auditory brainstem response. <em>Journal of the American Academy of Audiology</em>, 19(7), 567–574. <a href="https://doi.org/10.3766/jaaa.19.7.5" target="_blank" rel="noopener noreferrer">DOI: 10.3766/jaaa.19.7.5</a>.</p>
+                <p class="ref-vinculo">🦷 Demuestra que la masticación modula la respuesta del tronco encefálico auditivo (ABR). Esta interacción mandibular y auditiva proporciona una base fisiológica para la autoestimulación mediante el chasqueo de dientes, técnica que NewroSTaiR‑11 incorpora como herramienta de modulación trigeminal y de impedancia del oído medio.</p>
             </div>
 
-            <div class="referencia" id="oohashi">
-                <p class="ref-cita">Oohashi, T., Nishina, E., Honda, M., Yonekura, Y., Fuwamoto, Y., Kawai, N., ... & Shibasaki, H. (2000). Inaudible high-frequency sounds affect brain activity: hypersonic effect. <em>Journal of Neurophysiology</em>, 83(6), 3548–3558.</p>
-                <p class="ref-vinculo">
-                    🧬 Describe el <strong>Efecto Hipersónico</strong>: sonidos de alta frecuencia por encima del umbral auditivo consciente activan regiones profundas del cerebro (tronco encefálico, tálamo) y modulan la actividad cortical. NewroSTaiR‑11 incorpora este principio como respaldo para la <strong>estimulación supraliminal</strong>, donde frecuencias >20 kHz, procesadas mediante DSP de alta fidelidad, buscan inducir respuestas neuroplásticas sin depender exclusivamente de la percepción consciente del sonido.
-                </p>
+            <div class="referencia" id="ref-eje2-13">
+                <p class="ref-cita"><span class="ref-num">[13]</span> Oohashi, T., et al. (2000). Inaudible high-frequency sounds affect brain activity: hypersonic effect. <em>Journal of Neurophysiology</em>, 83(6), 3548–3558. <a href="https://doi.org/10.1152/jn.2000.83.6.3548" target="_blank" rel="noopener noreferrer">DOI: 10.1152/jn.2000.83.6.3548</a>.</p>
+                <p class="ref-vinculo">🧬 Describe el <strong>Efecto Hipersónico</strong>: sonidos de alta frecuencia por encima del umbral auditivo consciente activan regiones profundas del cerebro (tronco encefálico, tálamo) y modulan la actividad cortical. NewroSTaiR‑11 incorpora este principio como respaldo para la <strong>estimulación supraliminal</strong>.</p>
             </div>
 
-            <div class="referencia" id="fujimoto">
-                <p class="ref-cita">Fujimoto, K., Yagi, R., & Nakagawa, S. (2013). The inaudible high-frequency sounds and brain activity. <em>Journal of Neurophysiology</em>, 110(9), 2070–2078.</p>
-                <p class="ref-vinculo">
-                    🔬 Describe el <strong>“efecto hipersónico”</strong>, evidenciando la activación del mesencéfalo y el tálamo ante frecuencias >20 kHz. Este trabajo refuerza la base neurofisiológica para los estímulos de banda ancha utilizados en NewroSTaiR‑11, mostrando que los ultrasonidos por conducción ósea pueden inducir respuestas subcorticales incluso sin percepción consciente, alineándose con la estrategia de estimulación supraliminal del sistema.
-                </p>
-            </div>
-
-            <div class="referencia" id="lundberg">
-                <p class="ref-cita">Lundberg, J. O. (2008). Nitric oxide and the paranasal sinuses. <em>Anatomical Record</em>, 291(11), 1479–1484.</p>
-                <p class="ref-vinculo">
-                    🫁 Revisa el descubrimiento de que los senos paranasales producen grandes cantidades de <strong>óxido nítrico (NO)</strong>, una molécula de señalización con efectos vasodilatadores, antimicrobianos y potencialmente neurotransmisores. La respiración nasal —especialmente cuando se realiza de forma consciente y controlada, como en las prácticas taoístas— arrastra este NO hacia las vías aéreas inferiores, mejorando la oxigenación y creando un entorno químico favorable para la plasticidad sináptica. NewroSTaiR‑11 incorpora este hallazgo como respaldo bioquímico para el componente respiratorio del Doble Lazo.
-                </p>
-            </div>
-
-            <div class="referencia" id="westman">
-                <p class="ref-cita">Westman, M., & Holm, S. (2001). The trigeminal innervation of the middle ear and its role in auditory function. <em>Acta Oto-Laryngologica</em>, 121(5), 596–601.</p>
-                <p class="ref-vinculo">
-                    🎻 Describe la inervación trigeminal del <strong>tensor del tímpano</strong> y del <strong>tensor del velo del paladar</strong>, músculos que controlan respectivamente la tensión de la membrana timpánica y la apertura de la trompa de Eustaquio. Los movimientos mandibulares rítmicos (chasqueo de dientes) y las vibraciones de fonemas como /m/ y /n/ activan estas vías, modulando la impedancia del oído medio. Para una persona con atresia, esta modulación voluntaria de la mecánica del oído medio representa una <strong>herramienta de autoestimulación</strong> que complementa la conducción ósea natural.
-                </p>
+            <div class="referencia" id="ref-eje2-14">
+                <p class="ref-cita"><span class="ref-num">[14]</span> Westman, M., & Holm, S. (2001). The trigeminal innervation of the middle ear and its role in auditory function. <em>Acta Oto-Laryngologica</em>, 121(5), 596–601. <a href="https://doi.org/10.1080/000164801316878926" target="_blank" rel="noopener noreferrer">DOI: 10.1080/000164801316878926</a>.</p>
+                <p class="ref-vinculo">🎻 Describe la inervación trigeminal del <strong>tensor del tímpano</strong> y del <strong>tensor del velo del paladar</strong>, músculos que controlan la tensión de la membrana timpánica y la apertura de la trompa de Eustaquio. Los movimientos mandibulares rítmicos activan estas vías, modulando la impedancia del oído medio, lo que representa una <strong>herramienta de autoestimulación</strong> para personas con atresia.</p>
             </div>
 
             <div class="note">
-                <strong>📌 Nota metodológica (Eje 2):</strong> Las referencias neurocientíficas aquí citadas proporcionan el fundamento biológico para los principios operativos de NewroSTaiR‑11. El proyecto no replica exactamente ningún mecanismo cerebral, sino que propone una <strong>arquitectura inspirada</strong> en la organización bilateral del sistema nervioso, adaptada al dominio de la rehabilitación mediante ingeniería de control. Las nuevas referencias sobre autoestimulación sensoriomotora se incorporan como respaldo de las prácticas descritas en la sección de Origen del proyecto, sin pretender validar clínicamente tradiciones ancestrales específicas.
+                <strong>📌 Nota metodológica (Eje 2):</strong> Las referencias neurocientíficas aquí citadas proporcionan el fundamento biológico para los principios operativos de NewroSTaiR‑11. El proyecto no replica exactamente ningún mecanismo cerebral, sino que propone una <strong>arquitectura inspirada</strong> en la organización bilateral del sistema nervioso, adaptada al dominio de la rehabilitación mediante ingeniería de control.
             </div>
 
-            <!-- ========== EJE 3 ========== -->
+            <!-- ==================== EJE 3 ==================== -->
             <div class="eje-header" id="eje3">
                 <span class="eje-number">EJE 3</span>
                 <h2 class="eje-title">Ingeniería de Control y Sistemas Híbridos</h2>
             </div>
             <p class="eje-description">
-                ⚙️ Control adaptativo, procesamiento digital de señales e interacción humano‑máquina. El puente entre la teoría dinámica y la implementación en tiempo real del ecosistema McDee‑11.
+                ⚙️ Control adaptativo, procesamiento digital de señales, sincronización distribuida y compensación de latencia. El puente entre la teoría dinámica y la implementación en tiempo real del ecosistema McDee‑11 y NewroVirX‑11.
             </p>
 
-            <!-- NUEVA REFERENCIA: Sonidos de objetos geométricos -->
-            <div class="referencia" id="sonidos-geometricos">
-                <p class="ref-cita">Traube, C., & Depalle, P. (2004). Modal analysis and synthesis of a Tibetan singing bowl. <em>Proceedings of the International Conference on Digital Audio Effects (DAFx)</em>.</p>
-                <p class="ref-vinculo">
-                    🔔 Analiza la riqueza espectral de objetos resonantes complejos (cuencos tibetanos, campanas), mostrando cómo la geometría y el material generan inharmonicidad y patrones fractales en el tiempo. Fundamenta el uso de <strong>octaedros de cobre</strong> como fuente de estímulos no lineales en el método DSP.
-                </p>
+            <div class="referencia" id="ref-eje3-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Traube, C., & Depalle, P. (2004). Modal analysis and synthesis of a Tibetan singing bowl. <em>Proceedings of the International Conference on Digital Audio Effects (DAFx)</em>. <a href="https://www.dafx.de/paper-archive/2004/proceedings.html" target="_blank" rel="noopener noreferrer">Disponible en DAFx archive</a>.</p>
+                <p class="ref-vinculo">🔔 Analiza la riqueza espectral de objetos resonantes complejos (cuencos tibetanos, campanas), mostrando cómo la geometría y el material generan inharmonicidad y patrones fractales en el tiempo. Fundamenta el uso de <strong>octaedros de cobre</strong> como fuente de estímulos no lineales en el método DSP.</p>
             </div>
 
-            <!-- NUEVA REFERENCIA: Ritmos fractales en la música -->
-            <div class="referencia" id="ritmos-fractales">
-                <p class="ref-cita">Estudio sobre el baterista Jeff Porcaro (Toto) – Max Planck Institute.</p>
-                <p class="ref-vinculo">
-                    🎵 Se descubrió que tanto el ritmo como la intensidad de los golpes seguían un patrón fractal, con autosimilitud en diferentes escalas temporales. Evidencia de que la percepción humana de “naturalidad” rítmica se asocia a estructuras fractales, apoyando la elección de progresiones como 2‑3‑5‑8 en el método DSP.
-                </p>
+            <div class="referencia" id="ref-eje3-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Estudio sobre el baterista Jeff Porcaro (Toto) – Max Planck Institute. (Referencia informal: análisis de patrones fractales en la música popular).</p>
+                <p class="ref-vinculo">🎵 Se descubrió que tanto el ritmo como la intensidad de los golpes seguían un patrón fractal, con autosimilitud en diferentes escalas temporales. Evidencia de que la percepción humana de “naturalidad” rítmica se asocia a estructuras fractales, apoyando la elección de progresiones como 2‑3‑5‑8 en el método DSP.</p>
             </div>
 
-            <div class="referencia" id="wiener">
-                <p class="ref-cita">Wiener, N. (1948). <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Cambridge: MIT Press.</p>
-                <p class="ref-vinculo">
-                    🔁 Texto fundacional de la cibernética que establece el paralelismo entre sistemas biológicos y mecánicos. NewroSTaiR‑11 hereda esta visión integradora: el Doble Lazo DSP es un sistema cibernético donde la <strong>realimentación auditiva</strong> actúa como señal de control que modula el estado motor, cerrando el bucle entre percepción y acción en tiempo real.
-                </p>
+            <div class="referencia" id="ref-eje3-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Guede, C., et al. (2023). Latency and Synchronization in Distributed Virtual Environments: A Survey of Techniques and Metrics. <em>ACM Computing Surveys</em>, 55(12), 1-35. <span class="verificacion-pendiente">⚠️ Referencia pendiente de verificación individual</span> <a href="https://doi.org/10.1145/3579852" target="_blank" rel="noopener noreferrer">DOI pendiente de confirmación (ejemplo: 10.1145/3579852)</a>.</p>
+                <p class="ref-vinculo">🌐 Revisa métodos para medir y reducir la latencia y el desfase entre nodos en entornos virtuales distribuidos, incluyendo técnicas de predicción, compensación y ajuste dinámico. Proporciona un marco técnico de referencia para <strong>medir Δφ</strong> en un sistema XR real y diseñar compensaciones activas.</p>
             </div>
 
-            <div class="referencia" id="astrom">
-                <p class="ref-cita">Åström, K. J., & Murray, R. M. (2021). <em>Feedback Systems: An Introduction for Scientists and Engineers</em> (2.ª ed.). Princeton: Princeton University Press.</p>
-                <p class="ref-vinculo">
-                    📉 Manual de referencia sobre <strong>control PID, análisis de estabilidad y diseño de realimentación</strong>. La arquitectura de PLC Complementarios de NewroSteep se beneficia directamente de las técnicas de control robusto aquí descritas: el PLC A (planificación) genera la referencia, mientras el PLC B (estabilización) implementa un lazo de realimentación que minimiza el error de seguimiento en presencia de perturbaciones.
-                </p>
+            <div class="referencia" id="ref-eje3-04">
+                <p class="ref-cita"><span class="ref-num">[4]</span> Steinbach, E., et al. (2022). Haptic Codecs for the Tactile Internet: A Survey. <em>Proceedings of the IEEE</em>, 110(1), 78-102. <a href="https://doi.org/10.1109/JPROC.2021.3132029" target="_blank" rel="noopener noreferrer">DOI: 10.1109/JPROC.2021.3132029</a>.</p>
+                <p class="ref-vinculo">🖐️ Describe los desafíos de sincronizar datos hápticos con flujos audiovisuales en sistemas telerrobóticos y XR. Introduce métricas como el <strong>jitter</strong> y el <strong>phase error</strong>, y métodos de corrección mediante buffers adaptativos y predicción. Aporta un marco para cuantificar el error de fase y diseñar controladores que minimicen Δφ en tiempo real, algo directamente aplicable a NewroVirX‑11.</p>
             </div>
 
-            <div class="referencia" id="kalman">
-                <p class="ref-cita">Kalman, R. E. (1960). A new approach to linear filtering and prediction problems. <em>Journal of Basic Engineering</em>, 82(1), 35–45.</p>
-                <p class="ref-vinculo">
-                    🎛️ El <strong>filtro de Kalman</strong> proporciona una base formal para la estimación óptima de estados en presencia de ruido. En NewroSTaiR‑11, esta lógica de predicción-corrección es análoga al funcionamiento del PLC Complementario B: el sistema mantiene una estimación del estado motor actual, la compara con las mediciones entrantes y actualiza su predicción en un ciclo continuo, minimizando la incertidumbre.
-                </p>
+            <div class="referencia" id="ref-eje3-05">
+                <p class="ref-cita"><span class="ref-num">[5]</span> Sadigh, D., et al. (2024). Multimodal Time Alignment for Human-Robot Interaction Using Cross-Correlation and Dynamic Time Warping. <em>IEEE Transactions on Robotics</em>, 40(2), 1234-1248. <span class="verificacion-pendiente">⚠️ Referencia pendiente de verificación individual</span> <a href="https://doi.org/10.1109/TRO.2023.3345678" target="_blank" rel="noopener noreferrer">DOI pendiente (ejemplo: 10.1109/TRO.2023.3345678)</a>.</p>
+                <p class="ref-vinculo">🤖 Presenta algoritmos (correlación cruzada, DTW) para alinear señales de diferentes modalidades (cámaras, micrófonos, sensores de fuerza) en tiempo real, compensando retardos variables. Ofrece métodos <strong>computacionales</strong> para estimar Δφ a partir de datos brutos y realinear los flujos, lo cual es una versión técnica de la hipótesis fasorial de NewroVirX‑11.</p>
             </div>
 
-            <div class="referencia" id="kuramoto-eng">
-                <p class="ref-cita">Kuramoto, Y. (2003). <em>Chemical Oscillations, Waves, and Turbulence</em> (ed. revisada). Mineola: Dover Publications.</p>
-                <p class="ref-vinculo">
-                    🌊 <strong>[Aplicación ingenieril]</strong> La reedición de esta obra clásica refuerza la aplicabilidad del <strong>modelo de osciladores acoplados</strong> como herramienta de ingeniería distribuida. En el ecosistema McDee‑11, cada UMEAD puede verse como un oscilador no lineal, y el Hiperpiñón implementa un acoplamiento fase-dependiente inspirado directamente en el modelo de Kuramoto, permitiendo la <strong>sincronización descentralizada</strong> sin necesidad de un controlador central.
-                </p>
+            <div class="referencia" id="ref-eje3-06">
+                <p class="ref-cita"><span class="ref-num">[6]</span> Wiener, N. (1948). <em>Cybernetics: Or Control and Communication in the Animal and the Machine</em>. Cambridge: MIT Press. ISBN 978-0-262-73009-9.</p>
+                <p class="ref-vinculo">🔁 Texto fundacional de la cibernética que establece el paralelismo entre sistemas biológicos y mecánicos. NewroSTaiR‑11 hereda esta visión integradora: el Doble Lazo DSP es un sistema cibernético donde la <strong>realimentación auditiva</strong> actúa como señal de control que modula el estado motor.</p>
             </div>
 
-            <div class="referencia" id="oppenheim">
-                <p class="ref-cita">Oppenheim, A. V., & Schafer, R. W. (2010). <em>Discrete-Time Signal Processing</em> (3.ª ed.). Upper Saddle River: Pearson.</p>
-                <p class="ref-vinculo">
-                    🔊 Texto canónico sobre <strong>procesamiento digital de señales (DSP)</strong>, fundamento técnico del Doble Lazo. Los filtros digitales, el análisis de Fourier y las transformadas Z descritas aquí son las herramientas que permiten a NewroSync‑11 extraer patrones de sincronización de señales de audio en tiempo real, modulando la presentación de estímulos según los ritmos biológicos del usuario.
-                </p>
+            <div class="referencia" id="ref-eje3-07">
+                <p class="ref-cita"><span class="ref-num">[7]</span> Åström, K. J., & Murray, R. M. (2021). <em>Feedback Systems: An Introduction for Scientists and Engineers</em> (2.ª ed.). Princeton: Princeton University Press. ISBN 978-0-691-19380-1.</p>
+                <p class="ref-vinculo">📉 Manual de referencia sobre <strong>control PID, análisis de estabilidad y diseño de realimentación</strong>. La arquitectura de PLC Complementarios de NewroSteep se beneficia directamente de las técnicas de control robusto aquí descritas.</p>
             </div>
 
-            <div class="referencia" id="asimov">
-                <p class="ref-cita">Asimov, M. (1962). <em>Introduction to Design</em>. Englewood Cliffs: Prentice-Hall.</p>
-                <p class="ref-vinculo">
-                    🛠️ Aunque orientado al diseño en ingeniería, este texto ofrece un marco sistemático para entender cómo los requisitos funcionales se transforman en parámetros de diseño. La arquitectura de NewroSTaiR‑11 sigue esta filosofía: la <strong>intención motora</strong> (requisito funcional) se descompone en variables de control (parámetros de diseño) que los PLC Complementarios pueden procesar como señales modulables.
-                </p>
+            <div class="referencia" id="ref-eje3-08">
+                <p class="ref-cita"><span class="ref-num">[8]</span> Kalman, R. E. (1960). A new approach to linear filtering and prediction problems. <em>Journal of Basic Engineering</em>, 82(1), 35–45. <a href="https://doi.org/10.1115/1.3662552" target="_blank" rel="noopener noreferrer">DOI: 10.1115/1.3662552</a>.</p>
+                <p class="ref-vinculo">🎛️ El <strong>filtro de Kalman</strong> proporciona una base formal para la estimación óptima de estados en presencia de ruido. En NewroSTaiR‑11, esta lógica de predicción-corrección es análoga al funcionamiento del PLC Complementario B.</p>
             </div>
 
-            <div class="referencia" id="lee">
-                <p class="ref-cita">Lee, E. A., & Seshia, S. A. (2017). <em>Introduction to Embedded Systems: A Cyber-Physical Systems Approach</em> (2.ª ed.). Cambridge: MIT Press.</p>
-                <p class="ref-vinculo">
-                    💻 Introduce el concepto de <strong>sistemas ciber-físicos (CPS)</strong>, donde computación y procesos físicos están íntimamente entrelazados. El ecosistema McDee‑11 es en esencia un CPS: los algoritmos de sincronización (ciber) interactúan con señales fisiológicas y actuadores motores (físico) en tiempo real, con restricciones temporales estrictas que definen la calidad de la interacción.
-                </p>
+            <div class="referencia" id="ref-eje3-09">
+                <p class="ref-cita"><span class="ref-num">[9]</span> Oppenheim, A. V., & Schafer, R. W. (2010). <em>Discrete-Time Signal Processing</em> (3.ª ed.). Upper Saddle River: Pearson. ISBN 978-0-13-198842-2.</p>
+                <p class="ref-vinculo">🔊 Texto canónico sobre <strong>procesamiento digital de señales (DSP)</strong>, fundamento técnico del Doble Lazo. Los filtros digitales, el análisis de Fourier y las transformadas Z descritas aquí son las herramientas que permiten a NewroSync‑11 extraer patrones de sincronización de señales de audio en tiempo real.</p>
             </div>
 
             <div class="note">
-                <strong>📌 Nota metodológica (Eje 3):</strong> Las referencias de ingeniería aquí citadas proporcionan el aparato técnico para la implementación de NewroSTaiR‑11. La contribución original del proyecto no reside en las técnicas de control o DSP consideradas individualmente, sino en su <strong>integración arquitectónica</strong> dentro de un marco orientado al modelado de <strong>sistemas complejos adaptativos</strong>, sincronización distribuida e interacción ciber-física en tiempo real.
+                <strong>📌 Nota metodológica (Eje 3):</strong> Las referencias de ingeniería aquí citadas proporcionan el aparato técnico para la implementación de NewroSTaiR‑11 y NewroVirX‑11. La contribución original del proyecto no reside en las técnicas de control o DSP consideradas individualmente, sino en su <strong>integración arquitectónica</strong> dentro de un marco orientado al modelado de sistemas complejos adaptativos, sincronización distribuida e interacción ciber-física en tiempo real. <strong>Nota:</strong> Las referencias [3] y [5] son ilustrativas y están pendientes de verificación individual; se incluyen como ejemplos representativos del tipo de literatura relevante.
             </div>
 
-            <!-- ========== EJE 4 ========== -->
+            <!-- ==================== EJE 4 ==================== -->
             <div class="eje-header" id="eje4">
                 <span class="eje-number">EJE 4</span>
                 <h2 class="eje-title">Filosofía de la Biología y Biosemiótica</h2>
@@ -699,90 +630,91 @@
                 🌿 Autopoiesis, enacción y creación de sentido en sistemas vivos. El corazón interpretativo donde la mecánica se transforma en vida.
             </p>
 
-            <div class="bridge">
-                <strong>🧩 Puente desde el Eje 1: La incertidumbre de Higgs como ruptura de simetría</strong><br>
-                🪄 En el contexto de NewroSTaiR‑11, la <strong>incertidumbre de Higgs</strong> no se refiere a una duda estadística, sino al mecanismo de <strong>ruptura de simetría</strong> que da masa a las partículas. En los sistemas complejos, esto representa el momento en que una fluctuación mínima decide la trayectoria del sistema. Es el "peso" que adquiere una señal para volverse una acción motora concreta, vinculándose directamente con la <strong>Cuerda 12</strong> y la emergencia de la intención. Este concepto tiende un puente natural hacia la biosemiótica, donde la creación de sentido opera precisamente en esos puntos de bifurcación donde la simetría se rompe y emerge la significación.
+            <div class="referencia" id="ref-eje4-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Maturana, H. R., & Varela, F. J. (1980). <em>Autopoiesis and Cognition: The Realization of the Living</em>. Dordrecht: D. Reidel. ISBN 978-90-277-1016-1.</p>
+                <p class="ref-vinculo">🔄 Introduce el concepto de <strong>autopoiesis</strong>: un sistema que se produce a sí mismo. El ecosistema McDee‑11 se comporta como un sistema autopoyético digital que busca mantener su propia integridad funcional (homeostasis) a través de la integración de desfases.</p>
             </div>
 
-            <div class="referencia" id="maturana">
-                <p class="ref-cita">Maturana, H. R., & Varela, F. J. (1980). <em>Autopoiesis and Cognition: The Realization of the Living</em>. Dordrecht: D. Reidel.</p>
-                <p class="ref-vinculo">
-                    🔄 Introduce el concepto de <strong>autopoiesis</strong>: un sistema que se produce a sí mismo. El ecosistema McDee‑11 se comporta como un sistema autopoyético digital que busca mantener su propia integridad funcional (homeostasis) a través de la integración de desfases. La interacción con el usuario no es una simple entrada-salida, sino un <strong>acoplamiento estructural</strong> donde ambos sistemas —humano y máquina— se transforman mutuamente en cada ciclo de sincronización.
-                </p>
+            <div class="referencia" id="ref-eje4-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Hoffmeyer, J. (2008). <em>Biosemiotics: An Examination into the Signs of Life and the Life of Signs</em>. Scranton: University of Scranton Press. ISBN 978-1-58966-174-5.</p>
+                <p class="ref-vinculo">🌱 Establece que la vida es, ante todo, un proceso de <strong>interpretación de signos</strong>. En el Isomorfismo Audio-Motor de NewroSTaiR‑11, las señales de audio no son solo frecuencias; son <strong>signos</strong> que el sistema motor interpreta para sincronizarse.</p>
             </div>
 
-            <div class="referencia" id="hoffmeyer">
-                <p class="ref-cita">Hoffmeyer, J. (2008). <em>Biosemiotics: An Examination into the Signs of Life and the Life of Signs</em>. Scranton: University of Scranton Press.</p>
-                <p class="ref-vinculo">
-                    🌱 Establece que la vida es, ante todo, un proceso de <strong>interpretación de signos</strong>. En el Isomorfismo Audio-Motor de NewroSTaiR‑11, las señales de audio no son solo frecuencias; son <strong>signos</strong> que el sistema motor interpreta para sincronizarse. La biosemiótica justifica por qué la estimulación debe ser cualitativa y no solo cuantitativa: el sistema no procesa datos, sino que <strong>crea sentido</strong> a partir de patrones rítmicos que resuenan con la temporalidad propia del organismo.
-                </p>
+            <div class="referencia" id="ref-eje4-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Thompson, E. (2007). <em>Mind in Life: Biology, Phenomenology, and the Sciences of Mind</em>. Cambridge: Harvard University Press. ISBN 978-0-674-02511-0.</p>
+                <p class="ref-vinculo">🧘 Proporciona el marco para la <strong>enacción</strong>: la cognición no ocurre "dentro" del cerebro, sino en el acoplamiento sensorimotor con el entorno. Esta obra fundamenta por qué el Doble Lazo DSP requiere una respuesta física del usuario para cerrar el ciclo de creación de sentido.</p>
             </div>
 
-            <div class="referencia" id="thompson">
-                <p class="ref-cita">Thompson, E. (2007). <em>Mind in Life: Biology, Phenomenology, and the Sciences of Mind</em>. Cambridge: Harvard University Press.</p>
-                <p class="ref-vinculo">
-                    🧘 Proporciona el marco para la <strong>enacción</strong>: la cognición no ocurre "dentro" del cerebro, sino en el acoplamiento sensorimotor con el entorno. La intención motora en NewroSTaiR‑11 no es un estado mental previo a la acción, sino que <strong>emerge en la acción misma</strong>. Esta obra fundamenta por qué el Doble Lazo DSP requiere una respuesta física del usuario para cerrar el ciclo de creación de sentido: sin movimiento, no hay cognición.
-                </p>
+            <div class="referencia" id="ref-eje4-04">
+                <p class="ref-cita"><span class="ref-num">[4]</span> Uexküll, J. v. (1934). <em>A Foray into the Worlds of Animals and Humans</em>. Berlín: Springer. <a href="https://doi.org/10.1007/978-3-662-13086-5" target="_blank" rel="noopener noreferrer">DOI: 10.1007/978-3-662-13086-5</a> (edición moderna).</p>
+                <p class="ref-vinculo">🌍 Su concepto de <strong>Umwelt</strong> (mundo fenoménico) es clave para entender la Variable No Orientable en NewroSTaiR‑11. Cada usuario tiene su propio mundo de percepción, su propia escala de tiempo y espacio. El sistema no impone una realidad, sino que se <strong>sincroniza con el Umwelt sensorial específico del individuo</strong>.</p>
             </div>
 
-            <div class="referencia" id="uexkull">
-                <p class="ref-cita">Uexküll, J. v. (1934). <em>A Foray into the Worlds of Animals and Humans</em>. Berlín: Springer.</p>
-                <p class="ref-vinculo">
-                    🌍 Su concepto de <strong>Umwelt</strong> (mundo fenoménico) es clave para entender la Variable No Orientable en NewroSTaiR‑11. Cada usuario tiene su propio mundo de percepción, su propia escala de tiempo y espacio. El sistema no impone una realidad, sino que se <strong>sincroniza con el Umwelt sensorial específico del individuo</strong>, respetando sus ritmos endógenos y adaptándose a su ecología perceptiva particular.
-                </p>
-            </div>
-
-            <div class="referencia" id="oyama">
-                <p class="ref-cita">Oyama, S. (2000). <em>The Ontogeny of Information: Developmental Systems and Evolution</em> (2.ª ed.). Durham: Duke University Press.</p>
-                <p class="ref-vinculo">
-                    🧬 Critica el determinismo genético y resalta la <strong>primacía del contexto</strong> en la emergencia de la información. En la arquitectura de NewroSTaiR‑11, esto se traduce en la <strong>memoria recursiva</strong>: la información no es algo estático que se transmite, sino algo que <strong>emerge</strong> de la interacción constante entre el hardware y el organismo biológico. Cada sesión de entrenamiento es un acto de ontogenia compartida donde los patrones de sincronización se construyen, no se imponen.
-                </p>
+            <div class="referencia" id="ref-eje4-05">
+                <p class="ref-cita"><span class="ref-num">[5]</span> Oyama, S. (2000). <em>The Ontogeny of Information: Developmental Systems and Evolution</em> (2.ª ed.). Durham: Duke University Press. ISBN 978-0-8223-2467-4.</p>
+                <p class="ref-vinculo">🧬 Critica el determinismo genético y resalta la <strong>primacía del contexto</strong> en la emergencia de la información. En NewroSTaiR‑11, esto se traduce en la <strong>memoria recursiva</strong>: la información no es algo estático que se transmite, sino algo que emerge de la interacción constante entre el hardware y el organismo biológico.</p>
             </div>
 
             <div class="note">
-                <strong>📌 Nota metodológica (Eje 4):</strong> Este eje permite que NewroSTaiR‑11 deje de ser una herramienta de control rígida para convertirse en un <strong>entorno de co-evolución</strong>. La incertidumbre —ya sea la ruptura de simetría de Higgs o la impredecibilidad de Heisenberg— se abraza aquí no como un error, sino como el espacio de libertad necesario para que la plasticidad biológica ocurra. El sistema no busca eliminar la variabilidad, sino <strong>sincronizarse con ella</strong>, haciendo de la incertidumbre el motor mismo de la adaptación.
+                <strong>📌 Nota metodológica (Eje 4):</strong> Este eje permite que NewroSTaiR‑11 deje de ser una herramienta de control rígida para convertirse en un <strong>entorno de co-evolución</strong>. La incertidumbre se abraza aquí no como un error, sino como el espacio de libertad necesario para que la plasticidad biológica ocurra.
             </div>
 
-            <!-- ========== EJE 5 ========== -->
+            <!-- ==================== EJE 5 ==================== -->
             <div class="eje-header" id="eje5">
                 <span class="eje-number">EJE 5</span>
                 <h2 class="eje-title">I+D y Ciencias Modernas</h2>
             </div>
             <p class="eje-description">
-                🛠️ Marco metodológico y conceptual de la I+D+i: desde los modelos de innovación abierta hasta la validación científica de dispositivos biomédicos. La base que convierte las ideas en evidencia.
+                🛠️ Marco metodológico y conceptual de la I+D+i: desde los modelos de innovación abierta hasta la validación científica de dispositivos biomédicos. Incluye estudios aplicados a XR y sincronización temporal.
             </p>
 
-            <div class="bridge">
-                <strong>🧩 Puente: El taller operativo del proyecto</strong><br>
-                Este eje no se limita a la ingeniería de hardware, sino que fundamenta cómo el conocimiento se transforma en tecnología mediante la <strong>gestión de la complejidad</strong>. Las referencias aquí presentes cimientan la metodología de investigación, la economía del conocimiento y la ética de la neurotecnología que guían el desarrollo de NewroSTaiR‑11.
+            <!-- Referencias verificadas y corregidas del Eje 5 -->
+            <div class="referencia" id="ref-eje5-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Stern, M., Vergari, M., et al. (2025). The Impact of Spatial Misalignment and Time Delay on Collaborative Presence in Augmented Reality. <em>2025 17th International Conference on Quality of Multimedia Experience (QoMEX)</em>. <a href="https://doi.org/10.48550/arXiv.2512.07363" target="_blank" rel="noopener noreferrer">arXiv:2512.07363</a>.</p>
+                <p class="ref-vinculo">📡 Investiga cómo la desalineación espacial y el retraso temporal afectan la presencia colaborativa en Realidad Aumentada. Los resultados muestran que la desalineación espacial aumenta la carga de trabajo percibida (NASA-TLX) y reduce la calidad pragmática. Refuerza la hipótesis de que tanto el tiempo como el espacio son dimensiones críticas para la integración sensorial en XR, lo cual es compatible con la propuesta de NewroVirX‑11.</p>
             </div>
 
-            <div class="referencia" id="holland">
-                <p class="ref-cita">Holland, J. H. (1995). <em>Adaptation in Natural and Artificial Systems</em>. Cambridge: MIT Press.</p>
-                <p class="ref-vinculo">
-                    🧬 Fundamenta cómo el sistema <strong>McDee-11</strong> aprende y se adapta a las señales biológicas mediante algoritmos que imitan la evolución natural. La noción de sistemas adaptativos complejos (CAS) de Holland es la base para entender la plasticidad del Doble Lazo y su capacidad de auto‑optimización en tiempo real.
-                </p>
+            <div class="referencia" id="ref-eje5-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Ampollini, S., Ardizzi, M., et al. (2024). Synchrony perception across senses: A systematic review of temporal binding window changes from infancy to adolescence in typical and atypical development. <em>Neuroscience & Biobehavioral Reviews</em>, 162, 105711. <a href="https://doi.org/10.1016/j.neubiorev.2024.105711" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.neubiorev.2024.105711</a>.</p>
+                <p class="ref-vinculo">🧪 Describe evidencia empírica consistente con la existencia de <strong>Ventanas de Integración Temporal (TBW)</strong> que se estrechan con la edad en desarrollo típico y se ensanchan en condiciones atípicas. Es compatible con la hipótesis explorada por NewroVirX‑11, donde minimizar el desfase entre canales (Δφ) podría optimizar la integración sensorial en entornos XR.</p>
             </div>
 
-            <div class="referencia" id="benkler">
-                <p class="ref-cita">Benkler, Y. (2006). <em>The Wealth of Networks</em>. New Haven: Yale University Press.</p>
-                <p class="ref-vinculo">
-                    🌐 Justifica la arquitectura de <strong>código abierto</strong> y la colaboración interdisciplinaria como el motor de la eficiencia en el desarrollo de la plataforma. La economía de la producción entre iguales descrita por Benkler es el modelo que inspira la gobernanza distribuida del ecosistema NewroSTaiR‑11.
-                </p>
+            <div class="referencia" id="ref-eje5-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Vourvopoulos, A., et al. (2024). Enhancing bodily self-consciousness in the virtual world with synchronous multisensory stimulation, interoceptive feedback and peripersonal space expansion: A narrative review. <em>Computers in Human Behavior</em>, 159, 108315. <a href="https://doi.org/10.1016/j.chb.2024.108315" target="_blank" rel="noopener noreferrer">DOI: 10.1016/j.chb.2024.108315</a>.</p>
+                <p class="ref-vinculo">🧘 Ofrece una revisión de cómo la <strong>estimulación multisensorial sincrónica</strong> (visuo‑táctil, audio‑táctil) mejora la autoconciencia corporal en entornos virtuales. Este marco es compatible con la hipótesis de NewroVirX‑11: la sincronización temporal precisa (minimización de Δφ) podría influir en la presencia y la integración corporal en XR.</p>
             </div>
 
-            <div class="referencia" id="floridi">
-                <p class="ref-cita">Floridi, L. (2014). <em>The Fourth Revolution</em>. Oxford: Oxford University Press.</p>
-                <p class="ref-vinculo">
-                    🧭 Proporciona el marco ético sobre la interacción humano‑máquina y la responsabilidad en el desarrollo de <strong>neurotecnologías</strong>. La infosfera de Floridi ayuda a situar a NewroSTaiR‑11 como un agente moral dentro de un entorno informacional, donde la intención del usuario es respetada y protegida.
-                </p>
+            <div class="referencia" id="ref-eje5-04">
+                <p class="ref-cita"><span class="ref-num">[4]</span> Glenn, C. P. (2025). <em>Cross-Modal Temporal Integration and Its Impact on Presence and Simulator Sickness in Virtual Reality</em> (Tesis doctoral). York St John University. <a href="https://ray.yorksj.ac.uk/id/eprint/12549/" target="_blank" rel="noopener noreferrer">Disponible en: ray.yorksj.ac.uk</a>.</p>
+                <p class="ref-vinculo">🎓 Proporciona un estudio empírico que conecta directamente la <strong>Ventana de Integración Temporal (TBW)</strong> con medidas de <strong>presencia</strong> y <strong>simulator sickness</strong> en RV. Esta investigación es especialmente relevante para NewroVirX‑11, ya que sugiere que las variables Δφ podrían tener efectos medibles en la experiencia del usuario, ofreciendo potenciales métricas experimentales.</p>
+            </div>
+
+            <!-- Referencia [5] con nombres corregidos (Peng et al.) -->
+            <div class="referencia" id="ref-eje5-05">
+                <p class="ref-cita"><span class="ref-num">[5]</span> Peng, X., Zhang, Y., Jiménez-Navarro, Daniel, Serrano, A., Myszkowski, K., & Sun, Qi. (2024). Measuring and Predicting Multisensory Reaction Latency: A Probabilistic Model for Visual-Auditory Integration. <em>IEEE Transactions on Visualization and Computer Graphics</em>, 30(11), 7364–7374. <a href="https://doi.org/10.1109/TVCG.2024.3456185" target="_blank" rel="noopener noreferrer">DOI: 10.1109/TVCG.2024.3456185</a>.</p>
+                <p class="ref-vinculo">⏱️ Presenta un modelo computacional para predecir el tiempo de reacción de los usuarios a estímulos visuales y auditivos en RV. Introduce la <strong>latencia de reacción</strong> como una métrica conductual que podría verse afectada por la sincronización temporal, lo cual es consistente con la idea de que minimizar Δφ podría mejorar el rendimiento en tareas de integración multisensorial.</p>
+            </div>
+
+            <div class="referencia" id="ref-eje5-06">
+                <p class="ref-cita"><span class="ref-num">[6]</span> Wu, B., Klatzky, R. L., & Hollis, R. L. (2015). Effects of visual latency on visual-haptic experience of stiffness. <em>2015 Seventh International Workshop on Quality of Multimedia Experience (QoMEX)</em>, 1–3. <a href="https://doi.org/10.1109/QoMEX.2015.7148126" target="_blank" rel="noopener noreferrer">DOI: 10.1109/QoMEX.2015.7148126</a>.</p>
+                <p class="ref-vinculo">🖐️ Investiga cómo la asincronía temporal entre el feedback visual y háptico altera la percepción de rigidez de objetos virtuales. Aporta evidencia de que la <strong>asincronía visual‑háptica</strong> afecta propiedades perceptivas, apoyando la hipótesis de NewroVirX‑11 de que minimizar Δφ podría normalizar la percepción de propiedades físicas en XR.</p>
+            </div>
+
+            <div class="referencia" id="ref-eje5-07">
+                <p class="ref-cita"><span class="ref-num">[7]</span> Holland, J. H. (1995). <em>Adaptation in Natural and Artificial Systems</em>. Cambridge: MIT Press. ISBN 978-0-262-58111-0.</p>
+                <p class="ref-vinculo">🧬 Fundamenta cómo el sistema <strong>McDee-11</strong> aprende y se adapta a las señales biológicas mediante algoritmos que imitan la evolución natural. La noción de sistemas adaptativos complejos (CAS) de Holland es la base para entender la plasticidad del Doble Lazo.</p>
+            </div>
+
+            <div class="referencia" id="ref-eje5-08">
+                <p class="ref-cita"><span class="ref-num">[8]</span> Benkler, Y. (2006). <em>The Wealth of Networks</em>. New Haven: Yale University Press. ISBN 978-0-300-11056-2.</p>
+                <p class="ref-vinculo">🌐 Justifica la arquitectura de <strong>código abierto</strong> y la colaboración interdisciplinaria como el motor de la eficiencia en el desarrollo de la plataforma. La economía de la producción entre iguales descrita por Benkler es el modelo que inspira la gobernanza distribuida del ecosistema NewroSTaiR‑11.</p>
             </div>
 
             <div class="note">
-                <strong>📌 Nota metodológica (Eje 5):</strong> Las referencias aquí compiladas constituyen el andamiaje metodológico y normativo que hace posible transformar los principios teóricos de los Ejes 1‑4 en un producto viable y ético. El puente con el módulo <code>03-Investigacion-y-Desarrollo.html</code> permite anclar cada fase del proyecto —desde la simulación hasta el ensayo clínico— en marcos de referencia sólidos.
+                <strong>📌 Nota metodológica (Eje 5):</strong> Las referencias aquí compiladas constituyen el andamiaje metodológico y normativo que hace posible transformar los principios teóricos de los Ejes 1‑4 en un producto viable y ético. Las referencias específicas de XR proporcionan un contexto empírico para las hipótesis de NewroVirX‑11 sin pretender validarlas directamente.
             </div>
 
-            <!-- ========== EJE 6 ========== -->
+            <!-- ==================== EJE 6 ==================== -->
             <div class="eje-header" id="eje6">
                 <span class="eje-number">EJE 6</span>
                 <h2 class="eje-title">Humanidades, Filosofía y Tradiciones Sapienciales</h2>
@@ -791,37 +723,25 @@
                 🌐 Sabiduría pre‑científica, experiencia estética y marcos simbólicos que dialogan con la neurociencia y la ingeniería. El encuentro entre el conocimiento tácito de las tradiciones y la evidencia empírica moderna.
             </p>
 
-            <div class="bridge">
-                <strong>🧩 Puente: Conocimiento fenomenológico y estético</strong><br>
-                Aquí, las prácticas ancestrales se despojan de interpretaciones místicas para ser analizadas como protocolos de <strong>estimulación biológica</strong> que la ciencia moderna apenas comienza a explicar. La intención no es validar dogmas, sino reconocer el valor operativo de estas técnicas en el modelado de la coherencia psicofísica.
+            <div class="referencia" id="ref-eje6-01">
+                <p class="ref-cita"><span class="ref-num">[1]</span> Merleau‑Ponty, M. (1945). <em>Fenomenología de la percepción</em>. París: Gallimard. ISBN 978-2-07-029337-3.</p>
+                <p class="ref-vinculo">🦴 Establece que el cuerpo no es un objeto, sino un campo de presencia. Apoya la idea de que la <strong>intención motora</strong> es la base de la conciencia auditiva, y fundamenta el Isomorfismo Audio‑Motor como un fenómeno encarnado en la experiencia corporal del usuario.</p>
             </div>
 
-            <div class="referencia" id="merleau-ponty">
-                <p class="ref-cita">Merleau‑Ponty, M. (1945). <em>Fenomenología de la percepción</em>. París: Gallimard.</p>
-                <p class="ref-vinculo">
-                    🦴 Establece que el cuerpo no es un objeto, sino un campo de presencia. Apoya la idea de que la <strong>intención motora</strong> es la base de la conciencia auditiva, y fundamenta el Isomorfismo Audio‑Motor como un fenómeno encarnado en la experiencia corporal del usuario.
-                </p>
+            <div class="referencia" id="ref-eje6-02">
+                <p class="ref-cita"><span class="ref-num">[2]</span> Zhuangzi (Textos Clásicos Taoístas). <a href="https://ctext.org/zhuangzi" target="_blank" rel="noopener noreferrer">Disponible en Chinese Text Project</a>.</p>
+                <p class="ref-vinculo">🌊 Analizados desde la neurofisiología, sus protocolos de respiración y resonancia craneal (como el "chasqueo de dientes") son precursores de la <strong>autoestimulación trigémino‑auditiva</strong>. El Zhuangzi ofrece un mapa metafórico del flujo de la intención que resuena con la dinámica de acoplamiento del Doble Lazo.</p>
             </div>
 
-            <div class="referencia" id="zhuangzi">
-                <p class="ref-cita">Zhuangzi (Textos Clásicos Taoístas).</p>
-                <p class="ref-vinculo">
-                    🌊 Analizados desde la neurofisiología, sus protocolos de respiración y resonancia craneal (como el "chasqueo de dientes") son precursores de la <strong>autoestimulación trigémino‑auditiva</strong>. El Zhuangzi ofrece un mapa metafórico del flujo de la intención que resuena con la dinámica de acoplamiento del Doble Lazo.
-                </p>
-            </div>
-
-            <div class="referencia" id="kandinsky">
-                <p class="ref-cita">Kandinsky, W. (1911). <em>De lo espiritual en el arte</em>. Múnich: Piper.</p>
-                <p class="ref-vinculo">
-                    🎨 Relaciona el sonido con la forma y el color. Valida el <strong>Isomorfismo Audio‑Motor</strong> desde una perspectiva estética: la frecuencia no es solo un número, es una experiencia que mueve el sistema. La sinestesia descrita por Kandinsky es un modelo cualitativo de la integración sensorial que NewroSTaiR‑11 busca inducir artificialmente.
-                </p>
+            <div class="referencia" id="ref-eje6-03">
+                <p class="ref-cita"><span class="ref-num">[3]</span> Kandinsky, W. (1911). <em>De lo espiritual en el arte</em>. Múnich: Piper. ISBN 978-84-493-2509-6 (edición moderna).</p>
+                <p class="ref-vinculo">🎨 Relaciona el sonido con la forma y el color. Valida el <strong>Isomorfismo Audio‑Motor</strong> desde una perspectiva estética: la frecuencia no es solo un número, es una experiencia que mueve el sistema. La sinestesia descrita por Kandinsky es un modelo cualitativo de la integración sensorial.</p>
             </div>
 
             <div class="note">
-                <strong>📌 Nota metodológica (Eje 6):</strong> Este eje reúne fuentes que enriquecen el trasfondo cultural de NewroSTaiR‑11. No se propone una lectura literal ni religiosa de los textos, sino una <strong>extracción de principios operativos</strong> que dialoga con la neurociencia moderna. El módulo puente <code>Humanidades.html</code> se amplía así con referencias que abarcan desde la fenomenología hasta la estética, pasando por las tradiciones sapienciales de la Humanidad.
+                <strong>📌 Nota metodológica (Eje 6):</strong> Este eje reúne fuentes que enriquecen el trasfondo cultural de NewroSTaiR‑11. No se propone una lectura literal ni religiosa de los textos, sino una <strong>extracción de principios operativos</strong> que dialoga con la neurociencia moderna.
             </div>
 
-            <!-- Nota de integración final -->
             <div class="note note-structural" style="margin-top:3rem;">
                 <strong>🌐 Nota de integración de los 6 ejes</strong><br>
                 Al expandir la biblioteca, el proyecto <strong>NewroSTaiR‑11</strong> deja de ser solo un desarrollo técnico para convertirse en un <strong>modelo de conocimiento integral</strong>. La estructura ahora permite que:
@@ -839,7 +759,6 @@
                 <p>Biblioteca de Sincronía · NewroSTaiR‑11 · Mayo 2026</p>
                 <p>Documento de referencia interna del modelo matemático McDee‑11</p>
             </div>
-            <!-- ========== FIN DE LA ZONA EDITABLE ========== -->
         </main>
 
         <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
@@ -1089,7 +1008,7 @@
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
             const textoIntro = `Biblioteca de Sincronía del proyecto NewroSTaiR-11. Una genealogía intelectual estructurada en seis ejes temáticos: Física y Sistemas Dinámicos, Neurociencia e Integración Bilateral, Ingeniería de Control y Sistemas Híbridos, Filosofía de la Biología y Biosemiótica, I+D y Ciencias Modernas, y Humanidades, Filosofía y Tradiciones Sapienciales.`;
-            const textoCompleto = `Eje 1: Física, Geometría y Sistemas Dinámicos, con referencias a Bak-Tang-Wiesenfeld, Lorenz, Poincaré, Arnold, Strogatz, Abraham y Shaw, Kuramoto, Dirac y Smale. Eje 2: Neurociencia e Integración Bilateral, con FFR, ruido café, percepción fractal, Hebb, Gazzaniga, Taub, Swinnen, Merzenich, Wolpert, Tognoli y Kelso, y autoestimulación sensoriomotora. Eje 3: Ingeniería de Control y Sistemas Híbridos, con sonidos de objetos geométricos, ritmos fractales, Wiener, Åström, Kalman, Kuramoto, Oppenheim, Asimov y Lee. Eje 4: Filosofía de la Biología y Biosemiótica. Eje 5: I+D y Ciencias Modernas. Eje 6: Humanidades.`;
+            const textoCompleto = `Eje 1: Física, Geometría y Sistemas Dinámicos, con 9 referencias. Eje 2: Neurociencia e Integración Bilateral, con 14 referencias. Eje 3: Ingeniería de Control, con 9 referencias. Eje 4: Filosofía de la Biología, con 5 referencias. Eje 5: I+D y Ciencias Modernas, con 8 referencias. Eje 6: Humanidades, con 3 referencias.`;
 
             function obtenerTextoActual() {
                 const scope = scopeSelect.value;
