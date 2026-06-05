@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La danza de la evolución y la adaptación · newrostair-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== PLANTILLA UNIFICADA (NO MODIFICAR ESTA SECCIÓN) ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; }
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-size:3rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.1rem; color:#bbdfec; margin:0.2rem 0; }
+        .header-text-block .accesibilidad-header-text { font-size:1rem; color:#ffffff; margin-top:0.8rem; line-height:1.6; border-top:1px solid rgba(255,255,255,0.15); padding-top:0.6rem; font-style:normal; opacity:1; }
+        .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
+        .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
+        .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
+        .header-nav-quick a img { height:18px; width:auto; display:block; }
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id], div[id], section.modulo { scroll-margin-top:100px; }
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; } .menu-desplegable.visible { display:block; }
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:nowrap; white-space:nowrap; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+        .back-button { display:block; text-align:center; margin-bottom:1rem; }
+        .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.85rem; transition:background 0.2s, border-color 0.2s; }
+        .back-button a:hover { background:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .enlace-documento { color:#b97341; text-decoration:none; font-weight:bold; border-bottom:1px dashed #b97341; }
+        .enlace-documento:hover { color:#d9823b; border-bottom:1px solid #d9823b; }
+        .capitulos-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin:2rem 0; }
+        .capitulo-card { background:#f8fafc; border:1px solid #cbd5e1; border-radius:20px; padding:1.8rem; transition:all 0.2s; }
+        .capitulo-card:hover { background:#eef2f6; border-color:#9eb4c8; transform:translateY(-3px); box-shadow:0 6px 16px rgba(0,0,0,0.06); }
+        .capitulo-card h4 { font-size:1.2rem; margin-bottom:0.5rem; }
+        .capitulo-card p { font-size:0.95rem; margin-bottom:0.5rem; color:#4a5568; }
+        /* Estilos para imágenes */
+        .img-preambulo { width:100%; height:auto; max-width:100%; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:1rem 0; }
+        .img-capitulo { width:100%; height:auto; max-width:100%; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:1rem 0; min-height:180px; background:#f9fafb; }
+        .preambulo-pid-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; margin:1.5rem 0; }
+        .preambulo-umead-center { max-width:400px; margin:0 auto 1.5rem auto; }
+        /* Nuevo estilo para el párrafo de síntesis */
+        .sintesis-pid { background: #f9efe2; border-left: 4px solid #b97341; padding: 1.2rem 1.8rem; border-radius: 0 20px 20px 0; font-style: italic; color: #3d2f1f; margin: 1.5rem 0; }
+        @media (max-width:1000px) { .main-grid { grid-template-columns:1fr; } .sidebar-left,.sidebar-right { display:none; } .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; } .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); } .capitulos-grid { grid-template-columns:1fr; } .preambulo-pid-grid { grid-template-columns:1fr; } }
+        @media (max-width:700px) { .content { padding:1.2rem; } .formula { font-size:1rem; padding:0.8rem; } }
+        @media (max-width:600px) { .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; } .logo-main { flex:0 0 auto; padding:4px; } .logo-main img { max-height:65px !important; width:auto; } .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; } .header-text-block h1 { font-size:1.95rem; margin-bottom:0.1rem; white-space:normal; } .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; } .accesibilidad-header-text { font-size:0.65rem; } .header-nav-quick { margin-top:0.2rem; gap:6px; } .header-nav-quick a { font-size:0.6rem; } .header-nav-quick a img { height:12px; } .header-imagen { padding:0.5rem 0.3rem; } body { padding-bottom:100px; } .menu-flotante-left,.menu-flotante-right { bottom:80px; } .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); } .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; } .voice-btn { font-size:0.7rem; min-width:45px; } .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; } }
+    </style>
+</head>
+<body id="top">
+
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="../index.html" class="logo-main"><img src="../img/logo-ns-11-azul.png" alt="Logo Principal - Ir a Inicio"></a>
+            <div class="header-text-block">
+                <h1>newrostair-11</h1>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    🧩 Este sitio web integra iconos semánticos como <strong>anclajes cognitivos</strong>.
+                    🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas
+                    📖 y promover una lectura inclusiva mediante el refuerzo pictográfico de conceptos clave. 🌈
+                </p>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube"><img src="../img/youtube-icon.png" alt="YouTube" style="height:20px; vertical-align:middle;"></a>
+                    <a href="../index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo"><img src="../img/tiktok-icon.jpg" alt="TikTok" style="height:20px; vertical-align:middle;"></a>
+                </nav>
+            </div>
+            <a href="../elipso/elipso.html" class="logo-main"><img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso"></a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button"><a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a></div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair-11 (Portal)</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu"><li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div>
+                            <ul class="submenu"><li><a href="../i+d.html">📋 Índice I+D</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li><li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li></ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../04-modelo-de-negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../docs/marco-conceptual.html" class="module-link">🤝 Fundamentos y Conceptos</a><span class="module-toggle"></span></div><ul class="submenu"><li><a href="intro-ensayo-1.html">Evolución y Control Adaptativo</a></li></ul></li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                        <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                        <li><a href="../i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="../i+d.html">🎛️ Método DSP (Fase Complementaria y Desfase Temporal Progresivo)</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder">
+                    <div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span></div>
+                    <ul class="submenu" id="biblio-submenu">
+                        <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="galeria-folder">
+                    <div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span></div>
+                    <ul class="submenu" id="galeria-submenu"><li><a href="../galeria.html">🖼️ Ver galería completa</a></li></ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>La danza de la evolución y la adaptación</strong></p>
+        </aside>
+
+        <main class="content">
+            <!-- ========== INICIO DE LA ZONA EDITABLE ========== -->
+            <h1>🌿 La danza de la adaptación y la evolución<br><span style="font-size:1.3rem; font-weight:400;
+             color:#4a5568;">
+             El Control Adaptativo y La Evolución de las Especies. </span></h1>
+
+            <div class="nota-cafe">
+                <p style="font-size:1.1rem; text-align:center; margin-bottom:1rem;"><strong>⚙️ Preámbulo: 
+                    La Proporción, La Integración, La Incertidumbre, y El Doble Par Complementario, </strong></p>
+                <p>La Proporción, la Integración y La Incertidumbre  constituyen tres dinámicas 
+                    fundamentales para comprender por qué la vida cambia, persiste y se diversifica. 
+                    <br>
+                    Juntas expresan una forma de <strong>flexibilidad estructurada</strong>: la 
+                    capacidad de transformarse sin perder continuidad.
+                    <br><br>
+                    El Doble Par Complementario aporta la arquitectura mínima de redundancia que permite 
+                    sostener esas dinámicas en el tiempo. Representa una <strong>estructura flexible
+                    </strong>: suficientemente estable para conservar información y suficientemente 
+                    abierta para adaptarse al cambio.
+                    <br><br>
+
+                    La Inteligencia Humana ha desarrollado herramientas matemáticas para describir 
+                    procesos de regulación y adaptación. Entre ellas destaca la Teoría de Control, 
+                    cuyo lenguaje ofrece analogías útiles para explorar la dinámica evolutiva. 
+                    <br><br>
+                    A continuación exploraremos diversas analogías que permiten aplicar este formalismo en distintos campos 
+                    cuando se integra con la Relación de Doble Par Complementario.</p>
+                <hr>
+
+                <!-- TRES COLUMNAS CON IMÁGENES (MISMO TAMAÑO) -->
+                <div class="preambulo-pid-grid">
+                    <!-- PROPORCIÓN (P) -->
+                    <div style="text-align:center;">
+                        <img src="../img/pico-alargado.png" alt="Ilustración del concepto de Proporción (P): esfuerzo inmediato y equilibrio" class="img-preambulo">
+                        <p><strong>1. La Proporción (P)</strong> es el esfuerzo inmediato ⚡, la respuesta que damos al presente. Un pico que se alarga cuando el alimento escasea, un músculo que se activa cuando el frío aprieta. Es la energía que se gasta para mantener el equilibrio 🔄.</p>
+                    </div>
+                    <!-- INTEGRACIÓN (I) -->
+                    <div style="text-align:center;">
+                        <img src="../img/leones-jugando.png" alt="Ilustración del concepto de Integración (I): memoria acumulada y cimiento" class="img-preambulo">
+                        <p><strong>2. La Integración (I)</strong> es la memoria acumulada 🧠, el cimiento que construimos con cada experiencia. Es lo que permite que un linaje no empiece desde cero, sino que herede las soluciones del pasado. Integrar es consolidar lo vivido y usarlo como base 🏗️.</p>
+                    </div>
+                    <!-- INCERTIDUMBRE (D) -->
+                    <div style="text-align:center;">
+                        <img src="../img/incertidumbre-leones.png" alt="Ilustración del concepto de Incertidumbre (D): deriva, anticipación y principio de Heisenberg" class="img-preambulo">
+                        <p><strong>3. La Incertidumbre (D)</strong> es la capacidad de notar que el suelo se mueve bajo nuestros pies. 
+                            Es la habilidad de anticipar el cambio apoyado en la memoria o Integración y la Proporción o esfuerzo necesario. 
+                            Este concepto conecta con una de las ideas más bellas de la física: el principio de incertidumbre de Heisenberg ⚛️.</p>
+                    </div>
+                </div>
+                <hr>
+                <!-- IMAGEN PARA LA UMEAD (CENTRADA) -->
+                <p>Estos tres conceptos se engranan con una <strong>Unidad Mínima de Equilibrio 
+                    Adaptativo Dinámico</strong> 🧩, la <strong>UMEAD</strong> , cuya estructura 
+                    íntima es un <strong>doble par complementario</strong>: cuatro elementos que se 
+                    respaldan mutuamente 🔐. Esa redundancia es la clave de su estabilidad.</p>
+                <p>
+                    Tal vez uno de los ejemplos mas intuitivos que nos regalan la naturaleza y la ciencia,
+                    sea la estructura molecular del ADN, compuesto por cuatro bases nitrogenadas, operando
+                    en configuración de Doble Par Complementario: 
+                    <br>
+                <div class="preambulo-umead-center">
+                    <img src="../img/umead-adn.png" alt="Ilustración de la UMEAD como doble par complementario" class="img-preambulo">
+                </div>
+                    Uno de estos pares lo componen la Adenina y la Timina, cuyo emparejamiento tiende a la 
+                    flexibilidad, ya que se unen por dos enlaces de hidrógeno: Enlace Débil.
+                    <br>
+                    El otro par está compuesto por la Guanina y la Citosina, este emparejamiento tiende a 
+                    conservar la estructura, debido a que están ligadas por tres enlaces de hidrógeno: Enlace Fuerte. 
+                </p>    
+
+                <!-- NUEVO PÁRRAFO DE SÍNTESIS PID -->
+                <div class="sintesis-pid">
+                    <p style="font-size:1rem; margin-bottom:0.5rem;"><strong>🔁 Síntesis PID · Un lazo de control adaptativo para la evolución</strong></p>
+                    <p>La <strong>Proporción (P)</strong> actúa como el impulso corrector inmediato que responde a las desviaciones del entorno; la <strong>Integración (I)</strong> recoge la historia acumulada del linaje, dotando de persistencia a las soluciones exitosas; y la <strong>Incertidumbre (D)</strong> afina la sensibilidad hacia los cambios emergentes, permitiendo anticipar trayectorias sin necesidad de certeza absoluta. Juntos, estos tres principios conforman un lazo de control adaptativo que no solo estabiliza, sino que habilita la creatividad evolutiva: la danza perpetua entre el presente, la memoria y la posibilidad.</p>
+                </div>
+            </div>
+
+            <h2>📖 Itinerario de Navegación</h2>
+
+            <div class="capitulos-grid">
+                <!-- CAPÍTULO 1 -->
+                <div class="capitulo-card">
+                    <h4>📖 <a href="capitulo-1.html" class="enlace-documento">Capítulo 1 — Ensayo Universal</a></h4>
+                    <p>Un viaje cronológico por la historia de la vida 🌍: desde las primeras moléculas hasta las extinciones recientes. Ocho módulos que recorren el alfabeto del ADN, la danza celular, la persistencia residual y las bifurcaciones evolutivas.</p>
+                    <img src="../img/evolucion-vert.png" alt="Ilustración del Capítulo 1: línea de tiempo evolutiva" class="img-capitulo">
+                </div>
+                <!-- CAPÍTULO 2 -->
+                <div class="capitulo-card">
+                    <h4>🧭 <a href="capitulo-2.html" class="enlace-documento">Capítulo 2 — Marco Conceptual</a></h4>
+                    <p>Los constructos operacionales que dan coherencia al modelo 🧩: acoplamiento estructural, umbral crítico θ_c, UMEAD, campos adaptativos, principios variacionales y la constante κ.</p>
+                    <img src="../img/placeholder-capitulo-2.png" alt="Ilustración del Capítulo 2: marco conceptual" class="img-capitulo">
+                </div>
+                <!-- CAPÍTULO 3 -->
+                <div class="capitulo-card">
+                    <h4>📐 <a href="capitulo-3.html" class="enlace-documento">Capítulo 3 — Formalización Geométrica</a></h4>
+                    <p>Operadores topológicos y su validación empírica 🌀: fractal, hipercubo, campo de Möbius, hiperpiñón, nichos dinámicos y el observador constitutivo.</p>
+                    <img src="../img/placeholder-capitulo-3.png" alt="Ilustración del Capítulo 3: operadores topológicos" class="img-capitulo">
+                </div>
+                <!-- CAPÍTULO 4 -->
+                <div class="capitulo-card">
+                    <h4>📊 <a href="capitulo-4.html" class="enlace-documento">Capítulo 4 — Apéndice Matemático</a></h4>
+                    <p>El modelo McDee-11 en su expresión formal 📐: ecuación de evolución de trayectorias, operador fasorial, límite hipercúbico y validación computacional.</p>
+                    <img src="../img/placeholder-capitulo-4.png" alt="Ilustración del Capítulo 4: apéndice matemático" class="img-capitulo">
+                </div>
+            </div>
+
+            <h2>📚 Documentos Complementarios del Ecosistema</h2>
+            <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:20px; padding:1.5rem; margin-top:1rem;">
+                <ul style="list-style:none; padding-left:0;">
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento A:</strong> Caso observacional — Primer registro empírico del modelo. <a href="../i+d/documento-a.html" class="enlace-documento">Enlace</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento B:</strong> Runge‑Kutta y el código de cuatro letras. <a href="../docs/runge-kutta-adn.html" class="enlace-documento">Enlace</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento C:</strong> Electromagnetismo y el campo adaptativo. <a href="../docs/electromagnetismo-mcdee11.html" class="enlace-documento">Enlace</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento D:</strong> Termofluidos y la dinámica adaptativa. <a href="../docs/termofluidos-mcdee11.html" class="enlace-documento">Enlace</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento E:</strong> Pinzones de Darwin y McDee-11. <a href="../docs/documento-e-pinzones.html" class="enlace-documento">Enlace (próximamente)</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento F:</strong> Granularidad Celular. <a href="../docs/documento-f-granularidad.html" class="enlace-documento">Enlace (próximamente)</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento G:</strong> Simulaciones Computacionales. <a href="../docs/documento-g-simulaciones.html" class="enlace-documento">Enlace (próximamente)</a></li>
+                    <li style="margin-bottom:0.8rem; padding-left:1.5rem; position:relative;"><span style="position:absolute; left:0;">📄</span> <strong>Documento H:</strong> Nichos Dinámicos y Control Adaptativo. <a href="../docs/documento-h-nichos.html" class="enlace-documento">Enlace (próximamente)</a></li>
+                </ul>
+            </div>
+
+            <div class="firma">
+                <p>📖 Ensayo Modular — <strong>La danza de la evolución y la adaptación</strong><br>
+                🌐 Proyecto newrostair-11 · GitHub Pages · 2026</p>
+            </div>
+            <!-- ========== FIN DE LA ZONA EDITABLE ========== -->
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center; margin:15px 0 5px 0;"><img src="../img/qr_newrostair.png" alt="QR newrostair" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+            <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>newrostair-11</strong></p>
+            <hr>
+            <div class="folder" style="margin-bottom:1rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En este ensayo</span><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span></div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="capitulo-1.html">📖 Capítulo 1 · Ensayo Universal</a></li>
+                    <li><a href="capitulo-2.html">🧭 Capítulo 2 · Marco Conceptual</a></li>
+                    <li><a href="capitulo-3.html">📐 Capítulo 3 · Formalización Geométrica</a></li>
+                    <li><a href="capitulo-4.html">📊 Capítulo 4 · Apéndice Matemático</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem; margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
+            <div class="back-button"><ul><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li></ul></div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </aside>
+    </div>
+
+    <!-- ===== MENÚS FLOTANTES COMPLETOS ===== -->
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button"><a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a></div>
+            <ul class="tree">
+                <li class="folder open"><div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">01 · Origen, Misión y Visión</a><span class="module-toggle"></span></div></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · Propiedad Intelectual</a><span class="module-toggle"></span></div>
+                            <ul class="submenu"><li><a href="../PI&FT.html">📘 Índice PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11 (Completo)</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div>
+                            <ul class="submenu"><li><a href="../i+d.html">📋 Índice I+D</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li><li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li></ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../04-modelo-de-negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div></li>
+                        <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div></li>
+                        <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a><span class="module-toggle"></span></div></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../docs/marco-conceptual.html" class="module-link">🤝 Fundamentos y Conceptos</a><span class="module-toggle"></span></div><ul class="submenu"><li><a href="intro-ensayo-1.html">Evolución y Control Adaptativo</a></li></ul></li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li><li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li><li><a href="../i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li><li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li><li><a href="../metodo-dsp-fc-dtp.html">🎛️ Método DSP</a></li></ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder-flotante">
+                    <div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li><li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Filosofía de la Biología y Biosemiótica</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="galeria-folder-flotante"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span></div><ul class="submenu"><li><a href="../i+d/galeria-mm.html">🖼️ Ver galería completa</a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center; margin:10px 0;"><img src="../img/qr_newrostair.png" alt="QR newrostair" style="width:120px; border-radius:12px;"></div>
+            <p style="font-size:0.8rem; text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <div class="folder" style="margin-bottom:0.5rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En este ensayo</span><span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span></div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="capitulo-1.html">📖 Capítulo 1</a></li><li><a href="capitulo-2.html">🧭 Capítulo 2</a></li>
+                    <li><a href="capitulo-3.html">📐 Capítulo 3</a></li><li><a href="capitulo-4.html">📊 Capítulo 4</a></li>
+                </ul>
+            </div>
+            <hr>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button"><ul><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li></ul></div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            function bindToggles() {
+                document.querySelectorAll('.module-toggle').forEach(toggle => {
+                    toggle.removeEventListener('click', handleToggleClick);
+                    toggle.removeEventListener('keydown', handleToggleKey);
+                    toggle.addEventListener('click', handleToggleClick);
+                    toggle.addEventListener('keydown', handleToggleKey);
+                });
+            }
+            function handleToggleClick(e) { e.stopPropagation(); e.preventDefault(); const folder = this.closest('.folder'); if (folder) folder.classList.toggle('open'); }
+            function handleToggleKey(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); const folder = this.closest('.folder'); if (folder) folder.classList.toggle('open'); } }
+            bindToggles();
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    const folders = tree.querySelectorAll('.folder');
+                    folders.forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href'); if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
+                    }
+                    if (enlaceActual) { enlaceActual.classList.add('current-page'); let elemento = enlaceActual.closest('.folder'); while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); } }
+                    else if (nombreArchivo === 'index.html' || nombreArchivo === '') { const portalFolder = tree.querySelector('.folder'); if (portalFolder) { portalFolder.classList.add('open'); const portalLink = portalFolder.querySelector('.module-link'); if (portalLink) portalLink.classList.add('current-page'); } }
+                });
+            }
+            actualizarArbolSegunPagina();
+            const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight');
+            const btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
+            function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); localStorage.setItem('menuLeftState', 'hidden'); localStorage.setItem('menuRightState', 'hidden'); }
+            function toggleMenu(menu, btn, storageKey) { const isVisible = menu.classList.contains('visible'); if (!isVisible) { closeAll(); menu.classList.add('visible'); localStorage.setItem(storageKey, 'visible'); } else { menu.classList.remove('visible'); localStorage.setItem(storageKey, 'hidden'); } }
+            if (localStorage.getItem('menuLeftState') === 'visible') menuLeft.classList.add('visible');
+            if (localStorage.getItem('menuRightState') === 'visible') menuRight.classList.add('visible');
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuLeft, btnLeft, 'menuLeftState'); });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuRight, btnRight, 'menuRightState'); });
+            document.addEventListener('click', (event) => { if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll(); });
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn'), playPauseLabel = document.getElementById('playPauseLabel');
+            const stopBtn = document.getElementById('stopBtn'), voiceSelectEl = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect'), voiceStatus = document.getElementById('voiceStatus');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+            function construirVoiceMap() {
+                const voces = synth.getVoices(); if (!voces || voces.length === 0) return false;
+                const spanishVoices = voces.filter(v => v.lang.startsWith('es'));
+                const esES = spanishVoices.filter(v => v.lang === 'es-ES'), esLat = spanishVoices.filter(v => v.lang !== 'es-ES');
+                function elegirVoz(lista, genero) { const patrones = { female: ['female', 'mujer'], male: ['male', 'hombre'] }; const filtrada = lista.filter(v => patrones[genero].some(p => v.name.toLowerCase().includes(p))); if (filtrada.length) return filtrada.find(v => v.localService) || filtrada[0]; return lista[0] || null; }
+                voiceMap = { fem_es: elegirVoz(esES, 'female'), fem_lat: elegirVoz(esLat, 'female'), masc_es: elegirVoz(esES, 'male'), masc_lat: elegirVoz(esLat, 'male') };
+                for (const [key, voz] of Object.entries(voiceMap)) { const option = voiceSelectEl.querySelector(`option[value="${key}"]`); if (option) { option.disabled = !voz; option.textContent = option.textContent.replace(' (no disponible)', '') + (voz ? '' : ' (no disponible)'); } }
+                if (!voiceMap[voiceSelectEl.value]) { const primera = Object.entries(voiceMap).find(([, v]) => v); if (primera) { voiceSelectEl.value = primera[0]; selectedVoice = primera[1]; } } else selectedVoice = voiceMap[voiceSelectEl.value];
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible'; return true;
+            }
+            function actualizarInterfaz(estado, textoBoton) { playPauseBtn.querySelector('span:first-child').textContent = textoBoton; if (estado === 'reproduciendo') { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; } else if (estado === 'pausado') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; } else { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; } }
+            construirVoiceMap(); synth.onvoiceschanged = construirVoiceMap;
+            voiceSelectEl.addEventListener('change', () => { if (voiceMap[voiceSelectEl.value]) { if (isSpeaking) synth.cancel(); selectedVoice = voiceMap[voiceSelectEl.value]; isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); } });
+            playPauseBtn.addEventListener('click', () => { voiceStatus.textContent = 'Narración disponible en cada capítulo'; });
+            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Detenido'; });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+        })();
+    </script>
+</body>
+</html>
