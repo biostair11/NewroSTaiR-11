@@ -304,7 +304,7 @@
                         </li>
                         <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link">04 · 📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">06 · 🤝 Marco Conceptual</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · 📱 Comunidad</a></div><ul class="submenu"></ul></li>
                     </ul>
@@ -315,6 +315,7 @@
                     <ul class="submenu">
                         <li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li>
                         <li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li>
                     </ul>
                 </li>
                 <!-- PROYECTOS Y HERRAMIENTAS -->
@@ -430,7 +431,7 @@
                         </li>
                         <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link">04 · 📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · Humanidades</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">06 · 🤝 Marco Conceptual</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · Comunidad</a></div><ul class="submenu"></ul></li>
                     </ul>
@@ -441,6 +442,7 @@
                     <ul class="submenu">
                         <li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li>
                         <li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li>
                     </ul>
                 </li>
                 <!-- PROYECTOS Y HERRAMIENTAS -->
@@ -536,6 +538,13 @@
                     } else if (clickCount === 2) {
                         clearTimeout(clickTimer);
                         clickCount = 0;
+                        // Cierra todas las carpetas hermanas
+                        const parentUl = folder.closest('ul');
+                        if (parentUl) {
+                            parentUl.querySelectorAll(':scope > .folder.open').forEach(f => {
+                                if (f !== folder) f.classList.remove('open');
+                            });
+                        }
                         folder.classList.toggle('open');
                     }
                 });
@@ -584,7 +593,7 @@
 
             const enlacesFlexibilidad = [
                 { texto: '🎨 Arte y Humanidades', href: 'Humanidades.html' },
-                { texto: '📖 Historia', href: '06-Historia-Neuroplasticidad.html' },
+                { texto: '🤝 Marco Conceptual', href: 'marco-conceptual/marco-conceptual.html' },
                 { texto: '🗣️ Humano-IA', href: '07-Era-Humano-IA.html' },
                 { texto: '📱 Comunidad', href: 'elipso/elipso.html' }
             ];
