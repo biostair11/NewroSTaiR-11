@@ -76,7 +76,7 @@
         .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
         .menu-desplegable.visible { display:block; }
 
-        /* Barra de voz permanente en dos líneas */
+        /* Barra de voz permanente en dos líneas (escritorio) */
         .voice-floating-bar {
             position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
             z-index:1100;
@@ -153,26 +153,47 @@
             body { padding-bottom:100px; }
             .menu-flotante-left,.menu-flotante-right { bottom:80px; }
             .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+
+            /* ===== BARRA DE VOZ EN DOS LÍNEAS SIN DESBORDAMIENTO ===== */
             .voice-floating-bar {
-                bottom:10px; left:0; right:0; transform:none;
-                width:100%; max-width:100%;
-                border-radius:20px 20px 0 0;
-                padding:0.3rem 0.5rem; gap:0.3rem;
-                grid-template-columns:auto auto;
+                position:fixed;
+                bottom:0;
+                left:0;
+                right:0;
+                transform:none;
+                width:100%;
+                max-width:100%;
+                display:grid;
+                grid-template-columns:1fr 1fr;
+                grid-template-rows:auto auto;
+                gap:4px;
+                padding:6px;
+                border-radius:12px 12px 0 0;
+                box-sizing:border-box;
+                overflow:hidden;
                 justify-content:center;
+                align-items:center;
             }
             .voice-floating-bar .voice-btn {
-                font-size:0.7rem; padding:0.3rem 0.8rem;
-                min-width:45px;
+                font-size:0.65rem;
+                padding:6px;
+                min-width:0;
+                flex-shrink:1;
             }
             .voice-floating-bar .voice-select,
             .voice-floating-bar .voice-scope-select {
-                font-size:0.65rem; padding:0.3rem 0.5rem;
-                max-width:100px;
+                font-size:0.65rem;
+                padding:4px;
+                max-width:100%;
+                min-width:0;
+                width:100%;
+                box-sizing:border-box;
             }
             .voice-floating-bar .voice-status {
-                font-size:0.65rem; width:100%;
-                text-align:center; justify-content:center;
+                font-size:0.6rem;
+                grid-column:1 / -1;
+                text-align:center;
+                margin-top:2px;
             }
         }
     </style>
@@ -221,7 +242,6 @@
                 <a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a>
             </div>
             <h4>🗺️ Mini‑mapa del sitio</h4>
-            <!-- ===== MENÚ IZQUIERDO (personalizar enlaces y eliminar margen punteada) ===== -->
             <ul class="tree">
                 <!-- PORTAL -->
                 <li class="folder open">
@@ -246,7 +266,7 @@
                         </li>
                         <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link">04 · 📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">06 · 🤝 Marco Conceptual</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · 📱 Comunidad</a></div><ul class="submenu"></ul></li>
                     </ul>
@@ -257,6 +277,7 @@
                     <ul class="submenu">
                         <li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li>
                         <li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li>
                     </ul>
                 </li>
                 <!-- PROYECTOS Y HERRAMIENTAS -->
@@ -334,10 +355,8 @@
                     <li><a href="#">📋 #Enlace 1</a></li>
                     <li><a href="#">📄 #Enlace 2</a></li>
                     <li><a href="#">📄 #Enlace n</a></li>
-                    <!-- Añada aquí los enlaces query a secciones de su documento -->
                 </ul>
             </div>
-            <!-- FIN ZONA EDITABLE -->
             <hr>
             <h2 style="font-size:.9rem; margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
             <div class="back-button">
@@ -382,7 +401,7 @@
                         </li>
                         <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link">04 · 📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">05 · Humanidades</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">06 · 🤝 Marco Conceptual</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">08 · Comunidad</a></div><ul class="submenu"></ul></li>
                     </ul>
@@ -393,6 +412,7 @@
                     <ul class="submenu">
                         <li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li>
                         <li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li>
                     </ul>
                 </li>
                 <!-- PROYECTOS Y HERRAMIENTAS -->
@@ -468,7 +488,7 @@
 
             // ===== SISTEMA DE CARPETAS (CLIC SIMPLE = NAVEGAR, DOBLE CLIC = EXPANDIR) =====
             const folderLinks = document.querySelectorAll('.tree .folder > .module-row > .module-link');
-            const doubleClickDelay = 500; // milisegundos (estándar Windows)
+            const doubleClickDelay = 500;
 
             folderLinks.forEach(link => {
                 const folder = link.closest('.folder');
@@ -491,6 +511,13 @@
                     } else if (clickCount === 2) {
                         clearTimeout(clickTimer);
                         clickCount = 0;
+                        // Acordeón: cierra las carpetas hermanas
+                        const parentUl = folder.closest('ul');
+                        if (parentUl) {
+                            parentUl.querySelectorAll(':scope > .folder.open').forEach(f => {
+                                if (f !== folder) f.classList.remove('open');
+                            });
+                        }
                         folder.classList.toggle('open');
                     }
                 });
