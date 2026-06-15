@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundamentos Adaptativos de PIDCA · newrostair11</title>
+    <title>Marco Teórico de la Arquitectura PIDCA · newrostair11</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     <style>
         /* ===== PLANTILLA UNIFICADA ===== */
@@ -169,8 +169,8 @@
             .accesibilidad-header-text { font-size:0.65rem; }
             .header-imagen { padding:0.5rem 0.3rem; }
             body { padding-bottom:140px; }
-            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
-            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .menu-flotante-left,.menu-flotante-right { bottom:110px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 220px); }
             .indice-tarjetas { grid-template-columns:1fr 1fr; }
             .bibliografia-tarjetas { grid-template-columns:1fr; }
             .voice-floating-bar {
@@ -276,14 +276,22 @@
                 <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">📡 Multimedia y enlaces externos</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="../galeria.html">🖼️ Galería completa</a></li></ul></li>
             </ul>
             <hr>
-            <p style="font-size:0.85rem;">📍 Estás en: <strong>Fundamentos Adaptativos de PIDCA</strong></p>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Marco Teórico de PIDCA</strong></p>
         </aside>
 
         <main class="content" id="mainContent">
-            <h1 style="font-size:1.8rem; border-bottom:2px solid #005a9c; padding-bottom:0.2rem;">Fundamentos Adaptativos de la Arquitectura PIDCA</h1>
-            <p class="doc-lead" id="docLead"><strong>Identificador:</strong> PIDCA-FA-v2.8<br>Este documento describe la estructura generadora del sistema: <strong>Marco Adaptativo α–β–γ</strong> y <strong>UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico)</strong>, que contiene dos pares complementarios (α↔β y el ciclo de fases) y se manifiesta en múltiples escalas. A partir de ella se definen la memoria recursiva Δμ, la trayectoria Γ(t) y el atractor recurrente 𝒜Γ. Se incorpora el <strong>Principio de autosimilitud funcional</strong> como fundamento de la reinstanciación multiescala. Las referencias a Mandelbrot, Dirac y atractores cumplen funciones de <strong>andamiaje conceptual</strong>.
+            <h1 style="font-size:1.8rem; border-bottom:2px solid #005a9c; padding-bottom:0.2rem;">Marco Teórico de la Arquitectura PIDCA</h1>
+            <p class="doc-lead" id="docLead"><strong>Identificador:</strong> PIDCA‑MT‑v2.8<br>Este documento establece el marco conceptual 
+                que conecta teorías modernas de adaptación, control, neurociencia y sistemas dinámicos con la formalización
+                 matemática desarrollada en McDee‑11. 
+                Su propósito es proporcionar un lenguaje común que facilite la transición entre los marcos teóricos establecidos
+                 y las propuestas conceptuales y matemáticas descritas en la arquitectura PIDCA. 
                 
-            <!-- ===== ÍNDICE DE 9 TEMAS ===== -->
+                Presenta el <strong>Marco Adaptativo α–β–γ</strong> y la <strong>UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico)</strong>, que contiene dos pares complementarios (α↔β y el ciclo de fases) y se manifiesta en múltiples escalas. A partir de ella se definen la memoria recursiva Δμ, la trayectoria Γ(t) y el atractor recurrente 𝒜Γ. Se incorpora el <strong>Principio de autosimilitud funcional</strong> como fundamento de la reinstanciación multiescala. 
+                Las referencias a Mandelbrot, Dirac y atractores cumplen funciones de <strong>andamiaje conceptual</strong>.
+     
+            </p>
+
             <h2 id="indice">0. Índice de contenidos</h2>
             <div class="indice-tarjetas">
                 <a href="#marco" class="tarjeta-indice"><span class="emoji">🔺</span> 1. Marco α–β–γ</a>
@@ -297,7 +305,6 @@
                 <a href="#referencias" class="tarjeta-indice"><span class="emoji">📚</span> 9. Referencias</a>
             </div>
 
-            <!-- 1. MARCO ADAPTATIVO α–β–γ -->
             <h2 id="marco">1. Marco Adaptativo α–β–γ</h2>
             <p>En cada escala de observación, los procesos adaptativos pueden describirse mediante tres roles funcionales complementarios. Estos roles constituyen un marco organizador para analizar dinámicas adaptativas en distintos dominios y escalas:</p>
             <ul>
@@ -313,7 +320,6 @@
             <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Rol funcional</th><th>Componente PID</th><th>Función análoga</th></tr></thead><tbody><tr><td>α (proporcionalidad)</td><td>Proporcional (P)</td><td>Respuesta inmediata</td></tr><tr><td>β (memoria integrativa)</td><td>Integral (I)</td><td>Acumulación histórica</td></tr><tr><td>γ (sensibilidad al cambio)</td><td>Derivativa (D)</td><td>Anticipación, reconfiguración</td></tr></tbody></table></div>
             <div class="doc-note"><strong>📌 Nota sobre la relación con el PID:</strong> El marco adaptativo α–β–γ no redefine el controlador PID clásico. Utiliza las nociones de proporcionalidad, integración y sensibilidad al cambio como un lenguaje organizador para describir procesos adaptativos en múltiples escalas y dominios. La analogía es estructural, no una equivalencia matemática exacta.</div>
 
-            <!-- 2. UMEAD (incluye ecuación de gobierno) -->
             <h2 id="umead">2. UMEAD: unidad de doble par complementario y recursividad multiescala</h2>
             <p>El verdadero protagonista de la UMEAD no son las variables aisladas (α, β, γ), sino la <strong>complementariedad</strong> entre perspectivas. La arquitectura se organiza mediante pares complementarios (α↔β, y el segundo par de fases) que permiten la recursividad y el cambio de escala.</p>
             <p>La UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico) no es una pieza de tamaño fijo, sino un <strong>patrón estructural y dinámico</strong> que se manifiesta al cambiar la escala de observación. En cada escala, la UMEAD organiza la adaptación mediante:</p>
@@ -341,26 +347,23 @@
             <div class="doc-note"><strong>🧬 Analogía estructural (bases nitrogenadas):</strong> Así como en el ADN los pares complementarios A-T y C-G constituyen la estructura estable, y en el ARN aparece el uracilo (U) como una base emergente que permite funciones dinámicas adicionales, en la UMEAD los pares complementarios (α↔β y el segundo par de fases) proporcionan la arquitectura base, mientras que <strong>γ cumple la función relacional de sensibilidad al cambio, ya sea como variable introducida directamente en el marco o como variable que emerge de la interacción entre los pares complementarios.</strong> La implementación matemática de γ puede variar según el dominio (derivada, discrepancia, correlación, etc.); lo esencial es su <strong>función relacional</strong>.</div>
             <div class="doc-note"><strong>🧠 Nota sobre convergencia conceptual con neurociencia de sistemas:</strong> La arquitectura de perspectivas complementarias y la emergencia de variables relacionales γ es consistente con enfoques contemporáneos que describen funciones cognitivas como propiedades emergentes de la interacción entre redes distribuidas (e.g., Teoría del Espacio de Trabajo Global, Principio de Energía Libre, Sincronización Neural). Esta convergencia sugiere que el formalismo UMEAD podría ser útil para modelar dinámicas de integración multiescala en sistemas biológicos, aunque su validación empírica queda abierta a futuros desarrollos.</div>
 
-            <!-- 3. Δμ -->
             <h2 id="delta-miu">3. Δμ – Memoria recursiva</h2>
             <div class="formula">\(\displaystyle \Delta\mu(t+1) = \mathcal{H}\bigl(\Delta\mu(t),\ \gamma_1(t),\ \gamma_2(t)\bigr)\)</div>
             <p>A partir de la UMEAD, se define <strong>Δμ</strong> como la representación interna que conserva, filtra y reorganiza la interacción temporal entre γ₁ y γ₂. El operador \(\mathcal{H}\) puede incluir integración, decaimiento o convolución. Δμ actúa como la β de una UMEAD cuando se observa el sistema desde una escala que integra la memoria colectiva. Formalización completa en <a href="../fundamentos/McDee11-NFC.html#memoria-delta-miu">McDee-11, §4</a>.</p>
 
-            <!-- 4. Γ(t) -->
             <h2 id="trayectoria">4. Γ(t) – Estado global y trayectoria</h2>
             <div class="formula">\(\displaystyle \Gamma(t) = \bigl( \alpha_1(t),\beta_1(t),\alpha_2(t),\beta_2(t),\Delta\mu(t), \dots \bigr)\)</div>
             <p><strong>Γ(t)</strong> es el vector de estado en el instante t. La <strong>trayectoria dinámica</strong> es la colección ordenada \(\{ \Gamma(t) : t \ge 0 \}\). El atractor recurrente asociado se denota por \(\mathcal{A}_\Gamma\).</p>
             <div class="doc-note">📌 Distinción: un estado es un punto en el espacio de fases; la trayectoria es la sucesión de estados. Esta separación evita ambigüedades.</div>
 
-            <!-- 5. 𝒜Γ (incluye coherencia funcional) -->
-            <h2 id="atractor">5. 𝒜Γ – Atractor de fase recurrente y coherencia funcional</h2>
+            <h2 id="atractor">5. 𝒜Γ – Atractor de fase recurrente</h2>
             <div class="formula">\(\displaystyle \mathcal{A}_\Gamma = \left\{ \Gamma \ \middle|\ \| \mathcal{F}(\Gamma, S) - \Gamma \| < \varepsilon \right\}\)</div>
             <p>𝒜Γ es la región del espacio de fases hacia la cual la trayectoria Γ(t) tiende a mantenerse confinada. Se caracteriza por la <strong>coherencia funcional</strong>. Puede evolucionar lentamente con Δμ, de ahí el calificativo de <em>recurrente</em>. La noción de atractor recurrente 𝒜Γ mantiene una afinidad conceptual con los atractores estudiados en teoría de sistemas dinámicos (punto fijo, ciclo límite, toro, atractores extraños como el de Lorenz), incorporando además la influencia de la memoria recursiva Δμ.</p>
             <div class="doc-note">📌 La expresión presentada es una condición de cuasi-invarianza local, no la definición topológica estándar. La demostración formal como atractor en sentido de conjuntos límite se desarrolla en McDee-11.</div>
 
-            <div class="nota-cafe"><strong>Coherencia funcional:</strong> Propiedad emergente mediante la cual las trayectorias permanecen dentro de una región operativamente viable sin converger a un punto fijo. Caracterización formal en <a href="../fundamentos/McDee11-NFC.html#coherencia">McDee-11 §6</a>.</div>
+            <h3 id="coherencia">5.1 Coherencia funcional</h3>
+            <div class="nota-cafe"><strong>Definición:</strong> Propiedad emergente mediante la cual las trayectorias permanecen dentro de una región operativamente viable sin converger a un punto fijo. Caracterización formal en <a href="../fundamentos/McDee11-NFC.html#coherencia">McDee-11 §6</a>.</div>
 
-            <!-- 6. AUTOSIMILITUD FUNCIONAL (incluye andamiaje y tabla Dirac) -->
             <h2 id="autosimilitud">6. Autosimilitud funcional y andamiaje conceptual</h2>
             <div class="doc-note"><strong>🧩 Convergencias conceptuales</strong><br>La recursividad de la arquitectura UMEAD no se basa en una jerarquía rígida de niveles, sino en la reinstanciación de patrones complementarios en distintas escalas de observación. Esta propiedad mantiene una convergencia conceptual con el principio de <strong>autosimilitud funcional</strong> descrito por <a href="#ref-mandelbrot">Mandelbrot en geometría fractal</a>, aunque aplicada aquí a relaciones funcionales y no necesariamente a formas geométricas fractales estrictas.<br><br>Del mismo modo, la organización mediante pares complementarios mantiene afinidades metodológicas con la noción de <strong>organización relacional y acoplamiento estructural</strong> desarrollada por <a href="#ref-maturana-varela">Maturana y Varela</a>. En ambos casos, la estabilidad emerge de relaciones dinámicas entre componentes más que de elementos aislados.<br><br><strong>⚛️ Convergencia estructural con formalismos espinoriales (Dirac):</strong> La arquitectura PIDCA-UMEAD emplea perspectivas complementarias acopladas cuya dinámica conjunta determina el estado global del sistema. Esta organización presenta una convergencia estructural con los formalismos espinoriales, donde la evolución del estado no depende de una única variable escalar, sino de la interacción entre componentes relacionadas. Desde esta perspectiva, la descripción mínima de ciertos sistemas requiere al menos dos perspectivas complementarias acopladas para que emerja una dinámica coherente. En PIDCA-UMEAD, esta función la cumplen los pares complementarios que constituyen la UMEAD y cuya interacción da lugar a la memoria recursiva Δμ, la trayectoria Γ(t) y la coherencia funcional. La comparación se establece a nivel organizacional y no implica equivalencia física ni derivación matemática a partir de la ecuación de Dirac.<br><br>Estas referencias se incorporan como marcos conceptuales de apoyo y no implican equivalencia formal entre dichos modelos y la arquitectura UMEAD.</div>
 
@@ -370,26 +373,73 @@
 
             <div class="doc-note" style="border-left-color:#10b981;"><strong>🏗️ Roles de andamiaje conceptual</strong><br>Las referencias a Mandelbrot, Dirac y a la teoría de atractores dinámicos no se incorporan como demostraciones de la arquitectura PIDCA‑UMEAD, sino como <strong>andamiaje conceptual</strong>. Cada una cumple una función definida dentro del documento:<div class="doc-table-wrapper" style="margin-top:0.8rem;"><table class="doc-table"><thead><tr><th>Referente</th><th>Función de andamiaje</th><th>Dominio</th></tr></thead><tbody><tr><td><strong>Mandelbrot</strong></td><td>Proporciona lenguaje y antecedentes para la <em>autosimilitud entre escalas</em></td><td>Geometría fractal</td></tr><tr><td><strong>Dirac</strong></td><td>Proporciona lenguaje y antecedentes para la <em>complementariedad acoplada</em></td><td>Física matemática</td></tr><tr><td><strong>Atractores dinámicos</strong></td><td>Proporcionan lenguaje y antecedentes para la <em>estabilidad emergente</em></td><td>Sistemas dinámicos</td></tr></tbody></table></div><p style="margin-top:0.8rem;">En ningún caso se afirma derivación, equivalencia formal o demostración a partir de estos formalismos. Su presencia en el documento responde a la necesidad de <strong>situar</strong> la propuesta dentro de familias matemáticas reconocidas, ofreciendo un vocabulario compartido que hace inteligible el diseño de PIDCA‑UMEAD sin sustituir la formalización propia que corresponde a McDee‑11.</p></div>
 
-            <!-- 7. PROPOSICIÓN -->
             <h2 id="proposicion">7. Proposición de estabilidad emergente</h2>
             <div class="nota-cafe"><strong>Proposición:</strong> Bajo condiciones de configuración complementaria y un operador \(\mathcal{H}\) con decaimiento acotado, la trayectoria Γ(t) permanece dentro de una región acotada del espacio de fases para un conjunto amplio de condiciones iniciales y perturbaciones acotadas. Dicha región es una aproximación al atractor recurrente \(\mathcal{A}_\Gamma\).</div>
             <p><strong>Estado:</strong> Hipótesis de trabajo en evaluación mediante simulaciones numéricas asociadas a los casos de estudio Pelton y marcha humana. La demostración formal permanece en desarrollo dentro de McDee‑11.</p>
 
-            <!-- 8. CLASIFICACIÓN -->
+            <!-- 8. CLASIFICACIÓN DE CONCEPTOS (MAPA DE NAVEGACIÓN SEMÁNTICA) -->
             <h2 id="clasificacion">8. Clasificación de conceptos</h2>
-            <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Concepto</th><th>Tipo</th><th>Referencia</th></tr></thead><tbody>
-                <tr><td>Control PID clásico</td><td>Establecido</td><td><a href="#ref-pid">[Åström & Murray, 2021]</a></td></tr>
-                <tr><td>Transformada de Fourier</td><td>Establecido</td><td><a href="#ref-fourier">[Oppenheim & Schafer, 2010]</a></td></tr>
-                <tr><td>Sistemas dinámicos / atractores</td><td>Establecido</td><td><a href="#ref-strogatz">[Strogatz, 2015]</a>, <a href="#ref-lorenz">[Lorenz, 1963]</a></td></tr>
-                <tr><td>Marco Adaptativo α–β–γ</td><td>Desarrollo propio</td><td>§1</td></tr>
-                <tr><td>UMEAD (doble par complementario)</td><td>Desarrollo propio</td><td>§2</td></tr>
-                <tr><td>Principio de autosimilitud funcional</td><td>Desarrollo propio</td><td>§6</td></tr>
-                <tr><td>Δμ – Memoria recursiva</td><td>Desarrollo propio</td><td>§3 → McDee-11</td></tr>
-                <tr><td>𝒜Γ – Atractor recurrente</td><td>Desarrollo propio</td><td>§5 → McDee-11</td></tr>
-                <tr><td>Coherencia funcional</td><td>Desarrollo propio</td><td>§5</td></tr>
-            </tbody></table></div>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead>
+                        <tr><th>Concepto</th><th>Tipo</th><th>Nodo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Control PID clásico</td>
+                            <td>Establecido</td>
+                            <td><a href="#ref-pid">Åström & Murray (2021)</a></td>
+                        </tr>
+                        <tr>
+                            <td>Transformada de Fourier</td>
+                            <td>Establecido</td>
+                            <td><a href="#ref-fourier">Oppenheim & Schafer (2010)</a></td>
+                        </tr>
+                        <tr>
+                            <td>Sistemas dinámicos / atractores</td>
+                            <td>Establecido</td>
+                            <td><a href="#ref-strogatz">Strogatz (2015)</a> · <a href="#ref-lorenz">Lorenz (1963)</a></td>
+                        </tr>
+                        <tr>
+                            <td>Marco Adaptativo α–β–γ</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#marco">PIDCA‑MT §1</a></td>
+                        </tr>
+                        <tr>
+                            <td>UMEAD (doble par complementario)</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#umead">PIDCA‑MT §2</a></td>
+                        </tr>
+                        <tr>
+                            <td>Principio de autosimilitud funcional</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#autosimilitud">PIDCA‑MT §6</a></td>
+                        </tr>
+                        <tr>
+                            <td>Δμ – Memoria recursiva</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#delta-miu">PIDCA‑MT §3</a> → <a href="../fundamentos/McDee11-NFC.html#memoria-delta-miu">McDee‑11 §4</a></td>
+                        </tr>
+                        <tr>
+                            <td>𝒜Γ – Atractor recurrente</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#atractor">PIDCA‑MT §5</a> → <a href="../fundamentos/McDee11-NFC.html">McDee‑11</a></td>
+                        </tr>
+                        <tr>
+                            <td>Coherencia funcional</td>
+                            <td>Desarrollo propio</td>
+                            <td><a href="#coherencia">PIDCA‑MT §5.1</a> → <a href="../fundamentos/McDee11-NFC.html#coherencia">McDee‑11 §6</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="doc-note" style="margin-top:0.5rem;">
+                <strong>🔗 Tipos de enlaces en la columna «Nodo»:</strong><br>
+                • <strong>Anclas internas</strong> (<code>§1, §2, §5.1…</code>) → navegan dentro de este mismo documento.<br>
+                • <strong>Documentos del proyecto</strong> (<code>McDee‑11, Marcha humana…</code>) → enlazan a otras páginas del ecosistema newrostair11.<br>
+                • <strong>Referencias externas</strong> (<code>Åström & Murray, Strogatz…</code>) → enlazan a las tarjetas bibliográficas de la sección 9.2.
+            </p>
 
-            <!-- 9. DOCUMENTOS RELACIONADOS Y REFERENCIAS -->
             <h2 id="referencias">9. Documentos relacionados y referencias bibliográficas</h2>
             <h3>9.1 Documentos internos</h3>
             <div class="reference-grid">
@@ -413,9 +463,11 @@
             </div>
             <p class="doc-note">Las referencias bibliográficas externas se proporcionan como marco de referencia para los conceptos establecidos mencionados en este documento. El formalismo UMEAD es un desarrollo propio; las referencias a Mandelbrot, Maturana-Varela, Dirac y neurociencia indican convergencia conceptual, no equivalencia formal.</p>
 
-            <p class="doc-note" style="border-left-color:#005a9c;"><strong>📌 Cierre epistemológico.</strong> PIDCA-UMEAD constituye una arquitectura conceptual y funcional en proceso de formalización matemática dentro de McDee-11. Las implementaciones específicas y las demostraciones asociadas se desarrollan en los documentos especializados correspondientes.</p>
+            <p class="doc-note" style="border-left-color:#005a9c;"><strong>📌 Nota Final:</strong> La Arquitectura PIDCA constituye un
+                desarrollo conceptual y funcional en proceso de formalización matemática junto con el modelo matemático McDee-11. 
+                Las implementaciones específicas y las demostraciones asociadas se desarrollan en los documentos asociados correspondientes.</p>
 
-            <div class="firma"><p><strong>newrostair11 – Fundamentos Adaptativos de PIDCA</strong><br>Identificador: PIDCA-FA-v2.8<br>Documento normativo. Las demostraciones formales se desarrollan en McDee-11.<br><strong>Última revisión documental: 2026</strong></p></div>
+            <div class="firma"><p><strong>newrostair11 – Marco Teórico de la Arquitectura PIDCA</strong><br>Identificador: PIDCA‑MT‑v2.8<br>Documento normativo. Las demostraciones formales se desarrollan en McDee-11.<br><strong>Última revisión documental: 2026</strong></p></div>
         </main>
 
         <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
@@ -430,6 +482,7 @@
                 <li><a href="#delta-miu">🌀 3. Δμ</a></li>
                 <li><a href="#trayectoria">📈 4. Γ(t)</a></li>
                 <li><a href="#atractor">🌌 5. 𝒜Γ</a></li>
+                <li><a href="#coherencia">⚖️ 5.1 Coherencia</a></li>
                 <li><a href="#autosimilitud">🪞 6. Autosimilitud</a></li>
                 <li><a href="#proposicion">✨ 7. Proposición</a></li>
                 <li><a href="#clasificacion">📋 8. Clasificación</a></li>
@@ -491,6 +544,7 @@
                 <li><a href="#delta-miu">🌀 3. Δμ</a></li>
                 <li><a href="#trayectoria">📈 4. Γ(t)</a></li>
                 <li><a href="#atractor">🌌 5. 𝒜Γ</a></li>
+                <li><a href="#coherencia">⚖️ 5.1 Coherencia</a></li>
                 <li><a href="#autosimilitud">🪞 6. Autosimilitud</a></li>
                 <li><a href="#proposicion">✨ 7. Proposición</a></li>
                 <li><a href="#clasificacion">📋 8. Clasificación</a></li>
@@ -550,7 +604,7 @@
                 'tema7': '7. Proposición de estabilidad', 'tema8': '8. Clasificación de conceptos', 'tema9': '9. Documentos y referencias'
             };
 
-            function getIntroText() { const lead = document.getElementById('docLead'); return lead ? lead.innerText.trim() : 'Documento Fundamentos Adaptativos de PIDCA.'; }
+            function getIntroText() { const lead = document.getElementById('docLead'); return lead ? lead.innerText.trim() : 'Documento Marco Teórico de la Arquitectura PIDCA.'; }
             function getThemeText(sectionId) { const el = document.getElementById(sectionId); if (!el) return ''; let text = el.innerText.trim() + '. '; let sibling = el.nextElementSibling; while (sibling && sibling.tagName !== 'H2') { if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null) text += sibling.innerText.trim() + ' '; sibling = sibling.nextElementSibling; } return text.trim(); }
             function getFullText() { return mainContent.innerText.trim(); }
             function highlightSidebarLink(sectionId) { if (highlightedLink) highlightedLink.classList.remove('current-page'); const link = document.querySelector(`#sidebarRightLinks a[href="#${sectionId}"]`); if (link) { link.classList.add('current-page'); highlightedLink = link; } }
