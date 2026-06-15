@@ -9,7 +9,7 @@
         /* ===== PLANTILLA UNIFICADA ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
-        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:160px; word-wrap:break-word; overflow-wrap:break-word; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:180px; word-wrap:break-word; overflow-wrap:break-word; }
 
         .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
         .content,.sidebar-left,.sidebar-right { min-width:0; }
@@ -19,6 +19,7 @@
         .sidebar-left>* { direction:ltr; }
         .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
         h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+        h3 { font-size:1.1rem; color:#1e4a6b; margin-top:1.5rem; margin-bottom:0.8rem; }
 
         .tree { list-style:none; margin:0; padding-left:0; }
         .tree li { margin-bottom:0.3rem; position:relative; }
@@ -87,16 +88,65 @@
         .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
         .menu-desplegable.visible { display:block; }
 
-        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:20px; padding:0.4rem 0.8rem; display:grid; grid-template-columns:auto auto; grid-template-rows:auto auto; gap:0.3rem 0.6rem; justify-content:center; align-items:center; box-shadow:0 10px 28px rgba(0,0,0,0.13),0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; }
-        .voice-floating-bar .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:70px; justify-content:center; flex-shrink:0; }
+        /* ===== BARRA DE VOZ PROFESIONAL ===== */
+        .voice-floating-bar {
+            position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+            z-index:1100;
+            background:rgba(255,255,255,0.97); backdrop-filter:blur(12px);
+            border-radius:24px; padding:0.6rem 1rem;
+            display:grid;
+            grid-template-columns:auto auto auto auto;
+            grid-template-rows:auto auto;
+            gap:0.4rem 0.6rem;
+            justify-content:center; align-items:center;
+            box-shadow:0 12px 32px rgba(0,0,0,0.15), 0 0 0 1px rgba(30,74,107,0.25);
+            max-width:95vw;
+            border:1px solid #cbd5e1;
+        }
+        .voice-floating-bar .voice-btn {
+            background:#ffffff; border:1px solid #b9c8dd; border-radius:40px;
+            padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem;
+            color:#1e4a6b; cursor:pointer;
+            display:flex; align-items:center; gap:0.3rem;
+            transition:all 0.25s ease; min-width:70px;
+            justify-content:center; flex-shrink:0;
+        }
         .voice-floating-bar .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
         .voice-floating-bar .voice-btn:disabled { opacity:0.4; pointer-events:none; }
         .voice-floating-bar .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
-        .voice-floating-bar .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; grid-column:1 / -1; justify-content:center; }
+        .voice-floating-bar .voice-btn.play-btn:hover { background:#163d5c; }
+        .voice-progress-container {
+            grid-column:1 / -1; display:flex; align-items:center; gap:0.5rem;
+            width:100%;
+        }
+        .voice-progress-bar {
+            flex:1; height:6px; background:#e2e8f0; border-radius:6px; overflow:hidden;
+        }
+        .voice-progress-fill {
+            height:100%; width:0%; background:linear-gradient(90deg, #1e4a6b, #3e92cc);
+            transition:width 0.3s ease; border-radius:6px;
+        }
+        .voice-progress-text {
+            font-size:0.7rem; color:#2c5a7a; min-width:40px; text-align:right;
+        }
+        .voice-floating-bar .voice-status {
+            font-size:0.75rem; color:#2c5a7a; font-style:italic;
+            display:flex; align-items:center; gap:0.3rem;
+            flex-shrink:1; min-width:0;
+            grid-column:1 / -1; justify-content:center;
+        }
         .voice-floating-bar .voice-status::before { content:"🔊"; font-style:normal; }
-        .voice-floating-bar .voice-select,.voice-floating-bar .voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; }
-        .voice-floating-bar .voice-select { max-width:150px; }
-        .voice-floating-bar .voice-scope-select { max-width:130px; }
+        .voice-floating-bar .voice-select,
+        .voice-floating-bar .voice-scope-select,
+        .voice-floating-bar .voice-speed-select {
+            background:#ffffff; border:1px solid #b9c8dd; border-radius:30px;
+            padding:0.35rem 0.6rem; font-family:'Georgia',serif;
+            font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none;
+            flex-shrink:0;
+        }
+        .voice-floating-bar .voice-select { max-width:140px; }
+        .voice-floating-bar .voice-scope-select { max-width:180px; }
+        .voice-floating-bar .voice-speed-select { max-width:80px; }
 
         .back-button { display:block; text-align:center; margin-bottom:1rem; }
         .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.85rem; transition:background 0.2s,border-color 0.2s; }
@@ -104,6 +154,8 @@
 
         img { max-width:100%; height:auto; }
         .menu-desplegable img { width:120px; max-width:100%; }
+
+        .highlight-reading { background-color:#fff3cd !important; border-left:4px solid #e09d6f !important; font-weight:bold !important; }
 
         @media (max-width:1000px) { .main-grid { grid-template-columns:1fr; } .sidebar-left,.sidebar-right { display:none; } .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; } .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); } }
         @media (max-width:700px) { .content { padding:1.2rem; } .formula { font-size:1rem; padding:0.8rem; } }
@@ -116,22 +168,29 @@
             .header-text-block p { font-size:0.75rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
             .accesibilidad-header-text { font-size:0.65rem; }
             .header-imagen { padding:0.5rem 0.3rem; }
-            body { padding-bottom:100px; }
+            body { padding-bottom:140px; }
             .menu-flotante-left,.menu-flotante-right { bottom:80px; }
             .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
             .indice-tarjetas { grid-template-columns:1fr 1fr; }
             .bibliografia-tarjetas { grid-template-columns:1fr; }
-            .voice-floating-bar { bottom:0; left:0; right:0; transform:none; width:100%; max-width:100%; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:auto auto; gap:4px; padding:6px; border-radius:12px 12px 0 0; box-sizing:border-box; overflow:hidden; justify-content:center; align-items:center; }
-            .voice-floating-bar .voice-btn { font-size:0.65rem; padding:6px; min-width:0; flex-shrink:1; }
-            .voice-floating-bar .voice-select,.voice-floating-bar .voice-scope-select { font-size:0.65rem; padding:4px; max-width:100%; min-width:0; width:100%; box-sizing:border-box; }
-            .voice-floating-bar .voice-status { font-size:0.6rem; grid-column:1 / -1; text-align:center; margin-top:2px; }
+            .voice-floating-bar {
+                bottom:0; left:0; right:0; transform:none; width:100%; max-width:100%;
+                grid-template-columns:1fr 1fr 1fr; gap:4px; padding:6px;
+                border-radius:16px 16px 0 0;
+            }
+            .voice-floating-bar .voice-btn { font-size:0.65rem; padding:4px 6px; min-width:0; }
+            .voice-floating-bar .voice-select,
+            .voice-floating-bar .voice-scope-select,
+            .voice-floating-bar .voice-speed-select { font-size:0.6rem; padding:4px; max-width:100%; width:100%; }
+            .voice-floating-bar .voice-status { font-size:0.6rem; grid-column:1 / -1; }
+            .voice-progress-container { grid-column:1 / -1; }
         }
     </style>
 </head>
 <body id="top">
 
     <div class="voice-floating-bar" id="voiceFloatingBar">
-        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="playPauseBtn" class="voice-btn play-btn"><span id="playPauseIcon">▶</span> <span id="playPauseLabel">Escuchar</span></button>
         <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
         <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
             <option value="fem_es">Femenina (España)</option>
@@ -139,11 +198,30 @@
             <option value="masc_es">Masculina (España)</option>
             <option value="masc_lat">Masculina (Latina)</option>
         </select>
-        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
-            <option value="intro">📖 Introducción</option>
-            <option value="temas">📑 Por temas</option>
-            <option value="completo">📄 Completo</option>
+        <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
+            <option value="0.7">0.7x</option>
+            <option value="0.85">0.85x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.2">1.2x</option>
+            <option value="1.5">1.5x</option>
         </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
+            <option value="intro">📖 Introducción</option>
+            <option value="tema1">🔺 1. Marco α–β–γ</option>
+            <option value="tema2">🧬 2. UMEAD</option>
+            <option value="tema3">🌀 3. Δμ – Memoria recursiva</option>
+            <option value="tema4">📈 4. Γ(t) – Estado y trayectoria</option>
+            <option value="tema5">🌌 5. 𝒜Γ – Atractor recurrente</option>
+            <option value="tema6">🪞 6. Autosimilitud funcional</option>
+            <option value="tema7">✨ 7. Proposición de estabilidad</option>
+            <option value="tema8">📋 8. Clasificación de conceptos</option>
+            <option value="tema9">📚 9. Documentos y referencias</option>
+            <option value="completo">📄 Documento completo</option>
+        </select>
+        <div class="voice-progress-container">
+            <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
+            <span class="voice-progress-text" id="voiceProgressText">0%</span>
+        </div>
         <div class="voice-status" id="voiceStatus">Listo</div>
     </div>
 
@@ -170,10 +248,18 @@
                         <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
                         <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">🌱Origen, ▶️Misión y 🎥Visión</a></div><ul class="submenu"></ul></li>
                         <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📜​Fundamentos y 📝Marco Teórico</a></div>
-                            <ul class="submenu"><li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
                         </li>
                         <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">🔎I+D y 📋Modelos de Negocio</a></div>
-                            <ul class="submenu"><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li></ul>
+                            <ul class="submenu">
+                                <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
                         </li>
                         <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link">📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
                         <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEXIBILIDAD ESTRUCTURADA</div>
@@ -195,25 +281,23 @@
 
         <main class="content" id="mainContent">
             <h1 style="font-size:1.8rem; border-bottom:2px solid #005a9c; padding-bottom:0.2rem;">Fundamentos Adaptativos de la Arquitectura PIDCA</h1>
-            <p class="doc-lead" id="docLead"><strong>Identificador:</strong> PIDCA-FA-v2.6<br>Este documento describe la estructura generadora del sistema: <strong>Marco Adaptativo α–β–γ</strong> y <strong>UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico)</strong>, que contiene dos pares complementarios (α↔β y el ciclo de fases) y se manifiesta en múltiples escalas. A partir de ella se definen la memoria recursiva Δμ, la trayectoria Γ(t) y el atractor recurrente 𝒜Γ. Se incorpora el <strong>Principio de autosimilitud funcional</strong> como fundamento de la reinstanciación multiescala. Las referencias a Mandelbrot, Dirac y atractores cumplen funciones de <strong>andamiaje conceptual</strong>.<br>Es el puente entre el <a href="../documento-principal.html">documento conceptual PIDCA</a> y los desarrollos formales de <a href="../fundamentos/McDee11-NFC.html">McDee-11</a>.</p>
-
+            <p class="doc-lead" id="docLead"><strong>Identificador:</strong> PIDCA-FA-v2.8<br>Este documento describe la estructura generadora del sistema: <strong>Marco Adaptativo α–β–γ</strong> y <strong>UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico)</strong>, que contiene dos pares complementarios (α↔β y el ciclo de fases) y se manifiesta en múltiples escalas. A partir de ella se definen la memoria recursiva Δμ, la trayectoria Γ(t) y el atractor recurrente 𝒜Γ. Se incorpora el <strong>Principio de autosimilitud funcional</strong> como fundamento de la reinstanciación multiescala. Las referencias a Mandelbrot, Dirac y atractores cumplen funciones de <strong>andamiaje conceptual</strong>.
+                
+            <!-- ===== ÍNDICE DE 9 TEMAS ===== -->
             <h2 id="indice">0. Índice de contenidos</h2>
             <div class="indice-tarjetas">
-                <a href="#marco" class="tarjeta-indice"><span class="emoji">🔺</span> Marco α–β–γ</a>
-                <a href="#umead" class="tarjeta-indice"><span class="emoji">🧬</span> UMEAD</a>
-                <a href="#delta-miu" class="tarjeta-indice"><span class="emoji">🌀</span> Δμ – Memoria recursiva</a>
-                <a href="#trayectoria" class="tarjeta-indice"><span class="emoji">📈</span> Γ(t) – Estado y trayectoria</a>
-                <a href="#atractor" class="tarjeta-indice"><span class="emoji">🌌</span> 𝒜Γ – Atractor recurrente</a>
-                <a href="#andamiaje" class="tarjeta-indice"><span class="emoji">🏗️</span> Andamiaje conceptual</a>
-                <a href="#coherencia" class="tarjeta-indice"><span class="emoji">⚖️</span> Coherencia funcional</a>
-                <a href="#gobierno" class="tarjeta-indice"><span class="emoji">📐</span> Ecuación de gobierno</a>
-                <a href="#proposicion" class="tarjeta-indice"><span class="emoji">✨</span> Proposición de estabilidad</a>
-                <a href="#autosimilitud" class="tarjeta-indice"><span class="emoji">🪞</span> Autosimilitud funcional</a>
-                <a href="#clasificacion" class="tarjeta-indice"><span class="emoji">📋</span> Clasificación de conceptos</a>
-                <a href="#referencias" class="tarjeta-indice"><span class="emoji">📚</span> Documentos relacionados</a>
-                <a href="#bibliografia" class="tarjeta-indice"><span class="emoji">📖</span> Referencias bibliográficas</a>
+                <a href="#marco" class="tarjeta-indice"><span class="emoji">🔺</span> 1. Marco α–β–γ</a>
+                <a href="#umead" class="tarjeta-indice"><span class="emoji">🧬</span> 2. UMEAD</a>
+                <a href="#delta-miu" class="tarjeta-indice"><span class="emoji">🌀</span> 3. Δμ</a>
+                <a href="#trayectoria" class="tarjeta-indice"><span class="emoji">📈</span> 4. Γ(t)</a>
+                <a href="#atractor" class="tarjeta-indice"><span class="emoji">🌌</span> 5. 𝒜Γ</a>
+                <a href="#autosimilitud" class="tarjeta-indice"><span class="emoji">🪞</span> 6. Autosimilitud</a>
+                <a href="#proposicion" class="tarjeta-indice"><span class="emoji">✨</span> 7. Proposición</a>
+                <a href="#clasificacion" class="tarjeta-indice"><span class="emoji">📋</span> 8. Clasificación</a>
+                <a href="#referencias" class="tarjeta-indice"><span class="emoji">📚</span> 9. Referencias</a>
             </div>
 
+            <!-- 1. MARCO ADAPTATIVO α–β–γ -->
             <h2 id="marco">1. Marco Adaptativo α–β–γ</h2>
             <p>En cada escala de observación, los procesos adaptativos pueden describirse mediante tres roles funcionales complementarios. Estos roles constituyen un marco organizador para analizar dinámicas adaptativas en distintos dominios y escalas:</p>
             <ul>
@@ -229,10 +313,15 @@
             <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Rol funcional</th><th>Componente PID</th><th>Función análoga</th></tr></thead><tbody><tr><td>α (proporcionalidad)</td><td>Proporcional (P)</td><td>Respuesta inmediata</td></tr><tr><td>β (memoria integrativa)</td><td>Integral (I)</td><td>Acumulación histórica</td></tr><tr><td>γ (sensibilidad al cambio)</td><td>Derivativa (D)</td><td>Anticipación, reconfiguración</td></tr></tbody></table></div>
             <div class="doc-note"><strong>📌 Nota sobre la relación con el PID:</strong> El marco adaptativo α–β–γ no redefine el controlador PID clásico. Utiliza las nociones de proporcionalidad, integración y sensibilidad al cambio como un lenguaje organizador para describir procesos adaptativos en múltiples escalas y dominios. La analogía es estructural, no una equivalencia matemática exacta.</div>
 
+            <!-- 2. UMEAD (incluye ecuación de gobierno) -->
             <h2 id="umead">2. UMEAD: unidad de doble par complementario y recursividad multiescala</h2>
             <p>El verdadero protagonista de la UMEAD no son las variables aisladas (α, β, γ), sino la <strong>complementariedad</strong> entre perspectivas. La arquitectura se organiza mediante pares complementarios (α↔β, y el segundo par de fases) que permiten la recursividad y el cambio de escala.</p>
             <p>La UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico) no es una pieza de tamaño fijo, sino un <strong>patrón estructural y dinámico</strong> que se manifiesta al cambiar la escala de observación. En cada escala, la UMEAD organiza la adaptación mediante:</p>
-            <ul><li><strong>El marco adaptativo α–β–γ</strong> (proporcionalidad, memoria, sensibilidad al cambio).</li><li><strong>Dos pares complementarios</strong> que constituyen su topología:<ul><li><strong>Primer par: α ↔ β</strong> (dentro de cada procesador).</li><li><strong>Segundo par: fase de excitación-retracción ↔ fase de resonancia-consolidación</strong> (describe el ciclo adaptativo completo).</li></ul></li><li><strong>Cuatro fases dinámicas</strong>: Excitación (E), Retracción (R), Resonancia (Res), Consolidación (C).</li></ul>
+            <ul>
+                <li><strong>El marco adaptativo α–β–γ</strong> (proporcionalidad, memoria, sensibilidad al cambio).</li>
+                <li><strong>Dos pares complementarios</strong> que constituyen su topología:<ul><li><strong>Primer par: α ↔ β</strong> (dentro de cada procesador).</li><li><strong>Segundo par: fase de excitación-retracción ↔ fase de resonancia-consolidación</strong> (describe el ciclo adaptativo completo).</li></ul></li>
+                <li><strong>Cuatro fases dinámicas</strong>: Excitación (E), Retracción (R), Resonancia (Res), Consolidación (C).</li>
+            </ul>
             <p>Lo que caracteriza a una UMEAD es su topología relacional y su capacidad para completar un ciclo adaptativo. Esta propiedad de <strong>autosemejanza funcional</strong> permite describir tanto la adaptación de un sensor individual como la de una red completa de sensores, simplemente cambiando el foco de análisis. La misma estructura de dos pares complementarios reaparece al observar el sistema con diferente granularidad.</p>
 
             <div class="doc-note"><strong>✨ Principio de generación complementaria.</strong><br>Cuando una perspectiva complementaria no existe físicamente en el sistema observado, puede construirse mediante transformaciones funcionales aplicadas a variables existentes. La validez de una complementariedad no depende de la independencia física de sus componentes, sino de su capacidad para aportar información diferencial relevante para la dinámica adaptativa.<br><br>Formalmente, a partir de una entidad funcional \(X\) (por ejemplo, α, β, γ, Δμ, etc.), se puede generar una perspectiva complementaria \(X' = \Phi(X)\), donde \(\Phi\) es un operador como un retardo, un filtro, un promedio, un gradiente, una proyección, una inversión o cualquier transformación que preserve la relevancia informativa. De esta forma, el sistema no queda bloqueado ante la falta de una segunda fuente física; puede <strong>auto-generar la complementariedad</strong> necesaria para cerrar el ciclo adaptativo. Este principio convierte a la complementariedad en una propiedad <strong>generativa</strong>, no meramente descriptiva.</div>
@@ -241,50 +330,68 @@
 
             <div class="doc-note"><strong>📌 Recursividad multiescala (reinstanciación complementaria).</strong> Al cambiar la escala de análisis, cualquier variable, memoria, trayectoria o conjunto funcional emergente puede convertirse en la base de una nueva complementariedad adaptativa. Por ejemplo, pares como (γ₁,γ₂), (γ₁,γ₁′), (Δμ,Δμ′) o incluso conjuntos más complejos pueden actuar como nuevas perspectivas complementarias cuando la dinámica del sistema lo requiere. La recursividad del modelo no consiste en una jerarquía fija de niveles, sino en la capacidad de reinstanciar el patrón de complementariedad en cualquier escala de observación, <strong>ya sea a partir de variables existentes o mediante su transformación funcional</strong> (Principio de generación complementaria). Lo esencial no es la naturaleza de las variables involucradas, sino la emergencia de relaciones complementarias capaces de sostener un nuevo ciclo adaptativo.</div>
 
-            <div class="doc-note"><strong>🧩 Convergencias conceptuales</strong><br>La recursividad de la arquitectura UMEAD no se basa en una jerarquía rígida de niveles, sino en la reinstanciación de patrones complementarios en distintas escalas de observación. Esta propiedad mantiene una convergencia conceptual con el principio de <strong>autosimilitud funcional</strong> descrito por <a href="#ref-mandelbrot">Mandelbrot en geometría fractal</a>, aunque aplicada aquí a relaciones funcionales y no necesariamente a formas geométricas fractales estrictas.<br><br>Del mismo modo, la organización mediante pares complementarios mantiene afinidades metodológicas con la noción de <strong>organización relacional y acoplamiento estructural</strong> desarrollada por <a href="#ref-maturana-varela">Maturana y Varela</a>. En ambos casos, la estabilidad emerge de relaciones dinámicas entre componentes más que de elementos aislados.<br><br><strong>⚛️ Convergencia estructural con formalismos espinoriales (Dirac):</strong> La arquitectura PIDCA-UMEAD emplea perspectivas complementarias acopladas cuya dinámica conjunta determina el estado global del sistema. Esta organización presenta una convergencia estructural con los formalismos espinoriales, donde la evolución del estado no depende de una única variable escalar, sino de la interacción entre componentes relacionadas. Desde esta perspectiva, la descripción mínima de ciertos sistemas requiere al menos dos perspectivas complementarias acopladas para que emerja una dinámica coherente. En PIDCA-UMEAD, esta función la cumplen los pares complementarios que constituyen la UMEAD y cuya interacción da lugar a la memoria recursiva Δμ, la trayectoria Γ(t) y la coherencia funcional. La comparación se establece a nivel organizacional y no implica equivalencia física ni derivación matemática a partir de la ecuación de Dirac.<br><br>Estas referencias se incorporan como marcos conceptuales de apoyo y no implican equivalencia formal entre dichos modelos y la arquitectura UMEAD.</div>
+            <h3>2.1 Cierre del ciclo adaptativo y ecuación de gobierno</h3>
+            <p>La interacción de los pares complementarios se cierra mediante la ecuación de gobierno que determina la evolución del estado operativo:</p>
+            <div class="formula">\(\displaystyle P(t+1) = F\bigl(P(t),\ \Delta\mu(t),\ S(t)\bigr)\)</div>
+            <p>Donde \(P(t)\) es el estado operativo (conjunto de α,β,γ), \(\Delta\mu(t)\) la memoria recursiva y \(S(t)\) las señales externas. Esta ecuación resume el ciclo fundamental de la UMEAD.</p>
+            <div class="doc-note"><strong>Nota normativa:</strong> \(F\) puede adoptar distintas formas. Las realizaciones concretas se desarrollan en McDee-11 y en las aplicaciones (marcha humana, Pelton).</div>
 
-            <h2 id="autosimilitud">2.1 Principio de autosimilitud funcional</h2>
-            <div class="doc-note" style="border-left-color:#8b5cf6;"><strong>🪞 Principio de autosimilitud funcional</strong><br>La arquitectura UMEAD presenta autosimilitud funcional cuando las relaciones complementarias que organizan la adaptación en una escala de observación pueden reinstanciarse en otra escala conservando su papel adaptativo, aunque las variables específicas involucradas sean diferentes.<br><br>Esta propiedad no constituye una nueva forma de recursividad, sino una manifestación —en el dominio funcional— de una convergencia conceptual con el principio de autosimilitud descrito por Mandelbrot en el dominio geométrico.<br><br><strong>Precisión:</strong> La autosimilitud funcional se refiere a la preservación de relaciones adaptativas entre escalas y no necesariamente a la preservación de magnitudes, métricas o geometrías específicas. No se afirma equivalencia geométrica, sino convergencia estructural observable.<br><br><strong>En síntesis:</strong> <em>PIDCA-UMEAD no propone una nueva teoría de la recursión. Propone que la unidad autosimilar relevante para la adaptación es una relación funcional de complementariedad.</em><br><br>La secuencia lógica que organiza el modelo es: \[ \text{Complementariedad} \;\rightarrow\; \text{Autosimilitud} \;\rightarrow\; \text{Coherencia} \] donde la complementariedad genera la información diferencial, la autosimilitud explica la reinstanciación multiescala, y la coherencia funcional describe la estabilidad dinámica resultante.</div>
-
-            <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Formalismo de Dirac</th><th>Arquitectura PIDCA‑UMEAD</th></tr></thead><tbody><tr><td>Espinor \(\psi\)</td><td>Estado global \(\Gamma(t)\)</td></tr><tr><td>Componentes acopladas del espinor</td><td>Pares complementarios \((\alpha_1,\beta_1) \leftrightarrow (\alpha_2,\beta_2)\)</td></tr><tr><td>Evolución de \(\psi\)</td><td>Evolución de \(\Gamma(t)\)</td></tr><tr><td>Acoplamiento entre componentes</td><td>Interacción entre lazos complementarios</td></tr><tr><td>Corriente de probabilidad conservada</td><td>Coherencia funcional del sistema</td></tr><tr><td>Estructura mínima irreducible de dos componentes</td><td>UMEAD completa (frente a media UMEAD)</td></tr><tr><td>Simetrías del formalismo</td><td>Invariancias funcionales del modelo</td></tr><tr><td>Espacio de estados espinorial</td><td>Espacio de fases adaptativo</td></tr></tbody></table></div>
             <div class="formula">UMEAD = { α, β, γ, (α↔β), (excitación-retracción ↔ resonancia-consolidación) }</div>
+
             <div class="doc-note"><strong>🧬 Analogía estructural (bases nitrogenadas):</strong> Así como en el ADN los pares complementarios A-T y C-G constituyen la estructura estable, y en el ARN aparece el uracilo (U) como una base emergente que permite funciones dinámicas adicionales, en la UMEAD los pares complementarios (α↔β y el segundo par de fases) proporcionan la arquitectura base, mientras que <strong>γ cumple la función relacional de sensibilidad al cambio, ya sea como variable introducida directamente en el marco o como variable que emerge de la interacción entre los pares complementarios.</strong> La implementación matemática de γ puede variar según el dominio (derivada, discrepancia, correlación, etc.); lo esencial es su <strong>función relacional</strong>.</div>
             <div class="doc-note"><strong>🧠 Nota sobre convergencia conceptual con neurociencia de sistemas:</strong> La arquitectura de perspectivas complementarias y la emergencia de variables relacionales γ es consistente con enfoques contemporáneos que describen funciones cognitivas como propiedades emergentes de la interacción entre redes distribuidas (e.g., Teoría del Espacio de Trabajo Global, Principio de Energía Libre, Sincronización Neural). Esta convergencia sugiere que el formalismo UMEAD podría ser útil para modelar dinámicas de integración multiescala en sistemas biológicos, aunque su validación empírica queda abierta a futuros desarrollos.</div>
 
+            <!-- 3. Δμ -->
             <h2 id="delta-miu">3. Δμ – Memoria recursiva</h2>
             <div class="formula">\(\displaystyle \Delta\mu(t+1) = \mathcal{H}\bigl(\Delta\mu(t),\ \gamma_1(t),\ \gamma_2(t)\bigr)\)</div>
             <p>A partir de la UMEAD, se define <strong>Δμ</strong> como la representación interna que conserva, filtra y reorganiza la interacción temporal entre γ₁ y γ₂. El operador \(\mathcal{H}\) puede incluir integración, decaimiento o convolución. Δμ actúa como la β de una UMEAD cuando se observa el sistema desde una escala que integra la memoria colectiva. Formalización completa en <a href="../fundamentos/McDee11-NFC.html#memoria-delta-miu">McDee-11, §4</a>.</p>
 
+            <!-- 4. Γ(t) -->
             <h2 id="trayectoria">4. Γ(t) – Estado global y trayectoria</h2>
             <div class="formula">\(\displaystyle \Gamma(t) = \bigl( \alpha_1(t),\beta_1(t),\alpha_2(t),\beta_2(t),\Delta\mu(t), \dots \bigr)\)</div>
             <p><strong>Γ(t)</strong> es el vector de estado en el instante t. La <strong>trayectoria dinámica</strong> es la colección ordenada \(\{ \Gamma(t) : t \ge 0 \}\). El atractor recurrente asociado se denota por \(\mathcal{A}_\Gamma\).</p>
             <div class="doc-note">📌 Distinción: un estado es un punto en el espacio de fases; la trayectoria es la sucesión de estados. Esta separación evita ambigüedades.</div>
 
-            <h2 id="atractor">5. 𝒜Γ – Atractor de fase recurrente</h2>
+            <!-- 5. 𝒜Γ (incluye coherencia funcional) -->
+            <h2 id="atractor">5. 𝒜Γ – Atractor de fase recurrente y coherencia funcional</h2>
             <div class="formula">\(\displaystyle \mathcal{A}_\Gamma = \left\{ \Gamma \ \middle|\ \| \mathcal{F}(\Gamma, S) - \Gamma \| < \varepsilon \right\}\)</div>
             <p>𝒜Γ es la región del espacio de fases hacia la cual la trayectoria Γ(t) tiende a mantenerse confinada. Se caracteriza por la <strong>coherencia funcional</strong>. Puede evolucionar lentamente con Δμ, de ahí el calificativo de <em>recurrente</em>. La noción de atractor recurrente 𝒜Γ mantiene una afinidad conceptual con los atractores estudiados en teoría de sistemas dinámicos (punto fijo, ciclo límite, toro, atractores extraños como el de Lorenz), incorporando además la influencia de la memoria recursiva Δμ.</p>
             <div class="doc-note">📌 La expresión presentada es una condición de cuasi-invarianza local, no la definición topológica estándar. La demostración formal como atractor en sentido de conjuntos límite se desarrolla en McDee-11.</div>
 
-            <h2 id="andamiaje">5.1 Roles de andamiaje conceptual</h2>
-            <div class="doc-note" style="border-left-color:#10b981;"><strong>🏗️ Función de los referentes matemáticos externos</strong><br>Las referencias a Mandelbrot, Dirac y a la teoría de atractores dinámicos no se incorporan como demostraciones de la arquitectura PIDCA‑UMEAD, sino como <strong>andamiaje conceptual</strong>. Cada una cumple una función definida dentro del documento:<div class="doc-table-wrapper" style="margin-top:0.8rem;"><table class="doc-table"><thead><tr><th>Referente</th><th>Función de andamiaje</th><th>Dominio</th></tr></thead><tbody><tr><td><strong>Mandelbrot</strong></td><td>Proporciona lenguaje y antecedentes para la <em>autosimilitud entre escalas</em></td><td>Geometría fractal</td></tr><tr><td><strong>Dirac</strong></td><td>Proporciona lenguaje y antecedentes para la <em>complementariedad acoplada</em></td><td>Física matemática</td></tr><tr><td><strong>Atractores dinámicos</strong></td><td>Proporcionan lenguaje y antecedentes para la <em>estabilidad emergente</em></td><td>Sistemas dinámicos</td></tr></tbody></table></div><p style="margin-top:0.8rem;">En ningún caso se afirma derivación, equivalencia formal o demostración a partir de estos formalismos. Su presencia en el documento responde a la necesidad de <strong>situar</strong> la propuesta dentro de familias matemáticas reconocidas, ofreciendo un vocabulario compartido que hace inteligible el diseño de PIDCA‑UMEAD sin sustituir la formalización propia que corresponde a McDee‑11.</p></div>
+            <div class="nota-cafe"><strong>Coherencia funcional:</strong> Propiedad emergente mediante la cual las trayectorias permanecen dentro de una región operativamente viable sin converger a un punto fijo. Caracterización formal en <a href="../fundamentos/McDee11-NFC.html#coherencia">McDee-11 §6</a>.</div>
 
-            <h2 id="coherencia">6. Coherencia funcional</h2>
-            <div class="nota-cafe"><strong>Definición:</strong> Propiedad emergente mediante la cual las trayectorias permanecen dentro de una región operativamente viable sin converger a un punto fijo.</div>
-            <p>Caracterización formal en <a href="../fundamentos/McDee11-NFC.html#coherencia">McDee-11 §6</a>.</p>
+            <!-- 6. AUTOSIMILITUD FUNCIONAL (incluye andamiaje y tabla Dirac) -->
+            <h2 id="autosimilitud">6. Autosimilitud funcional y andamiaje conceptual</h2>
+            <div class="doc-note"><strong>🧩 Convergencias conceptuales</strong><br>La recursividad de la arquitectura UMEAD no se basa en una jerarquía rígida de niveles, sino en la reinstanciación de patrones complementarios en distintas escalas de observación. Esta propiedad mantiene una convergencia conceptual con el principio de <strong>autosimilitud funcional</strong> descrito por <a href="#ref-mandelbrot">Mandelbrot en geometría fractal</a>, aunque aplicada aquí a relaciones funcionales y no necesariamente a formas geométricas fractales estrictas.<br><br>Del mismo modo, la organización mediante pares complementarios mantiene afinidades metodológicas con la noción de <strong>organización relacional y acoplamiento estructural</strong> desarrollada por <a href="#ref-maturana-varela">Maturana y Varela</a>. En ambos casos, la estabilidad emerge de relaciones dinámicas entre componentes más que de elementos aislados.<br><br><strong>⚛️ Convergencia estructural con formalismos espinoriales (Dirac):</strong> La arquitectura PIDCA-UMEAD emplea perspectivas complementarias acopladas cuya dinámica conjunta determina el estado global del sistema. Esta organización presenta una convergencia estructural con los formalismos espinoriales, donde la evolución del estado no depende de una única variable escalar, sino de la interacción entre componentes relacionadas. Desde esta perspectiva, la descripción mínima de ciertos sistemas requiere al menos dos perspectivas complementarias acopladas para que emerja una dinámica coherente. En PIDCA-UMEAD, esta función la cumplen los pares complementarios que constituyen la UMEAD y cuya interacción da lugar a la memoria recursiva Δμ, la trayectoria Γ(t) y la coherencia funcional. La comparación se establece a nivel organizacional y no implica equivalencia física ni derivación matemática a partir de la ecuación de Dirac.<br><br>Estas referencias se incorporan como marcos conceptuales de apoyo y no implican equivalencia formal entre dichos modelos y la arquitectura UMEAD.</div>
 
-            <h2 id="gobierno">7. Ecuación de gobierno central</h2>
-            <div class="formula">\(\displaystyle P(t+1) = F\bigl(P(t),\ \Delta\mu(t),\ S(t)\bigr)\)</div>
-            <p>Donde \(P(t)\) es el estado operativo (conjunto de α,β,γ), \(\Delta\mu(t)\) la memoria recursiva y \(S(t)\) las señales externas. Esta ecuación resume el ciclo fundamental.</p>
-            <div class="doc-note"><strong>Nota normativa:</strong> \(F\) puede adoptar distintas formas. Las realizaciones concretas se desarrollan en McDee-11 y en las aplicaciones (marcha humana, Pelton).</div>
+            <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Formalismo de Dirac</th><th>Arquitectura PIDCA‑UMEAD</th></tr></thead><tbody><tr><td>Espinor \(\psi\)</td><td>Estado global \(\Gamma(t)\)</td></tr><tr><td>Componentes acopladas del espinor</td><td>Pares complementarios \((\alpha_1,\beta_1) \leftrightarrow (\alpha_2,\beta_2)\)</td></tr><tr><td>Evolución de \(\psi\)</td><td>Evolución de \(\Gamma(t)\)</td></tr><tr><td>Acoplamiento entre componentes</td><td>Interacción entre lazos complementarios</td></tr><tr><td>Corriente de probabilidad conservada</td><td>Coherencia funcional del sistema</td></tr><tr><td>Estructura mínima irreducible de dos componentes</td><td>UMEAD completa (frente a media UMEAD)</td></tr><tr><td>Simetrías del formalismo</td><td>Invariancias funcionales del modelo</td></tr><tr><td>Espacio de estados espinorial</td><td>Espacio de fases adaptativo</td></tr></tbody></table></div>
 
-            <h2 id="proposicion">8. Proposición de estabilidad emergente</h2>
+            <div class="doc-note" style="border-left-color:#8b5cf6;"><strong>🪞 Principio de autosimilitud funcional</strong><br>La arquitectura UMEAD presenta autosimilitud funcional cuando las relaciones complementarias que organizan la adaptación en una escala de observación pueden reinstanciarse en otra escala conservando su papel adaptativo, aunque las variables específicas involucradas sean diferentes.<br><br>Esta propiedad no constituye una nueva forma de recursividad, sino una manifestación —en el dominio funcional— de una convergencia conceptual con el principio de autosimilitud descrito por Mandelbrot en el dominio geométrico.<br><br><strong>Precisión:</strong> La autosimilitud funcional se refiere a la preservación de relaciones adaptativas entre escalas y no necesariamente a la preservación de magnitudes, métricas o geometrías específicas. No se afirma equivalencia geométrica, sino convergencia estructural observable.<br><br><strong>En síntesis:</strong> <em>PIDCA-UMEAD no propone una nueva teoría de la recursión. Propone que la unidad autosimilar relevante para la adaptación es una relación funcional de complementariedad.</em><br><br>La secuencia lógica que organiza el modelo es: \[ \text{Complementariedad} \;\rightarrow\; \text{Autosimilitud} \;\rightarrow\; \text{Coherencia} \] donde la complementariedad genera la información diferencial, la autosimilitud explica la reinstanciación multiescala, y la coherencia funcional describe la estabilidad dinámica resultante.</div>
+
+            <div class="doc-note" style="border-left-color:#10b981;"><strong>🏗️ Roles de andamiaje conceptual</strong><br>Las referencias a Mandelbrot, Dirac y a la teoría de atractores dinámicos no se incorporan como demostraciones de la arquitectura PIDCA‑UMEAD, sino como <strong>andamiaje conceptual</strong>. Cada una cumple una función definida dentro del documento:<div class="doc-table-wrapper" style="margin-top:0.8rem;"><table class="doc-table"><thead><tr><th>Referente</th><th>Función de andamiaje</th><th>Dominio</th></tr></thead><tbody><tr><td><strong>Mandelbrot</strong></td><td>Proporciona lenguaje y antecedentes para la <em>autosimilitud entre escalas</em></td><td>Geometría fractal</td></tr><tr><td><strong>Dirac</strong></td><td>Proporciona lenguaje y antecedentes para la <em>complementariedad acoplada</em></td><td>Física matemática</td></tr><tr><td><strong>Atractores dinámicos</strong></td><td>Proporcionan lenguaje y antecedentes para la <em>estabilidad emergente</em></td><td>Sistemas dinámicos</td></tr></tbody></table></div><p style="margin-top:0.8rem;">En ningún caso se afirma derivación, equivalencia formal o demostración a partir de estos formalismos. Su presencia en el documento responde a la necesidad de <strong>situar</strong> la propuesta dentro de familias matemáticas reconocidas, ofreciendo un vocabulario compartido que hace inteligible el diseño de PIDCA‑UMEAD sin sustituir la formalización propia que corresponde a McDee‑11.</p></div>
+
+            <!-- 7. PROPOSICIÓN -->
+            <h2 id="proposicion">7. Proposición de estabilidad emergente</h2>
             <div class="nota-cafe"><strong>Proposición:</strong> Bajo condiciones de configuración complementaria y un operador \(\mathcal{H}\) con decaimiento acotado, la trayectoria Γ(t) permanece dentro de una región acotada del espacio de fases para un conjunto amplio de condiciones iniciales y perturbaciones acotadas. Dicha región es una aproximación al atractor recurrente \(\mathcal{A}_\Gamma\).</div>
             <p><strong>Estado:</strong> Hipótesis de trabajo en evaluación mediante simulaciones numéricas asociadas a los casos de estudio Pelton y marcha humana. La demostración formal permanece en desarrollo dentro de McDee‑11.</p>
 
-            <h2 id="clasificacion">9. Clasificación de conceptos</h2>
-            <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Concepto</th><th>Tipo</th><th>Referencia</th></tr></thead><tbody><tr><td>Control PID clásico</td><td>Establecido</td><td><a href="#ref-pid">[Åström & Murray, 2021]</a></td></tr><tr><td>Transformada de Fourier</td><td>Establecido</td><td><a href="#ref-fourier">[Oppenheim & Schafer, 2010]</a></td></tr><tr><td>Sistemas dinámicos / atractores</td><td>Establecido</td><td><a href="#ref-strogatz">[Strogatz, 2015]</a>, <a href="#ref-lorenz">[Lorenz, 1963]</a></td></tr><tr><td>Marco Adaptativo α–β–γ</td><td>Desarrollo propio</td><td>§1</td></tr><tr><td>UMEAD (doble par complementario)</td><td>Desarrollo propio</td><td>§2</td></tr><tr><td>Principio de autosimilitud funcional</td><td>Desarrollo propio</td><td>§2.1</td></tr><tr><td>Δμ – Memoria recursiva</td><td>Desarrollo propio</td><td>§3 → McDee-11</td></tr><tr><td>𝒜Γ – Atractor recurrente</td><td>Desarrollo propio</td><td>§5 → McDee-11</td></tr><tr><td>Coherencia funcional</td><td>Desarrollo propio</td><td>§6</td></tr></tbody></table></div>
+            <!-- 8. CLASIFICACIÓN -->
+            <h2 id="clasificacion">8. Clasificación de conceptos</h2>
+            <div class="doc-table-wrapper"><table class="doc-table"><thead><tr><th>Concepto</th><th>Tipo</th><th>Referencia</th></tr></thead><tbody>
+                <tr><td>Control PID clásico</td><td>Establecido</td><td><a href="#ref-pid">[Åström & Murray, 2021]</a></td></tr>
+                <tr><td>Transformada de Fourier</td><td>Establecido</td><td><a href="#ref-fourier">[Oppenheim & Schafer, 2010]</a></td></tr>
+                <tr><td>Sistemas dinámicos / atractores</td><td>Establecido</td><td><a href="#ref-strogatz">[Strogatz, 2015]</a>, <a href="#ref-lorenz">[Lorenz, 1963]</a></td></tr>
+                <tr><td>Marco Adaptativo α–β–γ</td><td>Desarrollo propio</td><td>§1</td></tr>
+                <tr><td>UMEAD (doble par complementario)</td><td>Desarrollo propio</td><td>§2</td></tr>
+                <tr><td>Principio de autosimilitud funcional</td><td>Desarrollo propio</td><td>§6</td></tr>
+                <tr><td>Δμ – Memoria recursiva</td><td>Desarrollo propio</td><td>§3 → McDee-11</td></tr>
+                <tr><td>𝒜Γ – Atractor recurrente</td><td>Desarrollo propio</td><td>§5 → McDee-11</td></tr>
+                <tr><td>Coherencia funcional</td><td>Desarrollo propio</td><td>§5</td></tr>
+            </tbody></table></div>
 
-            <h2 id="referencias">10. Documentos relacionados</h2>
+            <!-- 9. DOCUMENTOS RELACIONADOS Y REFERENCIAS -->
+            <h2 id="referencias">9. Documentos relacionados y referencias bibliográficas</h2>
+            <h3>9.1 Documentos internos</h3>
             <div class="reference-grid">
                 <div class="reference-card"><h3>📄 Documento PIDCA</h3><p>Conceptual</p><a href="../documento-principal.html">Ir →</a></div>
                 <div class="reference-card"><h3>📐 McDee-11</h3><p>Formalización completa</p><a href="../fundamentos/McDee11-NFC.html">Ir →</a></div>
@@ -293,7 +400,7 @@
                 <div class="reference-card"><h3>📦 Archivo Histórico</h3><p>PI&FT y anteriores</p><a href="../archivo/PI&FT.html">Consultar</a></div>
             </div>
 
-            <h2 id="bibliografia">11. Referencias bibliográficas</h2>
+            <h3>9.2 Referencias bibliográficas externas</h3>
             <div class="bibliografia-tarjetas">
                 <div class="tarjeta-biblio" id="ref-pid"><h4>⚙️ Control PID</h4><p>Åström, K. J., &amp; Murray, R. M. (2021). <em>Feedback Systems: An Introduction for Scientists and Engineers</em> (2.ª ed.). Princeton University Press.</p><a href="#" class="ref-link">📚 Ver en biblioteca</a></div>
                 <div class="tarjeta-biblio" id="ref-fourier"><h4>🌊 Procesamiento de señales</h4><p>Oppenheim, A. V., &amp; Schafer, R. W. (2010). <em>Discrete-Time Signal Processing</em> (3.ª ed.). Pearson.</p><a href="#" class="ref-link">📚 Ver en biblioteca</a></div>
@@ -306,7 +413,9 @@
             </div>
             <p class="doc-note">Las referencias bibliográficas externas se proporcionan como marco de referencia para los conceptos establecidos mencionados en este documento. El formalismo UMEAD es un desarrollo propio; las referencias a Mandelbrot, Maturana-Varela, Dirac y neurociencia indican convergencia conceptual, no equivalencia formal.</p>
 
-            <div class="firma"><p><strong>newrostair11 – Fundamentos Adaptativos de PIDCA</strong><br>Identificador: PIDCA-FA-v2.6<br>Documento normativo. Las demostraciones formales se desarrollan en McDee-11.<br><strong>Última revisión documental: 2026</strong></p></div>
+            <p class="doc-note" style="border-left-color:#005a9c;"><strong>📌 Cierre epistemológico.</strong> PIDCA-UMEAD constituye una arquitectura conceptual y funcional en proceso de formalización matemática dentro de McDee-11. Las implementaciones específicas y las demostraciones asociadas se desarrollan en los documentos especializados correspondientes.</p>
+
+            <div class="firma"><p><strong>newrostair11 – Fundamentos Adaptativos de PIDCA</strong><br>Identificador: PIDCA-FA-v2.8<br>Documento normativo. Las demostraciones formales se desarrollan en McDee-11.<br><strong>Última revisión documental: 2026</strong></p></div>
         </main>
 
         <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
@@ -315,20 +424,16 @@
             <hr>
             <p style="font-weight:bold;color:#1e4a6b;margin:0 0 0.3rem 0;">📑 En esta página</p>
             <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;" id="sidebarRightLinks">
-                <li><a href="#indice">📇 Índice de contenidos</a></li>
-                <li><a href="#marco">🔺 Marco α–β–γ</a></li>
-                <li><a href="#umead">🧬 UMEAD</a></li>
-                <li><a href="#autosimilitud">🪞 Autosimilitud funcional</a></li>
-                <li><a href="#delta-miu">🌀 Δμ</a></li>
-                <li><a href="#trayectoria">📈 Γ(t)</a></li>
-                <li><a href="#atractor">🌌 𝒜Γ</a></li>
-                <li><a href="#andamiaje">🏗️ Andamiaje conceptual</a></li>
-                <li><a href="#coherencia">⚖️ Coherencia funcional</a></li>
-                <li><a href="#gobierno">📐 Ecuación de gobierno</a></li>
-                <li><a href="#proposicion">✨ Proposición</a></li>
-                <li><a href="#clasificacion">📋 Clasificación</a></li>
-                <li><a href="#referencias">📚 Documentos relacionados</a></li>
-                <li><a href="#bibliografia">📖 Referencias bibliográficas</a></li>
+                <li><a href="#indice">📇 Índice</a></li>
+                <li><a href="#marco">🔺 1. Marco α–β–γ</a></li>
+                <li><a href="#umead">🧬 2. UMEAD</a></li>
+                <li><a href="#delta-miu">🌀 3. Δμ</a></li>
+                <li><a href="#trayectoria">📈 4. Γ(t)</a></li>
+                <li><a href="#atractor">🌌 5. 𝒜Γ</a></li>
+                <li><a href="#autosimilitud">🪞 6. Autosimilitud</a></li>
+                <li><a href="#proposicion">✨ 7. Proposición</a></li>
+                <li><a href="#clasificacion">📋 8. Clasificación</a></li>
+                <li><a href="#referencias">📚 9. Referencias</a></li>
             </ul>
             <hr>
             <h2 style="font-size:.9rem;margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
@@ -338,13 +443,40 @@
         </aside>
     </div>
 
+    <!-- ===== MENÚS FLOTANTES CON MAPA COMPLETO DEL SITIO ===== -->
     <div class="menu-flotante-left">
         <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
             <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
-            <ul class="tree"><li class="folder open"><div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair11 (Inicio)</a></div><ul class="submenu"><li><a href="../PI&FT.html">📘 Índice PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li></ul></li></ul>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair11 (Inicio)</a></div>
+                    <ul class="submenu">
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">🌱Origen, ▶️Misión y 🎥Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📝Marco Teórico</a></div>
+                            <ul class="submenu"><li><a href="../PI&FT.html">📘 Índice PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">🔎I+D y 📋Modelos de Negocio</a></div>
+                            <ul class="submenu"><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../newrophome-11/index-np.html">📜 NewroPhome-11</a></li></ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link">📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEX. ESTRUCTURADA</div>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">🧑‍🏫Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos y herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">👋Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"><li><a href="../marco-conceptual/arqui-reg-dinam.html">⚙️ Arq. regulación</a></li><li><a href="../ensayo-evolucion/evol-intro.html">🌿 Evolución</a></li><li><a href="../06-Historia-Neuroplasticidad.html">📖 Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📝 Marco Teórico</a></div><ul class="submenu"><li><a href="../McDee11-NFC.html">📐 McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos</a></div><ul class="submenu"><li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../i+d/presentacion-mh-digiti.html">🚶‍♂️Marcha Humana</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚Bibliografía</a></div><ul class="submenu"><li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1</a></li><li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2</a></li><li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3</a></li><li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4</a></li><li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5</a></li><li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">📡 Multimedia</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="../galeria.html">🖼️ Galería</a></li></ul></li>
+            </ul>
         </div>
     </div>
+
     <div class="menu-flotante-right">
         <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
         <div class="menu-desplegable right" id="menuRight">
@@ -352,7 +484,18 @@
             <p style="font-size:0.8rem;text-align:center;">🔗 Escanea para compartir</p>
             <hr>
             <p style="font-weight:bold;color:#1e4a6b;">📑 En esta página</p>
-            <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;"><li><a href="#indice">📇 Índice</a></li><li><a href="#marco">🔺 Marco α–β–γ</a></li><li><a href="#umead">🧬 UMEAD</a></li><li><a href="#andamiaje">🏗️ Andamiaje</a></li></ul>
+            <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                <li><a href="#indice">📇 Índice</a></li>
+                <li><a href="#marco">🔺 1. Marco α–β–γ</a></li>
+                <li><a href="#umead">🧬 2. UMEAD</a></li>
+                <li><a href="#delta-miu">🌀 3. Δμ</a></li>
+                <li><a href="#trayectoria">📈 4. Γ(t)</a></li>
+                <li><a href="#atractor">🌌 5. 𝒜Γ</a></li>
+                <li><a href="#autosimilitud">🪞 6. Autosimilitud</a></li>
+                <li><a href="#proposicion">✨ 7. Proposición</a></li>
+                <li><a href="#clasificacion">📋 8. Clasificación</a></li>
+                <li><a href="#referencias">📚 9. Referencias</a></li>
+            </ul>
             <hr>
             <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
         </div>
@@ -394,23 +537,44 @@
             document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
 
             const synth = window.speechSynthesis;
-            const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), voiceStatus = document.getElementById('voiceStatus'), mainContent = document.getElementById('mainContent'), playPauseLabel = document.getElementById('playPauseLabel');
-            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null, currentThemeIndex = 0, themeTexts = [], highlightedLink = null;
+            const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), speedSelect = document.getElementById('speedSelect'), voiceStatus = document.getElementById('voiceStatus'), mainContent = document.getElementById('mainContent'), playPauseIcon = document.getElementById('playPauseIcon'), playPauseLabel = document.getElementById('playPauseLabel'), progressFill = document.getElementById('voiceProgressFill'), progressText = document.getElementById('voiceProgressText');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null, highlightedLink = null;
+
+            const themeMap = {
+                'tema1': 'marco', 'tema2': 'umead', 'tema3': 'delta-miu', 'tema4': 'trayectoria',
+                'tema5': 'atractor', 'tema6': 'autosimilitud', 'tema7': 'proposicion', 'tema8': 'clasificacion', 'tema9': 'referencias'
+            };
+            const themeTitles = {
+                'tema1': '1. Marco α–β–γ', 'tema2': '2. UMEAD', 'tema3': '3. Δμ – Memoria recursiva',
+                'tema4': '4. Γ(t) – Estado y trayectoria', 'tema5': '5. 𝒜Γ – Atractor recurrente', 'tema6': '6. Autosimilitud funcional',
+                'tema7': '7. Proposición de estabilidad', 'tema8': '8. Clasificación de conceptos', 'tema9': '9. Documentos y referencias'
+            };
 
             function getIntroText() { const lead = document.getElementById('docLead'); return lead ? lead.innerText.trim() : 'Documento Fundamentos Adaptativos de PIDCA.'; }
-            function getThemeTexts() { const themes = []; mainContent.querySelectorAll('h2').forEach(h2 => { let sectionText = h2.innerText.trim() + '. '; let sibling = h2.nextElementSibling; while (sibling && sibling.tagName !== 'H2') { if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null) sectionText += sibling.innerText.trim() + ' '; sibling = sibling.nextElementSibling; } themes.push({ id: h2.id, title: h2.innerText.trim(), text: sectionText.trim() }); }); return themes; }
+            function getThemeText(sectionId) { const el = document.getElementById(sectionId); if (!el) return ''; let text = el.innerText.trim() + '. '; let sibling = el.nextElementSibling; while (sibling && sibling.tagName !== 'H2') { if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null) text += sibling.innerText.trim() + ' '; sibling = sibling.nextElementSibling; } return text.trim(); }
             function getFullText() { return mainContent.innerText.trim(); }
             function highlightSidebarLink(sectionId) { if (highlightedLink) highlightedLink.classList.remove('current-page'); const link = document.querySelector(`#sidebarRightLinks a[href="#${sectionId}"]`); if (link) { link.classList.add('current-page'); highlightedLink = link; } }
-            function obtenerTextoActual() { switch (scopeSelect.value) { case 'intro': return getIntroText(); case 'temas': themeTexts = getThemeTexts(); currentThemeIndex = 0; if (themeTexts.length === 0) return getFullText(); voiceStatus.textContent = `Tema 1 de ${themeTexts.length}: ${themeTexts[0].title}`; highlightSidebarLink(themeTexts[0].id); return themeTexts[0].text; case 'completo': return getFullText(); default: return getIntroText(); } }
+            function obtenerTextoActual() {
+                const scope = scopeSelect.value;
+                if (scope === 'intro') return getIntroText();
+                if (scope === 'completo') return getFullText();
+                if (themeMap[scope]) {
+                    const sectionId = themeMap[scope];
+                    highlightSidebarLink(sectionId);
+                    voiceStatus.textContent = themeTitles[scope];
+                    return getThemeText(sectionId);
+                }
+                return getIntroText();
+            }
             function construirVoiceMap() { const voces = synth.getVoices(); if (!voces.length) return; const spanish = voces.filter(v => v.lang.startsWith('es')), fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer')), masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre')); voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc }; selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null; voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible'; }
             synth.onvoiceschanged = construirVoiceMap;
             voiceSelect.addEventListener('change', () => { if (voiceMap[voiceSelect.value]) { if (isSpeaking) synth.cancel(); selectedVoice = voiceMap[voiceSelect.value]; isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); } });
-            function actualizarInterfaz(estado) { if (estado === 'reproduciendo') { playPauseBtn.querySelector('span:first-child').textContent = '⏸️'; playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; playPauseBtn.classList.add('play-btn'); } else if (estado === 'pausado') { playPauseBtn.querySelector('span:first-child').textContent = '▶'; playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; playPauseBtn.classList.remove('play-btn'); } else { playPauseBtn.querySelector('span:first-child').textContent = '▶'; playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; playPauseBtn.classList.add('play-btn'); } }
-            function crearNuevaUtterance(texto, onEnd) { const u = new SpeechSynthesisUtterance(texto); if (selectedVoice) u.voice = selectedVoice; u.rate = 0.95; u.pitch = 1.0; u.volume = 1; u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); }; u.onend = () => { if (onEnd) onEnd(); }; u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Error'; }; u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); }; u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); }; return u; }
-            function iniciarLectura() { if (synth.speaking) synth.cancel(); if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz compatible'; return; } const texto = obtenerTextoActual(); utterance = crearNuevaUtterance(texto, () => { if (scopeSelect.value === 'temas' && currentThemeIndex < themeTexts.length - 1) { currentThemeIndex++; voiceStatus.textContent = `Tema ${currentThemeIndex + 1} de ${themeTexts.length}: ${themeTexts[currentThemeIndex].title}`; highlightSidebarLink(themeTexts[currentThemeIndex].id); utterance = crearNuevaUtterance(themeTexts[currentThemeIndex].text, () => { if (currentThemeIndex < themeTexts.length - 1) iniciarLectura(); else { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Lectura por temas finalizada'; } }); synth.speak(utterance); } else { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = scopeSelect.value === 'temas' ? 'Lectura por temas finalizada' : 'Listo'; } }); synth.speak(utterance); }
+            function actualizarInterfaz(estado) { if (estado === 'reproduciendo') { playPauseIcon.textContent = '⏸️'; playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; playPauseBtn.classList.add('play-btn'); } else if (estado === 'pausado') { playPauseIcon.textContent = '▶'; playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; playPauseBtn.classList.remove('play-btn'); } else { playPauseIcon.textContent = '▶'; playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; playPauseBtn.classList.add('play-btn'); progressFill.style.width = '0%'; progressText.textContent = '0%'; } }
+            function crearNuevaUtterance(texto, onEnd) { const u = new SpeechSynthesisUtterance(texto); if (selectedVoice) u.voice = selectedVoice; u.rate = parseFloat(speedSelect.value); u.pitch = 1.0; u.volume = 1; u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); }; u.onend = () => { if (onEnd) onEnd(); }; u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Error'; }; u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); }; u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); }; u.onboundary = (e) => { if (e.name === 'word' || e.name === 'sentence') { const charIndex = e.charIndex || 0; const totalLength = texto.length; const progress = Math.min(100, Math.round((charIndex / totalLength) * 100)); progressFill.style.width = progress + '%'; progressText.textContent = progress + '%'; } }; return u; }
+            function iniciarLectura() { if (synth.speaking) synth.cancel(); if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz compatible'; return; } const texto = obtenerTextoActual(); utterance = crearNuevaUtterance(texto, () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Listo'; progressFill.style.width = '100%'; progressText.textContent = '100%'; }); synth.speak(utterance); }
             playPauseBtn.addEventListener('click', () => { if (!isSpeaking && !isPaused) iniciarLectura(); else if (isSpeaking && !isPaused) synth.pause(); else if (isSpeaking && isPaused) synth.resume(); });
-            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel(); isSpeaking = false; isPaused = false; currentThemeIndex = 0; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Detenido'; if (highlightedLink) highlightedLink.classList.remove('current-page'); highlightedLink = null; });
-            scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; currentThemeIndex = 0; actualizarInterfaz('detenido'); } if (highlightedLink) highlightedLink.classList.remove('current-page'); highlightedLink = null; voiceStatus.textContent = scopeSelect.value === 'intro' ? 'Modo: Introducción' : scopeSelect.value === 'temas' ? 'Modo: Por temas' : 'Modo: Completo'; });
+            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Detenido'; if (highlightedLink) highlightedLink.classList.remove('current-page'); highlightedLink = null; });
+            scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); } if (highlightedLink) highlightedLink.classList.remove('current-page'); highlightedLink = null; });
             window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
             construirVoiceMap();
         })();
