@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth; max-width:100%; overflow-x:hidden;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitecturas de regulación dinámica · newrostair-11</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; max-width:100%; overflow-x:hidden; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; max-width:100%; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px 0 0 30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .module-toggle { cursor:pointer; background:#e6edf4; border:1px solid #cbdae6; border-left:none; border-radius:0 30px 30px 0; padding:0.5rem; font-size:0.8rem; color:#1e4a6b; display:flex; align-items:center; justify-content:center; transition:background 0.2s; min-width:2.4rem; user-select:none; }
+        .module-toggle:hover { background:#d4e0ea; }
+        .module-toggle::before { content:"▶"; display:block; transition:transform 0.2s; }
+        .folder.open>.module-row .module-toggle::before { transform:rotate(90deg); }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-size:3rem; font-weight:450; color:#FFFFF0; margin-bottom:0.3rem; }
+        .header-text-block p { font-size:1.1rem; color:#bbdfec; margin:0.2rem 0; }
+
+        .header-text-block .accesibilidad-header-text {
+            font-size: 1rem; color: #ffffff; margin-top: 0.8rem; line-height: 1.6;
+            border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.6rem; font-style: normal; opacity: 1;
+        }
+
+        .header-nav-quick { margin-top:0.8rem; display:flex; gap:15px; justify-content:center; align-items:center; }
+        .header-nav-quick a { color:rgba(255,245,235,0.8); text-decoration:none; font-size:0.8rem; text-transform:uppercase; border-bottom:1px solid transparent; display:flex; align-items:center; gap:4px; }
+        .header-nav-quick a:hover { color:white; border-color:#e09d6f; }
+        .header-nav-quick a img { height:18px; width:auto; display:block; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id], div[id], section.modulo { scroll-margin-top:100px; }
+
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; max-width:100%; width:100%; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        .voice-floating-bar { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); z-index:1100; background:rgba(240,244,248,0.96); backdrop-filter:blur(12px); border-radius:60px; padding:0.4rem 0.8rem; display:flex; align-items:center; gap:0.4rem; box-shadow:0 10px 28px rgba(0,0,0,0.13), 0 0 0 1px rgba(30,74,107,0.2); max-width:95vw; flex-wrap:wrap; white-space:normal; justify-content:center; }
+        .voice-btn { background:#ffffff; border:1px solid #b9c8dd; border-radius:40px; padding:0.4rem 1rem; font-family:'Georgia',serif; font-size:0.85rem; color:#1e4a6b; cursor:pointer; display:flex; align-items:center; gap:0.3rem; transition:all 0.25s ease; min-width:0; justify-content:center; flex-shrink:0; }
+        .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-status { font-size:0.75rem; color:#2c5a7a; font-style:italic; display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0; }
+        .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-select,.voice-scope-select { background:#ffffff; border:1px solid #b9c8dd; border-radius:30px; padding:0.35rem 0.6rem; font-family:'Georgia',serif; font-size:0.75rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0; min-width:0; }
+        .voice-select { max-width:150px; } .voice-scope-select { max-width:130px; }
+
+        .back-button { display:block; text-align:center; margin-bottom:1rem; }
+        .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.85rem; transition:background 0.2s, border-color 0.2s; }
+        .back-button a:hover { background:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+
+        /* ===== ESTILOS PROPIOS DEL DOCUMENTO ===== */
+        .manifiesto-content {
+            font-family: 'Georgia', 'Times New Roman', serif; color: #1e2a3a; line-height: 1.7;
+            overflow-wrap: break-word; word-break: break-word;
+        }
+        .manifiesto-content h2 { font-size: 1.9rem; color: #1e4a6b; border-left: 4px solid #e09d6f; padding-left: 1rem; margin: 2.2rem 0 0.8rem; border-bottom: none; }
+        .manifiesto-content h3 { font-size: 1.45rem; color: #3a4e5c; margin-top: 1.8rem; }
+        .manifiesto-content .lead { font-size: 1.25rem; color: #3e4f4f; margin-bottom: 2rem; }
+        .manifiesto-content blockquote { margin: 2rem 0; padding: 1.2rem 1.8rem; background: #faf8f5; border-left: 5px solid #e09d6f; font-style: italic; color: #4a4a44; border-radius: 0 6px 6px 0; font-size: 1.15rem; }
+        .manifiesto-content .projection-table { width: 100%; border-collapse: collapse; margin: 2rem 0; font-size: 0.95rem; table-layout: auto; }
+        .manifiesto-content .projection-table th { background: #f0ebe0; color: #1e4a6b; font-weight: 500; padding: 0.8rem 1rem; text-align: left; border-bottom: 2px solid #e09d6f; font-size: 1.1rem; }
+        .manifiesto-content .projection-table td { padding: 0.8rem 1rem; border-bottom: 1px solid #e9dccd; vertical-align: top; word-break: break-word; }
+        .manifiesto-content .projection-table tr:hover td { background: #fdfcf7; }
+        .manifiesto-content a { color: #1e4a6b; text-decoration: none; border-bottom: 1px dotted #e09d6f; transition: all 0.2s ease; }
+        .manifiesto-content a:hover { border-bottom-color: #1e4a6b; border-bottom-style: solid; }
+        .manifiesto-content .ficha { background: #fdfcf8; border: 1px solid #e9dccd; padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 6px; border-left: 3px solid #e09d6f; }
+        .manifiesto-content .ficha h4 { margin-top: 0; font-size: 1.2rem; color: #1a2f3f; }
+        .manifiesto-content .tag { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 8px; border-radius: 12px; background: transparent; border: 1px solid; font-style: normal; }
+        .tag-classic { color: #4a6d8c; border-color: #4a6d8c; }
+        .tag-reinterpreted { color: #b89b6b; border-color: #b89b6b; }
+        .tag-emergent { color: #8b6b4a; border-color: #8b6b4a; }
+        .manifiesto-content .references { font-size: 0.95rem; }
+        .manifiesto-content .references p { margin-bottom: 0.5rem; padding-left: 1.5em; text-indent: -1.5em; }
+        .btn-ficha { display: inline-block; background: #e6edf4; color: #1a4d6b; text-decoration: none; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 20px; border: 1px solid #cbdae6; font-size: 0.7rem; margin-left: 0.5rem; transition: all 0.2s; }
+        .btn-ficha:hover { background: #d4e0ea; border-color: #9eb4c8; color: #0a3146; }
+
+        /* ===== REGLAS GLOBALES ANTI-DESBORDAMIENTO ===== */
+        svg { max-width: 100%; height: auto; }
+        img { max-width: 100%; height: auto; }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); }
+        }
+        @media (max-width:700px) {
+            .content { padding:1.2rem; }
+            .formula { font-size:1rem; padding:0.8rem; }
+            .manifiesto-content h2 { font-size:1.5rem; }
+            .manifiesto-content h3 { font-size:1.25rem; }
+            .manifiesto-content blockquote { margin:1.5rem 0; padding:1rem 1.2rem; font-size:1rem; }
+            .projection-table { display:block; overflow-x:auto; white-space:normal; }
+            .projection-table td, .projection-table th { min-width:100px; }
+            .manifiesto-content .ficha { margin:1rem 0; padding:1rem; }
+        }
+        @media (max-width:600px) {
+            .header-container { flex-wrap:wrap !important; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:65px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.95rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.8rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
+            .header-nav-quick { margin-top:0.2rem; gap:6px; }
+            .header-nav-quick a { font-size:0.6rem; }
+            .header-nav-quick a img { height:12px; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:80px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 180px); }
+            .voice-floating-bar { bottom:10px; padding:0.3rem 0.5rem; gap:0.3rem; flex-wrap:wrap; white-space:normal; justify-content:center; }
+            .voice-btn { font-size:0.7rem; min-width:0; }
+            .voice-select,.voice-scope-select { font-size:0.65rem; max-width:100px; min-width:0; }
+            .voice-status { width:100%; text-align:center; }
+            .manifiesto-content h1 { font-size:1.8rem; }
+            .manifiesto-content h2 { font-size:1.4rem; }
+            .manifiesto-content h3 { font-size:1.1rem; }
+            .manifiesto-content .lead { font-size:1rem; }
+            .manifiesto-content blockquote { margin:1rem 0; padding:0.8rem 1rem; font-size:0.9rem; }
+            .manifiesto-content .references p { padding-left:1em; text-indent:-1em; }
+            .btn-ficha { margin-top:0.2rem; }
+            .content { padding:1rem; }
+            .projection-table { white-space:normal; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span>▶</span> <span id="playPauseLabel">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span>Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Ámbito de lectura">
+            <option value="intro">📖 Introducción</option>
+            <option value="completo">📄 Documento</option>
+            <option value="todo">📚 Todo</option>
+        </select>
+        <div class="voice-status" id="voiceStatus">Listo</div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="../index.html" class="logo-main"><img src="../img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio"></a>
+            <div class="header-text-block">
+                <h1>newrostair-11</h1>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    🧩 Este sitio web integra iconos semánticos como <strong>anclajes cognitivos</strong>.
+                    🧠 Con el fin de optimizar la experiencia de usuario de diversas neuroarquitecturas
+                    📖 y promover una lectura inclusiva mediante el refuerzo pictográfico de conceptos clave. 🌈
+                </p>
+                <nav class="header-nav-quick">
+                    <a href="https://www.youtube.com/results?search_query=andrustiven" title="Canal de YouTube"><img src="../img/youtube-icon.png" alt="YouTube" style="height:20px; vertical-align:middle;"></a>
+                    <a href="../index.html">NewroBraink-11</a>
+                    <a href="https://www.tiktok.com/@atresicoaureo"><img src="../img/tiktok-icon.jpg" alt="TikTok" style="height:20px; vertical-align:middle;"></a>
+                </nav>
+            </div>
+            <a href="../elipso/elipso.html" class="logo-main"><img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso"></a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button"><a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a></div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair-11 (Portal)</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar submenú del portal"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">01 · 🔎Origen, 🎯 Misión y 🔭 Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · 💡 Propiedad Intelectual y Fundamentos</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">03 · 🔎 I+D</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="../i+d.html">📋 Índice I+D</a></li>
+                                <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                                <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../04-modelo-de-negocio.html" class="module-link">04 · ➿ Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · 🎨 Arte y Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · 📖 Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · 🗣️ Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">08 · 📱 Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../docs/marco-conceptual.html" class="module-link current-page">🤝 Fundamentos y Conceptos</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="../pagina-en-desarrollo.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="../i+d/documento-a.html">📄 Caso observacional (Documento A)</a></li>
+                        <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                        <li><a href="../i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="../i+d.html">🎛️ Método DSP</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder">
+                    <div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca" id="biblio-toggle"></span></div>
+                    <ul class="submenu" id="biblio-submenu">
+                        <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Biología y Biosemiótica</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="galeria-folder">
+                    <div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span></div>
+                    <ul class="submenu" id="galeria-submenu"><li><a href="../galeria.html">🖼️ Ver galería completa</a></li></ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Fundamentos y Conceptos · Marco Conceptual</strong></p>
+        </aside>
+
+        <main class="content">
+            <div class="manifiesto-content">
+
+                <h1 style="font-size:2.5rem; color:#1a2f3f; border-bottom:1px solid #e9dccd; padding-bottom:0.5rem; margin-top:0;">Arquitecturas de regulación dinámica</h1>
+                <p style="font-size:1.25rem; color:#b89b6b; font-style:italic; margin-bottom:2.5rem;">Resumen del Marco Conceptual newrostair-11 sobre estructura y flexibilidad en sistemas adaptativos</p>
+
+                <blockquote>
+                    "La estabilidad no es la ausencia de cambio, sino un proceso adaptativo continuo.
+                    La permanencia no surge de eliminar el error, sino de integrarlo continuamente."
+                </blockquote>
+
+                <div style="background:#f9f7f2; padding:1.8rem 2rem; margin:2.5rem 0 3rem; border-radius:8px; border:1px solid #e9dccd;">
+                    <h3 style="margin-top:0; font-size:1.2rem; color:#1e4a6b; margin-bottom:1rem;">Índice</h3>
+                    <ol style="list-style:none; padding-left:0;">
+                        <li style="margin-bottom:0.5rem;"><a href="#resumen">1. Resumen / Abstract</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#filosofia">2. Estructura y Flexibilidad</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#marco">3. Síntesis Marco Teórico</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#nucleos">4. Núcleos conceptuales</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#proyecciones">5. Proyecciones del modelo</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#internet">6. Internet y Teoría de la Información</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#neurociencia">7. Neurociencia: hemisferios como par complementario</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#robotica">8. Proyección en robótica: arquitecturas duales</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#limitaciones">9. Limitaciones del modelo</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#conclusion">10. Conclusión</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#referencias">11. Referencias</a></li>
+                        <li style="margin-bottom:0.5rem;"><a href="#fichas">12. Fichas conceptuales y bibliográficas</a></li>
+                    </ol>
+                </div>
+
+                <section id="resumen">
+                    <h2>1. Resumen</h2>
+                    <p class="lead">
+                        Este documento presenta el modelo conceptual newrostair-11, que propone que la estabilidad duradera de los
+                        sistemas complejos —desde los átomos hasta el cosmos, pasando por el ADN, el cerebro, los ecosistemas,
+                        las sociedades, la tecnología y la robótica— no equivale a rigidez, sino a una integración continua y
+                        adaptativa del desfase. A partir de una homología funcional con los controladores PID, se articula el par
+                        complementario <strong>Estructura (UMEAD) ↔ Flexibilidad (PID)</strong>, que se replica fractalmente en
+                        todas las escalas, incluyendo la organización dual de los hemisferios cerebrales y su potencial para
+                        arquitecturas robóticas adaptativas.
+                    </p>
+                    <p><em>Palabras clave:</em> newrostair-11, UMEAD, PID, estructura y flexibilidad, estabilidad adaptativa,
+                        sistemas complejos, fractalidad, cibernética, neurociencia, lateralidad cruzada, robótica dual.</p>
+                    <p><strong>Abstract:</strong> This document presents the newrostair-11 conceptual model, proposing that the
+                        long‑term stability of complex systems —from atoms to the cosmos, through DNA, the brain, ecosystems,
+                        societies, technology and robotics— is not rigidity, but a continuous adaptive integration of phase
+                        shifts. Drawing on a functional homology with PID controllers, it articulates the complementary pair
+                        <strong>Structure (UMEAD) ↔ Flexibility (PID)</strong>, replicated fractally at all scales, including
+                        the dual organization of cerebral hemispheres and its potential for adaptive robotic architectures.</p>
+                </section>
+
+                <section id="filosofia">
+                    <h2>2. Estructura y Flexibilidad</h2>
+                    <p>
+                        Inspirada en los sistemas complejos y la geometría fractal de Mandelbrot, el modelo conceptual newrostair-11
+                        propone que todo sistema estable y adaptativo se sostiene sobre un <strong>equilibrio dinámico entre
+                        dos principios complementarios</strong>:
+                    </p>
+                    <p>
+                        <strong>🔵 Estructura (UMEAD):</strong> La UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico) es el
+                        "átomo funcional" del ecosistema newrostair-11. Inspirada en las cuatro bases nitrogenadas del ADN (A, T,
+                        G, C), proporciona el armazón mínimo de orden. Es la memoria, los pares complementarios (α↔β,
+                        excitación↔retracción, estructura↔flexibilidad), la discretización por umbrales de coherencia (±U), la
+                        condición topológica T²=-I del modelo McDee-11. La estructura <em>condensa</em> la historia del sistema y
+                        define su identidad.
+                    </p>
+                    <p>
+                        <strong>🟠 Flexibilidad (PID):</strong> El control proporcional-integral-derivativo proporciona la
+                        capacidad de respuesta inmediata (P), la corrección de sesgos históricos (I) y la anticipación de
+                        tendencias (D). La flexibilidad <em>procesa</em> el desfase en tiempo real y permite la adaptación.
+                    </p>
+                    <blockquote>
+                        "Ni la UMEAD es rígida ni el PID es caótico. Cada UMEAD contiene micro-ciclos PID internos; cada lazo PID
+                        se organiza dentro de una estructura UMEAD que le da coherencia. La <strong>fractalidad
+                        newrostair</strong> es la autosimilitud de este par en todas las escalas."
+                    </blockquote>
+
+                    <h3>2.1 El ADN como UMEAD primigenia</h3>
+                    <p>
+                        La inspiración fundacional de la UMEAD proviene del ADN, el sistema de almacenamiento y replicación de
+                        información más estable y adaptable que conocemos. Su arquitectura molecular se basa en <strong>cuatro
+                        bases nitrogenadas</strong> —Adenina (A), Timina (T), Guanina (G) y Citosina (C)— que forman
+                        <strong>dos pares complementarios</strong>: A ↔ T y G ↔ C. Esta estructura de doble par complementario es
+                        la fuente directa de la arquitectura de la UMEAD.
+                    </p>
+                    <p>
+                        En la UMEAD proponemos <strong>dos pares complementarios</strong> que organizan la dinámica adaptativa:
+                    </p>
+                    <p>
+                        <strong>Primer par (α ↔ β): Acoplamiento externo y memoria interna.</strong> α representa la entrada
+                        sensorial o perturbación externa. En el PID, α modula la componente proporcional (P). β representa la
+                        historia acumulada de compensaciones previas. En el PID, β modula la componente integral (I).
+                    </p>
+                    <p>
+                        <strong>Segundo par (excitación‑retracción ↔ resonancia‑consolidación): Ciclo adaptativo.</strong>
+                        La excitación‑retracción ocurre cuando el sistema recibe una perturbación y responde basándose en su
+                        memoria. La resonancia‑consolidación sucede cuando la perturbación es recurrente: el sistema aprende su
+                        ritmo y consolida un nuevo patrón. En el PID, esto corresponde al término derivativo (D).
+                    </p>
+                    <p>
+                        Los mecanismos de reparación del ADN ilustran esta dualidad: la reparación por escisión de bases es
+                        una respuesta inmediata (P); la reparación por recombinación homóloga usa la hebra complementaria como
+                        molde para restaurar secuencias dañadas, integrando la historia genética (I); y la recombinación
+                        meiótica genera variabilidad que anticipa futuros desafíos ambientales (D).
+                    </p>
+
+                    <div style="text-align:center; margin:2.5rem 0;">
+                        <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="width:100%; max-width:500px; height:auto;">
+                            <text x="250" y="25" text-anchor="middle" fill="#1e4a6b" font-family="Georgia, serif" font-size="1.2rem" font-style="italic">ADN ↔ UMEAD ↔ PID</text>
+                            <path d="M100,180 C160,100 240,60 320,100 C370,130 400,150 400,180" fill="none" stroke="#1e4a6b" stroke-width="2.5" opacity="0.8"/>
+                            <path d="M100,60 C160,140 240,180 320,140 C370,110 400,90 400,60" fill="none" stroke="#b89b6b" stroke-width="2.5" opacity="0.8"/>
+                            <line x1="155" y1="115" x2="155" y2="125" stroke="#b89b6b" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="210" y1="90" x2="210" y2="150" stroke="#b89b6b" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="265" y1="90" x2="265" y2="150" stroke="#b89b6b" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="320" y1="100" x2="320" y2="140" stroke="#b89b6b" stroke-width="1.5" opacity="0.6"/>
+                            <line x1="365" y1="115" x2="365" y2="125" stroke="#b89b6b" stroke-width="1.5" opacity="0.6"/>
+                            <circle cx="100" cy="180" r="6" fill="#1e4a6b"/>
+                            <circle cx="100" cy="60" r="6" fill="#b89b6b"/>
+                            <circle cx="400" cy="180" r="6" fill="#1e4a6b"/>
+                            <circle cx="400" cy="60" r="6" fill="#b89b6b"/>
+                            <text x="85" y="205" text-anchor="middle" fill="#1e4a6b" font-family="Georgia, serif" font-size="0.75rem">Estructura</text>
+                            <text x="415" y="50" text-anchor="middle" fill="#b89b6b" font-family="Georgia, serif" font-size="0.75rem">Flexibilidad</text>
+                            <text x="250" y="205" text-anchor="middle" fill="#b89b6b" font-family="Georgia, serif" font-size="0.75rem">Equilibrio</text>
+                        </svg>
+                        <p style="font-size:0.9rem; color:#7b8a8a; font-style:italic; margin-top:0.5rem;">Figura 1 · Doble hélice conceptual: ADN como UMEAD primigenia.</p>
+                    </div>
+                </section>
+
+                <section id="marco">
+                    <h2>3. Síntesis Marco Teórico</h2>
+                    <p>
+                        La física clásica describió la estabilidad como un reloj irreversible. La cibernética de primer orden
+                        aportó la realimentación como mecanismo corrector, pero seguía centrada en el equilibrio y en un
+                        observador externo. La cibernética de segundo orden (von Foerster, Maturana, Varela) nos enseñó que el
+                        observador forma parte del sistema y que la estabilidad se construye desde la autorregulación y la
+                        historia de interacciones. La termodinámica del no-equilibrio (Prigogine, Nicolis) mostró que el orden
+                        puede emerger y mantenerse gracias al flujo de energía y materia, no a pesar de él.
+                    </p>
+                    <p>
+                        Sobre estas bases, newrostair-11 incorpora el modelo McDee-11 como núcleo formal, con su condición
+                        topológica T²=-I, los coeficientes α-β-γ, la discretización por coherencia y el Hiperpiñón como
+                        engranaje continuo-discreto. La UMEAD es la unidad mínima que implementa esta arquitectura, y el PID es
+                        el mecanismo que le inyecta flexibilidad. El marco identifica un isomorfismo de control: una estructura
+                        matemática y funcional que la naturaleza redescubre en distintos sustratos.
+                    </p>
+                </section>
+
+                <section id="nucleos">
+                    <h2>4. Núcleos conceptuales del análisis</h2>
+                    <h3>4.1 La geometría como memoria recursiva</h3>
+                    <p>En los sistemas dinámicos complejos, el estado actual de una trayectoria no es solo una coordenada espacial; es una traza geométrica que condensa los desfases históricos acumulados por interacciones previas. La trayectoria <em>es</em> memoria recursiva del sistema. Cada punto contiene información holográfica del camino recorrido.</p>
+                    <h3>4.2 Alineación con la termodinámica del no-equilibrio</h3>
+                    <p>Definir la estabilidad como oscilación contenida e integración constante del desfase aparta el modelo de la física clásica reversible. La disipación no es imperfección, sino requisito para una estabilidad flexible. La estabilidad adaptativa se despliega en los límites de nuestra percepción escalar y de la complejidad que podemos modelar; el sistema planetario y el ADN lo evidencian a magnitudes muy distintas.</p>
+                    <h3>4.3 Modelado por homología funcional</h3>
+                    <p>No afirmamos que exista un circuito PID físico en cada sistema, sino que hay una coincidencia estructural profunda en la manera en que la naturaleza procesa la información dinámica. El modelo opera principalmente como una herramienta de lectura organizacional y no como una equivalencia ontológica estricta entre dominios físicos, biológicos y sociales.</p>
+                </section>
+
+                <section id="proyecciones">
+                    <h2>5. Proyecciones del modelo</h2>
+                    <p>El par Estructura (UMEAD) ↔ Flexibilidad (PID) se manifiesta en todas las escalas:</p>
+                    <div style="overflow-x:auto;">
+                        <table class="projection-table">
+                            <thead><tr><th>Dominio</th><th>Estructura (UMEAD)</th><th>Flexibilidad (PID)</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>ADN</strong></td><td>Pares base (A-T, G-C), código genético</td><td>Reparación (P), mutación y selección (I), recombinación (D)</td></tr>
+                                <tr><td><strong>Sistema planetario</strong></td><td>Órbitas, resonancias, excentricidad</td><td>Corrección inmediata, integración del desfase, amortiguación</td></tr>
+                                <tr><td><strong>Átomo</strong></td><td>Niveles de energía, principio de exclusión</td><td>Transiciones (P), fase cuántica (I), incertidumbre (D)*</td></tr>
+                                <tr><td><strong>Cognición</strong></td><td>Memoria procedimental, arquitectura neuronal</td><td>Reflejo (P), aprendizaje (I), expectativa (D)</td></tr>
+                                <tr><td><strong>Biología</strong></td><td>Homeostasis, circuitos neuroendocrinos</td><td>Alostasis: respuesta, corrección, anticipación</td></tr>
+                                <tr><td><strong>Ecosistema</strong></td><td>Biodiversidad, nichos, relaciones tróficas</td><td>Fluctuaciones (P), sucesión (I), evolución (D)</td></tr>
+                                <tr><td><strong>Sociedad y derecho</strong></td><td>Constituciones, jurisprudencia, códigos</td><td>Aplicación judicial (P), reformas (I), legislación prospectiva (D)</td></tr>
+                                <tr><td><strong>Internet</strong></td><td>Protocolos TCP/IP, DNS, estándares</td><td>Enrutamiento dinámico (P), machine learning (I), recomendación (D)</td></tr>
+                                <tr><td><strong>Neurociencia</strong></td><td>Hemisferios, lateralidad cruzada</td><td>Transferencia explícito/implícito, plasticidad (I), predicción (D)</td></tr>
+                                <tr><td><strong>Robótica dual</strong></td><td>Procesador determinista + probabilista</td><td>Control PID distribuido, aprendizaje por refuerzo, reconfiguración</td></tr>
+                            </tbody>
+                        </table>
+                        <p style="font-size:0.8rem; color:#7b8a8a; margin-top:0.5rem;">* Esta es la proyección más abstracta del modelo y debe tomarse como una exploración conceptual, no como una equivalencia física estricta.</p>
+                    </div>
+
+                    <h3>5.1 Sistema planetario</h3>
+                    <p>La mecánica celeste ofrece uno de los ejemplos más elegantes. Las órbitas son la <strong>Estructura (UMEAD)</strong>: excentricidad, inclinación y resonancias que condensan la historia gravitatoria. La <strong>Flexibilidad (PID)</strong> se manifiesta en la respuesta inmediata a perturbaciones (P), la integración del desfase en la geometría orbital (I) y la amortiguación de tendencias mediante resonancias (D). La resonancia orbital es diálogo: dos cuerpos negocian una historia compartida corrigiendo mutuamente el desfase.</p>
+                    <h3>5.2 Biología: la alostasis como PID evolutivo</h3>
+                    <p>La alostasis (estabilidad mediante cambio predictivo) es la manifestación biológica del par. La <strong>Estructura (UMEAD)</strong> reside en los circuitos neuroendocrinos (pares simpático ↔ parasimpático). La <strong>Flexibilidad (PID)</strong> opera en la respuesta inmediata (P), la corrección de desgastes (I) y la anticipación de demandas (D).</p>
+                    <h3>5.3 Cognición: el bucle sensoriomotor</h3>
+                    <p>El bucle sensoriomotor es una órbita cognitiva. La <strong>Estructura (UMEAD)</strong> es la arquitectura neuronal y las memorias consolidadas. La <strong>Flexibilidad (PID)</strong> opera en la corrección refleja (P), el aprendizaje (I) y la expectativa (D).</p>
+                    <h3>5.4 Átomo: estructura cuántica y flexibilidad orbital</h3>
+                    <p>Los niveles discretos de energía y el principio de exclusión son la <strong>Estructura (UMEAD)</strong> del átomo. Las transiciones electrónicas (P), la fase cuántica acumulada (I) y el principio de incertidumbre como freno derivativo (D) constituyen la <strong>Flexibilidad (PID)</strong>. <em>Esta es la proyección más especulativa del modelo y se ofrece como exploración conceptual, no como equivalencia física.</em></p>
+                    <h3>5.5 Sociedad y derecho</h3>
+                    <p>Las constituciones y la jurisprudencia son la <strong>Estructura (UMEAD)</strong> social. La aplicación judicial inmediata (P), las reformas que corrigen injusticias históricas (I) y la legislación prospectiva (D) son la <strong>Flexibilidad (PID)</strong>.</p>
+                </section>
+
+                <section id="internet">
+                    <h2>6. Internet y Teoría de la Información</h2>
+                    <p>Internet representa uno de los ejemplos más potentes del par. Su <strong>Estructura (UMEAD)</strong> es formidable: TCP/IP, DNS, estándares abiertos, pares complementarios (cliente↔servidor), umbrales de coherencia (timeouts, congestión). La <strong>Flexibilidad (PID)</strong> se inyecta a través de la información que fluye: enrutamiento dinámico (P), algoritmos de aprendizaje sobre historial (I), sistemas de recomendación que anticipan contenidos (D).</p>
+                    <p>La <strong>Teoría de la Información</strong> (Shannon, 1948) aporta el lenguaje formal: la entropía mide la incertidumbre (desfase) que el sistema debe reducir; la capacidad de canal es el ancho de banda adaptativo; la redundancia es la memoria (I); la compresión es la anticipación (D).</p>
+                </section>
+
+                <section id="neurociencia">
+                    <h2>7. Neurociencia: hemisferios como par complementario</h2>
+                    <p>El cerebro humano ofrece una manifestación fascinante del par. Se trata de una <strong>arquitectura de doble par complementario</strong> que opera simultáneamente en el nivel anatómico (lateralidad hemisférica) y en el funcional (procesamiento explícito vs. implícito).</p>
+                    <h3>7.1 Lateralidad hemisférica cruzada</h3>
+                    <p>El sistema nervioso está organizado de forma <strong>contralateral</strong>. El hemisferio izquierdo se especializa en procesamiento secuencial (componente P); el derecho, en procesamiento holístico (componente I). <em>Estas asociaciones no deben interpretarse como localizaciones absolutas, sino como tendencias funcionales predominantes dentro de una red distribuida. Se ofrecen como analogía funcional dentro del modelo, reconociendo que la lateralización estricta no es respaldada por la neurociencia actual de redes distribuidas.</em></p>
+                    <p>El <strong>cuerpo calloso</strong> actúa como el <strong>Hiperpiñón</strong> del modelo McDee-11: engrana la dinámica continua de cada hemisferio con los eventos discretos de la toma de decisiones.</p>
+                    <h3>7.2 Procesamiento explícito e implícito</h3>
+                    <p>El procesamiento explícito (consciente) opera como el término P, respondiendo a estímulos novedosos. El procesamiento implícito (que opera en segundo plano) opera como el término I, acumulando experiencia y automatizando respuestas. La interacción entre ambos sigue el ciclo UMEAD.</p>
+                </section>
+
+                <section id="robotica">
+                    <h2>8. Proyección en robótica: arquitecturas duales</h2>
+                    <p>Un robot puede implementar su control mediante una <strong>arquitectura dual</strong>: un núcleo determinista (α-dominante) para tareas secuenciales (P), y un núcleo probabilista (β-dominante) que integra información sensorial y aprende (I). El término derivativo (D) emerge de la capacidad de anticipar obstáculos basándose en patrones aprendidos.</p>
+                    <h3>8.1 El péndulo invertido como UMEAD de control clásico</h3>
+                    <p>El péndulo invertido es una <strong>UMEAD de control</strong>. La <strong>Estructura</strong> es la dinámica física del sistema; la <strong>Flexibilidad</strong> es el controlador PID que actúa sobre el motor. El aprendizaje sigue el ciclo UMEAD.</p>
+                    <h3>8.2 Caso de estudio: Control de caudal en turbina Pelton</h3>
+                    <p>Un ejemplo concreto de arquitectura híbrida PID + McDee‑11 se documenta en el caso de estudio del control de caudal para una turbina Pelton (Documento de ejemplo del ecosistema newrostair-11, 2026).</p>
+                </section>
+
+                <section id="limitaciones">
+                    <h2>9. Limitaciones del modelo</h2>
+                    <p>Es fundamental trazar una frontera clara entre la analogía heurística y la descripción física exacta. La Mecánica Celeste opera bajo leyes deterministas reversibles y conservativas. Un controlador PID industrial es un artificio para sistemas disipativos. La analogía es funcional, no estructural.</p>
+                    <h3>9.1 Naturaleza epistemológica del modelo</h3>
+                    <p>El presente marco <strong>no pretende ser una teoría unificada física</strong>, sino un <strong>marco interpretativo transdisciplinario</strong> basado en homologías funcionales. Las metáforas de control son lentes, no realidades últimas.</p>
+                </section>
+
+                <section id="conclusion">
+                    <h2>10. Conclusión</h2>
+                    <p>La estabilidad escalar adaptativa propone un puente conceptual donde el error deja de ser una falla para convertirse en la variable fundamental de la persistencia. el modelo conceptual newrostair-11, con su par Estructura ↔ Flexibilidad y su fractalidad UMEAD–PID, proporciona el lenguaje para describir esta danza en cualquier escala.</p>
+                    <p>La estabilidad no es un estado, sino un proceso. La estructura sin flexibilidad es fragilidad; la flexibilidad sin estructura es disolución.</p>
+                    <blockquote>"La permanencia no surge de eliminar el cambio, sino de integrarlo continuamente."</blockquote>
+                </section>
+
+                <hr style="border:none; border-top:1px solid #b9c8dd; margin:3rem 0;">
+
+                <section id="referencias">
+                    <h2>11. Referencias</h2>
+                    <div class="references">
+                        <p>Ashby, W. R. (1956). <em>An Introduction to Cybernetics</em>. Chapman & Hall. <a href="#ficha-ashby" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Bamieh, B., Paganini, F., & Dahleh, M. (2002). Distributed control of spatially invariant systems. <em>IEEE Trans. Autom. Control</em>, 47(7). <a href="#ficha-controldistribuido" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Barabási, A.-L. (2016). <em>Network Science</em>. Cambridge University Press. <a href="#ficha-controldistribuido" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Batygin, K. & Morbidelli, A. (2013). Analytical treatment of planetary resonances. <em>Astronomy & Astrophysics</em>, 556, A28. <a href="#ficha-resonancia" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Clark, A., & Chalmers, D. (1998). The Extended Mind. <em>Analysis</em>, 58(1), 7-19. <a href="../bibliografia-emojis.html#eje6" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>von Foerster, H. (2003). <em>Understanding Understanding</em>. Springer. <a href="#ficha-foerster" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Haken, H. (1983). <em>Synergetics: An Introduction</em>. Springer. <a href="../bibliografia-emojis.html#eje1" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Hutchins, E. (1995). <em>Cognition in the Wild</em>. MIT Press. <a href="../bibliografia-emojis.html#eje6" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Laskar, J. (1990). The chaotic motion of the solar system. <em>Icarus</em>, 88(2), 266–291. <a href="../bibliografia-emojis.html#eje1" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Laskar, J., et al. (2004). A long-term numerical solution for the insolation quantities of the Earth. <em>Astronomy & Astrophysics</em>, 428, 261–285. <a href="../bibliografia-emojis.html#eje1" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Mandelbrot, B. (1982). <em>The Fractal Geometry of Nature</em>. W. H. Freeman. <a href="#ficha-mandelbrot" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Maturana, H. R., & Varela, F. J. (1980). <em>Autopoiesis and Cognition</em>. D. Reidel. <a href="../bibliografia-emojis.html#eje4" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Morbidelli, A. (2002). <em>Modern Celestial Mechanics</em>. Taylor & Francis. <a href="../bibliografia-emojis.html#eje1" class="btn-ficha">📚 Biblioteca</a></p>
+                        <p>Murray, C. D., & Dermott, S. F. (1999). <em>Solar System Dynamics</em>. Cambridge University Press. <a href="#ficha-resonancia" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Nicolis, G., & Prigogine, I. (1977). <em>Self-Organization in Non-Equilibrium Systems</em>. Wiley. <a href="#ficha-prigogine" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Prigogine, I. (1980). <em>From Being to Becoming</em>. W. H. Freeman. <a href="#ficha-prigogine" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Schulkin, J. (2003). <em>Rethinking Homeostasis</em>. MIT Press. <a href="#ficha-alostasis" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Shannon, C. E. (1948). A Mathematical Theory of Communication. <em>Bell System Technical Journal</em>, 27. <a href="#ficha-shannon" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Šiljak, D. D. (1991). <em>Decentralized Control of Complex Systems</em>. Academic Press. <a href="#ficha-controldistribuido" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Sterling, P., & Eyer, J. (1988). Allostasis. En <em>Handbook of Life Stress, Cognition and Health</em>. Wiley. <a href="#ficha-alostasis" class="btn-ficha">📘 Ver ficha</a></p>
+                        <p>Wiener, N. (1948). <em>Cybernetics</em>. MIT Press. <a href="#ficha-ashby" class="btn-ficha">📘 Ver ficha</a></p>
+                    </div>
+                </section>
+
+                <section id="fichas">
+                    <h2>12. Fichas conceptuales y bibliográficas</h2>
+                    <p style="margin-bottom:2rem;">Esta sección reúne definiciones contextualizadas al presente marco. Las fichas marcadas como <span class="tag tag-classic">Clásico</span> corresponden a referencias establecidas; las <span class="tag tag-reinterpreted">Reinterpretado</span> han sido adaptadas al modelo; las <span class="tag tag-emergent">Emergente</span> son conceptos originales del ecosistema.</p>
+                    
+                    <div class="ficha" id="ficha-umead"><h4>UMEAD <span class="tag tag-emergent">Emergente (newrostair-11)</span></h4><p><strong>Definición:</strong> Unidad Mínima de Equilibrio Adaptativo Dinámico. Inspirada en las cuatro bases del ADN, es la mínima estructura capaz de conservar coherencia funcional bajo perturbación mediante adaptación continua.</p></div>
+                    <div class="ficha" id="ficha-estructura-flexibilidad"><h4>Estructura y Flexibilidad <span class="tag tag-emergent">Emergente (newrostair-11)</span></h4><p><strong>Definición:</strong> Par complementario fundamental. La Estructura (UMEAD) proporciona memoria, umbrales e identidad; la Flexibilidad (PID) proporciona respuesta, corrección y anticipación.</p></div>
+                    <div class="ficha" id="ficha-fractalidad"><h4>Fractalidad newrostair <span class="tag tag-emergent">Emergente (newrostair-11)</span></h4><p><strong>Definición:</strong> Principio de autosimilitud del par Estructura–Flexibilidad en todas las escalas. Una UMEAD contiene otras UMEAD y replica el patrón PID en cada nivel.</p></div>
+                    <div class="ficha" id="ficha-homologia"><h4>Homología funcional <span class="tag tag-emergent">Emergente</span></h4><p><strong>Definición:</strong> Correspondencia estructural entre procesos de diferente naturaleza material que resuelven problemas equivalentes de control dinámico.</p></div>
+                    <div class="ficha" id="ficha-memoria"><h4>Memoria recursiva <span class="tag tag-reinterpreted">Reinterpretado</span></h4><p><strong>Definición:</strong> Capacidad de una trayectoria geométrica para codificar las perturbaciones históricas en su propia forma física actual.</p></div>
+                    <div class="ficha" id="ficha-alostasis"><h4>Alostasis <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Proceso de lograr la estabilidad orgánica a través del cambio fisiológico activo y la anticipación predictiva. <em>Referencia:</em> Sterling & Eyer (1988); Schulkin (2003).</p></div>
+                    <div class="ficha" id="ficha-resonancia"><h4>Resonancia orbital <span class="tag tag-reinterpreted">Reinterpretado</span></h4><p><strong>Definición:</strong> Influencia gravitatoria periódica entre cuerpos celestes, modelable como un controlador PID distribuido. <em>Referencia:</em> Murray & Dermott (1999); Batygin & Morbidelli (2013).</p></div>
+                    <div class="ficha" id="ficha-controldistribuido"><h4>Control distribuido <span class="tag tag-emergent">Emergente</span></h4><p><strong>Definición:</strong> Arquitectura de regulación donde la estabilidad emerge colectivamente de interacciones locales, sin controlador central. <em>Referencia:</em> Šiljak (1991); Bamieh et al. (2002); Barabási (2016).</p></div>
+                    <div class="ficha" id="ficha-neurociencia"><h4>Neurociencia dual <span class="tag tag-reinterpreted">Reinterpretado</span></h4><p><strong>Definición:</strong> Interpretación de los hemisferios cerebrales y el procesamiento explícito/implícito como un doble par complementario UMEAD. <em>Esta interpretación se ofrece como analogía funcional dentro del modelo, reconociendo que la lateralización estricta no es respaldada por la neurociencia actual de redes distribuidas.</em></p></div>
+                    <div class="ficha" id="ficha-robotica"><h4>Robótica dual <span class="tag tag-emergent">Emergente (newrostair-11)</span></h4><p><strong>Definición:</strong> Arquitectura robótica inspirada en la doble complementariedad cerebral.</p></div>
+                    <div class="ficha" id="ficha-turbina-pelton"><h4>Turbina Pelton (Caso de estudio) <span class="tag tag-emergent">Ejemplo de aplicación</span></h4><p><strong>Definición:</strong> Implementación de control híbrido PID + McDee‑11 para regulación de caudal en turbina Pelton.</p></div>
+                    <div class="ficha" id="ficha-ashby"><h4>Cibernética (Ashby) <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Ciencia de la regulación y comunicación en sistemas complejos. Ashby estableció principios como la variedad de requisitos y la autorregulación, fundamentales para entender cómo los sistemas mantienen estabilidad mediante realimentación. <em>Referencia:</em> Ashby (1956); Wiener (1948).</p></div>
+                    <div class="ficha" id="ficha-shannon"><h4>Teoría de la Información (Shannon) <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Formalización matemática de la transmisión de información. Conceptos como entropía, capacidad de canal y redundancia proporcionan el lenguaje para describir cómo los sistemas procesan la incertidumbre (desfase) que deben reducir para mantener coherencia. <em>Referencia:</em> Shannon (1948).</p></div>
+                    <div class="ficha" id="ficha-mandelbrot"><h4>Geometría Fractal (Mandelbrot) <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Descripción matemática de estructuras autosimilares que se repiten a diferentes escalas. La fractalidad newrostair toma este principio para explicar cómo el par Estructura–Flexibilidad se replica en todos los niveles de organización. <em>Referencia:</em> Mandelbrot (1982).</p></div>
+                    <div class="ficha" id="ficha-prigogine"><h4>Termodinámica del No-Equilibrio (Prigogine) <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Estudio de sistemas abiertos que intercambian energía y materia con su entorno. Las estructuras disipativas y la autoorganización son conceptos clave que fundamentan cómo el orden puede emerger del flujo constante. <em>Referencia:</em> Nicolis & Prigogine (1977); Prigogine (1980).</p></div>
+                    <div class="ficha" id="ficha-foerster"><h4>Cibernética de Segundo Orden (von Foerster) <span class="tag tag-classic">Clásico</span></h4><p><strong>Definición:</strong> Extensión de la cibernética que incluye al observador como parte del sistema observado. Introduce la reflexividad y la construcción de realidad mediante la interacción. <em>Referencia:</em> von Foerster (2003).</p></div>
+                </section>
+
+                <hr style="border:none; border-top:1px solid #b9c8dd; margin:3rem 0;">
+                <p style="text-align:center; color:#9aaa9a; font-size:0.9rem; margin-top:3rem;">
+                    <span style="display:block; font-style:italic; color:#b89b6b; font-size:1.1rem;">newrostair-11 · Persistencia mediante adaptación.</span>
+                    Versión final · Arquitecturas de regulación dinámica · Estructura y Flexibilidad en todas las escalas
+                </p>
+
+            </div>
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center; margin:15px 0 5px 0;"><img src="../img/qr_newrostair.png" alt="QR newrostair" style="width:180px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+            <p style="font-size:0.9rem; text-align:center;">📱 Escanea para compartir<br><strong>newrostair-11</strong></p>
+            <hr>
+            <div class="folder" style="margin-bottom:1rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar menú interno" style="border-left:1px solid #cbdae6; border-radius:30px;"></span></div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#resumen">📄 Resumen</a></li>
+                    <li><a href="#filosofia">🧬 Modelo Conceptual</a></li>
+                    <li><a href="#proyecciones">🌐 Proyecciones</a></li>
+                    <li><a href="#neurociencia">🧠 Neurociencia</a></li>
+                    <li><a href="#robotica">🤖 Robótica</a></li>
+                    <li><a href="#fichas">📚 Fichas</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem; margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </aside>
+    </div>
+
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button"><a href="#" onclick="history.back(); return false;" title="Volver a la página anterior">⬅️ Volver atrás</a></div>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair-11 (Portal)</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">01 · Origen, Misión y Visión</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">02 · Propiedad Intelectual</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html">📘 Índice PI</a></li>
+                                <li><a href="../McDee11-NFC.html">📐 McDee-11 (Completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">03 · I+D</a><span class="module-toggle"></span></div>
+                            <ul class="submenu">
+                                <li><a href="../i+d.html">📋 Índice I+D</a></li>
+                                <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="../i+d/documento-a.html">📄 Caso observacional</a></li>
+                                <li><a href="../newrophome-11/index-np.html">📜 NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../04-modelo-de-negocio.html" class="module-link">04 · Modelo de negocio</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">05 · Humanidades</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../06-Historia-Neuroplasticidad.html" class="module-link">06 · Historia</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../07-Era-Humano-IA.html" class="module-link">07 · Humano-IA</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">08 · Comunidad</a><span class="module-toggle"></span></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../docs/marco-conceptual.html" class="module-link current-page">🤝 Fundamentos y Conceptos</a><span class="module-toggle"></span></div>
+                    <ul class="submenu"><li><a href="../pagina-en-desarrollo.html">Liderazgo Distribuido</a></li></ul>
+                </li>
+                <li class="folder open">
+                    <div class="module-row"><a href="../Base-Newro-Sync.html" class="module-link">📁 Proyectos y herramientas</a><span class="module-toggle"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="../i+d/documento-a.html">📄 Caso observacional</a></li>
+                        <li><a href="../newrophome-11/index-np.html">📜 NewroPhome-11</a></li>
+                        <li><a href="../i+d/galeria-mm.html">🖼️ Galería Multimedia</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="biblio-sync-folder-flotante">
+                    <div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚 Biblioteca de Sincronía</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar ejes de la biblioteca"></span></div>
+                    <ul class="submenu">
+                        <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sistemas Dinámicos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia e Integración Bilateral</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control y Sistemas Híbridos</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Biología y Biosemiótica</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                        <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades, Filosofía y Tradiciones Sapienciales</a></li>
+                    </ul>
+                </li>
+                <li class="folder" id="galeria-folder-flotante">
+                    <div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">🖼️ Galería Multimedia</a><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar galería multimedia"></span></div>
+                    <ul class="submenu"><li><a href="../i+d/galeria-mm.html">🖼️ Ver galería completa</a></li></ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center; margin:10px 0;"><img src="../img/qr_newrostair.png" alt="QR newrostair" style="width:120px; border-radius:12px;"></div>
+            <p style="font-size:0.8rem; text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <div class="folder" style="margin-bottom:0.5rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📑 En esta página</span><span class="module-toggle" role="button" tabindex="0" style="border-left:1px solid #cbdae6; border-radius:30px;"></span></div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="#resumen">📄 Resumen</a></li>
+                    <li><a href="#filosofia">🧬 Modelo Conceptual</a></li>
+                    <li><a href="#proyecciones">🌐 Proyecciones</a></li>
+                    <li><a href="#neurociencia">🧠 Neurociencia</a></li>
+                    <li><a href="#robotica">🤖 Robótica</a></li>
+                    <li><a href="#fichas">📚 Fichas</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="folder" style="margin-bottom:0.5rem;">
+                <div class="module-row"><span class="module-link" style="background:transparent; border:none; font-weight:bold; cursor:default;">📚 Biblio. de Sincronía</span><span class="module-toggle" role="button" tabindex="0" aria-label="Desplegar/plegar biblioteca"></span></div>
+                <ul class="submenu" style="margin-left:0; padding-left:0.5rem;">
+                    <li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1 · Física y Sist. Dinámicos</a></li>
+                    <li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2 · Neurociencia</a></li>
+                    <li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3 · Ingeniería de Control</a></li>
+                    <li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4 · Biología</a></li>
+                    <li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5 · I+D y Ciencias Modernas</a></li>
+                    <li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6 · Humanidades</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            function bindToggles() {
+                document.querySelectorAll('.module-toggle').forEach(toggle => {
+                    toggle.removeEventListener('click', handleToggleClick);
+                    toggle.removeEventListener('keydown', handleToggleKey);
+                    toggle.addEventListener('click', handleToggleClick);
+                    toggle.addEventListener('keydown', handleToggleKey);
+                });
+            }
+            function handleToggleClick(e) { e.stopPropagation(); e.preventDefault(); const folder = this.closest('.folder'); if (folder) folder.classList.toggle('open'); }
+            function handleToggleKey(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); const folder = this.closest('.folder'); if (folder) folder.classList.toggle('open'); } }
+            bindToggles();
+
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    const folders = tree.querySelectorAll('.folder');
+                    folders.forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); }
+                    }
+                });
+            }
+            actualizarArbolSegunPagina();
+
+            const menuLeft = document.getElementById('menuLeft');
+            const menuRight = document.getElementById('menuRight');
+            const btnLeft = document.getElementById('menuLeftBtn');
+            const btnRight = document.getElementById('menuRightBtn');
+            function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); localStorage.setItem('menuLeftState', 'hidden'); localStorage.setItem('menuRightState', 'hidden'); }
+            function toggleMenu(menu, btn, storageKey) { const isVisible = menu.classList.contains('visible'); if (!isVisible) { closeAll(); menu.classList.add('visible'); localStorage.setItem(storageKey, 'visible'); } else { menu.classList.remove('visible'); localStorage.setItem(storageKey, 'hidden'); } }
+            if (localStorage.getItem('menuLeftState') === 'visible') menuLeft.classList.add('visible');
+            if (localStorage.getItem('menuRightState') === 'visible') menuRight.classList.add('visible');
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuLeft, btnLeft, 'menuLeftState'); });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(menuRight, btnRight, 'menuRightState'); });
+            document.addEventListener('click', (event) => { if (!menuLeft.contains(event.target) && event.target !== btnLeft && !menuRight.contains(event.target) && event.target !== btnRight) closeAll(); });
+
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const playPauseLabel = document.getElementById('playPauseLabel');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const voiceStatus = document.getElementById('voiceStatus');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+            const textoIntro = `Arquitecturas de regulación dinámica. Notas conceptuales del ecosistema newrostair-11 sobre estructura y flexibilidad en sistemas adaptativos.`;
+            const textoCompleto = `La estabilidad duradera de los sistemas complejos no equivale a rigidez, sino a una integración continua y adaptativa del desfase. Se articula el par complementario Estructura y Flexibilidad, que se replica fractalmente.`;
+
+            function obtenerTextoActual() { const scope = scopeSelect.value; if (scope === 'intro') return textoIntro; else if (scope === 'completo') return textoCompleto; else return textoIntro + ' ' + textoCompleto; }
+            function construirVoiceMap() {
+                const voces = synth.getVoices(); if (!voces || voces.length === 0) return false;
+                const spanishVoices = voces.filter(v => v.lang.startsWith('es'));
+                const esES = spanishVoices.filter(v => v.lang === 'es-ES'); const esLat = spanishVoices.filter(v => v.lang !== 'es-ES');
+                function elegirVoz(lista, genero) { const patrones = { female: ['female', 'mujer'], male: ['male', 'hombre'] }; const filtrada = lista.filter(v => patrones[genero].some(p => v.name.toLowerCase().includes(p))); if (filtrada.length) return filtrada.find(v => v.localService) || filtrada[0]; return lista[0] || null; }
+                voiceMap = { fem_es: elegirVoz(esES, 'female'), fem_lat: elegirVoz(esLat, 'female'), masc_es: elegirVoz(esES, 'male'), masc_lat: elegirVoz(esLat, 'male') };
+                for (const [key, voz] of Object.entries(voiceMap)) { const option = voiceSelect.querySelector(`option[value="${key}"]`); if (option) { option.disabled = !voz; option.textContent = option.textContent.replace(' (no disponible)', '') + (voz ? '' : ' (no disponible)'); } }
+                if (!voiceMap[voiceSelect.value]) { const primera = Object.entries(voiceMap).find(([, v]) => v); if (primera) { voiceSelect.value = primera[0]; selectedVoice = primera[1]; } } else selectedVoice = voiceMap[voiceSelect.value];
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible'; return true;
+            }
+            function actualizarInterfaz(estado, textoBoton) { playPauseBtn.querySelector('span:first-child').textContent = textoBoton; if (estado === 'reproduciendo') { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Pausa'; stopBtn.disabled = false; } else if (estado === 'pausado') { playPauseBtn.classList.remove('play-btn'); playPauseLabel.textContent = 'Reanudar'; stopBtn.disabled = false; } else { playPauseBtn.classList.add('play-btn'); playPauseLabel.textContent = 'Escuchar'; stopBtn.disabled = true; } }
+            construirVoiceMap(); synth.onvoiceschanged = construirVoiceMap;
+            voiceSelect.addEventListener('change', () => { if (voiceMap[voiceSelect.value]) { if (isSpeaking) synth.cancel(); selectedVoice = voiceMap[voiceSelect.value]; isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); } });
+            function crearNuevaUtterance() { const u = new SpeechSynthesisUtterance(obtenerTextoActual()); if (selectedVoice) { u.voice = selectedVoice; u.lang = selectedVoice.lang; } u.rate = 0.95; u.pitch = 1.0; u.volume = 1; u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo', '⏸️'); voiceStatus.textContent = 'Reproduciendo...'; }; u.onend = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Listo'; }; u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido', '▶'); }; u.onpause = () => { isPaused = true; actualizarInterfaz('pausado', '▶'); }; u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo', '⏸️'); }; return u; }
+            playPauseBtn.addEventListener('click', () => { if (!isSpeaking && !isPaused) { if (synth.speaking) synth.cancel(); if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz'; return; } utterance = crearNuevaUtterance(); synth.speak(utterance); } else if (isSpeaking && !isPaused) synth.pause(); else if (isSpeaking && isPaused) synth.resume(); });
+            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); voiceStatus.textContent = 'Detenido'; });
+            scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido', '▶'); } });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+        })();
+    </script>
+</body>
+</html>
