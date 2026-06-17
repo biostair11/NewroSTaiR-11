@@ -1,28 +1,508 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fundamentos · newrostair11</title>
+    <title>Propuesta PIDCA · Marcha Humana · newrostair11</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 100px;
+            height: auto;
+        }
         body {
-            background: #f5f3f0;
+            background-color: #f5f3f0;
             font-family: 'Georgia', 'Times New Roman', serif;
             color: #1e2a3a;
             line-height: 1.7;
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1.5rem 4rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding-bottom: 180px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
-        h1 {
+        .main-grid {
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+            gap: 0;
+            align-items: start;
+        }
+        .content,
+        .sidebar-left,
+        .sidebar-right {
+            min-width: 0;
+        }
+        .sidebar-left,
+        .sidebar-right {
+            background-color: #f0f4f8;
+            padding: 1rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #cbd5e1;
+            scrollbar-width: thin;
+            overflow-y: auto;
+        }
+        .sidebar-left {
+            border-radius: 0 25px 25px 0;
+            direction: rtl;
+            height: calc(100vh - 40px);
+            position: sticky;
+            top: 20px;
+        }
+        .sidebar-left>* {
+            direction: ltr;
+        }
+        .sidebar-right {
+            border-radius: 25px 0 0 25px;
+            position: sticky;
+            top: 20px;
+            max-height: calc(100vh - 40px);
+        }
+        h2 {
+            font-size: 1.3rem;
+            color: #1e4a6b;
+            border-bottom: 1px solid #b9c8dd;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tree {
+            list-style: none;
+            margin: 0;
+            padding-left: 0;
+        }
+        .tree li {
+            margin-bottom: 0.3rem;
+            position: relative;
+        }
+        .module-row {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .module-link {
+            flex: 1;
+            color: #1a4d6b;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.4rem 0.6rem;
+            border-radius: 30px;
+            background: #e6edf4;
+            border: 1px solid #cbdae6;
+            transition: all 0.2s;
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.8rem;
+            cursor: pointer;
+            user-select: none;
+        }
+        .module-link:hover {
+            background-color: #d4e0ea;
+            border-color: #9eb4c8;
+            color: #0a3146;
+        }
+        .module-link.current-page {
+            background-color: #d0dce8;
+            border-left: 4px solid #e09d6f;
+            font-weight: bold;
+            color: #0f3b5c;
+        }
+        .submenu {
+            display: none;
+            margin-left: 1.5rem;
+            padding-left: 0.8rem;
+            border-left: 2px solid #b9c8dd;
+        }
+        .folder.open>.submenu {
+            display: block;
+        }
+        .submenu a {
+            color: #1a4d6b;
+            text-decoration: none;
+            font-size: 0.75rem;
+            display: block;
+            padding: 0.3rem 0.5rem 0.3rem 1rem;
+            border-radius: 25px;
+            background: #f9fbfd;
+            border: 1px solid #dce5ed;
+            margin: 0.1rem 0;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .submenu a:hover {
+            background-color: #e4edf5;
+            border-color: #9fb7cc;
+            transform: translateX(3px);
+        }
+        .submenu a.current-page {
+            background-color: #d0dce8;
+            border-left: 4px solid #e09d6f;
+            font-weight: bold;
+            color: #0f3b5c;
+        }
+        hr {
+            margin: 1rem 0;
+            border-color: #b9c8dd;
+        }
+        .header-imagen {
+            background: linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%);
+            padding: 2rem 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 4px solid #3e92cc;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1350px;
+            width: 100%;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .logo-main {
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+        .logo-main img {
+            height: auto;
+            max-height: 90px;
+            width: auto;
+            display: block;
+        }
+        .header-text-block {
+            text-align: center;
+            color: white;
+            flex: 1;
+        }
+        .header-text-block h1 {
+            font-family: 'Century Gothic', 'CenturyGothic', 'AppleGothic', sans-serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: #FFFFF0;
+            margin-bottom: 0rem;
+        }
+        .header-text-block p {
+            font-size: 0.9rem;
+            color: #bbdfec;
+            margin: 0rem 0;
+        }
+        .header-text-block .accesibilidad-header-text {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-top: 0.2rem;
+            line-height: 1.6;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 0.6rem;
+            font-style: normal;
+            opacity: 1;
+        }
+        .lang-selector {
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .lang-selector select {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 0.3rem 0.6rem;
+            color: white;
+            font-family: 'Georgia', serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        .content {
+            background-color: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+            margin: 2rem 0;
+        }
+        section[id],
+        div[id],
+        section.modulo {
+            scroll-margin-top: 100px;
+        }
+        .formula {
+            background: #eaf2f9;
+            padding: 1rem 1.8rem;
+            border-radius: 40px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            margin: 1.5rem 0;
+            border: 1px dashed #2c7da0;
+            box-shadow: inset 0 1px 4px #cbdbe9;
+            overflow-x: auto;
+        }
+        .nota-cafe {
+            background: #fff4e6;
+            border-left: 6px solid #b97341;
+            padding: 1.5rem 2rem;
+            border-radius: 20px;
+            font-style: italic;
+            color: #3d2f1f;
+            margin: 2rem 0;
+        }
+        .badge {
+            background: #1b4a6b;
+            color: white;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+        .firma {
+            text-align: right;
+            border-top: 2px solid #b0b9c5;
+            padding-top: 2rem;
+            margin-top: 3rem;
+            color: #2b4b64;
+        }
+        .menu-flotante-left,
+        .menu-flotante-right {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            z-index: 1000;
+        }
+        .menu-flotante-left {
+            left: 20px;
+        }
+        .menu-flotante-right {
+            right: 20px;
+        }
+        .menu-flotante-btn {
+            background-color: #1e4a6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            transition: transform 0.05s linear;
+        }
+        .menu-flotante-btn:active {
+            transform: scale(0.95);
+        }
+        .menu-desplegable {
+            display: none;
+            position: absolute;
+            bottom: 70px;
+            background-color: #f0f4f8;
+            border-radius: 20px;
+            padding: 1rem;
+            width: 260px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid #cbd5e1;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        .menu-desplegable.left {
+            left: 0;
+        }
+        .menu-desplegable.right {
+            right: 0;
+        }
+        .menu-desplegable.visible {
+            display: block;
+        }
+        .voice-floating-bar {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1100;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 0.3rem 0.6rem;
+            display: grid;
+            grid-template-columns: auto auto auto auto;
+            grid-template-rows: auto;
+            gap: 0.3rem 0.4rem;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(30, 74, 107, 0.15);
+            max-width: 95vw;
+            border: 1px solid #cbd5e1;
+        }
+        .voice-floating-bar .voice-btn {
+            background: #ffffff;
+            border: 1px solid #b9c8dd;
+            border-radius: 20px;
+            padding: 0.3rem 0.8rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.75rem;
+            color: #1e4a6b;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            transition: all 0.25s ease;
+            min-width: 50px;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .voice-floating-bar .voice-btn:hover {
+            background: #e2eaf1;
+            border-color: #2c5a7a;
+        }
+        .voice-floating-bar .voice-btn:disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        .voice-floating-bar .voice-btn.play-btn {
+            background: #1e4a6b;
+            border-color: #4cc9f0;
+            color: white;
+            font-weight: bold;
+        }
+        .voice-floating-bar .voice-btn.play-btn:hover {
+            background: #163d5c;
+        }
+        .voice-progress-container {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            width: 100%;
+            margin-top: 0.1rem;
+        }
+        .voice-progress-bar {
+            flex: 1;
+            height: 4px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .voice-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #1e4a6b, #3e92cc);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        .voice-progress-text {
+            font-size: 0.6rem;
+            color: #2c5a7a;
+            min-width: 32px;
+            text-align: right;
+        }
+        .voice-floating-bar .voice-status {
+            font-size: 0.7rem;
+            color: #2c5a7a;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+            flex-shrink: 1;
+            min-width: 0;
+            grid-column: 1 / -1;
+            justify-content: center;
+            margin-top: 0.1rem;
+        }
+        .voice-floating-bar .voice-status::before {
+            content: "🔊";
+            font-style: normal;
+        }
+        .voice-floating-bar .voice-select,
+        .voice-floating-bar .voice-scope-select,
+        .voice-floating-bar .voice-speed-select {
+            background: #ffffff;
+            border: 1px solid #b9c8dd;
+            border-radius: 20px;
+            padding: 0.25rem 0.5rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.7rem;
+            color: #1e4a6b;
+            cursor: pointer;
+            outline: none;
+            flex-shrink: 0;
+        }
+        .voice-floating-bar .voice-select {
+            max-width: 130px;
+        }
+        .voice-floating-bar .voice-scope-select {
+            max-width: 160px;
+        }
+        .voice-floating-bar .voice-speed-select {
+            max-width: 70px;
+        }
+        .back-button {
+            display: block;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .back-button a {
+            display: inline-block;
+            background: #e6edf4;
+            color: #1a4d6b;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            border: 1px solid #cbdae6;
+            font-size: 0.85rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .back-button a:hover {
+            background: #d4e0ea;
+            border-color: #9eb4c8;
+            color: #0a3146;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .menu-desplegable img {
+            width: 120px;
+            max-width: 100%;
+        }
+        .highlight-reading {
+            background-color: #fff3cd !important;
+            border-left: 4px solid #e09d6f !important;
+            font-weight: bold !important;
+        }
+        .documento-principal {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .documento-principal h1 {
             font-size: 1.6rem;
             text-align: center;
             color: #0a2463;
             margin-bottom: 0.3rem;
         }
-        h2 {
+        .documento-principal h2 {
             font-size: 1.4rem;
             color: #1e4a6b;
             border-bottom: 2px solid #b9c8dd;
@@ -30,12 +510,12 @@
             margin-top: 2.5rem;
             scroll-margin-top: 2rem;
         }
-        h3 {
+        .documento-principal h3 {
             font-size: 1.1rem;
             color: #2c5a7a;
             margin-top: 1.8rem;
         }
-        p {
+        .documento-principal p {
             margin: 1rem 0;
             text-align: justify;
         }
@@ -52,7 +532,7 @@
             padding: 1.5rem;
             border-radius: 20px;
             margin: 1.5rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         .note-box {
             background: #fef9e7;
@@ -73,7 +553,7 @@
             border: 1px dashed #2c7da0;
             overflow-x: auto;
         }
-        code {
+        .documento-principal code {
             background: #eaf2f9;
             padding: 0.2rem 0.4rem;
             border-radius: 6px;
@@ -84,7 +564,7 @@
             border-radius: 20px;
             padding: 1rem;
             margin: 2rem 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
             text-align: center;
         }
         .figure-box img {
@@ -103,7 +583,7 @@
             padding: 3rem 1rem 2rem;
             background: #ffffff;
             border-radius: 30px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
             margin-bottom: 2rem;
         }
         .portada h1 {
@@ -144,7 +624,7 @@
             background: white;
             border-radius: 16px;
             padding: 0.8rem 0.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             text-align: center;
             text-decoration: none;
             color: inherit;
@@ -158,7 +638,7 @@
         }
         .tarjeta:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
             border-color: #2c7da0;
         }
         .tarjeta svg {
@@ -193,13 +673,6 @@
             background: #b0b9c5;
             pointer-events: none;
         }
-        .firma {
-            text-align: right;
-            border-top: 2px solid #b0b9c5;
-            padding-top: 1.5rem;
-            margin-top: 3rem;
-            color: #2b4b64;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -215,248 +688,765 @@
         th {
             background: #e6edf4;
         }
+        @media (max-width:1000px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-left,
+            .sidebar-right {
+                display: none;
+            }
+            .menu-flotante-left,
+            .menu-flotante-right {
+                display: block;
+                bottom: 80px;
+            }
+            .menu-desplegable {
+                bottom: 70px;
+                max-height: calc(100vh - 200px);
+            }
+        }
+        @media (max-width:700px) {
+            .content {
+                padding: 1.2rem;
+            }
+            .formula {
+                font-size: 1rem;
+                padding: 0.8rem;
+            }
+        }
+        @media (max-width:600px) {
+            .header-container {
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                justify-content: space-between;
+                align-items: center;
+                gap: 0.3rem;
+            }
+            .logo-main {
+                flex: 0 0 auto;
+                padding: 4px;
+            }
+            .logo-main img {
+                max-height: 50px !important;
+                width: auto;
+            }
+            .header-text-block {
+                flex: 1;
+                width: auto;
+                text-align: center;
+                margin: 0;
+                padding: 0 0.2rem;
+            }
+            .header-text-block h1 {
+                font-size: 1.8rem;
+                margin-bottom: 0.1rem;
+                white-space: normal;
+            }
+            .header-text-block p {
+                font-size: 0.75rem;
+                line-height: 1.2;
+                margin: 0.1rem 0;
+                white-space: normal;
+            }
+            .accesibilidad-header-text {
+                font-size: 0.65rem;
+            }
+            .header-imagen {
+                padding: 0.5rem 0.3rem;
+            }
+            body {
+                padding-bottom: 120px;
+            }
+            .menu-flotante-left,
+            .menu-flotante-right {
+                bottom: 90px;
+            }
+            .menu-desplegable {
+                bottom: 60px;
+                max-height: calc(100vh - 200px);
+            }
+            .indice-tarjetas {
+                grid-template-columns: 1fr 1fr;
+            }
+            .voice-floating-bar {
+                bottom: 0;
+                left: 0;
+                right: 0;
+                transform: none;
+                width: 100%;
+                max-width: 100%;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 4px;
+                padding: 4px;
+                border-radius: 10px 10px 0 0;
+            }
+            .voice-floating-bar .voice-btn {
+                font-size: 0.6rem;
+                padding: 4px 6px;
+                min-width: 0;
+            }
+            .voice-floating-bar .voice-select,
+            .voice-floating-bar .voice-scope-select,
+            .voice-floating-bar .voice-speed-select {
+                font-size: 0.6rem;
+                padding: 3px;
+                max-width: 100%;
+                width: 100%;
+            }
+            .voice-floating-bar .voice-status {
+                font-size: 0.6rem;
+                grid-column: 1 / -1;
+            }
+            .voice-progress-container {
+                grid-column: 1 / -1;
+            }
+        }
     </style>
 </head>
-<body>
+<body id="top">
 
-    <!-- PORTADA -->
-    <div class="portada">
-        <p style="font-size:0.9rem; color:#5a4a3a;">Proyecto NewroSTaiR‑11 · Semillero QRIOSITY · Grupo DIGITI</p>
-        <h1>Modelado de Desfases en Sensores de Marcha</h1>
-        <p style="font-size:1.1rem;">Formalismo Integrador McDee‑11</p>
-        <hr style="width:60px; border-color:#2c7da0; margin:1.5rem auto;">
-        <p><strong>Fundamentos</strong></p>
-        <p style="font-size:0.9rem;">Alcance · Problema · Motivación · Contribuciones · Sensores como PID Adaptativos</p>
-        <p style="font-size:0.8rem; color:#5a4a3a; margin-top:1.5rem;">Andru Stiven Rodríguez Bustos</p>
-        <p style="font-size:0.8rem; color:#5a4a3a;">Tecnólogo en Electrónica · Facultad Tecnológica</p>
-        <p style="font-size:0.8rem; color:#5a4a3a;">Universidad Distrital Francisco José de Caldas · Junio 2026</p>
-    </div>
-
-    <!-- ÍNDICE DE TARJETAS (NAVEGACIÓN ENTRE MÓDULOS) -->
-    <div class="indice-tarjetas">
-        <a href="modulo1_fundamentos.html" class="tarjeta activo" title="Fundamentos">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#2c7da0"/><text x="16" y="21" text-anchor="middle" fill="white" font-size="16">🔵</text></svg>
-            Fundamentos
-        </a>
-        <a href="#" class="tarjeta" title="Arquitectura del Hiperpiñón">
-            <svg viewBox="0 0 32 32"><circle cx="10" cy="16" r="8" fill="none" stroke="#1e4a6b" stroke-width="2"/><circle cx="22" cy="16" r="8" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
-            Arquitectura
-        </a>
-        <a href="#" class="tarjeta" title="Fundamentación Matemática">
-            <svg viewBox="0 0 32 32"><path d="M8 24 L16 8 L24 24" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
-            Matemática
-        </a>
-        <a href="#" class="tarjeta" title="Simulación Numérica">
-            <svg viewBox="0 0 32 32"><rect x="6" y="10" width="20" height="12" rx="3" fill="none" stroke="#1e4a6b" stroke-width="2"/><line x1="10" y1="16" x2="22" y2="16" stroke="#1e4a6b" stroke-width="2"/></svg>
-            Simulación
-        </a>
-        <a href="#" class="tarjeta" title="Análisis Espectral">
-            <svg viewBox="0 0 32 32"><polyline points="4,24 10,14 16,20 22,6 28,18" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
-            Espectral
-        </a>
-        <a href="#" class="tarjeta" title="Validación y Perspectivas">
-            <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="#1e4a6b" stroke-width="2"/><polyline points="10,16 14,20 22,10" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
-            Validación
-        </a>
-        <a href="anexoD_experimental.html" class="tarjeta" title="Arquitectura Experimental">
-            <svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" rx="2" fill="none" stroke="#8b4513" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="#8b4513"/></svg>
-            Hardware
-        </a>
-        <a href="anexoE_informacion.html" class="tarjeta" title="Teoría de la Información">
-            <svg viewBox="0 0 32 32"><circle cx="10" cy="16" r="3" fill="#e09d6f"/><circle cx="22" cy="10" r="3" fill="#e09d6f"/><circle cx="22" cy="22" r="3" fill="#e09d6f"/><line x1="13" y1="14" x2="19" y2="11" stroke="#e09d6f" stroke-width="1.5"/><line x1="13" y1="18" x2="19" y2="21" stroke="#e09d6f" stroke-width="1.5"/></svg>
-            Información
-        </a>
-    </div>
-
-    <!-- BARRA DE PROGRESO -->
-    <div class="barra-progreso">
-        <span class="activo">🔵 Fundamentos</span>
-        <span>⚪ Arquitectura</span>
-        <span>⚪ Matemática</span>
-        <span>⚪ Simulación</span>
-        <span>⚪ Espectral</span>
-        <span>⚪ Validación</span>
-    </div>
-
-    <!-- ABSTRACT -->
-    <div class="intro-box" style="background:#f0f4ff; border-left-color:#4a6fa5;">
-        <h2 style="margin-top:0; color:#4a6fa5;">📄 Abstract</h2>
-        <p>Este trabajo explora una representación de estados basada en el formalismo integrador McDee‑11 para describir la evolución temporal de desfases entre señales inerciales (IMU) durante el análisis de marcha humana. A diferencia de los enfoques correctivos clásicos, se propone una arquitectura de <strong>pares complementarios de controladores PID adaptativos</strong> que no minimizan un error, sino que representan, intercambian y acumulan información sobre los retardos. El modelo se fundamenta en un principio variacional lagrangiano, se discretiza mediante métodos de Euler y Runge‑Kutta de cuarto orden, y predice, a través de la Transformada de Fourier, la aparición de dos modos espectrales cuya separación depende del coeficiente de acoplamiento. Se definen métricas de coherencia, umbrales de detección y condiciones de falsabilidad, sentando las bases para una validación experimental futura con plataformas inalámbricas basadas en ESP32 y BLE.</p>
-    </div>
-
-    <!-- OBJETIVOS -->
-    <div class="section-box">
-        <h2>🎯 Objetivos</h2>
-        <h3>Objetivo General</h3>
-        <p>Desarrollar un modelo de espacio de estados acoplados, enmarcado en el formalismo McDee‑11, que permita representar, analizar y predecir la evolución temporal de los desfases entre sensores inerciales en estudios de marcha humana, y obtener apoyo académico del Grupo DIGITI de la Facultad Tecnológica de la Universidad Distrital para su validación experimental.</p>
-        <h3>Objetivos Específicos</h3>
-        <ol>
-            <li>Modelar cada IMU como un PID adaptativo cuyas componentes proporcional (α), integral (β) y derivativa (γ) capturen respectivamente el valor instantáneo, la historia acumulada y la tasa de cambio de coherencia de la señal.</li>
-            <li>Formular el acoplamiento entre los dos procesadores (pierna izquierda y pierna derecha) mediante una arquitectura de cuatro estados denominada Hiperpiñón.</li>
-            <li>Fundamentar matemáticamente el modelo a través de un principio lagrangiano, derivando la matriz de acoplamiento y realizando un análisis modal preliminar.</li>
-            <li>Implementar la simulación numérica del sistema utilizando los métodos de Euler y Runge‑Kutta de cuarto orden, y predecir la separación espectral (\(\Delta f\)) como función del parámetro de acoplamiento (\(\kappa\)).</li>
-            <li>Definir métricas cuantitativas de validación (coherencia \(C(t)\), error RMS, estabilidad vía Transformada Z) y establecer condiciones de refutación que permitan evaluar la utilidad del modelo.</li>
-            <li>Validar la metodología propuesta tomando como punto de partida la experiencia personal del autor con atresia auricular, y expandir progresivamente el estudio hacia poblaciones con y sin deficiencias auditivas.</li>
-            <li>Gestionar apoyo académico e institucional ante el Grupo DIGITI y la Facultad Tecnológica de la Universidad Distrital para la implementación experimental y la posible transferencia tecnológica del formalismo.</li>
-        </ol>
-    </div>
-
-    <!-- SECCIÓN 1: ALCANCE -->
-    <div id="alcance" class="intro-box">
-        <h2>📏 Alcance del Presente Estudio</h2>
-        <p>El presente documento no propone un nuevo método de sincronización de sensores ni reemplaza técnicas establecidas de estimación de retardo, filtrado o alineamiento temporal.</p>
-        <p>Su objetivo es explorar una representación de estados, articulada a través del formalismo McDee‑11, para describir la evolución temporal de desfases entre señales acopladas, utilizando métricas de coherencia reconocidas en la literatura de procesamiento de señales.</p>
-        <p>La utilidad del enfoque deberá evaluarse mediante simulaciones y experimentos controlados, comparando su comportamiento con herramientas convencionales de análisis temporal y sincronización.</p>
-    </div>
-
-    <!-- SECCIÓN 2: PROBLEMA -->
-    <div id="problema">
-        <h2>1. 🦿 Planteamiento del Problema Real</h2>
-        <h3>1.1 Contexto experimental</h3>
-        <p>En un análisis típico de marcha humana con sensores inerciales (IMU) se utilizan al menos <strong>cuatro sensores individuales</strong>, colocando <strong>dos IMU en cada pierna</strong> para capturar la cinemática de ambas extremidades:</p>
-        <ul>
-            <li><strong>Sensor 1 (muslo izquierdo):</strong> velocidad angular en el plano sagital de la pierna izquierda.</li>
-            <li><strong>Sensor 2 (tobillo izquierdo):</strong> aceleración o ángulo de flexión plantar de la pierna izquierda.</li>
-            <li><strong>Sensor 3 (muslo derecho):</strong> velocidad angular en el plano sagital de la pierna derecha.</li>
-            <li><strong>Sensor 4 (tobillo derecho):</strong> aceleración o ángulo de flexión plantar de la pierna derecha.</li>
-        </ul>
-
-        <!-- IMAGEN 1: Contexto experimental -->
-        <div class="figure-box">
-            <img src="https://images.openai.com/static-rsc-4/PnD1zcARena6fa0waCrFrlaWfD4coZPnVKSr0SrKHlIt9RWWJGB3jvdXU70AcpuLAHGtTOlscbgy_y7lSyRsA-98xeFK2bdMy_G3u7uL1cUYCVERQ4Gw7WlinRfz8s4kEvSDkPI3bgYtg_kj7c-Uebdcsx3lxdh3qlpFyJWHYHvzazKOID58VPubaqjf0Z3Q?purpose=fullsize" alt="Instrumentación IMU para análisis de marcha humana" loading="lazy">
-            <div class="figure-caption">Figura 1. Instrumentación con 4 IMU para análisis de marcha humana.</div>
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn"><span id="playPauseIcon">▶</span> <span id="playPauseLabel" data-es="Escuchar" data-en="Listen">Escuchar</span></button>
+        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span data-es="Detener" data-en="Stop">Detener</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Femenina (España)</option>
+            <option value="fem_lat" selected>Femenina (Latina)</option>
+            <option value="masc_es">Masculina (España)</option>
+            <option value="masc_lat">Masculina (Latina)</option>
+        </select>
+        <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
+            <option value="0.7">0.7x</option>
+            <option value="0.85">0.85x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.2">1.2x</option>
+            <option value="1.5">1.5x</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
+            <option value="intro" data-es="📖 Introducción" data-en="📖 Introduction">📖 Introducción</option>
+            <option value="completo" data-es="📄 Documento completo" data-en="📄 Full document">📄 Documento completo</option>
+        </select>
+        <div class="voice-progress-container">
+            <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
+            <span class="voice-progress-text" id="voiceProgressText">0%</span>
         </div>
-
-        <p>Esta configuración de 4 IMU es la práctica habitual en laboratorios de biomecánica. Las señales deben estar sincronizadas para que los cálculos sean fiables.</p>
-        <h3>1.2 El problema: retardo entre sensores</h3>
-        <p>Por razones de hardware (deriva de reloj, latencia de comunicación, buffers de procesamiento), una señal puede presentar un retardo \(\Delta t\) respecto a la otra. Este desfase degrada la coherencia del ciclo de marcha, introduce artefactos y dificulta la detección automática de fases del paso.</p>
-        <h3>1.3 Pregunta de ingeniería</h3>
-        <p>¿Puede una representación de estados, articulada a través del formalismo McDee‑11, describir de forma útil la evolución temporal de desfases entre señales inerciales durante el análisis de marcha humana?</p>
+        <div class="voice-status" id="voiceStatus" data-es="Listo" data-en="Ready">Listo</div>
     </div>
 
-    <!-- NUEVA SECCIÓN: MOTIVACIÓN EXPERIMENTAL Y OBSERVACIÓN INICIAL -->
-    <div id="motivacion">
-        <h2>1. 🧠 Motivación Experimental y Observación Inicial</h2>
-        <p>El origen de esta investigación no es exclusivamente teórico. Responde a un proceso que comenzó de manera intuitiva y que, con el tiempo, ha ido articulándose en tres campos de trabajo interconectados, todos ellos vinculados por un mismo principio subyacente: el <strong>doble par complementario</strong> que formaliza el método MCDee‑11.</p>
-        <p>El autor presenta una condición congénita de atresia auricular que, durante gran parte de su vida, implicó la necesidad de compensar auditivamente la disminución de percepción espacial proveniente del lado derecho. Como consecuencia, se desarrollaron hábitos posturales adaptativos, entre ellos la tendencia a orientar la cabeza para mejorar la localización y comprensión de los sonidos.</p>
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="../index.html" class="logo-main"><img src="../img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio"></a>
+            <div class="header-text-block">
+                <h1>newrostair11</h1>
+                <p data-es="Conocimiento Colaborativo Complementario" data-en="Collaborative Complementary Knowledge">Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text" data-es="🧩 Este sitio web integra iconos semánticos como 🧠<strong>anclajes cognitivos</strong>. Con el fin de promover una 📖lectura inclusiva🌈." data-en="🧩 This website integrates semantic icons such as 🧠<strong>cognitive anchors</strong>. In order to promote inclusive 📖reading🌈.">🧩 Este sitio web integra iconos semánticos como 🧠<strong>anclajes cognitivos</strong>. Con el fin de promover una 📖lectura inclusiva🌈.</p>
+                <div class="lang-selector">
+                    <select id="langSelect" aria-label="Seleccionar idioma">
+                        <option value="es" selected>🇪🇸 Español</option>
+                        <option value="en">🇬🇧 English</option>
+                    </select>
+                </div>
+            </div>
+            <a href="../elipso/elipso.html" class="logo-main"><img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso"></a>
+        </div>
+    </header>
 
-        <h3>Observación inicial</h3>
-        <p>Hace aproximadamente 18 meses, el autor comenzó a experimentar de forma intuitiva con <strong>audios modificados mediante procesamiento digital de señales (DSP)</strong>. Aquellos primeros ensayos, sin un marco teórico previo, mostraron mejoras perceptivas que motivaron una profundización progresiva. Con el tiempo, y con el apoyo de plataformas de inteligencia artificial, el proceso fue refinándose y revelando una estructura matemática coherente que el autor formalizó como el <strong>método MCDee‑11</strong>. Desde entonces, tres campos han evolucionado en paralelo, realimentándose mutuamente:</p>
-        <ul>
-            <li><strong>Audios DSP:</strong> el desarrollo en curso de un reproductor de audio procesado —con capacidad potencial tanto de aplicar transformaciones en tiempo real como de crearlas y almacenarlas— basado en el principio del doble par complementario.</li>
-            <li><strong>Método matemático MCDee‑11:</strong> la formalización rigurosa del modelo de pares complementarios, cuya aplicación se extiende ahora al análisis de desfases en sensores inerciales.</li>
-            <li><strong>Percepción personal:</strong> la mejoría auditiva experimentada por el autor durante el proceso —hasta el punto de que ya no necesita girar la cabeza para localizar sonidos del lado derecho.</li>
-        </ul>
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair11 (Inicio)</a></div>
+                    <ul class="submenu">
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">🌱Origen, ▶️Misión y 🎥Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📜​Fundamentos y 📝Marco Teórico</a></div>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">🔎I+D y 📋Modelos de Negocio</a></div>
+                            <ul class="submenu">
+                                <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link">📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEXIBILIDAD ESTRUCTURADA</div>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">🎨Arte y Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos y Herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">📱 Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝 Marco Conceptual</a></div><ul class="submenu"><li><a href="../marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li><li><a href="../ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li><li><a href="../06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📝 Marco Teórico</a></div><ul class="submenu"><li><a href="../McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos y herramientas</a></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li>
+                        <li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                        <li><a href="../newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                        <li><a href="../i+d/presentacion-mh-digiti.html">Proyecto 🚶‍♂️Marcha 🚶Humana</a></li>
+                        <li><a href="propuesta-pidca-marcha.html">📐 Propuesta PIDCA</a></li>
+                        <li><a href="../docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li>
+                        <li><a href="../pagina-en-desarrollo.html">🎛️ Método DSP</a></li>
+                        <li><a href="../07-Era-Humano-IA.html">🗣️ Humano IA</a></li>
+                    </ul>
+                </li>
+                <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚Bibliografía Temática</a></div><ul class="submenu"><li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1</a></li><li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2</a></li><li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3</a></li><li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4</a></li><li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5</a></li><li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">📡 Multimedia y enlaces externos</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="../galeria.html">🖼️ Galería completa</a></li></ul></li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Propuesta PIDCA · Marcha Humana</strong></p>
+        </aside>
 
-        <h3>Observación secundaria</h3>
-        <p>En las últimas semanas, el autor ha percibido una creciente sensación de que su cuerpo se está reacomodando, como si la estructura postural respondiera a la nueva configuración sensorial. Estas sensaciones incluyen cambios en la percepción de alineación entre cabeza, cuello, tronco y cintura pélvica.</p>
+        <main class="content">
+            <div class="documento-principal">
 
-        <h3>Hipótesis</h3>
-        <p>La modificación de la percepción espacial —inducida por la estimulación auditiva estructurada bajo el principio del doble par complementario— podría estar asociada a reajustes dinámicos observables en la marcha y en la coordinación corporal. Estos reajustes, de existir, deberían manifestarse como variaciones en los desfases temporales entre las señales inerciales capturadas por IMU colocadas en diferentes segmentos corporales.</p>
+                <!-- PORTADA -->
+                <div class="portada">
+                    <p style="font-size:0.9rem; color:#5a4a3a;">Proyecto NewroSTaiR‑11 · Semillero QRIOSITY · Grupo DIGITI</p>
+                    <h1>Modelado de Desfases en Sensores de Marcha</h1>
+                    <p style="font-size:1.1rem;">Formalismo Integrador McDee‑11</p>
+                    <hr style="width:60px; border-color:#2c7da0; margin:1.5rem auto;">
+                    <p><strong>Propuesta de Implementación PIDCA</strong></p>
+                    <p style="font-size:0.9rem;">Alcance · Problema · Motivación · Contribuciones · Sensores como PID Adaptativos</p>
+                    <p style="font-size:0.8rem; color:#5a4a3a; margin-top:1.5rem;">Andru Stiven Rodríguez Bustos</p>
+                    <p style="font-size:0.8rem; color:#5a4a3a;">Tecnólogo en Electrónica · Facultad Tecnológica</p>
+                    <p style="font-size:0.8rem; color:#5a4a3a;">Universidad Distrital Francisco José de Caldas · Junio 2026</p>
+                </div>
 
-        <h3>Necesidad</h3>
-        <p>Para verificar o refutar dicha hipótesis se requiere instrumentación objetiva: sensores inerciales capaces de registrar la cinemática de la marcha con precisión temporal, y un marco de modelado que permita interpretar los desfases entre señales como variables dinámicas portadoras de información.</p>
+                <!-- ÍNDICE DE TARJETAS -->
+                <div class="indice-tarjetas">
+                    <a href="propuesta-pidca-marcha.html" class="tarjeta activo" title="Propuesta PIDCA">
+                        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="#2c7da0"/><text x="16" y="21" text-anchor="middle" fill="white" font-size="16">🔵</text></svg>
+                        Propuesta PIDCA
+                    </a>
+                    <a href="#" class="tarjeta" title="Arquitectura del Hiperpiñón">
+                        <svg viewBox="0 0 32 32"><circle cx="10" cy="16" r="8" fill="none" stroke="#1e4a6b" stroke-width="2"/><circle cx="22" cy="16" r="8" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
+                        Arquitectura
+                    </a>
+                    <a href="#" class="tarjeta" title="Fundamentación Matemática">
+                        <svg viewBox="0 0 32 32"><path d="M8 24 L16 8 L24 24" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
+                        Matemática
+                    </a>
+                    <a href="#" class="tarjeta" title="Simulación Numérica">
+                        <svg viewBox="0 0 32 32"><rect x="6" y="10" width="20" height="12" rx="3" fill="none" stroke="#1e4a6b" stroke-width="2"/><line x1="10" y1="16" x2="22" y2="16" stroke="#1e4a6b" stroke-width="2"/></svg>
+                        Simulación
+                    </a>
+                    <a href="#" class="tarjeta" title="Análisis Espectral">
+                        <svg viewBox="0 0 32 32"><polyline points="4,24 10,14 16,20 22,6 28,18" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
+                        Espectral
+                    </a>
+                    <a href="#" class="tarjeta" title="Validación y Perspectivas">
+                        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="#1e4a6b" stroke-width="2"/><polyline points="10,16 14,20 22,10" fill="none" stroke="#1e4a6b" stroke-width="2"/></svg>
+                        Validación
+                    </a>
+                    <a href="../anexoD_experimental.html" class="tarjeta" title="Arquitectura Experimental">
+                        <svg viewBox="0 0 32 32"><rect x="6" y="8" width="20" height="16" rx="2" fill="none" stroke="#8b4513" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="#8b4513"/></svg>
+                        Hardware
+                    </a>
+                    <a href="../anexoE_informacion.html" class="tarjeta" title="Teoría de la Información">
+                        <svg viewBox="0 0 32 32"><circle cx="10" cy="16" r="3" fill="#e09d6f"/><circle cx="22" cy="10" r="3" fill="#e09d6f"/><circle cx="22" cy="22" r="3" fill="#e09d6f"/><line x1="13" y1="14" x2="19" y2="11" stroke="#e09d6f" stroke-width="1.5"/><line x1="13" y1="18" x2="19" y2="21" stroke="#e09d6f" stroke-width="1.5"/></svg>
+                        Información
+                    </a>
+                </div>
 
-        <h3>Propuesta</h3>
-        <p>El formalismo McDee‑11 se propone precisamente como ese marco de representación. Su arquitectura de pares complementarios y su métrica de coherencia \(C(t)\) ofrecen un lenguaje matemático para describir cómo evolucionan los desfases, cómo se intercambia información entre segmentos corporales y cómo se podría distinguir un desfase patológico o adaptativo de uno puramente instrumental.</p>
+                <!-- BARRA DE PROGRESO -->
+                <div class="barra-progreso">
+                    <span class="activo">🔵 Propuesta PIDCA</span>
+                    <span>⚪ Arquitectura</span>
+                    <span>⚪ Matemática</span>
+                    <span>⚪ Simulación</span>
+                    <span>⚪ Espectral</span>
+                    <span>⚪ Validación</span>
+                </div>
 
-        <h3>Afinidad con líneas de investigación existentes</h3>
-        <p>La presente propuesta encuentra afinidad temática con diversas líneas de trabajo desarrolladas por el <strong>Grupo DIGITI</strong> de la Universidad Distrital Francisco José de Caldas, particularmente aquellas relacionadas con biomecánica de la marcha humana, captura de movimiento mediante sensores inerciales, análisis de señales fisiológicas y sistemas de asistencia tecnológica. Investigaciones previas del grupo han abordado problemas asociados a la adquisición, sincronización e interpretación de datos provenientes de múltiples sensores, tanto en estudios de marcha convencional como en contextos de rehabilitación y apoyo clínico. En este contexto, el formalismo McDee‑11 se presenta como una propuesta complementaria orientada al modelado de desfases y relaciones de coherencia entre señales, cuya utilidad deberá evaluarse mediante validación experimental y comparación con metodologías establecidas.</p>
+                <!-- ABSTRACT -->
+                <div class="intro-box" style="background:#f0f4ff; border-left-color:#4a6fa5;">
+                    <h2 style="margin-top:0; color:#4a6fa5;">📄 Abstract</h2>
+                    <p>Este trabajo explora una representación de estados basada en el formalismo integrador McDee‑11 para describir la evolución temporal de desfases entre señales inerciales (IMU) durante el análisis de marcha humana. A diferencia de los enfoques correctivos clásicos, se propone una arquitectura de <strong>pares complementarios de controladores PID adaptativos</strong> que no minimizan un error, sino que representan, intercambian y acumulan información sobre los retardos. El modelo se fundamenta en un principio variacional lagrangiano, se discretiza mediante métodos de Euler y Runge‑Kutta de cuarto orden, y predice, a través de la Transformada de Fourier, la aparición de dos modos espectrales cuya separación depende del coeficiente de acoplamiento. Se definen métricas de coherencia, umbrales de detección y condiciones de falsabilidad, sentando las bases para una validación experimental futura con plataformas inalámbricas basadas en ESP32 y BLE.</p>
+                </div>
 
-        <h3>Limitación metodológica inicial</h3>
-        <p>Las observaciones personales descritas en esta sección constituyen el punto de partida de la investigación y deben interpretarse exclusivamente como generadoras de hipótesis. Aunque han motivado el desarrollo del formalismo McDee‑11, no constituyen evidencia experimental de su validez. La utilidad del modelo deberá establecerse mediante adquisición de datos instrumentados, análisis cuantitativo y comparación con metodologías reconocidas en biomecánica, teoría de control y procesamiento de señales. En consecuencia, las hipótesis planteadas permanecen abiertas a confirmación, modificación o refutación a través de futuras etapas experimentales.</p>
+                <!-- OBJETIVOS -->
+                <div class="section-box">
+                    <h2>🎯 Objetivos</h2>
+                    <h3>Objetivo General</h3>
+                    <p>Desarrollar un modelo de espacio de estados acoplados, enmarcado en el formalismo McDee‑11, que permita representar, analizar y predecir la evolución temporal de los desfases entre sensores inerciales en estudios de marcha humana, y obtener apoyo académico del Grupo DIGITI de la Facultad Tecnológica de la Universidad Distrital para su validación experimental.</p>
+                    <h3>Objetivos Específicos</h3>
+                    <ol>
+                        <li>Modelar cada IMU como un PID adaptativo cuyas componentes proporcional (α), integral (β) y derivativa (γ) capturen respectivamente el valor instantáneo, la historia acumulada y la tasa de cambio de coherencia de la señal.</li>
+                        <li>Formular el acoplamiento entre los dos procesadores (pierna izquierda y pierna derecha) mediante una <strong>Unidad Mínima de Equilibrio Adaptativo Dinámico (UMEAD)</strong>, representada conceptualmente mediante la metáfora del Hiperpiñón.</li>
+                        <li>Fundamentar matemáticamente el modelo a través de un principio lagrangiano, derivando la matriz de acoplamiento y realizando un análisis modal preliminar.</li>
+                        <li>Implementar la simulación numérica del sistema utilizando los métodos de Euler y Runge‑Kutta de cuarto orden, y predecir la separación espectral (\(\Delta f\)) como función del parámetro de acoplamiento (\(\kappa\)).</li>
+                        <li>Definir métricas cuantitativas de validación (coherencia \(C(t)\), error RMS, estabilidad vía Transformada Z) y establecer condiciones de refutación que permitan evaluar la utilidad del modelo.</li>
+                        <li>Validar la metodología propuesta tomando como punto de partida la experiencia personal del autor con atresia auricular, y expandir progresivamente el estudio hacia poblaciones con y sin deficiencias auditivas.</li>
+                        <li>Gestionar apoyo académico e institucional ante el Grupo DIGITI y la Facultad Tecnológica de la Universidad Distrital para la implementación experimental y la posible transferencia tecnológica del formalismo.</li>
+                    </ol>
+                </div>
+
+                <!-- SECCIÓN 1: ALCANCE -->
+                <div id="alcance" class="intro-box">
+                    <h2>📏 Alcance del Presente Estudio</h2>
+                    <p>El presente documento no propone un nuevo método de sincronización de sensores ni reemplaza técnicas establecidas de estimación de retardo, filtrado o alineamiento temporal.</p>
+                    <p>Su objetivo es explorar una representación de estados, articulada a través del formalismo McDee‑11, para describir la evolución temporal de desfases entre señales acopladas, utilizando métricas de coherencia reconocidas en la literatura de procesamiento de señales.</p>
+                    <p>La utilidad del enfoque deberá evaluarse mediante simulaciones y experimentos controlados, comparando su comportamiento con herramientas convencionales de análisis temporal y sincronización.</p>
+                </div>
+
+                <!-- SECCIÓN 2: PROBLEMA -->
+                <div id="problema">
+                    <h2>1. 🦿 Planteamiento del Problema Real</h2>
+                    <h3>1.1 Contexto experimental</h3>
+                    <p>En un análisis típico de marcha humana con sensores inerciales (IMU) se utilizan al menos <strong>cuatro sensores individuales</strong>, colocando <strong>dos IMU en cada pierna</strong> para capturar la cinemática de ambas extremidades:</p>
+                    <ul>
+                        <li><strong>Sensor 1 (muslo izquierdo):</strong> velocidad angular en el plano sagital de la pierna izquierda.</li>
+                        <li><strong>Sensor 2 (tobillo izquierdo):</strong> aceleración o ángulo de flexión plantar de la pierna izquierda.</li>
+                        <li><strong>Sensor 3 (muslo derecho):</strong> velocidad angular en el plano sagital de la pierna derecha.</li>
+                        <li><strong>Sensor 4 (tobillo derecho):</strong> aceleración o ángulo de flexión plantar de la pierna derecha.</li>
+                    </ul>
+                    <p>Como referencia experimental inicial, la metodología podría implementarse utilizando unidades de medición inercial (IMU) de 6 o 9 grados de libertad, tales como MPU‑6050, MPU‑9250, ICM‑20948 o sensores equivalentes ampliamente utilizados en biomecánica y sistemas embebidos. La selección definitiva del hardware dependerá de la disponibilidad instrumental, los requisitos de precisión temporal y los criterios experimentales definidos conjuntamente con el Grupo DIGITI.</p>
+                    <p>Dado que la presente propuesta se centra en el modelado de desfases y no en una plataforma específica, el formalismo McDee‑11 se plantea como independiente del fabricante o arquitectura concreta del sensor.</p>
+
+                    <div class="figure-box">
+                        <img src="https://images.openai.com/static-rsc-4/PnD1zcARena6fa0waCrFrlaWfD4coZPnVKSr0SrKHlIt9RWWJGB3jvdXU70AcpuLAHGtTOlscbgy_y7lSyRsA-98xeFK2bdMy_G3u7uL1cUYCVERQ4Gw7WlinRfz8s4kEvSDkPI3bgYtg_kj7c-Uebdcsx3lxdh3qlpFyJWHYHvzazKOID58VPubaqjf0Z3Q?purpose=fullsize" alt="Instrumentación IMU para análisis de marcha humana" loading="lazy">
+                        <div class="figure-caption">Figura 1. Instrumentación con 4 IMU para análisis de marcha humana.</div>
+                    </div>
+
+                    <h3>1.2 El problema: retardo entre sensores</h3>
+                    <p>Por razones de hardware (deriva de reloj, latencia de comunicación, buffers de procesamiento), una señal puede presentar un retardo \(\Delta t\) respecto a la otra. Este desfase degrada la coherencia del ciclo de marcha, introduce artefactos y dificulta la detección automática de fases del paso.</p>
+                    <h3>1.3 Pregunta de ingeniería</h3>
+                    <p>¿Puede una representación de estados, articulada a través del formalismo McDee‑11, describir de forma útil la evolución temporal de desfases entre señales inerciales durante el análisis de marcha humana?</p>
+                </div>
+
+                <!-- MOTIVACIÓN EXPERIMENTAL -->
+                <div id="motivacion">
+                    <h2>1. 🧠 Motivación Experimental y Observación Inicial</h2>
+                    <p>El origen de esta investigación no es exclusivamente teórico. Responde a un proceso que comenzó de manera intuitiva y que, con el tiempo, ha ido articulándose en tres campos de trabajo interconectados, todos ellos vinculados por un mismo principio subyacente: el <strong>doble par complementario</strong> que formaliza el método MCDee‑11.</p>
+                    <p>El autor presenta una condición congénita de atresia auricular que, durante gran parte de su vida, implicó la necesidad de compensar auditivamente la disminución de percepción espacial proveniente del lado derecho. Como consecuencia, se desarrollaron hábitos posturales adaptativos, entre ellos la tendencia a orientar la cabeza para mejorar la localización y comprensión de los sonidos.</p>
+                    <h3>Observación inicial</h3>
+                    <p>Hace aproximadamente 18 meses, el autor comenzó a experimentar de forma intuitiva con <strong>audios modificados mediante procesamiento digital de señales (DSP)</strong>. Aquellos primeros ensayos, sin un marco teórico previo, mostraron mejoras perceptivas que motivaron una profundización progresiva. Con el tiempo, y con el apoyo de plataformas de inteligencia artificial, el proceso fue refinándose y revelando una estructura matemática coherente que el autor formalizó como el <strong>método MCDee‑11</strong>. Desde entonces, tres campos han evolucionado en paralelo, realimentándose mutuamente:</p>
+                    <ul>
+                        <li><strong>Audios DSP:</strong> el desarrollo en curso de un reproductor de audio procesado —con capacidad potencial tanto de aplicar transformaciones en tiempo real como de crearlas y almacenarlas— basado en el principio del doble par complementario.</li>
+                        <li><strong>Método matemático MCDee‑11:</strong> la formalización rigurosa del modelo de pares complementarios, cuya aplicación se extiende ahora al análisis de desfases en sensores inerciales.</li>
+                        <li><strong>Percepción personal:</strong> la mejoría auditiva experimentada por el autor durante el proceso —hasta el punto de que ya no necesita girar la cabeza para localizar sonidos del lado derecho.</li>
+                    </ul>
+                    <h3>Observación secundaria</h3>
+                    <p>En las últimas semanas, el autor ha percibido una creciente sensación de que su cuerpo se está reacomodando, como si la estructura postural respondiera a la nueva configuración sensorial. Estas sensaciones incluyen cambios en la percepción de alineación entre cabeza, cuello, tronco y cintura pélvica.</p>
+                    <h3>Hipótesis</h3>
+                    <p>La modificación de la percepción espacial —inducida por la estimulación auditiva estructurada bajo el principio del doble par complementario— podría estar asociada a reajustes dinámicos observables en la marcha y en la coordinación corporal. Estos reajustes, de existir, deberían manifestarse como variaciones en los desfases temporales entre las señales inerciales capturadas por IMU colocadas en diferentes segmentos corporales.</p>
+                    <h3>Necesidad</h3>
+                    <p>Para verificar o refutar dicha hipótesis se requiere instrumentación objetiva: sensores inerciales capaces de registrar la cinemática de la marcha con precisión temporal, y un marco de modelado que permita interpretar los desfases entre señales como variables dinámicas portadoras de información.</p>
+                    <h3>Propuesta</h3>
+                    <p>El formalismo McDee‑11 se propone precisamente como ese marco de representación. Su arquitectura de pares complementarios y su métrica de coherencia \(C(t)\) ofrecen un lenguaje matemático para describir cómo evolucionan los desfases, cómo se intercambia información entre segmentos corporales y cómo se podría distinguir un desfase patológico o adaptativo de uno puramente instrumental.</p>
+                    <h3>Afinidad con líneas de investigación existentes</h3>
+                    <p>La presente propuesta encuentra afinidad temática con diversas líneas de trabajo desarrolladas por el <strong>Grupo DIGITI</strong> de la Universidad Distrital Francisco José de Caldas, particularmente aquellas relacionadas con biomecánica de la marcha humana, captura de movimiento mediante sensores inerciales, análisis de señales fisiológicas y sistemas de asistencia tecnológica. Investigaciones previas del grupo han abordado problemas asociados a la adquisición, sincronización e interpretación de datos provenientes de múltiples sensores, tanto en estudios de marcha convencional como en contextos de rehabilitación y apoyo clínico. En este contexto, el formalismo McDee‑11 se presenta como una propuesta complementaria orientada al modelado de desfases y relaciones de coherencia entre señales, cuya utilidad deberá evaluarse mediante validación experimental y comparación con metodologías establecidas.</p>
+                    <h3>Limitación metodológica inicial</h3>
+                    <p>Las observaciones personales descritas en esta sección constituyen el punto de partida de la investigación y deben interpretarse exclusivamente como generadoras de hipótesis. Aunque han motivado el desarrollo del formalismo McDee‑11, no constituyen evidencia experimental de su validez. La utilidad del modelo deberá establecerse mediante adquisición de datos instrumentados, análisis cuantitativo y comparación con metodologías reconocidas en biomecánica, teoría de control y procesamiento de señales. En consecuencia, las hipótesis planteadas permanecen abiertas a confirmación, modificación o refutación a través de futuras etapas experimentales.</p>
+                </div>
+
+                <!-- CONTRIBUCIONES -->
+                <div id="contribuciones">
+                    <h2>2. 💡 Contribuciones Propuestas</h2>
+                    <div class="section-box">
+                        <ol>
+                            <li><strong>Representación de desfases mediante espacio de estados acoplado:</strong> el retardo entre sensores se modela como una variable dinámica dentro de un sistema de estados interconectados.</li>
+                            <li><strong>Interpretación del retardo como variable dinámica observable:</strong> se define una métrica de coherencia \(C(t)\) y una salida lineal \(y_{\text{lin}}(t)\) que permiten seguir la evolución del desfase.</li>
+                            <li><strong>Relación entre coherencia temporal y modos espectrales:</strong> se predice que la interacción entre la memoria acumulada (\(\beta\)) y el intercambio de los potenciales de adaptación (\(\delta\)) entre los procesadores produce dos modos propios \(\omega_\pm\), separados en frecuencia, observables mediante análisis espectral (FFT).</li>
+                            <li><strong>Arquitectura escalable para redes de IMU:</strong> la estructura de pares complementarios (α, β, γ) se replica en cada sensor y en cada nivel de agrupación.</li>
+                            <li><strong>Hipótesis sobre operadores de memoria (M) e intercambio (E):</strong> se plantea la posible no conmutatividad \([M,E]\neq 0\) como una propiedad algebraica sujeta a verificación.</li>
+                            <li><strong>Unidad Mínima de Equilibrio Adaptativo Dinámico (UMEAD):</strong> se propone una arquitectura mínima de cuatro estados capaz de representar el intercambio de información entre dos procesadores adaptativos complementarios. Esta unidad constituye el bloque elemental de construcción del formalismo McDee‑11 y puede representarse visualmente mediante la metáfora geométrica del Hiperpiñón. La UMEAD se plantea como la estructura mínima capaz de almacenar memoria, representar coherencia instantánea, generar potenciales de adaptación y describir la dinámica de intercambio entre subsistemas acoplados.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- PROYECCIÓN DE APLICACIÓN EN BIOMECÁNICA -->
+                <div id="proyeccion" class="section-box">
+                    <h2>🔭 Proyección de Aplicación en Biomecánica</h2>
+                    <p>La arquitectura PIDCA propone interpretar los desfases temporales entre sensores inerciales no únicamente como errores de sincronización, sino también como posibles indicadores de adaptación y coherencia funcional. Bajo esta perspectiva, variables derivadas de dichos desfases —en particular el potencial de adaptación \(\delta(t)\) y su tasa de cambio \(\gamma(t)\)— podrían complementar las métricas biomecánicas convencionales, proporcionando información adicional sobre la coordinación intersegmentaria, la estabilidad dinámica y los procesos de reajuste durante la marcha.</p>
+                    <p>Lo que diferencia esta aproximación de los métodos tradicionales de análisis de fase o correlación no es simplemente estudiar el desfase, sino <strong>dotarlo de un estado dinámico</strong>. En lugar de preguntar únicamente <em>"¿cuál es el desfase?"</em>, PIDCA pregunta <em>"¿cómo evoluciona el desfase en el tiempo y qué información contiene esa evolución sobre la organización del sistema?"</em>. La secuencia jerárquica \(\alpha \rightarrow \beta \rightarrow \delta \rightarrow \gamma\) convierte una medición instantánea en una trayectoria de adaptación con memoria.</p>
+                    <p>Esta aproximación no requiere modificaciones sustanciales del hardware utilizado actualmente por el Grupo DIGITI y podría explorarse inicialmente mediante el reprocesamiento de señales ya adquiridas. En caso de validación experimental, abriría la posibilidad de incorporar nuevas métricas de coherencia temporal aplicables al estudio de la marcha, la rehabilitación motora y la interacción entre procesos sensoriales y control motor.</p>
+                    <p><em>Las afirmaciones anteriores constituyen hipótesis de trabajo y proyecciones basadas en la arquitectura formal propuesta. Su validez deberá ser evaluada mediante simulación y experimentación controlada.</em></p>
+                </div>
+
+                <!-- SENSORES COMO PID ADAPTATIVOS -->
+                <div id="sensores">
+                    <h2>3. 🧬 Sensores como PID Adaptativos en Pares Complementarios</h2>
+                    <p>A diferencia de un controlador PID clásico —que opera sobre una señal de error para minimizar desviaciones respecto a una referencia fija—, el formalismo McDee‑11 organiza <strong>pares complementarios de controladores PID adaptativos</strong> cuyo propósito no es corregir, sino <strong>representar, intercambiar y acumular información sobre los desfases</strong> que ocurren naturalmente entre sensores. En esta arquitectura, el desfase no se interpreta como una falla que deba eliminarse, sino como una variable dinámica que contiene información valiosa sobre el estado del sistema.</p>
+                    <p>La denominación <em>PID adaptativo</em> se utiliza para destacar la presencia explícita de operaciones proporcionales, integrativas y derivativas sobre señales sensoriales. No implica que el sistema implemente necesariamente un controlador PID clásico destinado a la regulación de un error.</p>
+
+                    <h3>3.1 Las componentes α, β y γ como operaciones P, I, D</h3>
+                    <p>Cada IMU proporciona un flujo continuo de datos que puede descomponerse en tres operaciones dinámicas elementales:</p>
+                    <ul>
+                        <li><strong>α (Proporcional):</strong> lectura cruda instantánea de aceleración o velocidad angular. Matemáticamente captura el <strong>valor presente</strong> de la señal del sensor, es decir, la operación proporcional clásica aplicada directamente a la medición.</li>
+                        <li><strong>β (Integral):</strong> representa el componente acumulativo o memorístico de la señal, obtenido mediante procesos de estimación de estado que incorporan integración temporal (filtros de fusión como Madgwick o Kalman).</li>
+                        <li><strong>γ (Derivativo):</strong> tendencia o variación de la coherencia entre lecturas sucesivas. Mide la <strong>tasa de cambio</strong> de la similitud entre señales, lo que corresponde a una operación derivativa sobre la coherencia.</li>
+                    </ul>
+                    <p>Desde un punto de vista operacional, las tres funciones matemáticas —valor presente, acumulación histórica y tasa de cambio— corresponden a las operaciones proporcional, integrativa y derivativa empleadas en los controladores PID. Por esta razón, cada sensor puede representarse mediante una estructura PID adaptativa de carácter informacional, cuyas componentes son \(S_i = (\alpha_i, \beta_i, \gamma_i)\).</p>
+
+                    <h3>3.2 Diferencias con el PID correctivo clásico</h3>
+                    <p>La siguiente tabla resume la distinción fundamental:</p>
+                    <table>
+                        <thead><tr><th>Característica</th><th>PID Clásico (Corrector)</th><th>PID McDee‑11 (Representacional)</th></tr></thead>
+                        <tbody>
+                            <tr><td>Entrada</td><td>Error \(e(t) = r(t) - y(t)\)</td><td>Señal sensorial directa</td></tr>
+                            <tr><td>Propósito</td><td>Minimizar la desviación</td><td>Caracterizar la dinámica del desfase</td></tr>
+                            <tr><td>Salida</td><td>Acción de control</td><td>Estado informacional (α, β, γ)</td></tr>
+                            <tr><td>Operación proporcional</td><td>Amplifica el error presente</td><td>Captura el valor instantáneo de la señal</td></tr>
+                            <tr><td>Operación integral</td><td>Acumula errores pasados</td><td>Acumula historia de la señal (orientación)</td></tr>
+                            <tr><td>Operación derivativa</td><td>Anticipa errores futuros</td><td>Detecta cambios en la coherencia</td></tr>
+                            <tr><td>Contexto</td><td>Lazo cerrado de realimentación negativa</td><td>Red abierta de representación y acoplamiento</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>3.2.1 Diagrama comparativo de arquitecturas</h3>
+                    <p>La diferencia fundamental entre el PID clásico y PIDCA se aprecia con claridad en sus diagramas de bloques. En el controlador industrial, las ramas proporcional, integral y derivativa <strong>operan en paralelo</strong> sobre una misma señal de error \(e(t)\), sin que exista comunicación entre ellas hasta el nodo sumador final. En contraste, PIDCA despliega una <strong>arquitectura jerárquica y secuencial</strong> donde cada etapa emerge de la anterior: el presente \(\alpha\) da lugar a la memoria \(\beta\), la comparación entre ambas genera el potencial de adaptación \(\delta\), y la tasa de cambio de este potencial constituye la componente derivativa \(\gamma\).</p>
+                    <div class="figure-box">
+                        <img src="../img/diagrama-comparativo-pidca.png" alt="Diagrama comparativo PID clásico (paralelo) vs PIDCA (jerárquico secuencial)">
+                        <div class="figure-caption">Figura 4. Comparación de arquitecturas: PID clásico (ramas en paralelo) vs. PIDCA (secuencia jerárquica presente → memoria → potencial de adaptación → tasa de adaptación).</div>
+                    </div>
+                    <p>En el esquema PIDCA, la componente derivativa \(\gamma\) no observa directamente la señal externa, sino la <em>relación</em> entre el presente y la historia acumulada. Esta organización secuencial diferencia estructuralmente la propuesta de un PID convencional y constituye el fundamento gráfico de la hipótesis de modelado.</p>
+
+                    <p>En el formalismo McDee‑11 no existe una señal de error clásica \(e(t)=r(t)-y(t)\). En su lugar, <strong>se propone modelar una variable de potencial de adaptación</strong> definida como la diferencia entre una medida instantánea de coherencia entre dos señales y la memoria integrada de esa misma coherencia acumulada hasta el momento. Esta variable se expresa como:</p>
+
+                    <div class="equation">\[ \delta_{ij}(t) = \phi_{ij}(t) - \frac{1}{\tau_\beta} \int_{0}^{t} \phi_{ij}(t')\, dt' \]</div>
+
+                    <p>donde \(\phi_{ij}(t)\) es una <strong>medida operacional de coherencia instantánea</strong> (por ejemplo, correlación cruzada normalizada en ventana deslizante). El segundo término, con constante de tiempo \(\tau_\beta\), representa la componente integrativa \(\beta\) que actúa como memoria del sistema. La componente derivativa \(\gamma\) se asocia entonces a la <strong>tasa de cambio de este potencial de adaptación</strong> \(\delta_{ij}(t)\), es decir, a la velocidad con que el sistema convierte la discrepancia presente‑memoria en una dinámica de ajuste.</p>
+
+                    <p>De esta forma, la arquitectura se despliega como una secuencia jerárquica: <strong>presente → memoria → potencial de adaptación → tasa de adaptación</strong>. La componente derivativa \(\gamma\) deja de observar directamente la señal externa y pasa a evaluar la <em>relación</em> entre el presente y la historia acumulada, midiendo así la rapidez con que el sistema se adapta. Esta organización secuencial diferencia estructuralmente a McDee‑11 de un PID clásico, donde las tres ramas operan en paralelo sobre la misma señal de error.</p>
+
+                    <h3>3.3 Red de PIDs complementarios</h3>
+                    <p>Una pierna (Procesador A o B) no es un solo PID, sino una <strong>red de micro‑PIDs complementarios</strong> que cooperan:</p>
+                    <div class="equation">\[ P_A = \{S_{\text{muslo izq}}, S_{\text{tobillo izq}}\}, \qquad P_B = \{S_{\text{muslo der}}, S_{\text{tobillo der}}\} \]</div>
+                    <p>Donde cada sensor \(S_i\) ya es un PID adaptativo completo que internamente recorre la secuencia \(\alpha \rightarrow \beta \rightarrow \delta \rightarrow \gamma\). La complementariedad surge del intercambio de estos potenciales de adaptación entre los sensores de una misma pierna y, en última instancia, entre las dos piernas a través de la Unidad Mínima de Equilibrio Adaptativo Dinámico (UMEAD), representada conceptualmente mediante la metáfora del Hiperpiñón.</p>
+                </div>
+
+                <!-- RECURSOS COMPLEMENTARIOS -->
+                <div id="recursos" class="section-box">
+                    <h2>🔗 Recursos Complementarios</h2>
+                    <p>Para mantener la continuidad entre el marco conceptual, la implementación matemática y la futura validación experimental, se dispone de la siguiente documentación complementaria:</p>
+                    <ul>
+                        <li>📄 Desarrollo Matemático Completo</li>
+                        <li>📄 Derivación Lagrangiana y Análisis Modal</li>
+                        <li>📄 Pseudocódigo McDee‑11</li>
+                        <li>📄 Discretización mediante Euler y Runge‑Kutta de Cuarto Orden</li>
+                        <li>📄 Estabilidad y Representación mediante Transformada Z</li>
+                        <li>📄 Simulaciones Numéricas y Análisis Espectral</li>
+                        <li>📄 Diseño Experimental con Sensores IMU y ESP32/BLE</li>
+                    </ul>
+                    <p><em>Estos recursos constituyen material de trabajo en evolución y sirven como soporte técnico para la evaluación, reproducción y eventual validación experimental de la propuesta.</em></p>
+                </div>
+
+                <!-- CIERRE DEL MÓDULO -->
+                <div class="section-box" style="text-align:center; margin-top:3rem;">
+                    <div class="figure-box">
+                        <img src="https://images.openai.com/static-rsc-4/G6gSKYIRaL8cXkv6UlLiO5BJGXeJaVdbuScrtEVNrXYLpQ97RLVDQfZ__KHSBCSL-vCzCgmOx_T1moyDxcZAXl8whQMzOXHXcvdMuPLCp2XkfNgE0bX8TY1e_rJn3O4u5VqMP2CNetD431sMQUEAQm-xzXXSUChDv9cGGxZJFs2wDmnAamJ1LxM3ai_ykzTX?purpose=fullsize" alt="Vista previa conceptual del Hiperpiñón" loading="lazy">
+                        <div class="figure-caption">Figura 5. Vista previa de la arquitectura de acoplamiento Hiperpiñón (siguiente módulo).</div>
+                    </div>
+                    <p style="font-size:1.1rem; color:#1e4a6b;"><strong>Fin de la Propuesta PIDCA</strong></p>
+                    <p>En esta propuesta se ha planteado el problema de los desfases en sensores IMU, se ha presentado la motivación experimental —basada en un proceso que comenzó de forma intuitiva con audios DSP y que evolucionó, con apoyo de IA, en tres campos interconectados—, se han enunciado las contribuciones del formalismo McDee‑11 y se ha justificado por qué cada sensor se modela como un PID adaptativo con componentes α (P), β (I) y γ (D). Se ha establecido la diferencia esencial entre el PID correctivo clásico y el PID representacional, incluyendo un diagrama comparativo de las arquitecturas, y se ha preparado el terreno para la arquitectura de acoplamiento de la UMEAD (Hiperpiñón).</p>
+                    <p>El <strong>siguiente módulo</strong> presentará en detalle la Unidad Mínima de Equilibrio Adaptativo Dinámico (UMEAD), que permite modelar la interacción entre los dos procesadores (pierna izquierda y pierna derecha).</p>
+                </div>
+
+                <!-- NAVEGACIÓN ENTRE MÓDULOS -->
+                <div class="nav-modulos">
+                    <a href="#" class="deshabilitado">← Anterior</a>
+                    <a href="#modulo2">Siguiente: Arquitectura UMEAD →</a>
+                </div>
+
+                <!-- NOTA SOBRE PROPIEDAD INTELECTUAL -->
+                <div class="note-box" style="margin-top:2rem;">
+                    <strong>📜 Nota sobre divulgación, autoría y vinculación institucional.</strong> Este trabajo representa una aproximación a una posible implementación de la metodología McDee‑11 en el marco de investigación del <strong>Grupo DIGITI</strong> de la <strong>Facultad Tecnológica</strong> de la <strong>Universidad Distrital Francisco José de Caldas</strong>. El autor, Tecnólogo en Electrónica egresado de dicha Facultad hace más de diez años, retorna a su alma mater buscando colaboración mutua para avanzar en esta investigación. La condición de atresia auricular del autor y el proceso de estimulación auditiva con DSP —desarrollado primero de forma intuitiva y refinado progresivamente con apoyo de plataformas de inteligencia artificial— constituyen el punto de partida para iniciar el estudio, con la proyección de expandirlo tanto a personas con deficiencias auditivas como sin ellas. Los conceptos, modelos y pseudocódigo aquí descritos pueden utilizarse libremente con fines educativos y de investigación, siempre que se cite adecuadamente la fuente. Las implementaciones de software, los datos experimentales y los desarrollos tecnológicos derivados están sujetos a las políticas de propiedad intelectual de las instituciones participantes.
+                </div>
+
+                <!-- FIRMA -->
+                <div class="firma">
+                    <p>Proyecto <strong>NewroSTaiR‑11</strong> · Semillero <strong>QRIOSITY</strong> · Grupo <strong>DIGITI</strong><br>
+                    Formalismo McDee‑11 aplicado al modelado de desfases en sensores inerciales de marcha humana.<br>
+                    Junio 2026.</p>
+                </div>
+
+            </div><!-- .documento-principal -->
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center;margin:15px 0 5px 0;"><img src="../img/qr_newrostair.png" alt="QR newrostair" style="width:180px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+            <p style="font-size:0.9rem;text-align:center;">📱 Escanea para compartir<br><strong>newrostair11</strong></p>
+            <hr>
+            <p style="font-weight:bold;color:#1e4a6b;margin:0 0 0.3rem 0;">📑 En esta página</p>
+            <div style="border: 2px dashed #e09d6f; padding: 0.8rem; border-radius: 16px; margin-bottom: 1rem;">
+                <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                    <li><a href="#alcance">📏 Alcance</a></li>
+                    <li><a href="#problema">🦿 Problema</a></li>
+                    <li><a href="#motivacion">🧠 Motivación</a></li>
+                    <li><a href="#contribuciones">💡 Contribuciones</a></li>
+                    <li><a href="#proyeccion">🔭 Proyección</a></li>
+                    <li><a href="#sensores">🧬 PID Adaptativos</a></li>
+                    <li><a href="#recursos">🔗 Recursos</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </aside>
     </div>
 
-    <!-- SECCIÓN 3: CONTRIBUCIONES -->
-    <div id="contribuciones">
-        <h2>2. 💡 Contribuciones Propuestas</h2>
-        <div class="section-box">
-            <ol>
-                <li><strong>Representación de desfases mediante espacio de estados acoplado:</strong> el retardo entre sensores se modela como una variable dinámica dentro de un sistema de estados interconectados.</li>
-                <li><strong>Interpretación del retardo como variable dinámica observable:</strong> se define una métrica de coherencia \(C(t)\) y una salida lineal \(y_{\text{lin}}(t)\) que permiten seguir la evolución del desfase.</li>
-                <li><strong>Relación entre coherencia temporal y modos espectrales:</strong> se predice que la interacción entre memoria e intercambio produce dos modos propios \(\omega_\pm\) observables mediante FFT.</li>
-                <li><strong>Arquitectura escalable para redes de IMU:</strong> la estructura de pares complementarios (α, β, γ) se replica en cada sensor y en cada nivel de agrupación.</li>
-                <li><strong>Hipótesis sobre operadores de memoria (M) e intercambio (E):</strong> se plantea la posible no conmutatividad \([M,E]\neq 0\) como una propiedad algebraica sujeta a verificación.</li>
-            </ol>
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link">🏠 newrostair11 (Inicio)</a></div>
+                    <ul class="submenu">
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link">🌱Origen, ▶️Misión y 🎥Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📝Marco Teórico</a></div>
+                            <ul class="submenu"><li><a href="../PI&FT.html">📘 Índice PI</a></li><li><a href="../McDee11-NFC.html">📐 McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link">🔎I+D y 📋Modelos de Negocio</a></div>
+                            <ul class="submenu"><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="../newrophome-11/index-np.html">📜 NewroPhome-11</a></li></ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link">📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEX. ESTRUCTURADA</div>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link">🧑‍🏫Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos y herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link">👋Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"><li><a href="../marco-conceptual/arqui-reg-dinam.html">⚙️ Arq. regulación</a></li><li><a href="../ensayo-evolucion/evol-intro.html">🌿 Evolución</a></li><li><a href="../06-Historia-Neuroplasticidad.html">📖 Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link">📝 Marco Teórico</a></div><ul class="submenu"><li><a href="../McDee11-NFC.html">📐 McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html">🧬 ADN</a></li><li><a href="../sonificacion.html">🎵 Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../pyh/pyh.html" class="module-link">🛠️Proyectos</a></div><ul class="submenu"><li><a href="../Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="../NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="../i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="propuesta-pidca-marcha.html">📐 Propuesta PIDCA</a></li><li><a href="../i+d/presentacion-mh-digiti.html">🚶‍♂️Marcha Humana</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚Bibliografía</a></div><ul class="submenu"><li><a href="../bibliografia-emojis.html#eje1">🌀 Eje 1</a></li><li><a href="../bibliografia-emojis.html#eje2">🧠 Eje 2</a></li><li><a href="../bibliografia-emojis.html#eje3">⚙️ Eje 3</a></li><li><a href="../bibliografia-emojis.html#eje4">🌿 Eje 4</a></li><li><a href="../bibliografia-emojis.html#eje5">🛠️ Eje 5</a></li><li><a href="../bibliografia-emojis.html#eje6">🌐 Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link">📡 Multimedia</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="../galeria.html">🖼️ Galería</a></li></ul></li>
+            </ul>
         </div>
     </div>
 
-    <!-- SECCIÓN 4: SENSORES COMO PID ADAPTATIVOS -->
-    <div id="sensores">
-        <h2>3. 🧬 Sensores como PID Adaptativos en Pares Complementarios</h2>
-
-        <p>A diferencia de un controlador PID clásico —que opera sobre una señal de error para minimizar desviaciones respecto a una referencia fija—, el formalismo McDee‑11 organiza <strong>pares complementarios de controladores PID adaptativos</strong> cuyo propósito no es corregir, sino <strong>representar, intercambiar y acumular información sobre los desfases</strong> que ocurren naturalmente entre sensores. En esta arquitectura, el desfase no se interpreta como una falla que deba eliminarse, sino como una variable dinámica que contiene información valiosa sobre el estado del sistema.</p>
-        <p>La denominación <em>PID adaptativo</em> se utiliza para destacar la presencia explícita de operaciones proporcionales, integrativas y derivativas sobre señales sensoriales. No implica que el sistema implemente necesariamente un controlador PID clásico destinado a la regulación de un error.</p>
-
-        <h3>3.1 Las componentes α, β y γ como operaciones P, I, D</h3>
-        <p>Cada IMU proporciona un flujo continuo de datos que puede descomponerse en tres operaciones dinámicas elementales:</p>
-        <ul>
-            <li><strong>α (Proporcional):</strong> lectura cruda instantánea de aceleración o velocidad angular. Matemáticamente captura el <strong>valor presente</strong> de la señal del sensor, es decir, la operación proporcional clásica aplicada directamente a la medición.</li>
-            <li><strong>β (Integral):</strong> representa el componente acumulativo o memorístico de la señal, obtenido mediante procesos de estimación de estado que incorporan integración temporal (filtros de fusión como Madgwick o Kalman).</li>
-            <li><strong>γ (Derivativo):</strong> tendencia o variación de la coherencia entre lecturas sucesivas. Mide la <strong>tasa de cambio</strong> de la similitud entre señales, lo que corresponde a una operación derivativa sobre la coherencia.</li>
-        </ul>
-        <p>Desde un punto de vista operacional, las tres funciones matemáticas —valor presente, acumulación histórica y tasa de cambio— corresponden a las operaciones proporcional, integrativa y derivativa empleadas en los controladores PID. Por esta razón, cada sensor puede representarse mediante una estructura PID adaptativa de carácter informacional, cuyas componentes son \(S_i = (\alpha_i, \beta_i, \gamma_i)\).</p>
-
-        <h3>3.2 Diferencias con el PID correctivo clásico</h3>
-        <p>La siguiente tabla resume la distinción fundamental:</p>
-        <table>
-            <thead><tr><th>Característica</th><th>PID Clásico (Corrector)</th><th>PID McDee‑11 (Representacional)</th></tr></thead>
-            <tbody>
-                <tr><td>Entrada</td><td>Error \(e(t) = r(t) - y(t)\)</td><td>Señal sensorial directa</td></tr>
-                <tr><td>Propósito</td><td>Minimizar la desviación</td><td>Caracterizar la dinámica del desfase</td></tr>
-                <tr><td>Salida</td><td>Acción de control</td><td>Estado informacional (α, β, γ)</td></tr>
-                <tr><td>Operación proporcional</td><td>Amplifica el error presente</td><td>Captura el valor instantáneo de la señal</td></tr>
-                <tr><td>Operación integral</td><td>Acumula errores pasados</td><td>Acumula historia de la señal (orientación)</td></tr>
-                <tr><td>Operación derivativa</td><td>Anticipa errores futuros</td><td>Detecta cambios en la coherencia</td></tr>
-                <tr><td>Contexto</td><td>Lazo cerrado de realimentación negativa</td><td>Red abierta de representación y acoplamiento</td></tr>
-            </tbody>
-        </table>
-
-        <p>En esencia, McDee‑11 emplea las mismas operaciones P, I y D que cualquier otro PID, pero las aplica sobre la señal de medición —no sobre un error— y las organiza en pares complementarios. La denominación <em>adaptativo</em> refleja que los coeficientes de ponderación pueden ajustarse según el contexto (fase de la marcha, tipo de terreno, etc.), y <em>complementario</em> indica que dos PIDs se acoplan para intercambiar información de manera bidireccional, sin anularse mutuamente.</p>
-
-        <!-- IMAGEN 2: Esquema conceptual α β γ -->
-        <div class="figure-box">
-            <img src="https://images.openai.com/static-rsc-4/BjTCWp0jLTDr_uTXzrjHXOWJrDTjRM11V2ncOBsQm91GMChJBsivB47zlkFVJuhgpjTsZlLR1FyRYowqck0dTXBQQl7J921pEMo3CPJTdHGN9DUwBVx62B0oX0LMsDClZO-8av11Yujy0AoYRUcymXLntUs_M2j4YiXOVJL19MyPL-LfIhYjIL0xrXmwFTvJ?purpose=fullsize" alt="Esquema conceptual de los coeficientes α, β, γ en una IMU como PID adaptativo" loading="lazy">
-            <div class="figure-caption">Figura 2. Representación de una IMU como PID adaptativo: α (valor instantáneo), β (acumulación histórica) y γ (tasa de cambio de coherencia).</div>
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center;margin:10px 0;"><img src="../img/qr_newrostair.png" alt="QR" style="width:120px;border-radius:12px;"></div>
+            <p style="font-size:0.8rem;text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <p style="font-weight:bold;color:#1e4a6b;">📑 En esta página</p>
+            <div style="border: 2px dashed #e09d6f; padding: 0.5rem; border-radius: 12px; margin-bottom: 0.5rem;">
+                <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                    <li><a href="#alcance">📏 Alcance</a></li>
+                    <li><a href="#problema">🦿 Problema</a></li>
+                    <li><a href="#motivacion">🧠 Motivación</a></li>
+                    <li><a href="#contribuciones">💡 Contribuciones</a></li>
+                    <li><a href="#proyeccion">🔭 Proyección</a></li>
+                    <li><a href="#sensores">🧬 PID Adaptativos</a></li>
+                    <li><a href="#recursos">🔗 Recursos</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
         </div>
-
-        <h3>3.3 Red de PIDs complementarios</h3>
-        <p>Una pierna (Procesador A o B) no es un solo PID, sino una <strong>red de micro‑PIDs complementarios</strong> que cooperan:</p>
-        <div class="equation">\[ P_A = \{S_{\text{muslo izq}}, S_{\text{tobillo izq}}\}, \qquad P_B = \{S_{\text{muslo der}}, S_{\text{tobillo der}}\} \]</div>
-        <p>Donde cada sensor \(S_i\) ya es un PID adaptativo completo con sus tres componentes. La complementariedad surge del intercambio de información entre los PIDs de una misma pierna y, en última instancia, entre las dos piernas a través del Hiperpiñón (siguiente módulo).</p>
     </div>
 
-    <!-- CIERRE DEL MÓDULO -->
-    <div class="section-box" style="text-align:center; margin-top:3rem;">
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            const folderLinks = document.querySelectorAll('.tree .folder > .module-row > .module-link');
+            const doubleClickDelay = 500;
+            folderLinks.forEach(link => {
+                const folder = link.closest('.folder');
+                if (!folder) return;
+                let clickCount = 0,
+                    clickTimer = null;
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    clickCount++;
+                    if (clickCount === 1) {
+                        clickTimer = setTimeout(() => { const href = link.getAttribute('href'); if (href && href !== '#')
+                                window.location.href = href;
+                            clickCount = 0; }, doubleClickDelay);
+                    } else if (clickCount === 2) {
+                        clearTimeout(clickTimer);
+                        clickCount = 0;
+                        const parentUl = folder.closest('ul');
+                        if (parentUl) { parentUl.querySelectorAll(':scope > .folder.open').forEach(f => { if (f !==
+                                    folder) f.classList.remove('open'); }); }
+                        folder.classList.toggle('open');
+                    }
+                });
+            });
 
-        <!-- IMAGEN 3: Vista previa del Hiperpiñón -->
-        <div class="figure-box">
-            <img src="https://images.openai.com/static-rsc-4/G6gSKYIRaL8cXkv6UlLiO5BJGXeJaVdbuScrtEVNrXYLpQ97RLVDQfZ__KHSBCSL-vCzCgmOx_T1moyDxcZAXl8whQMzOXHXcvdMuPLCp2XkfNgE0bX8TY1e_rJn3O4u5VqMP2CNetD431sMQUEAQm-xzXXSUChDv9cGGxZJFs2wDmnAamJ1LxM3ai_ykzTX?purpose=fullsize" alt="Vista previa conceptual del Hiperpiñón" loading="lazy">
-            <div class="figure-caption">Figura 3. Vista previa de la arquitectura de acoplamiento Hiperpiñón (siguiente módulo).</div>
-        </div>
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, ''),
+                    nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    tree.querySelectorAll('.folder').forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) { const href = enlace.getAttribute('href'); if (!
+                            href) continue; const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[
+                            0]; if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; } }
+                    if (enlaceActual) { enlaceActual.classList.add('current-page'); let elemento = enlaceActual.closest(
+                            '.folder'); while (elemento) { elemento.classList.add('open'); elemento = elemento
+                            .parentElement.closest('.folder'); } }
+                });
+            }
+            actualizarArbolSegunPagina();
 
-        <p style="font-size:1.1rem; color:#1e4a6b;"><strong>Fin de Fundamentos</strong></p>
-        <p>En este módulo se ha planteado el problema de los desfases en sensores IMU, se ha presentado la motivación experimental —basada en un proceso que comenzó de forma intuitiva con audios DSP y que evolucionó, con apoyo de IA, en tres campos interconectados—, se han enunciado las contribuciones del formalismo McDee‑11 y se ha justificado por qué cada sensor se modela como un PID adaptativo con componentes α (P), β (I) y γ (D). Se ha establecido la diferencia esencial entre el PID correctivo clásico y el PID representacional, preparando el terreno para la arquitectura de acoplamiento del Hiperpiñón.</p>
-        <p>El <strong>siguiente módulo</strong> presentará la arquitectura de acoplamiento de cuatro estados denominada Hiperpiñón, que permite modelar la interacción entre los dos procesadores (pierna izquierda y pierna derecha).</p>
-    </div>
+            const menuLeft = document.getElementById('menuLeft'),
+                menuRight = document.getElementById('menuRight'),
+                btnLeft = document.getElementById('menuLeftBtn'),
+                btnRight = document.getElementById('menuRightBtn');
 
-    <!-- NAVEGACIÓN ENTRE MÓDULOS (ANTERIOR/SIGUIENTE) -->
-    <div class="nav-modulos">
-        <a href="#" class="deshabilitado">← Anterior</a>
-        <a href="#modulo2">Siguiente: Arquitectura →</a>
-    </div>
+            function closeAll() { menuLeft.classList.remove('visible');
+                menuRight.classList.remove('visible'); }
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible'))
+                    menuLeft.classList.remove('visible');
+                else { closeAll();
+                    menuLeft.classList.add('visible'); } });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains(
+                    'visible')) menuRight.classList.remove('visible');
+                else { closeAll();
+                    menuRight.classList.add('visible'); } });
+            document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !
+                    menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
 
-    <!-- NOTA SOBRE PROPIEDAD INTELECTUAL, AUTORÍA Y VINCULACIÓN INSTITUCIONAL -->
-    <div class="note-box" style="margin-top:2rem;">
-        <strong>📜 Nota sobre divulgación, autoría y vinculación institucional.</strong> Este trabajo representa una aproximación a una posible implementación de la metodología McDee‑11 en el marco de investigación del <strong>Grupo DIGITI</strong> de la <strong>Facultad Tecnológica</strong> de la <strong>Universidad Distrital Francisco José de Caldas</strong>. El autor, Tecnólogo en Electrónica egresado de dicha Facultad hace más de diez años, retorna a su alma mater buscando colaboración mutua para avanzar en esta investigación. La condición de atresia auricular del autor y el proceso de estimulación auditiva con DSP —desarrollado primero de forma intuitiva y refinado progresivamente con apoyo de plataformas de inteligencia artificial— constituyen el punto de partida para iniciar el estudio, con la proyección de expandirlo tanto a personas con deficiencias auditivas como sin ellas. Los conceptos, modelos y pseudocódigo aquí descritos pueden utilizarse libremente con fines educativos y de investigación, siempre que se cite adecuadamente la fuente. Las implementaciones de software, los datos experimentales y los desarrollos tecnológicos derivados están sujetos a las políticas de propiedad intelectual de las instituciones participantes.
-    </div>
+            const langSelect = document.getElementById('langSelect');
 
-    <!-- FIRMA -->
-    <div class="firma">
-        <p>Proyecto <strong>NewroSTaiR‑11</strong> · Semillero <strong>QRIOSITY</strong> · Grupo <strong>DIGITI</strong><br>
-        Formalismo McDee‑11 aplicado al modelado de desfases en sensores inerciales de marcha humana.<br>
-        Junio 2026.</p>
-    </div>
+            function cambiarIdioma(lang) {
+                document.querySelectorAll('[data-es][data-en]').forEach(el => {
+                    el.textContent = el.getAttribute('data-' + lang);
+                });
+            }
+            langSelect.addEventListener('change', () => {
+                cambiarIdioma(langSelect.value);
+                localStorage.setItem('langPref', langSelect.value);
+            });
+            const savedLang = localStorage.getItem('langPref');
+            if (savedLang && savedLang !== langSelect.value) {
+                langSelect.value = savedLang;
+                cambiarIdioma(savedLang);
+            }
 
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn'),
+                stopBtn = document.getElementById('stopBtn'),
+                voiceSelect = document.getElementById('voiceSelect'),
+                scopeSelect = document.getElementById('scopeSelect'),
+                speedSelect = document.getElementById('speedSelect'),
+                voiceStatus = document.getElementById('voiceStatus'),
+                playPauseIcon = document.getElementById('playPauseIcon'),
+                playPauseLabel = document.getElementById('playPauseLabel'),
+                progressFill = document.getElementById('voiceProgressFill'),
+                progressText = document.getElementById('voiceProgressText');
+            let utterance = null,
+                isPaused = false,
+                isSpeaking = false,
+                voiceMap = {},
+                selectedVoice = null;
+
+            function getIntroText() { return 'Propuesta de Implementación PIDCA para modelado de desfases en sensores de marcha humana. Formalismo Integrador McDee-11. Alcance, problema, motivación, contribuciones y proyección de aplicación en biomecánica.'; }
+
+            function obtenerTextoActual() { return scopeSelect.value === 'intro' ? getIntroText() : getIntroText() +
+                    ' Planteamiento del problema real: contexto experimental, retardo entre sensores, pregunta de ingeniería. Motivación experimental y observación inicial. Contribuciones propuestas. Proyección de aplicación en biomecánica. Sensores como PID adaptativos en pares complementarios. Potencial de adaptación y tasa de adaptación. Diferencias con el PID correctivo clásico. Diagrama comparativo de arquitecturas. Red de PIDs complementarios. Recursos complementarios. Fin de la Propuesta PIDCA.'
+                    ; }
+
+            function construirVoiceMap() { const voces = synth.getVoices(); if (!voces.length) return; const spanish =
+                    voces.filter(v => v.lang.startsWith('es')),
+                    fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes(
+                        'mujer')),
+                    masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes(
+                        'hombre'));
+                voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc };
+                selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null;
+                voiceStatus.textContent = selectedVoice ? (langSelect.value === 'es' ? 'Voz lista' : 'Voice ready') : (
+                    langSelect.value === 'es' ? 'Sin voz compatible' : 'No compatible voice'); }
+            synth.onvoiceschanged = construirVoiceMap;
+            voiceSelect.addEventListener('change', () => { if (voiceMap[voiceSelect.value]) { if (isSpeaking) synth
+                        .cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false;
+                    isPaused = false;
+                    actualizarInterfaz('detenido'); } });
+
+            function actualizarInterfaz(estado) { if (estado === 'reproduciendo') { playPauseIcon.textContent = '⏸️';
+                    playPauseLabel.textContent = langSelect.value === 'es' ? 'Pausa' : 'Pause';
+                    stopBtn.disabled = false;
+                    playPauseBtn.classList.add('play-btn'); } else if (estado === 'pausado') { playPauseIcon
+                    .textContent = '▶';
+                    playPauseLabel.textContent = langSelect.value === 'es' ? 'Reanudar' : 'Resume';
+                    stopBtn.disabled = false;
+                    playPauseBtn.classList.remove('play-btn'); } else { playPauseIcon.textContent = '▶';
+                    playPauseLabel.textContent = langSelect.value === 'es' ? 'Escuchar' : 'Listen';
+                    stopBtn.disabled = true;
+                    playPauseBtn.classList.add('play-btn');
+                    progressFill.style.width = '0%';
+                    progressText.textContent = '0%'; } }
+
+            function crearNuevaUtterance(texto, onEnd) { const u = new SpeechSynthesisUtterance(texto); if (selectedVoice)
+                    u.voice = selectedVoice;
+                u.rate = parseFloat(speedSelect.value);
+                u.pitch = 1.0;
+                u.volume = 1;
+                u.onstart = () => { isSpeaking = true;
+                    actualizarInterfaz('reproduciendo'); };
+                u.onend = () => { if (onEnd) onEnd(); };
+                u.onerror = () => { isSpeaking = false;
+                    actualizarInterfaz('detenido');
+                    voiceStatus.textContent = langSelect.value === 'es' ? 'Error' : 'Error'; };
+                u.onpause = () => { isPaused = true;
+                    actualizarInterfaz('pausado'); };
+                u.onresume = () => { isPaused = false;
+                    actualizarInterfaz('reproduciendo'); };
+                u.onboundary = (e) => { if (e.name === 'word' || e.name === 'sentence') { const charIndex = e.charIndex ||
+                            0; const totalLength = texto.length; const progress = Math.min(100, Math.round((
+                            charIndex / totalLength) * 100));
+                        progressFill.style.width = progress + '%';
+                        progressText.textContent = progress + '%'; } }; return u; }
+
+            function iniciarLectura() { if (synth.speaking) synth.cancel(); if (!selectedVoice) { voiceStatus
+                    .textContent = langSelect.value === 'es' ? 'Seleccione una voz compatible' :
+                    'Select a compatible voice'; return; } const texto = obtenerTextoActual();
+                utterance = crearNuevaUtterance(texto, () => { isSpeaking = false;
+                    actualizarInterfaz('detenido');
+                    voiceStatus.textContent = langSelect.value === 'es' ? 'Listo' : 'Ready';
+                    progressFill.style.width = '100%';
+                    progressText.textContent = '100%'; });
+                synth.speak(utterance); }
+            playPauseBtn.addEventListener('click', () => { if (!isSpeaking && !isPaused) iniciarLectura(); else if (
+                    isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume(); });
+            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel();
+                isSpeaking = false;
+                isPaused = false;
+                actualizarInterfaz('detenido');
+                voiceStatus.textContent = langSelect.value === 'es' ? 'Detenido' : 'Stopped'; });
+            scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel();
+                    isSpeaking = false;
+                    isPaused = false;
+                    actualizarInterfaz('detenido'); } });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+            construirVoiceMap();
+        })();
+    </script>
 </body>
 </html>
