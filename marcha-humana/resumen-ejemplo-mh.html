@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen Ejecutivo · Ejemplo PIDCA-UMEAD · Marcha Humana</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== PLANTILLA UNIFICADA ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:180px; word-wrap:break-word; overflow-wrap:break-word; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+        .content,.sidebar-left,.sidebar-right { min-width:0; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:1rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.3rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.5rem; margin-bottom:1rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.3rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.2rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.4rem 0.6rem; border-radius:30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.8rem; cursor:pointer; user-select:none; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .submenu { display:none; margin-left:1.5rem; padding-left:0.8rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.75rem; display:block; padding:0.3rem 0.5rem 0.3rem 1rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.1rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:1rem 0; border-color:#b9c8dd; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-family:'Century Gothic','CenturyGothic','AppleGothic',sans-serif; font-size:3rem; font-weight:400; color:#FFFFF0; margin-bottom:0rem; }
+        .header-text-block p { font-size:0.9rem; color:#bbdfec; margin:0rem 0; }
+        .header-text-block .accesibilidad-header-text { font-size:1rem; color:#ffffff; margin-top:0.2rem; line-height:1.6; border-top:1px solid rgba(255,255,255,0.15); padding-top:0.6rem; font-style:normal; opacity:1; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; }
+        section[id],div[id],section.modulo { scroll-margin-top:100px; }
+
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+        .doc-lead { font-size:0.95rem; background:#f0f7ff; padding:0.8rem 1.2rem; border-left:4px solid #005a9c; margin:1.2rem 0; word-wrap:break-word; }
+
+        .indice-tarjetas { display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:0.8rem; margin:1.5rem 0; }
+        .tarjeta-indice { background:white; border-radius:16px; padding:0.6rem 0.4rem; text-align:center; text-decoration:none; color:#1e4a6b; border:1px solid #dce5ed; transition:transform 0.2s, box-shadow 0.2s; display:flex; flex-direction:column; align-items:center; gap:0.3rem; font-size:0.75rem; font-weight:600; }
+        .tarjeta-indice:hover { transform:translateY(-3px); box-shadow:0 6px 14px rgba(0,0,0,0.08); border-color:#2c7da0; background:#f0f4ff; }
+        .tarjeta-indice .emoji { font-size:1.4rem; }
+
+        .btn-documento { display:inline-block; background:#1e4a6b; color:white; text-decoration:none; padding:0.6rem 1.5rem; border-radius:40px; font-weight:600; font-size:0.9rem; transition:background 0.2s; margin:0.3rem 0.3rem 0.3rem 0; }
+        .btn-documento:hover { background:#0a3146; }
+        .btn-documento.secundario { background:#e6edf4; color:#1a4d6b; border:1px solid #cbdae6; }
+        .btn-documento.secundario:hover { background:#d4e0ea; }
+
+        .doc-table-wrapper { overflow-x:auto; width:100%; margin:1rem 0; }
+        .doc-table { display:table; width:max-content; min-width:100%; border-collapse:collapse; }
+        .doc-table th,.doc-table td { border:1px solid #ddd; padding:0.4rem 0.6rem; text-align:left; vertical-align:top; }
+        .doc-table th { background-color:#005a9c; color:white; }
+
+        /* Menús flotantes */
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1150; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:1rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        /* Barra de voz */
+        .voice-floating-bar {
+            position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
+            z-index:1100;
+            background:rgba(255,255,255,0.97); backdrop-filter:blur(12px);
+            border-radius:16px; padding:0.3rem 0.6rem;
+            display:grid;
+            grid-template-columns:auto auto auto auto;
+            grid-template-rows:auto;
+            gap:0.2rem 0.3rem;
+            justify-content:center; align-items:center;
+            box-shadow:0 8px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(30,74,107,0.15);
+            max-width:95vw;
+            border:1px solid #cbd5e1;
+        }
+        .voice-floating-bar .voice-btn {
+            background:#ffffff; border:1px solid #b9c8dd; border-radius:20px;
+            padding:0.2rem 0.6rem; font-family:'Georgia',serif; font-size:0.7rem;
+            color:#1e4a6b; cursor:pointer;
+            display:flex; align-items:center; justify-content:center; gap:0.2rem;
+            transition:all 0.25s ease; min-width:40px; flex-shrink:0; line-height:1;
+        }
+        .voice-floating-bar .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
+        .voice-floating-bar .voice-btn:disabled { opacity:0.4; pointer-events:none; }
+        .voice-floating-bar .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
+        .voice-floating-bar .voice-btn.play-btn:hover { background:#163d5c; }
+        .voice-progress-container {
+            grid-column:1 / -1; display:flex; align-items:center; gap:0.3rem;
+            width:100%; margin-top:0.1rem;
+        }
+        .voice-progress-bar { flex:1; height:4px; background:#e2e8f0; border-radius:4px; overflow:hidden; }
+        .voice-progress-fill {
+            height:100%; width:0%; background:linear-gradient(90deg, #1e4a6b, #3e92cc);
+            transition:width 0.3s ease; border-radius:4px;
+        }
+        .voice-progress-text { font-size:0.6rem; color:#2c5a7a; min-width:32px; text-align:right; }
+        .voice-floating-bar .voice-status {
+            font-size:0.7rem; color:#2c5a7a; font-style:italic;
+            display:flex; align-items:center; gap:0.2rem; flex-shrink:1; min-width:0;
+            grid-column:1 / -1; justify-content:center; margin-top:0.1rem;
+        }
+        .voice-floating-bar .voice-status::before { content:"🔊"; font-style:normal; }
+        .voice-floating-bar .voice-select,
+        .voice-floating-bar .voice-scope-select,
+        .voice-floating-bar .voice-speed-select {
+            background:#ffffff; border:1px solid #b9c8dd; border-radius:20px;
+            padding:0.2rem 0.4rem; font-family:'Georgia',serif;
+            font-size:0.65rem; color:#1e4a6b; cursor:pointer; outline:none; flex-shrink:0;
+        }
+        .voice-floating-bar .voice-select { max-width:100px; }
+        .voice-floating-bar .voice-scope-select { max-width:150px; }
+        .voice-floating-bar .voice-speed-select { max-width:60px; }
+
+        .back-button { display:block; text-align:center; margin-bottom:1rem; }
+        .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.85rem; transition:background 0.2s,border-color 0.2s; }
+        .back-button a:hover { background:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+
+        img { max-width:100%; height:auto; }
+        .menu-desplegable img { width:120px; max-width:100%; }
+        .highlight-reading { background-color:#fff3cd !important; border-left:4px solid #e09d6f !important; font-weight:bold !important; }
+
+        @media (max-width:1000px) {
+            .main-grid { grid-template-columns:1fr; }
+            .sidebar-left,.sidebar-right { display:none; }
+            .menu-flotante-left,.menu-flotante-right { display:block; bottom:150px; }
+            .menu-desplegable { bottom:80px; max-height:calc(100vh - 250px); }
+        }
+        @media (max-width:700px) { .content { padding:1.2rem; } .formula { font-size:1rem; padding:0.8rem; } }
+        @media (max-width:600px) {
+            .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:50px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.8rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.75rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:120px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:150px; }
+            .menu-desplegable { bottom:70px; max-height:calc(100vh - 220px); }
+            .indice-tarjetas { grid-template-columns:1fr 1fr; }
+            .voice-floating-bar {
+                bottom:0; left:0; right:0; transform:none; width:100%; max-width:100%;
+                grid-template-columns:1fr 1fr 1fr; gap:4px; padding:4px;
+                border-radius:10px 10px 0 0;
+                font-size:0.75rem;
+            }
+            .voice-floating-bar .voice-btn { font-size:0.7rem; padding:6px 8px; min-width:44px; }
+            .voice-floating-bar .voice-select,
+            .voice-floating-bar .voice-scope-select,
+            .voice-floating-bar .voice-speed-select { font-size:0.65rem; padding:4px 6px; max-width:100%; width:100%; }
+            .voice-floating-bar .voice-status { font-size:0.65rem; }
+            .voice-progress-container { grid-column:1 / -1; }
+            .voice-floating-bar .voice-scope-select { max-width:none; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <!-- ===== BARRA DE VOZ ===== -->
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <button id="playPauseBtn" class="voice-btn play-btn" aria-label="Reproducir lectura"><span id="playPauseIcon" aria-hidden="true">▶</span></button>
+        <button id="stopBtn" class="voice-btn" disabled aria-label="Detener lectura"><span aria-hidden="true">⏹️</span></button>
+        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+            <option value="fem_es">Fem (Esp)</option>
+            <option value="fem_lat" selected>Fem (Lat)</option>
+            <option value="masc_es">Masc (Esp)</option>
+            <option value="masc_lat">Masc (Lat)</option>
+        </select>
+        <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
+            <option value="0.7">0.7x</option>
+            <option value="0.85">0.85x</option>
+            <option value="1" selected>1x</option>
+            <option value="1.2">1.2x</option>
+            <option value="1.5">1.5x</option>
+        </select>
+        <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar sección">
+            <option value="A">Doc. completo</option>
+            <option value="B">Introducción</option>
+            <option value="C">Cap. 1: Contexto</option>
+            <option value="D">Cap. 2: Propuesta</option>
+            <option value="E">Cap. 3: Mecanismos</option>
+            <option value="F">Cap. 4: Aplicación</option>
+            <option value="G">Cap. 5: DIGITI</option>
+            <option value="H">Cap. 6: Estado</option>
+            <option value="I">Cap. 7: Documentos</option>
+        </select>
+        <div class="voice-progress-container">
+            <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso de lectura"></div></div>
+            <span class="voice-progress-text" id="voiceProgressText">0%</span>
+        </div>
+        <div class="voice-status" id="voiceStatus" aria-live="polite">Listo</div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="../index.html" class="logo-main"><img src="../img/Logo-Ns.png" alt="Logo Principal - Ir a Inicio"></a>
+            <div class="header-text-block">
+                <h1>newrostair11</h1>
+                <p>Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text"><span aria-hidden="true">🧩</span> Este sitio web integra iconos semánticos como <span aria-hidden="true">🧠</span><strong>anclajes cognitivos</strong>. Con el fin de promover una <span aria-hidden="true">📖</span>lectura inclusiva<span aria-hidden="true">🌈</span>.</p>
+            </div>
+            <a href="../elipso/elipso.html" class="logo-main"><img src="../img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso"></a>
+        </div>
+    </header>
+
+    <!-- ===== MAIN GRID ===== -->
+    <div class="main-grid">
+        <!-- SIDEBAR IZQUIERDO -->
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <h4>🗺️ Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link"><span aria-hidden="true">🏠</span> newrostair11 (Inicio)</a></div>
+                    <ul class="submenu">
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link"><span aria-hidden="true">🌱</span>Origen, <span aria-hidden="true">▶️</span>Misión y <span aria-hidden="true">🎥</span>Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link"><span aria-hidden="true">📜</span>​Fundamentos y <span aria-hidden="true">📝</span>Marco Teórico</a></div>
+                            <ul class="submenu">
+                                <li><a href="../PI&FT.html"><span aria-hidden="true">📘</span> Índice de documentos PI</a></li>
+                                <li><a href="../McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="../McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li>
+                                <li><a href="../sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link"><span aria-hidden="true">🔎</span>I+D y <span aria-hidden="true">📋</span>Modelos de Negocio</a></div>
+                            <ul class="submenu">
+                                <li><a href="../i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                                <li><a href="../newrophome-11/index-np.html"><span aria-hidden="true">📜</span> Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link"><span aria-hidden="true">📚</span>Bibliografía Temática</a></div><ul class="submenu"></ul></li>
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEXIBILIDAD ESTRUCTURADA</div>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link"><span aria-hidden="true">🎨</span>Arte y Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span>Marco Conceptual</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos y Herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link"><span aria-hidden="true">📱</span> Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span> Marco Conceptual</a></div><ul class="submenu"><li><a href="../marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arquitecturas de regulación dinámica</a></li><li><a href="../ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución y Teorías Modernas</a></li><li><a href="../06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Historia de la Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link"><span aria-hidden="true">📝</span> Marco Teórico</a></div><ul class="submenu"><li><a href="../McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11 (Núcleo completo)</a></li><li><a href="../McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li><li><a href="../sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos y herramientas</a></div>
+                    <ul class="submenu">
+                        <li><a href="../Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li>
+                        <li><a href="../NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li>
+                        <li><a href="../i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                        <li><a href="../newrophome-11/index-np.html"><span aria-hidden="true">📜</span> Proyecto NewroPhome-11</a></li>
+                        <li><a href="../i+d/presentacion-mh-digiti.html">Proyecto <span aria-hidden="true">🚶‍♂️</span>Marcha <span aria-hidden="true">🚶</span>Humana</a></li>
+                        <li><a href="../docs/grupos-abc.html"><span aria-hidden="true">📊</span> Tabla de Grupos ABC</a></li>
+                        <li><a href="../pagina-en-desarrollo.html"><span aria-hidden="true">🎛️</span> Método DSP</a></li>
+                        <li><a href="../07-Era-Humano-IA.html"><span aria-hidden="true">🗣️</span> Humano IA</a></li>
+                    </ul>
+                </li>
+                <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;"><span aria-hidden="true">📚</span>Bibliografía Temática</a></div><ul class="submenu"><li><a href="../bibliografia-emojis.html#eje1"><span aria-hidden="true">🌀</span> Eje 1</a></li><li><a href="../bibliografia-emojis.html#eje2"><span aria-hidden="true">🧠</span> Eje 2</a></li><li><a href="../bibliografia-emojis.html#eje3"><span aria-hidden="true">⚙️</span> Eje 3</a></li><li><a href="../bibliografia-emojis.html#eje4"><span aria-hidden="true">🌿</span> Eje 4</a></li><li><a href="../bibliografia-emojis.html#eje5"><span aria-hidden="true">🛠️</span> Eje 5</a></li><li><a href="../bibliografia-emojis.html#eje6"><span aria-hidden="true">🌐</span> Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link"><span aria-hidden="true">📡</span> Multimedia y enlaces externos</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs"><span aria-hidden="true">🎶</span> YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo"><span aria-hidden="true">🎶</span> TikTok</a></li><li><a href="../galeria.html"><span aria-hidden="true">🖼️</span> Galería completa</a></li></ul></li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;">📍 Estás en: <strong>Ejemplo implementación PIDCA-UMEAD-Marcha Humana · (Resumen)</strong></p>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <main class="content" id="mainContent">
+            <h1 style="font-size:1.8rem; border-bottom:2px solid #005a9c; padding-bottom:0.2rem;">Ejemplo implementación PIDCA-UMEAD para el Análisis de Marcha Humana</h1>
+
+            <p class="doc-lead" id="docLead">
+                <strong>Resumen ejecutivo</strong><br>
+                <span aria-hidden="true">📌</span> Este documento presenta un hipotético ejemplo de aplicación del modelo matemático MCDEE‑11 en el análisis de la marcha humana. El ejemplo propuesto no necesariamente cumple con requerimientos reales del Grupo de Investigación DIGITI. Se presenta como <strong>puente conceptual</strong> entre el modelo matemático y una posible aplicación en el estudio de la marcha humana utilizando los métodos y conceptos de la arquitectura PIDCA y el doble par complementario (UMEAD).
+            </p>
+
+            <div style="font-size:0.9rem; background:#f8f4f0; padding:0.5rem 1rem; border-left:4px solid #b97341; margin:0.5rem 0 1.5rem 0; border-radius:8px;">
+                <strong><span aria-hidden="true">📅</span> Junio 2026</strong> &nbsp;·&nbsp; <span aria-hidden="true">👤</span> <strong>Andru Stiven Rodríguez Bustos</strong> &nbsp;·&nbsp; <span aria-hidden="true">🏛️</span> Tecnólogo en Electrónica · Egresado Facultad Tecnológica · Universidad Distrital "Francisco José de Caldas"
+            </div>
+
+            <!-- BLOQUE DE AUTORÍA -->
+            <div style="font-size:0.9rem; background:#f0f4f8; padding:0.5rem 1rem; border-left:4px solid #1a4a6b; margin:0.5rem 0 1.5rem 0; border-radius:8px;">
+                <strong><span aria-hidden="true">📌</span> Sobre la autoría y la colaboración:</strong> La presente propuesta se comparte como una iniciativa de colaboración abierta entre el proyecto NewroSTaiR-11 y el Grupo de Investigación DIGITI de la Universidad Distrital Francisco José de Caldas. Su propósito es evaluar el alcance descriptivo y la posible capacidad predictiva del formalismo McDee-11 en el análisis de la marcha humana, así como establecer condiciones objetivas que permitan validarlo, modificarlo o refutarlo experimentalmente. El formalismo, la documentación conceptual y los desarrollos asociados se encuentran disponibles públicamente en el repositorio donde se aloja este documento, junto con sus respectivos enlaces y materiales complementarios. La propuesta busca promover la construcción conjunta de conocimiento que permita evaluar rigurosamente el alcance, las limitaciones y la posible aplicabilidad de la arquitectura planteada. La participación del Grupo DIGITI se concibe como una oportunidad de colaboración mutua, integrando la experiencia del grupo en biomecánica, sensores inerciales y análisis de marcha con el desarrollo conceptual y matemático realizado dentro del proyecto NewroSTaiR-11.
+            </div>
+
+            <!-- UMBRAL DE LECTURA: NATURALEZA DEL FORMALISMO -->
+            <div style="background:#f4f8fc; border-left:4px solid #2c7da0; padding:1rem 1.8rem; border-radius:16px; margin:1.5rem 0; font-size:0.95rem;" id="naturaleza-formalismo">
+                <h2 style="margin-top:0; border-bottom:1px solid #b9c8dd; padding-bottom:0.3rem; font-size:1.1rem;">Naturaleza del formalismo y lectura del modelo McDee-11</h2>
+                <p>El formalismo que se desarrolla en este documento <strong>se propone como un marco de análisis de organización dinámica de sistemas</strong>, más que como un modelo matemático cerrado en sentido clásico. En este contexto, las herramientas formales (PIDCA y UMEAD) describen relaciones estructurales entre estados y no únicamente transformaciones algebraicas de variables.</p>
+                <p>El nombre del modelo McDee-11 (Multi Convolución y Discretización de Estados Emergentes) <strong>se propone interpretarse como una designación conceptual del tipo de procesos que el marco intenta capturar</strong>, y no como la imposición de operaciones matemáticas estrictas en el sentido técnico de la teoría de señales o la cuantización de sistemas dinámicos.</p>
+                <p>En particular, el término <em>multiconvolución</em> se utiliza aquí para referirse a la <strong>interacción multiescala de relaciones dinámicas entre variables acopladas</strong>, mientras que la noción de <em>estados emergentes</em> hace referencia a la aparición de configuraciones estables o recurrentes dentro de la dinámica del sistema. Estos estados no se asumen como discretizaciones en sentido algebraico, sino como <strong>regímenes de coherencia organizacional</strong> que pueden ser identificados y descritos a través de su estabilidad estructural.</p>
+                <p>Desde esta perspectiva, McDee-11 nombra un enfoque de observación donde el interés principal no es la evolución puntual de las señales, sino la forma en que dichas señales contribuyen a la formación de estructuras relacionales estables a través de múltiples escalas de interacción.</p>
+            </div>
+
+            <h2 id="indice">0. Índice de contenidos</h2>
+            <div class="indice-tarjetas">
+                <a href="#contexto" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🔺</span> 1. Contexto</a>
+                <a href="#propuesta" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🧬</span> 2. Propuesta</a>
+                <a href="#mecanismos" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🔄</span> 3. Mecanismos</a>
+                <a href="#aplicacion" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🧬</span> 4. Aplicación</a>
+                <a href="#digiti" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🔍</span> 5. DIGITI</a>
+                <a href="#estado" class="tarjeta-indice"><span class="emoji" aria-hidden="true">📋</span> 6. Estado</a>
+                <a href="#documentos" class="tarjeta-indice"><span class="emoji" aria-hidden="true">📚</span> 7. Documentos</a>
+            </div>
+
+            <!-- 1. CONTEXTO -->
+            <h2 id="contexto">1. Contexto y motivación</h2>
+            <p>En el análisis de marcha con sensores inerciales (IMU), la variabilidad entre ciclos suele tratarse como ruido. Sin embargo, estudios recientes —incluyendo el trabajo del <strong>Grupo DIGITI</strong> sobre desalineación protésica— muestran que esta variabilidad contiene información sobre reorganización funcional y estrategias de compensación del sistema motor.</p>
+            <p>La hipótesis que guía esta propuesta es que parte de la variabilidad observada podría ser útil para análisis más profundos. Eventualmente, podría convertirse en una herramienta para anticipar cambios o medir con mayor objetividad la reorganización funcional relacional.</p>
+
+            <!-- 2. PROPUESTA (con definición final de PIDCA) -->
+            <h2 id="propuesta">2. Propuesta de análisis: arquitectura PIDCA y UMEAD</h2>
+            <p>Se propone una arquitectura de análisis basada en dos conceptos complementarios:</p>
+            <div style="background:#f0f8fc; border-radius:12px; padding:0.8rem 1.2rem; margin:0.5rem 0; border-left:4px solid #1a5276;">
+                <p style="font-weight:bold; margin:0;">El método PIDCA</p>
+                <p style="margin:0.2rem 0 0 0; font-size:0.95rem;">Arquitectura operacional inspirada en un controlador PID clásico. Su propósito es <strong>representar, integrar y correlacionar relaciones dinámicas entre señales</strong> para suavizar y, eventualmente, anticipar la respuesta del sistema ante perturbaciones, en lugar de corregir errores. Componentes: <strong>α (P)</strong> valor instantáneo, <strong>β (I)</strong> memoria acumulada, <strong>γ (D)</strong> respuesta derivada.</p>
+            </div>
+            <div style="background:#fcf4e8; border-radius:12px; padding:0.8rem 1.2rem; margin:0.5rem 0; border-left:4px solid #b97341;">
+                <p style="font-weight:bold; margin:0;">La UMEAD (Unidad Mínima de Equilibrio Adaptativo Dinámico)</p>
+                <p style="margin:0.2rem 0 0 0; font-size:0.95rem;">Estructura funcional recursiva basada en pares complementarios. Opera mediante dos lazos de control que interactúan, identificados como <strong>lazo A</strong> y <strong>lazo B</strong>. En una capa dada <em>n</em>, las variables se denotan:</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 1rem; margin:0.3rem 0 0 0; font-size:0.95rem;">
+                    <div><strong>α<sub>a,n</sub></strong> · presente (lazo A)</div><div><strong>α<sub>b,n</sub></strong> · presente (lazo B)</div>
+                    <div><strong>β<sub>a,n</sub></strong> · memoria (lazo A)</div><div><strong>β<sub>b,n</sub></strong> · memoria (lazo B)</div>
+                    <div><strong>γ<sub>a,n</sub></strong> · respuesta derivada (lazo A)</div><div><strong>γ<sub>b,n</sub></strong> · respuesta derivada (lazo B)</div>
+                </div>
+            </div>
+
+            <!-- 🔁 DINÁMICA INTERNA DEL DOBLE PAR COMPLEMENTARIO -->
+            <div style="background:#f4f8fc; border-radius:12px; padding:1rem 1.5rem; margin:1rem 0; border-left:4px solid #2c7da0;">
+                <p style="font-weight:bold; margin:0 0 0.5rem 0; color:#1a5276;"><span aria-hidden="true">🔁</span> Dinámica interna del doble par complementario</p>
+                <p style="margin:0; font-size:0.95rem;">En cada capa <em>n</em>, la UMEAD se organiza en dos lazos complementarios que operan en paralelo:</p>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 1rem; margin:0.5rem 0 0 0; font-size:0.95rem;">
+                    <div style="background:#e8f0f8; padding:0.5rem 0.8rem; border-radius:8px;">
+                        <strong>Lazo A:</strong> α<sub>a,n</sub> ↔ β<sub>a,n</sub> → γ<sub>a,n</sub>
+                    </div>
+                    <div style="background:#e8f0f8; padding:0.5rem 0.8rem; border-radius:8px;">
+                        <strong>Lazo B:</strong> α<sub>b,n</sub> ↔ β<sub>b,n</sub> → γ<sub>b,n</sub>
+                    </div>
+                </div>
+                <p style="margin:0.8rem 0 0 0; font-size:0.95rem;">En ambos lazos, <strong>α y β se complementan mutuamente</strong> (de ahí la doble flecha), y a partir de esa interacción emerge <strong>γ como respuesta derivada del sistema, incorporando tanto la variación instantánea como la influencia de su historia reciente</strong>. Las componentes γ<sub>a,n</sub> y γ<sub>b,n</sub> no son entradas externas, sino <strong>salidas estabilizadas</strong> de cada lazo que reflejan la dinámica interna completa de cada subsistema.</p>
+                <p style="margin:0.5rem 0 0 0; font-size:0.95rem;">La relación entre ambas respuestas derivadas, γ<sub>a,n</sub> ↔ γ<sub>b,n</sub>, no se interpreta como un acoplamiento directo de control, sino como una <strong>relación de correspondencia estructural</strong>, de la cual se deriva el indicador de capa Γ<sub>n</sub>.</p>
+            </div>
+
+            <!-- NOTA SOBRE COMPLEMENTARIEDAD CONTEXTUAL -->
+            <div style="background:#fefaf0; border-radius:12px; padding:0.8rem 1.5rem; margin:1rem 0; border-left:4px solid #e0a030; font-size:0.95rem;">
+                <strong>Sobre la naturaleza del par complementario:</strong> La complementariedad entre α y β no es estrictamente algebraica; puede ser temporal, espacial, funcional, biomecánica o de cualquier otro tipo, según el contexto de análisis. El doble par complementario surge cuando un primer par (α<sub>a</sub>, β<sub>a</sub>) da origen a un segundo par (α<sub>b</sub>, β<sub>b</sub>), y cada uno produce su propia respuesta derivada. Esta flexibilidad es la que permite que la UMEAD se aplique a dominios tan diversos como la instrumentación inercial, la coordinación motora o la integración sensorial.
+            </div>
+
+            <!-- DIAGRAMA UMEAD CON TRANSICIÓN ENTRE CAPAS -->
+            <div style="background:#eaf6f0; padding:1rem 1.5rem; border-radius:16px; border:1px solid #b9d4c4; margin:1rem 0; text-align:center; font-family:'Courier New', monospace; font-size:0.9rem; line-height:1.8;">
+                <div style="font-weight:bold; color:#1a4a6b; margin-bottom:0.5rem; font-family:Georgia, serif;">Estructura de la UMEAD (capa genérica)</div>
+                <div style="display:flex; justify-content:center; align-items:center; gap:2rem; flex-wrap:wrap;">
+                    <div style="text-align:center;">
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">α<sub>a</sub></span>
+                        <span style="display:inline-block; font-size:1.2rem; margin:0 0.2rem;">↔</span>
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">β<sub>a</sub></span>
+                        <div style="margin:0.2rem 0;">→</div>
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">γ<sub>a</sub></span>
+                    </div>
+                    <div style="text-align:center;">
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">α<sub>b</sub></span>
+                        <span style="display:inline-block; font-size:1.2rem; margin:0 0.2rem;">↔</span>
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">β<sub>b</sub></span>
+                        <div style="margin:0.2rem 0;">→</div>
+                        <span style="display:inline-block; background:white; padding:0.3rem 0.8rem; border-radius:8px; border:1px solid #b9c8dd; margin:0.2rem;">γ<sub>b</sub></span>
+                    </div>
+                </div>
+                <div style="margin:0.5rem 0;">
+                    <span style="display:inline-block; background:white; padding:0.3rem 1.5rem; border-radius:8px; border:1px solid #b9c8dd; font-weight:bold;">γ<sub>a</sub> ↔ γ<sub>b</sub></span>
+                </div>
+                <div style="margin:0.5rem 0; font-family:Georgia, serif; color:#1a4a6b;">
+                    Γ ≡ Δγ <span style="font-size:0.8rem;">(indicador de capa: contraste estructural entre γ<sub>a</sub> y γ<sub>b</sub>)</span>
+                </div>
+                <div style="margin-top:0.8rem; font-family:Georgia, serif; font-size:0.85rem; color:#1a4a6b; border-top:1px solid #b9d4c4; padding-top:0.8rem;">
+                    <em>Γ actúa como un indicador de capa emergente que describe la organización relacional entre las respuestas derivadas complementarias de la capa <strong>n</strong>, sin participar en la dinámica de transición entre capas.<br>
+                    Al cambiar de capa, γ<sub>a,n</sub> y γ<sub>b,n</sub> se reinterpretan como α<sub>a,n+1</sub> y β<sub>a,n+1</sub> (lazo A de la nueva capa). A partir de este nuevo par complementario se genera, de forma complementaria, el segundo par α<sub>b,n+1</sub> y β<sub>b,n+1</sub> (lazo B), recreando así la estructura de doble lazo que produce γ<sub>a,n+1</sub>, γ<sub>b,n+1</sub> y el indicador Γ<sub>n+1</sub>. Esta transición no es una transformación algebraica directa, sino un proceso de reorganización funcional análogo a la autopoiesis.</em>
+                </div>
+            </div>
+
+            <p style="font-size:0.9rem; background:#f0f8fc; padding:0.3rem 1rem; border-left:4px solid #1a5276; margin:0.5rem 0;">
+                <strong>Nota sobre notación:</strong> Los subíndices <em>a</em>, <em>b</em> identifican los lazos complementarios; el número indica la capa de complejidad. Γ<sub>n</sub> es un <strong>indicador de capa</strong>, no una variable dinámica. Δγ no representa una derivada, sino un <strong>operador de contraste estructural</strong> entre respuestas derivadas complementarias (γ<sub>a,n</sub> y γ<sub>b,n</sub>).
+            </p>
+
+            <!-- 3. MECANISMOS -->
+            <h2 id="mecanismos">3. Mecanismos de aumento de complejidad</h2>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1rem 0;">
+                <div style="background:white; border-radius:16px; padding:1rem 1.2rem; border:1px solid #dce5ed;">
+                    <div style="font-weight:bold; color:#1a4a6b;"><span aria-hidden="true">🔄</span> Autopoiesis (crecimiento interno)</div>
+                    <p style="font-size:0.95rem; margin:0.5rem 0 0 0;">La UMEAD incrementa su complejidad generando nuevos lazos de control conservando su coherencia organizacional.</p>
+                </div>
+                <div style="background:white; border-radius:16px; padding:1rem 1.2rem; border:1px solid #dce5ed;">
+                    <div style="font-weight:bold; color:#1a4a6b;"><span aria-hidden="true">🔗</span> Acoplamiento estructural (crecimiento relacional)</div>
+                    <p style="font-size:0.95rem; margin:0.5rem 0 0 0;">Dos o más UMEAD establecen relaciones estables que permiten la emergencia de una organización de mayor complejidad.</p>
+                </div>
+            </div>
+            <p style="font-size:0.95rem;">Ambos mecanismos conservan la identidad funcional de la UMEAD mientras aumentan su riqueza de relaciones. Se inspiran en los conceptos de <strong>autopoiesis</strong> y <strong>acoplamiento estructural</strong> de Humberto Maturana y Francisco Varela.</p>
+            <div style="background:#f0f4ff; border-left:6px solid #2c7da0; padding:1rem 1.8rem; border-radius:16px; margin:1.5rem 0;">
+                <strong>Idea clave:</strong> La organización se conserva mientras la estructura cambia. La variabilidad no es ruido, sino el vehículo a través del cual el sistema se reorganiza funcionalmente.
+            </div>
+
+            <!-- 4. APLICACIÓN (capas) -->
+            <h2 id="aplicacion">4. Aplicación al análisis de marcha: estratificación de capas</h2>
+            <p>El modelo se aplica recursivamente en diferentes capas de complejidad. En cada cambio de capa, <strong>γ<sub>a,n</sub> y γ<sub>b,n</sub> se transforman conceptualmente en los nuevos pares α, β de la capa siguiente</strong>, tanto para el lazo A como para el B. El número indica la capa de descripción, no una derivada. Γ<sub>n</sub> actúa únicamente como <strong>indicador de capa emergente</strong> para esa capa.</p>
+            <div class="doc-table-wrapper">
+                <table class="doc-table">
+                    <thead><tr><th>Capa <em>n</em></th><th>Componentes (lazo A / lazo B)</th><th>Proceso</th><th>Resultado</th><th>Transición a capa <em>n+1</em></th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Capa 1 (IMU)</strong></td>
+                            <td>α<sub>a,1</sub>, β<sub>a,1</sub>, γ<sub>a,1</sub><br>α<sub>b,1</sub>, β<sub>b,1</sub>, γ<sub>b,1</sub></td>
+                            <td>Procesamiento en paralelo</td>
+                            <td>γ<sub>a,1</sub>, γ<sub>b,1</sub> → Γ₁</td>
+                            <td>γ<sub>a,1</sub>, γ<sub>b,1</sub> → α<sub>a,2</sub>, β<sub>a,2</sub> y α<sub>b,2</sub>, β<sub>b,2</sub></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capa 2 (Pierna con dos IMU)</strong></td>
+                            <td>α<sub>a,2</sub>, β<sub>a,2</sub>, γ<sub>a,2</sub><br>α<sub>b,2</sub>, β<sub>b,2</sub>, γ<sub>b,2</sub></td>
+                            <td>Interacción de dos lazos</td>
+                            <td>γ<sub>a,2</sub>, γ<sub>b,2</sub> → Γ₂</td>
+                            <td>γ<sub>a,2</sub>, γ<sub>b,2</sub> → α<sub>a,3</sub>, β<sub>a,3</sub> y α<sub>b,3</sub>, β<sub>b,3</sub></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capa 3 (Ambas piernas, cuatro IMU)</strong></td>
+                            <td>α<sub>a,3</sub>, β<sub>a,3</sub>, γ<sub>a,3</sub><br>α<sub>b,3</sub>, β<sub>b,3</sub>, γ<sub>b,3</sub></td>
+                            <td>Acoplamiento entre piernas</td>
+                            <td>γ<sub>a,3</sub>, γ<sub>b,3</sub> → Γ₃</td>
+                            <td>γ<sub>a,3</sub>, γ<sub>b,3</sub> → α<sub>a,4</sub>, β<sub>a,4</sub> y α<sub>b,4</sub>, β<sub>b,4</sub></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capa 4 (Extremidades + cadera)</strong></td>
+                            <td>α<sub>a,4</sub>, β<sub>a,4</sub>, γ<sub>a,4</sub><br>α<sub>b,4</sub>, β<sub>b,4</sub>, γ<sub>b,4</sub></td>
+                            <td>Integración con más subsistemas</td>
+                            <td>γ<sub>a,4</sub>, γ<sub>b,4</sub> → Γ₄</td>
+                            <td>γ<sub>a,4</sub>, γ<sub>b,4</sub> → α<sub>a,5</sub>, β<sub>a,5</sub> y α<sub>b,5</sub>, β<sub>b,5</sub></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capa <em>n</em> (organización global definida por el contexto de análisis)</strong></td>
+                            <td>α<sub>a,n</sub>, β<sub>a,n</sub>, γ<sub>a,n</sub><br>α<sub>b,n</sub>, β<sub>b,n</sub>, γ<sub>b,n</sub></td>
+                            <td>Reorganización funcional emergente</td>
+                            <td>γ<sub>a,n</sub>, γ<sub>b,n</sub> → Γ<sub>n</sub></td>
+                            <td>— (frontera de análisis seleccionada)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="background:#eef6fa; border-left:6px solid #1a5276; padding:1rem 1.8rem; border-radius:16px; margin:1.5rem 0;">
+                <p style="font-weight:bold; margin:0 0 0.5rem 0;"><span aria-hidden="true">🧬</span> Ejemplo en el contexto de marcha</p>
+                <p style="margin:0;"><strong>Capa 1 (cada IMU):</strong> La IMU del muslo (lazo A) procesa α<sub>a,1</sub> ↔ β<sub>a,1</sub> generando la respuesta derivada γ<sub>a,1</sub>; la IMU del tobillo (lazo B) genera γ<sub>b,1</sub>. Γ₁ es el indicador de capa de esta organización.</p>
+                <p style="margin:0.5rem 0 0 0;"><strong>Capa 2 (pierna):</strong> γ<sub>a,1</sub>, γ<sub>b,1</sub> se reinterpretan como α<sub>a,2</sub> y β<sub>a,2</sub>; a partir de estos se genera complementariamente α<sub>b,2</sub>, β<sub>b,2</sub>, y así se obtienen γ<sub>a,2</sub>, γ<sub>b,2</sub> y el indicador Γ₂.</p>
+                <p style="margin:0.5rem 0 0 0;"><strong>Capa 3 (ambas piernas):</strong> El proceso se repite, generando Γ₃ como indicador de la organización bipedestadora, y así sucesivamente.</p>
+            </div>
+            <div style="background:#f0f8fc; border-left:4px solid #2c7da0; padding:0.8rem 1.5rem; border-radius:12px; margin:1.5rem 0; font-size:0.95rem;">
+                <strong>Síntesis conceptual:</strong> Una capa emerge cuando un par complementario da origen a otro par complementario capaz de producir nuevas respuestas derivadas y una nueva organización relacional observable. Esta definición es independiente del dominio biomecánico y se aplica a cualquier contexto donde la UMEAD se utilice como unidad de análisis.
+            </div>
+
+            <!-- 5. CONEXIÓN CON DIGITI -->
+            <h2 id="digiti">5. Conexión con el Grupo DIGITI</h2>
+            <div style="background:#fcf4e8; border-left:6px solid #b97341; padding:0.8rem 1.5rem; border-radius:12px; margin:1rem 0; font-style:italic; font-size:0.95rem;">
+                "El estudio de DIGITI (Camargo Casallas, Luengas Contreras y Garzón González, 2025) evidencia que desalineaciones protésicas de 2°, 6° y 10° producen reorganizaciones medibles en la coordinación intersegmentaria, identificables mediante ciclogramas."
+            </div>
+            <p>La propuesta se apoya en esos hallazgos y ofrece una <strong>capa adicional de análisis relacional</strong> sobre los mismos datos IMU, utilizando la UMEAD como unidad de análisis en sus diferentes capas de complejidad. No compite con los métodos existentes; busca complementarlos, proporcionando métricas que podrían anticipar cambios en la organización funcional.</p>
+            <p><strong>La parametrización concreta</strong> (frecuencias de corte, constantes de tiempo, tamaños de ventana) se define como <strong>abierta y ajustable</strong> en colaboración con el grupo, adaptándose a su hardware y protocolos.</p>
+
+            <!-- 6. ESTADO ACTUAL -->
+            <h2 id="estado">6. Estado actual del desarrollo</h2>
+            <ul style="margin-left:1.5rem; margin-bottom:1rem;">
+                <li><strong><span aria-hidden="true">✅</span> Marco conceptual y epistemológico</strong> definido como hipótesis de trabajo.</li>
+                <li><strong><span aria-hidden="true">🔄</span> Formalización matemática</strong> en desarrollo (principio lagrangiano, análisis modal).</li>
+                <li><strong><span aria-hidden="true">🔄</span> Simulación Blender–Python</strong> en construcción para generar ground truth controlado.</li>
+                <li><strong><span aria-hidden="true">⏳</span> Validación experimental</strong> y definición de criterios de refutación pendientes (en diálogo con DIGITI).</li>
+            </ul>
+
+            <!-- 7. DOCUMENTOS -->
+            <h2 id="documentos">7. Documentación complementaria</h2>
+            <p>Para una comprensión completa de la propuesta, se dispone de los siguientes documentos:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1rem 0;">
+                <a href="propuesta-pidca-marcha.html" class="btn-documento"><span aria-hidden="true">📐</span> Propuesta completa (PIDCA · Marcha)</a>
+                <a href="https://biostair11.github.io/NewroSTaiR-11/PI/UMEAD.html" target="_blank" class="btn-documento secundario"><span aria-hidden="true">🧬</span> Definición de UMEAD</a>
+            </div>
+            <p style="font-size:0.85rem; color:#4a5a6a;">*El primer documento contiene los objetivos, el desarrollo matemático, la simulación y las condiciones de refutación. El segundo define la unidad mínima de adaptación sobre la que se basa la arquitectura.</p>
+
+            <div class="firma">
+                <p><strong>Proyecto NewroSTaiR‑11</strong></p>
+                <p>Andru Stiven Rodríguez Bustos</p>
+                <p style="font-size:0.8rem; margin-top:0.3rem;">Junio de 2026</p>
+            </div>
+        </main>
+
+        <!-- SIDEBAR DERECHO -->
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center;margin:15px 0 5px 0;"><img src="../img/qr_newrostair.png" alt="Código QR para compartir esta página" style="width:180px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+            <p style="font-size:0.9rem;text-align:center;"><span aria-hidden="true">📱</span> Escanea para compartir<br><strong>newrostair11</strong></p>
+            <hr>
+            <p style="font-weight:bold;color:#1e4a6b;margin:0 0 0.3rem 0;"><span aria-hidden="true">📑</span> En esta página</p>
+            <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                <li><a href="#contexto"><span aria-hidden="true">🔺</span> 1. Contexto</a></li>
+                <li><a href="#propuesta"><span aria-hidden="true">🧬</span> 2. Propuesta</a></li>
+                <li><a href="#mecanismos"><span aria-hidden="true">🔄</span> 3. Mecanismos</a></li>
+                <li><a href="#aplicacion"><span aria-hidden="true">🧬</span> 4. Aplicación</a></li>
+                <li><a href="#digiti"><span aria-hidden="true">🔍</span> 5. DIGITI</a></li>
+                <li><a href="#estado"><span aria-hidden="true">📋</span> 6. Estado</a></li>
+                <li><a href="#documentos"><span aria-hidden="true">📚</span> 7. Documentos</a></li>
+            </ul>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </aside>
+    </div>
+
+    <!-- MENÚS FLOTANTES -->
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local"><span aria-hidden="true">📖</span><br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="../index.html" class="module-link"><span aria-hidden="true">🏠</span> newrostair11 (Inicio)</a></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="../MVO/OSD.html" class="module-link"><span aria-hidden="true">🌱</span>Origen, <span aria-hidden="true">▶️</span>Misión y <span aria-hidden="true">🎥</span>Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link"><span aria-hidden="true">📝</span>Marco Teórico</a></div><ul class="submenu"><li><a href="../PI&FT.html"><span aria-hidden="true">📘</span> Índice PI</a></li><li><a href="../McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li><li><a href="../sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="../i+d.html" class="module-link"><span aria-hidden="true">🔎</span>I+D y <span aria-hidden="true">📋</span>Modelos de Negocio</a></div><ul class="submenu"><li><a href="../i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li><li><a href="../newrophome-11/index-np.html"><span aria-hidden="true">📜</span> NewroPhome-11</a></li></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link"><span aria-hidden="true">📚</span>Bibliografía Temática</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../Humanidades.html" class="module-link"><span aria-hidden="true">🧑‍🏫</span>Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span>Marco Conceptual</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos y herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="../elipso/elipso.html" class="module-link"><span aria-hidden="true">👋</span>Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="../marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span>Marco Conceptual</a></div><ul class="submenu"><li><a href="../marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arq. regulación</a></li><li><a href="../ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución</a></li><li><a href="../06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../PI&FT.html" class="module-link"><span aria-hidden="true">📝</span> Marco Teórico</a></div><ul class="submenu"><li><a href="../McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11</a></li><li><a href="../McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> ADN</a></li><li><a href="../sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="../pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos</a></div><ul class="submenu"><li><a href="../Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li><li><a href="../NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li><li><a href="../i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li><li><a href="../i+d/presentacion-mh-digiti.html"><span aria-hidden="true">🚶‍♂️</span>Marcha Humana</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../bibliografia-emojis.html" class="module-link" style="font-weight:bold;"><span aria-hidden="true">📚</span>Bibliografía</a></div><ul class="submenu"><li><a href="../bibliografia-emojis.html#eje1"><span aria-hidden="true">🌀</span> Eje 1</a></li><li><a href="../bibliografia-emojis.html#eje2"><span aria-hidden="true">🧠</span> Eje 2</a></li><li><a href="../bibliografia-emojis.html#eje3"><span aria-hidden="true">⚙️</span> Eje 3</a></li><li><a href="../bibliografia-emojis.html#eje4"><span aria-hidden="true">🌿</span> Eje 4</a></li><li><a href="../bibliografia-emojis.html#eje5"><span aria-hidden="true">🛠️</span> Eje 5</a></li><li><a href="../bibliografia-emojis.html#eje6"><span aria-hidden="true">🌐</span> Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="../i+d/galeria-mm.html" class="module-link"><span aria-hidden="true">📡</span> Multimedia</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs"><span aria-hidden="true">🎶</span> YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo"><span aria-hidden="true">🎶</span> TikTok</a></li><li><a href="../galeria.html"><span aria-hidden="true">🖼️</span> Galería</a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs"><span aria-hidden="true">⚙️</span><br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center;margin:10px 0;"><img src="../img/qr_newrostair.png" alt="Código QR para compartir esta página" style="width:120px;border-radius:12px;"></div>
+            <p style="font-size:0.8rem;text-align:center;"><span aria-hidden="true">🔗</span> Escanea para compartir</p>
+            <hr>
+            <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                <li><a href="#contexto"><span aria-hidden="true">🔺</span> 1. Contexto</a></li>
+                <li><a href="#propuesta"><span aria-hidden="true">🧬</span> 2. Propuesta</a></li>
+                <li><a href="#mecanismos"><span aria-hidden="true">🔄</span> 3. Mecanismos</a></li>
+                <li><a href="#aplicacion"><span aria-hidden="true">🧬</span> 4. Aplicación</a></li>
+                <li><a href="#digiti"><span aria-hidden="true">🔍</span> 5. DIGITI</a></li>
+                <li><a href="#estado"><span aria-hidden="true">📋</span> 6. Estado</a></li>
+                <li><a href="#documentos"><span aria-hidden="true">📚</span> 7. Documentos</a></li>
+            </ul>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+            const folderLinks = document.querySelectorAll('.tree .folder > .module-row > .module-link');
+            const doubleClickDelay = 500;
+            folderLinks.forEach(link => {
+                const folder = link.closest('.folder');
+                if (!folder) return;
+                let clickCount = 0, clickTimer = null;
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    clickCount++;
+                    if (clickCount === 1) { clickTimer = setTimeout(() => { const href = link.getAttribute('href'); if (href && href !== '#') window.location.href = href; clickCount = 0; }, doubleClickDelay); }
+                    else if (clickCount === 2) { clearTimeout(clickTimer); clickCount = 0; const parentUl = folder.closest('ul'); if (parentUl) { parentUl.querySelectorAll(':scope > .folder.open').forEach(f => { if (f !== folder) f.classList.remove('open'); }); } folder.classList.toggle('open'); }
+                });
+            });
+
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, ''), nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    tree.querySelectorAll('.folder').forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) { const href = enlace.getAttribute('href'); if (!href) continue; const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0]; if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; } }
+                    if (enlaceActual) { enlaceActual.classList.add('current-page'); let elemento = enlaceActual.closest('.folder'); while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); } }
+                });
+            }
+            actualizarArbolSegunPagina();
+
+            const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight'), btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
+            function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); }
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible')) menuLeft.classList.remove('visible'); else { closeAll(); menuLeft.classList.add('visible'); } });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains('visible')) menuRight.classList.remove('visible'); else { closeAll(); menuRight.classList.add('visible'); } });
+            document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
+
+            // ===== LECTOR DE VOZ (con exclusión de aria-hidden) =====
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), speedSelect = document.getElementById('speedSelect'), voiceStatus = document.getElementById('voiceStatus'), mainContent = document.getElementById('mainContent'), playPauseIcon = document.getElementById('playPauseIcon'), progressFill = document.getElementById('voiceProgressFill'), progressText = document.getElementById('voiceProgressText');
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+
+            const themeMap = {
+                'B': 'docLead', 'C': 'contexto', 'D': 'propuesta', 'E': 'mecanismos',
+                'F': 'aplicacion', 'G': 'digiti', 'H': 'estado', 'I': 'documentos'
+            };
+
+            // Función auxiliar para obtener texto limpio (sin elementos con aria-hidden)
+            function getVisibleText(el) {
+                const clone = el.cloneNode(true);
+                clone.querySelectorAll('[aria-hidden="true"]').forEach(e => e.remove());
+                return clone.innerText.trim();
+            }
+
+            function getIntroText() { const lead = document.getElementById('docLead'); return lead ? getVisibleText(lead) : 'Ejemplo implementación PIDCA-UMEAD, para el análisis de marcha humana.'; }
+            function getThemeText(sectionId) {
+                const el = document.getElementById(sectionId);
+                if (!el) return '';
+                let text = getVisibleText(el) + '. ';
+                let sibling = el.nextElementSibling;
+                while (sibling && sibling.tagName !== 'H2') {
+                    if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null && sibling.getAttribute('aria-hidden') !== 'true') {
+                        text += getVisibleText(sibling) + ' ';
+                    }
+                    sibling = sibling.nextElementSibling;
+                }
+                return text.trim();
+            }
+            function getFullText() { return getVisibleText(mainContent); }
+            function obtenerTextoActual() {
+                const scope = scopeSelect.value;
+                if (scope === 'A') return getFullText();
+                if (scope === 'B') return getIntroText();
+                if (themeMap[scope]) return getThemeText(themeMap[scope]);
+                return getIntroText();
+            }
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces.length) return;
+                const findVoice = (lang) => voces.find(v => v.lang === lang);
+                voiceMap.fem_es = findVoice('es-ES') || voces.find(v => v.lang.startsWith('es') && /femenino|female|mujer/i.test(v.name));
+                voiceMap.fem_lat = findVoice('es-MX') || findVoice('es-419') || voces.find(v => v.lang.startsWith('es') && /latino|mujer|femenino|female/i.test(v.name));
+                voiceMap.masc_es = findVoice('es-ES') || voces.find(v => v.lang.startsWith('es') && /masculino|male|hombre/i.test(v.name));
+                voiceMap.masc_lat = findVoice('es-MX') || findVoice('es-419') || voces.find(v => v.lang.startsWith('es') && /latino|hombre|masculino|male/i.test(v.name));
+                selectedVoice = voiceMap[voiceSelect.value] || voces.find(v => v.lang.startsWith('es')) || null;
+                voiceStatus.textContent = selectedVoice ? 'Voz lista' : 'Sin voz compatible';
+            }
+            synth.onvoiceschanged = construirVoiceMap;
+            voiceSelect.addEventListener('change', () => {
+                if (voiceMap[voiceSelect.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false; isPaused = false;
+                    actualizarInterfaz('detenido');
+                }
+            });
+            function actualizarInterfaz(estado) {
+                if (estado === 'reproduciendo') {
+                    playPauseIcon.textContent = '⏸️';
+                    stopBtn.disabled = false;
+                    playPauseBtn.classList.add('play-btn');
+                    playPauseBtn.setAttribute('aria-label', 'Pausar lectura');
+                } else if (estado === 'pausado') {
+                    playPauseIcon.textContent = '▶';
+                    stopBtn.disabled = false;
+                    playPauseBtn.classList.remove('play-btn');
+                    playPauseBtn.setAttribute('aria-label', 'Reanudar lectura');
+                } else {
+                    playPauseIcon.textContent = '▶';
+                    stopBtn.disabled = true;
+                    playPauseBtn.classList.add('play-btn');
+                    playPauseBtn.setAttribute('aria-label', 'Reproducir lectura');
+                    progressFill.style.width = '0%';
+                    progressFill.setAttribute('aria-valuenow', 0);
+                    progressText.textContent = '0%';
+                }
+            }
+            function crearNuevaUtterance(texto, onEnd) {
+                const u = new SpeechSynthesisUtterance(texto);
+                if (selectedVoice) u.voice = selectedVoice;
+                u.rate = parseFloat(speedSelect.value);
+                u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); };
+                u.onend = () => { if (onEnd) onEnd(); };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = 'Error'; };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); };
+                u.onboundary = (e) => {
+                    if (e.name === 'word' || e.name === 'sentence') {
+                        const charIndex = e.charIndex || 0;
+                        const totalLength = texto.length;
+                        const progress = Math.min(100, Math.round((charIndex / totalLength) * 100));
+                        progressFill.style.width = progress + '%';
+                        progressFill.setAttribute('aria-valuenow', progress);
+                        progressText.textContent = progress + '%';
+                    }
+                };
+                return u;
+            }
+            function iniciarLectura() {
+                if (synth.speaking) synth.cancel();
+                if (!selectedVoice) { voiceStatus.textContent = 'Seleccione una voz compatible'; return; }
+                const texto = obtenerTextoActual();
+                utterance = crearNuevaUtterance(texto, () => {
+                    isSpeaking = false; actualizarInterfaz('detenido');
+                    voiceStatus.textContent = 'Listo';
+                    progressFill.style.width = '100%';
+                    progressFill.setAttribute('aria-valuenow', 100);
+                    progressText.textContent = '100%';
+                });
+                synth.speak(utterance);
+            }
+            playPauseBtn.addEventListener('click', () => {
+                if (!isSpeaking && !isPaused) iniciarLectura();
+                else if (isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume();
+            });
+            stopBtn.addEventListener('click', () => {
+                if (synth.speaking) synth.cancel();
+                isSpeaking = false; isPaused = false;
+                actualizarInterfaz('detenido'); voiceStatus.textContent = 'Detenido';
+            });
+            scopeSelect.addEventListener('change', () => {
+                if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); }
+            });
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+            construirVoiceMap();
+        })();
+    </script>
+</body>
+</html>
