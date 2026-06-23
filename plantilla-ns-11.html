@@ -33,6 +33,30 @@
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
 
+        /* Botón de toggle en el árbol (nuevo) */
+        .toggle-folder {
+            background: transparent;
+            border: none;
+            color: #1a4d6b;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.4rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            flex-shrink: 0;
+            line-height: 1;
+            width: 1.8rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .toggle-folder:hover {
+            background: rgba(0,0,0,0.08);
+        }
+        .toggle-folder:focus-visible {
+            outline: 2px solid #005a9c;
+            outline-offset: 2px;
+        }
+
         .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
         .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
         .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
@@ -158,6 +182,231 @@
             .voice-floating-bar .voice-status { font-size:0.6rem; grid-column:1 / -1; }
             .voice-progress-container { grid-column:1 / -1; }
         }
+
+        /* ===== NUEVOS ESTILOS PARA COMPONENTES INTERACTIVOS ===== */
+        :root {
+            --tarjeta-bg: #ffffff;
+            --acento-apoyo: #e74c3c;
+            --acento-balanceo: #2ecc71;
+            --texto-claro: #5a4a3a;
+            --borde: #cbd5e1;
+            --sombra-tarjeta: 0 8px 20px rgba(0,0,0,0.04);
+            --radio-tarjeta: 28px;
+            --transicion: all 0.3s ease;
+        }
+
+        .tarjeta {
+            background: var(--tarjeta-bg);
+            border-radius: var(--radio-tarjeta);
+            box-shadow: var(--sombra-tarjeta);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transicion);
+            border: 1px solid var(--borde);
+        }
+        .tarjeta:hover {
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .tarjeta h2 {
+            font-size: 1.8rem;
+            color: #1e4a6b;
+            margin-bottom: 1.2rem;
+            border-bottom: 3px solid #3e92cc;
+            padding-bottom: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .icono-toggle {
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            color: #3e92cc;
+        }
+        .icono-toggle.girado {
+            transform: rotate(180deg);
+        }
+        .controles {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+        .btn {
+            background: #1e4a6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transicion);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(30,74,107,0.3);
+            font-family: 'Georgia', serif;
+        }
+        .btn:hover {
+            background: #163d5c;
+            box-shadow: 0 6px 14px rgba(30,74,107,0.4);
+            transform: scale(1.03);
+        }
+        .btn.secundario {
+            background: #ecf0f1;
+            color: #1e4a6b;
+            box-shadow: none;
+            border: 1px solid #b9c8dd;
+        }
+        .btn.secundario:hover {
+            background: #d5dbdb;
+        }
+        .contenido-colapsable {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.4s ease;
+            opacity: 1;
+        }
+        .colapsado {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+        }
+        .fase-apoyo {
+            background: linear-gradient(135deg, #fdedec, #fadbd8);
+            border-left: 6px solid var(--acento-apoyo);
+            padding: 1rem;
+            border-radius: 0 20px 20px 0;
+            margin: 1rem 0;
+        }
+        .fase-balanceo {
+            background: linear-gradient(135deg, #eafaf1, #d5f5e3);
+            border-left: 6px solid var(--acento-balanceo);
+            padding: 1rem;
+            border-radius: 0 20px 20px 0;
+            margin: 1rem 0;
+        }
+        .barra-progreso {
+            width: 100%;
+            height: 12px;
+            background: #ecf0f1;
+            border-radius: 20px;
+            margin: 0.5rem 0 1rem;
+            overflow: hidden;
+            display: flex;
+        }
+        .progreso-apoyo { background: var(--acento-apoyo); width: 60%; height: 100%; }
+        .progreso-balanceo { background: var(--acento-balanceo); width: 40%; height: 100%; }
+        .galeria {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .galeria img {
+            width: 100%;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: var(--transicion);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--borde);
+        }
+        .galeria img:hover {
+            transform: scale(1.04);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1200;
+            backdrop-filter: blur(5px);
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+        .modal.visible { display: flex; }
+        .cerrar-modal {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 2.5rem;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            background: rgba(0,0,0,0.5);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: var(--transicion);
+        }
+        .cerrar-modal:hover { background: rgba(255,255,255,0.3); }
+        .timeline {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1.5rem 0;
+            position: relative;
+            padding: 1rem 0;
+        }
+        .timeline::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0; right: 0;
+            height: 4px;
+            background: var(--borde);
+            z-index: 0;
+            transform: translateY(-50%);
+            border-radius: 2px;
+        }
+        .fase-timeline {
+            position: relative;
+            z-index: 1;
+            background: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid var(--borde);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .fase-timeline.apoyo { color: var(--acento-apoyo); border-color: var(--acento-apoyo); }
+        .fase-timeline.balanceo { color: var(--acento-balanceo); border-color: var(--acento-balanceo); }
+
+        /* ===== BARRA DE CONTROLES PARA TARJETAS (PERMANENTE) ===== */
+        .controles-globales {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            background: #f9fbfd;
+            border: 1px dashed #b9c8dd;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .controles-globales .etiqueta-controles {
+            font-size: 0.85rem;
+            color: #2c5a7a;
+            margin-right: auto;
+        }
+
+        @media (max-width: 600px) {
+            .tarjeta { padding: 1.2rem; }
+            .tarjeta h2 { font-size: 1.4rem; }
+            .controles-globales { flex-direction: column; align-items: flex-start; }
+        }
     </style>
 </head>
 <body id="top">
@@ -250,6 +499,7 @@
         </aside>
 
         <main class="content">
+            <!-- ZONA EDITABLE (no modificar en la plantilla) -->
             <div style="border: 3px dashed #e09d6f; background: #fefaf5; border-radius: 28px; padding: 3rem 2rem; text-align: center; margin: 2rem 0;">
                 <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
                 <h2 style="color: #b45a3b; margin-bottom: 1rem;">Área de contenido personalizable</h2>
@@ -264,6 +514,13 @@
                 <code style="background: #e2eaf1; padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.85rem; display: inline-block;">
                     &lt;!-- Todo lo que ponga aquí se mostrará en el área principal --&gt;
                 </code>
+            </div>
+
+            <!-- BARRA DE CONTROLES PARA TARJETAS (siempre visible, fuera de la zona editable) -->
+            <div class="controles-globales">
+                <span class="etiqueta-controles">🧩 Controles para tarjetas colapsables (añada sus propias tarjetas más abajo)</span>
+                <button class="btn secundario" onclick="expandirTodo()">📂 Expandir todo</button>
+                <button class="btn secundario" onclick="colapsarTodo()">📁 Colapsar todo</button>
             </div>
         </main>
 
@@ -357,39 +614,91 @@
     <script>
         (function() {
             document.documentElement.classList.remove('no-js');
-            const folderLinks = document.querySelectorAll('.tree .folder > .module-row > .module-link');
-            const doubleClickDelay = 500;
-            folderLinks.forEach(link => {
-                const folder = link.closest('.folder');
-                if (!folder) return;
-                let clickCount = 0, clickTimer = null;
-                link.addEventListener('click', function(e) {
+
+            // ===== NAVEGACIÓN CON BOTONES DE TOGGLE (REEMPLAZA DOBLE CLIC) =====
+            // 1. Añadir botones de toggle a todas las carpetas
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                // Si ya tiene un botón, no duplicar
+                if (folder.querySelector('.toggle-folder')) return;
+
+                const btn = document.createElement('button');
+                btn.className = 'toggle-folder';
+                btn.setAttribute('aria-label', 'Expandir o contraer carpeta');
+                btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
+
+                const moduleRow = folder.querySelector('.module-row');
+                if (moduleRow) {
+                    moduleRow.prepend(btn); // lo pone antes del enlace
+                } else {
+                    folder.prepend(btn);
+                }
+
+                // Solo toggle al pulsar el botón
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     e.preventDefault();
-                    clickCount++;
-                    if (clickCount === 1) { clickTimer = setTimeout(() => { const href = link.getAttribute('href'); if (href && href !== '#') window.location.href = href; clickCount = 0; }, doubleClickDelay); }
-                    else if (clickCount === 2) { clearTimeout(clickTimer); clickCount = 0; const parentUl = folder.closest('ul'); if (parentUl) { parentUl.querySelectorAll(':scope > .folder.open').forEach(f => { if (f !== folder) f.classList.remove('open'); }); } folder.classList.toggle('open'); }
+                    folder.classList.toggle('open');
                 });
             });
 
+            // 2. Observar cambios de clase para actualizar la flecha
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                const btn = folder.querySelector('.toggle-folder');
+                if (!btn) return;
+                const observer = new MutationObserver(() => {
+                    btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
+                });
+                observer.observe(folder, { attributes: true, attributeFilter: ['class'] });
+            });
+
+            // 3. Comportamiento del enlace: navega normalmente y además abre la carpeta
+            document.querySelectorAll('.tree .module-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const folder = this.closest('.folder');
+                    if (folder) {
+                        folder.classList.add('open'); // mantener visible el submenú al volver
+                    }
+                    // No preventDefault, permite la navegación
+                });
+            });
+
+            // 4. Resaltar página actual
             function actualizarArbolSegunPagina() {
-                const pathActual = window.location.pathname.replace(/\/$/, ''), nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
                 document.querySelectorAll('.tree').forEach(tree => {
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     tree.querySelectorAll('.folder').forEach(f => f.classList.remove('open'));
                     let enlaceActual = null;
-                    for (const enlace of tree.querySelectorAll('a')) { const href = enlace.getAttribute('href'); if (!href) continue; const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0]; if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; } }
-                    if (enlaceActual) { enlaceActual.classList.add('current-page'); let elemento = enlaceActual.closest('.folder'); while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); } }
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) {
+                            enlaceActual = enlace;
+                            break;
+                        }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) {
+                            elemento.classList.add('open');
+                            elemento = elemento.parentElement.closest('.folder');
+                        }
+                    }
                 });
             }
             actualizarArbolSegunPagina();
 
+            // 5. Menús flotantes (sin cambios)
             const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight'), btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
             function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); }
             btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible')) menuLeft.classList.remove('visible'); else { closeAll(); menuLeft.classList.add('visible'); } });
             btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains('visible')) menuRight.classList.remove('visible'); else { closeAll(); menuRight.classList.add('visible'); } });
             document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
 
-            // ===== SELECTOR DE IDIOMA =====
+            // 6. Selector de idioma
             const langSelect = document.getElementById('langSelect');
             function cambiarIdioma(lang) {
                 document.querySelectorAll('[data-es][data-en]').forEach(el => {
@@ -406,13 +715,21 @@
                 cambiarIdioma(savedLang);
             }
 
-            // ===== SÍNTESIS DE VOZ =====
+            // 7. Síntesis de voz (adaptada para tarjetas opcionales)
             const synth = window.speechSynthesis;
             const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), speedSelect = document.getElementById('speedSelect'), voiceStatus = document.getElementById('voiceStatus'), playPauseIcon = document.getElementById('playPauseIcon'), playPauseLabel = document.getElementById('playPauseLabel'), progressFill = document.getElementById('voiceProgressFill'), progressText = document.getElementById('voiceProgressText');
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
             function getIntroText() { return 'Plantilla universal de newrostair11. Use esta base para crear nuevas páginas respetando el ecosistema. Reemplace el contenido de la zona editable.'; }
-            function obtenerTextoActual() { return scopeSelect.value === 'intro' ? getIntroText() : getIntroText() + ' Instrucciones: Copie y pegue su contenido dentro del bloque marcado. No modifique el resto de la estructura para mantener la coherencia visual y funcional.'; }
+            function obtenerTextoActual() {
+                let base = scopeSelect.value === 'intro' ? getIntroText() : getIntroText() + ' Instrucciones: Copie y pegue su contenido dentro del bloque marcado. No modifique el resto de la estructura para mantener la coherencia visual y funcional.';
+                const tarjetas = document.querySelectorAll('.tarjeta .contenido-colapsable');
+                if (tarjetas.length > 0) {
+                    base += ' ';
+                    tarjetas.forEach(t => base += t.innerText + ' ');
+                }
+                return base;
+            }
             function construirVoiceMap() { const voces = synth.getVoices(); if (!voces.length) return; const spanish = voces.filter(v => v.lang.startsWith('es')), fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer')), masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre')); voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc }; selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null; voiceStatus.textContent = selectedVoice ? (langSelect.value === 'es' ? 'Voz lista' : 'Voice ready') : (langSelect.value === 'es' ? 'Sin voz compatible' : 'No compatible voice'); }
             synth.onvoiceschanged = construirVoiceMap;
             voiceSelect.addEventListener('change', () => { if (voiceMap[voiceSelect.value]) { if (isSpeaking) synth.cancel(); selectedVoice = voiceMap[voiceSelect.value]; isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); } });
@@ -426,5 +743,49 @@
             construirVoiceMap();
         })();
     </script>
+
+    <!-- Funciones para tarjetas interactivas -->
+    <script>
+        function toggleSeccion(idContenido, icono) {
+            const contenido = document.getElementById(idContenido);
+            if (contenido) {
+                contenido.classList.toggle('colapsado');
+                if (icono) icono.classList.toggle('girado');
+            }
+        }
+
+        function expandirTodo() {
+            document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.remove('colapsado'));
+            document.querySelectorAll('.icono-toggle').forEach(i => i.classList.remove('girado'));
+        }
+
+        function colapsarTodo() {
+            document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.add('colapsado'));
+            document.querySelectorAll('.icono-toggle').forEach(i => i.classList.add('girado'));
+        }
+
+        function abrirModal(src) {
+            const modal = document.getElementById('modalImagen');
+            if (modal) {
+                document.getElementById('imagenAmpliada').src = src;
+                modal.classList.add('visible');
+            }
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modalImagen');
+            if (modal) modal.classList.remove('visible');
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') cerrarModal();
+        });
+    </script>
+
+    <!-- Modal genérico para imágenes -->
+    <div id="modalImagen" class="modal" onclick="cerrarModal()">
+        <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
+        <img id="imagenAmpliada" src="" alt="Imagen ampliada">
+    </div>
 </body>
 </html>
