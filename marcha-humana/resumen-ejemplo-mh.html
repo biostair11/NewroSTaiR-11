@@ -33,6 +33,30 @@
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
 
+        /* Botón de toggle en el árbol */
+        .toggle-folder {
+            background: transparent;
+            border: none;
+            color: #1a4d6b;
+            font-size: 0.8rem;
+            padding: 0.2rem 0.4rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            flex-shrink: 0;
+            line-height: 1;
+            width: 1.8rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .toggle-folder:hover {
+            background: rgba(0,0,0,0.08);
+        }
+        .toggle-folder:focus-visible {
+            outline: 2px solid #005a9c;
+            outline-offset: 2px;
+        }
+
         .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
         .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
         .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
@@ -176,8 +200,8 @@
 
     <!-- ===== BARRA DE VOZ ===== -->
     <div class="voice-floating-bar" id="voiceFloatingBar">
-        <button id="playPauseBtn" class="voice-btn play-btn" aria-label="Reproducir lectura"><span id="playPauseIcon" aria-hidden="true">▶</span></button>
-        <button id="stopBtn" class="voice-btn" disabled aria-label="Detener lectura"><span aria-hidden="true">⏹️</span></button>
+        <button id="playPauseBtn" class="voice-btn play-btn" aria-label="Reproducir lectura"><span id="playPauseIcon">▶</span></button>
+        <button id="stopBtn" class="voice-btn" disabled aria-label="Detener lectura"><span>⏹️</span></button>
         <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
             <option value="fem_es">Fem (Esp)</option>
             <option value="fem_lat" selected>Fem (Lat)</option>
@@ -201,6 +225,7 @@
             <option value="G">Cap. 5: DIGITI</option>
             <option value="H">Cap. 6: Estado</option>
             <option value="I">Cap. 7: Documentos</option>
+            <option value="J">Cap. 8: Limitaciones</option>
         </select>
         <div class="voice-progress-container">
             <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progreso de lectura"></div></div>
@@ -282,27 +307,28 @@
         <main class="content" id="mainContent">
             <h1 style="font-size:1.8rem; border-bottom:2px solid #005a9c; padding-bottom:0.2rem;">Ejemplo implementación PIDCA-UMEAD para el Análisis de Marcha Humana</h1>
 
-            <p class="doc-lead" id="docLead">
-                <strong>Resumen ejecutivo</strong><br>
-                <span aria-hidden="true">📌</span> Este documento presenta un hipotético ejemplo de aplicación del modelo matemático MCDEE‑11 en el análisis de la marcha humana. El ejemplo propuesto no necesariamente cumple con requerimientos reales del Grupo de Investigación DIGITI. Se presenta como <strong>puente conceptual</strong> entre el modelo matemático y una posible aplicación en el estudio de la marcha humana utilizando los métodos y conceptos de la arquitectura PIDCA y el doble par complementario (UMEAD).
-            </p>
-
-            <div style="font-size:0.9rem; background:#f8f4f0; padding:0.5rem 1rem; border-left:4px solid #b97341; margin:0.5rem 0 1.5rem 0; border-radius:8px;">
-                <strong><span aria-hidden="true">📅</span> Junio 2026</strong> &nbsp;·&nbsp; <span aria-hidden="true">👤</span> <strong>Andru Stiven Rodríguez Bustos</strong> &nbsp;·&nbsp; <span aria-hidden="true">🏛️</span> Tecnólogo en Electrónica · Egresado Facultad Tecnológica · Universidad Distrital "Francisco José de Caldas"
+            <!-- ===== NUEVO RESUMEN EJECUTIVO CORTO (DIGITI-friendly) ===== -->
+            <div id="docLead" style="background:#ffffff; border:1px solid #cbd5e1; border-radius:20px; padding:1.5rem 2rem; margin:0.5rem 0 1.5rem 0; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+                <h2 style="border-bottom:none; padding-bottom:0; margin-bottom:0.5rem; font-size:1.4rem;">📌 Resumen ejecutivo</h2>
+                <p style="font-size:1rem; line-height:1.8; margin-top:0.5rem;">
+                El análisis de marcha con sensores inerciales (IMU) suele tratar la variabilidad entre ciclos como ruido, descartando información potencialmente relevante sobre la reorganización funcional del sistema motor. Este trabajo explora la hipótesis de que dicha variabilidad contiene patrones de coherencia relacional que pueden ser modelados mediante una arquitectura de análisis multicapa.
+                </p>
+                <p style="font-size:1rem; line-height:1.8; margin-top:0.5rem;">
+                Se propone un marco denominado <strong>PIDCA</strong>, que organiza las señales en componentes de valor instantáneo, memoria acumulada y respuesta derivada, con el objetivo de describir la evolución de la organización entre sensores, en lugar de centrarse únicamente en promedios o errores. La estructura se aplica a configuraciones de múltiples IMU en escenarios de marcha, con especial interés en situaciones de compensación biomecánica y desalineación protésica.
+                </p>
+                <p style="font-size:1rem; line-height:1.8; margin-top:0.5rem;">
+                El modelo se interpreta como una herramienta de análisis <strong>complementaria</strong> a los métodos clásicos de biomecánica, y no como un reemplazo. Se fundamenta en una unidad conceptual de acoplamiento (UMEAD) que permite representar interacciones entre sensores a diferentes capas de organización funcional. La propuesta está en fase de desarrollo teórico y simulación, y se presenta como una hipótesis abierta, sujeta a validación experimental, modificación o refutación en colaboración con el Grupo de Investigación DIGITI.
+                </p>
+                <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; margin-top:1rem; padding-top:0.8rem; border-top:1px solid #e2e8f0;">
+                    <span style="font-size:0.9rem; color:#1e4a6b;"><strong>📅 Junio 2026</strong> · <strong>👤 Andru Stiven Rodríguez Bustos</strong></span>
+                    <span style="font-size:0.85rem; background:#f0f4f8; padding:0.2rem 0.8rem; border-radius:30px;">🏛️ Universidad Distrital FJC</span>
+                </div>
             </div>
+            <!-- ===== FIN DEL NUEVO RESUMEN EJECUTIVO ===== -->
 
-            <!-- BLOQUE DE AUTORÍA -->
-            <div style="font-size:0.9rem; background:#f0f4f8; padding:0.5rem 1rem; border-left:4px solid #1a4a6b; margin:0.5rem 0 1.5rem 0; border-radius:8px;">
+            <!-- Nota de colaboración (se mantiene, pero más abajo) -->
+            <div style="font-size:0.9rem; background:#f0f4f8; padding:0.5rem 1rem; border-left:4px solid #1a4a6b; margin:0 0 1.5rem 0; border-radius:8px;">
                 <strong><span aria-hidden="true">📌</span> Sobre la autoría y la colaboración:</strong> La presente propuesta se comparte como una iniciativa de colaboración abierta entre el proyecto NewroSTaiR-11 y el Grupo de Investigación DIGITI de la Universidad Distrital Francisco José de Caldas. Su propósito es evaluar el alcance descriptivo y la posible capacidad predictiva del formalismo McDee-11 en el análisis de la marcha humana, así como establecer condiciones objetivas que permitan validarlo, modificarlo o refutarlo experimentalmente. El formalismo, la documentación conceptual y los desarrollos asociados se encuentran disponibles públicamente en el repositorio donde se aloja este documento, junto con sus respectivos enlaces y materiales complementarios. La propuesta busca promover la construcción conjunta de conocimiento que permita evaluar rigurosamente el alcance, las limitaciones y la posible aplicabilidad de la arquitectura planteada. La participación del Grupo DIGITI se concibe como una oportunidad de colaboración mutua, integrando la experiencia del grupo en biomecánica, sensores inerciales y análisis de marcha con el desarrollo conceptual y matemático realizado dentro del proyecto NewroSTaiR-11.
-            </div>
-
-            <!-- UMBRAL DE LECTURA: NATURALEZA DEL FORMALISMO -->
-            <div style="background:#f4f8fc; border-left:4px solid #2c7da0; padding:1rem 1.8rem; border-radius:16px; margin:1.5rem 0; font-size:0.95rem;" id="naturaleza-formalismo">
-                <h2 style="margin-top:0; border-bottom:1px solid #b9c8dd; padding-bottom:0.3rem; font-size:1.1rem;">Naturaleza del formalismo y lectura del modelo McDee-11</h2>
-                <p>El formalismo que se desarrolla en este documento <strong>se propone como un marco de análisis de organización dinámica de sistemas</strong>, más que como un modelo matemático cerrado en sentido clásico. En este contexto, las herramientas formales (PIDCA y UMEAD) describen relaciones estructurales entre estados y no únicamente transformaciones algebraicas de variables.</p>
-                <p>El nombre del modelo McDee-11 (Multi Convolución y Discretización de Estados Emergentes) <strong>se propone interpretarse como una designación conceptual del tipo de procesos que el marco intenta capturar</strong>, y no como la imposición de operaciones matemáticas estrictas en el sentido técnico de la teoría de señales o la cuantización de sistemas dinámicos.</p>
-                <p>En particular, el término <em>multiconvolución</em> se utiliza aquí para referirse a la <strong>interacción multiescala de relaciones dinámicas entre variables acopladas</strong>, mientras que la noción de <em>estados emergentes</em> hace referencia a la aparición de configuraciones estables o recurrentes dentro de la dinámica del sistema. Estos estados no se asumen como discretizaciones en sentido algebraico, sino como <strong>regímenes de coherencia organizacional</strong> que pueden ser identificados y descritos a través de su estabilidad estructural.</p>
-                <p>Desde esta perspectiva, McDee-11 nombra un enfoque de observación donde el interés principal no es la evolución puntual de las señales, sino la forma en que dichas señales contribuyen a la formación de estructuras relacionales estables a través de múltiples escalas de interacción.</p>
             </div>
 
             <h2 id="indice">0. Índice de contenidos</h2>
@@ -314,6 +340,7 @@
                 <a href="#digiti" class="tarjeta-indice"><span class="emoji" aria-hidden="true">🔍</span> 5. DIGITI</a>
                 <a href="#estado" class="tarjeta-indice"><span class="emoji" aria-hidden="true">📋</span> 6. Estado</a>
                 <a href="#documentos" class="tarjeta-indice"><span class="emoji" aria-hidden="true">📚</span> 7. Documentos</a>
+                <a href="#limitaciones" class="tarjeta-indice"><span class="emoji" aria-hidden="true">⚠️</span> 8. Limitaciones</a>
             </div>
 
             <!-- 1. CONTEXTO -->
@@ -387,6 +414,28 @@
                 <div style="margin-top:0.8rem; font-family:Georgia, serif; font-size:0.85rem; color:#1a4a6b; border-top:1px solid #b9d4c4; padding-top:0.8rem;">
                     <em>Γ actúa como un indicador de capa emergente que describe la organización relacional entre las respuestas derivadas complementarias de la capa <strong>n</strong>, sin participar en la dinámica de transición entre capas.<br>
                     Al cambiar de capa, γ<sub>a,n</sub> y γ<sub>b,n</sub> se reinterpretan como α<sub>a,n+1</sub> y β<sub>a,n+1</sub> (lazo A de la nueva capa). A partir de este nuevo par complementario se genera, de forma complementaria, el segundo par α<sub>b,n+1</sub> y β<sub>b,n+1</sub> (lazo B), recreando así la estructura de doble lazo que produce γ<sub>a,n+1</sub>, γ<sub>b,n+1</sub> y el indicador Γ<sub>n+1</sub>. Esta transición no es una transformación algebraica directa, sino un proceso de reorganización funcional análogo a la autopoiesis.</em>
+                </div>
+            </div>
+
+            <!-- ===== NUEVO BLOQUE: Γ COMO IDENTIDAD ORGANIZACIONAL MULTICAPA ===== -->
+            <div style="background:#e6f2fa; border-radius:16px; padding:1.2rem 1.8rem; margin:1.5rem 0; border-left:6px solid #005a9c; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+                <p style="font-weight:bold; font-size:1.05rem; color:#0a3146; margin:0 0 0.5rem 0;">
+                    <span aria-hidden="true">🧩</span> Γ como identidad organizacional multicapa
+                </p>
+                <p style="margin:0; font-size:0.98rem; line-height:1.7;">
+                Más allá de ser un indicador numérico, Γ<sub>s,n</sub> puede interpretarse como el <strong>identificador organizacional</strong> de la capa <em>n</em> para el subsistema <em>s</em>. No es una variable de control adicional, sino un marcador que permite:
+                </p>
+                <ul style="margin:0.5rem 0 0 1.5rem; font-size:0.98rem; line-height:1.7;">
+                    <li>caracterizar la organización alcanzada en esa capa,</li>
+                    <li>comparar organizaciones de diferentes subsistemas (<strong>relaciones horizontales</strong>, e.g. Γ<sub>t,1</sub> ↔ Γ<sub>m,1</sub>),</li>
+                    <li>analizar la transición hacia capas superiores (<strong>relaciones verticales</strong>, e.g. Γ<sub>p,2</sub> → Γ<sub>b,3</sub> → Γ<sub>c,4</sub>).</li>
+                </ul>
+                <p style="margin:0.5rem 0 0 0; font-size:0.98rem; line-height:1.7;">
+                Esta interpretación abre la posibilidad de representar la arquitectura mediante <strong>matrices de adyacencia, grafos multicapa o tensores</strong>, aprovechando herramientas consolidadas de teoría de redes y sistemas dinámicos. De este modo, Γ deja de ser únicamente un resultado local y se convierte en la <strong>referencia que permite comparar, conectar y propagar</strong> organizaciones entre capas y subsistemas.
+                </p>
+                <div style="display:flex; flex-wrap:wrap; gap:0.5rem 1.5rem; margin-top:0.8rem; padding-top:0.8rem; border-top:1px solid #b9d4e0; font-size:0.9rem; color:#1a4a6b;">
+                    <span><strong>Ejemplo horizontal:</strong> Γ<sub>t,1</sub> (tobillo) ↔ Γ<sub>m,1</sub> (muslo)</span>
+                    <span><strong>Ejemplo vertical:</strong> Γ<sub>p,2</sub> (pierna) → Γ<sub>b,3</sub> (bipedestación)</span>
                 </div>
             </div>
 
@@ -492,6 +541,16 @@
             </div>
             <p style="font-size:0.85rem; color:#4a5a6a;">*El primer documento contiene los objetivos, el desarrollo matemático, la simulación y las condiciones de refutación. El segundo define la unidad mínima de adaptación sobre la que se basa la arquitectura.</p>
 
+            <!-- ===== NUEVA SECCIÓN 8: LIMITACIONES ACTUALES ===== -->
+            <h2 id="limitaciones">8. Limitaciones actuales</h2>
+            <ul style="margin-left:1.5rem; margin-bottom:1rem;">
+                <li><strong>El formalismo aún no ha sido validado experimentalmente.</strong> La propuesta se encuentra en fase de desarrollo teórico y simulación.</li>
+                <li><strong>La definición operacional de Δγ depende del contexto de aplicación.</strong> No existe una única forma de calcular el contraste estructural entre γ<sub>a</sub> y γ<sub>b</sub>; su definición debe adaptarse al tipo de señales y al objetivo del análisis.</li>
+                <li><strong>Los parámetros de PIDCA requieren calibración experimental.</strong> Las constantes de tiempo, ganancias y tamaños de ventana deben ajustarse según las características de los sensores y el protocolo de captura.</li>
+                <li><strong>Las capacidades predictivas son hipotéticas hasta su validación.</strong> La capacidad de anticipar reorganizaciones o cambios funcionales es una hipótesis que debe ser probada con datos reales.</li>
+                <li><strong>La interpretación de Γ como identidad organizacional es una propuesta en evolución.</strong> Aunque es coherente con el marco teórico, su utilidad como herramienta de análisis y su relación con métricas clásicas de biomecánica deben ser exploradas en profundidad.</li>
+            </ul>
+
             <div class="firma">
                 <p><strong>Proyecto NewroSTaiR‑11</strong></p>
                 <p>Andru Stiven Rodríguez Bustos</p>
@@ -513,6 +572,7 @@
                 <li><a href="#digiti"><span aria-hidden="true">🔍</span> 5. DIGITI</a></li>
                 <li><a href="#estado"><span aria-hidden="true">📋</span> 6. Estado</a></li>
                 <li><a href="#documentos"><span aria-hidden="true">📚</span> 7. Documentos</a></li>
+                <li><a href="#limitaciones"><span aria-hidden="true">⚠️</span> 8. Limitaciones</a></li>
             </ul>
             <hr>
             <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
@@ -560,6 +620,7 @@
                 <li><a href="#digiti"><span aria-hidden="true">🔍</span> 5. DIGITI</a></li>
                 <li><a href="#estado"><span aria-hidden="true">📋</span> 6. Estado</a></li>
                 <li><a href="#documentos"><span aria-hidden="true">📚</span> 7. Documentos</a></li>
+                <li><a href="#limitaciones"><span aria-hidden="true">⚠️</span> 8. Limitaciones</a></li>
             </ul>
             <hr>
             <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
@@ -569,70 +630,131 @@
     <script>
         (function() {
             document.documentElement.classList.remove('no-js');
-            const folderLinks = document.querySelectorAll('.tree .folder > .module-row > .module-link');
-            const doubleClickDelay = 500;
-            folderLinks.forEach(link => {
-                const folder = link.closest('.folder');
-                if (!folder) return;
-                let clickCount = 0, clickTimer = null;
-                link.addEventListener('click', function(e) {
+
+            // ===== 1. NAVEGACIÓN CON BOTÓN DE TOGGLE =====
+            // Añadir botón de toggle a cada carpeta que no lo tenga
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                if (folder.querySelector('.toggle-folder')) return;
+
+                const btn = document.createElement('button');
+                btn.className = 'toggle-folder';
+                btn.setAttribute('aria-label', 'Expandir o contraer carpeta');
+                btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
+
+                const moduleRow = folder.querySelector('.module-row');
+                if (moduleRow) {
+                    moduleRow.prepend(btn);
+                } else {
+                    folder.prepend(btn);
+                }
+
+                // Evento del botón: solo toggle (sin navegación)
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
                     e.preventDefault();
-                    clickCount++;
-                    if (clickCount === 1) { clickTimer = setTimeout(() => { const href = link.getAttribute('href'); if (href && href !== '#') window.location.href = href; clickCount = 0; }, doubleClickDelay); }
-                    else if (clickCount === 2) { clearTimeout(clickTimer); clickCount = 0; const parentUl = folder.closest('ul'); if (parentUl) { parentUl.querySelectorAll(':scope > .folder.open').forEach(f => { if (f !== folder) f.classList.remove('open'); }); } folder.classList.toggle('open'); }
+                    folder.classList.toggle('open');
                 });
             });
 
+            // Observar cambios en la clase 'open' para actualizar flechas
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                const btn = folder.querySelector('.toggle-folder');
+                if (!btn) return;
+                const observer = new MutationObserver(() => {
+                    btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
+                });
+                observer.observe(folder, { attributes: true, attributeFilter: ['class'] });
+            });
+
+            // Comportamiento del enlace: solo navega (y opcionalmente abre la carpeta)
+            document.querySelectorAll('.tree .module-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Permitir la navegación normal
+                    // Además, abrir la carpeta para que el usuario vea el contexto
+                    const folder = this.closest('.folder');
+                    if (folder) {
+                        folder.classList.add('open');
+                    }
+                    // No prevenimos el evento, así que el navegador navega
+                });
+            });
+
+            // ===== 2. RESALTAR PÁGINA ACTUAL EN EL ÁRBOL =====
             function actualizarArbolSegunPagina() {
-                const pathActual = window.location.pathname.replace(/\/$/, ''), nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
                 document.querySelectorAll('.tree').forEach(tree => {
                     tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
                     tree.querySelectorAll('.folder').forEach(f => f.classList.remove('open'));
                     let enlaceActual = null;
-                    for (const enlace of tree.querySelectorAll('a')) { const href = enlace.getAttribute('href'); if (!href) continue; const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0]; if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; } }
-                    if (enlaceActual) { enlaceActual.classList.add('current-page'); let elemento = enlaceActual.closest('.folder'); while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); } }
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) {
+                            enlaceActual = enlace;
+                            break;
+                        }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) {
+                            elemento.classList.add('open');
+                            elemento = elemento.parentElement.closest('.folder');
+                        }
+                    }
                 });
             }
             actualizarArbolSegunPagina();
 
-            const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight'), btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
+            // ===== 3. MENÚS FLOTANTES =====
+            const menuLeft = document.getElementById('menuLeft');
+            const menuRight = document.getElementById('menuRight');
+            const btnLeft = document.getElementById('menuLeftBtn');
+            const btnRight = document.getElementById('menuRightBtn');
             function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); }
             btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible')) menuLeft.classList.remove('visible'); else { closeAll(); menuLeft.classList.add('visible'); } });
             btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains('visible')) menuRight.classList.remove('visible'); else { closeAll(); menuRight.classList.add('visible'); } });
             document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
 
-            // ===== LECTOR DE VOZ (con exclusión de aria-hidden) =====
+            // ===== 4. LECTOR DE VOZ =====
             const synth = window.speechSynthesis;
-            const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), speedSelect = document.getElementById('speedSelect'), voiceStatus = document.getElementById('voiceStatus'), mainContent = document.getElementById('mainContent'), playPauseIcon = document.getElementById('playPauseIcon'), progressFill = document.getElementById('voiceProgressFill'), progressText = document.getElementById('voiceProgressText');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const speedSelect = document.getElementById('speedSelect');
+            const voiceStatus = document.getElementById('voiceStatus');
+            const mainContent = document.getElementById('mainContent');
+            const playPauseIcon = document.getElementById('playPauseIcon');
+            const progressFill = document.getElementById('voiceProgressFill');
+            const progressText = document.getElementById('voiceProgressText');
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
             const themeMap = {
                 'B': 'docLead', 'C': 'contexto', 'D': 'propuesta', 'E': 'mecanismos',
-                'F': 'aplicacion', 'G': 'digiti', 'H': 'estado', 'I': 'documentos'
+                'F': 'aplicacion', 'G': 'digiti', 'H': 'estado', 'I': 'documentos', 'J': 'limitaciones'
             };
 
-            // Función auxiliar para obtener texto limpio (sin elementos con aria-hidden)
-            function getVisibleText(el) {
-                const clone = el.cloneNode(true);
-                clone.querySelectorAll('[aria-hidden="true"]').forEach(e => e.remove());
-                return clone.innerText.trim();
+            function getIntroText() {
+                const lead = document.getElementById('docLead');
+                return lead ? lead.innerText.trim() : 'Ejemplo implementación PIDCA-UMEAD, para el análisis de marcha humana.';
             }
-
-            function getIntroText() { const lead = document.getElementById('docLead'); return lead ? getVisibleText(lead) : 'Ejemplo implementación PIDCA-UMEAD, para el análisis de marcha humana.'; }
             function getThemeText(sectionId) {
                 const el = document.getElementById(sectionId);
                 if (!el) return '';
-                let text = getVisibleText(el) + '. ';
+                let text = el.innerText.trim() + '. ';
                 let sibling = el.nextElementSibling;
                 while (sibling && sibling.tagName !== 'H2') {
-                    if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null && sibling.getAttribute('aria-hidden') !== 'true') {
-                        text += getVisibleText(sibling) + ' ';
+                    if (sibling.tagName !== 'STYLE' && sibling.tagName !== 'SCRIPT' && sibling.offsetParent !== null) {
+                        text += sibling.innerText.trim() + ' ';
                     }
                     sibling = sibling.nextElementSibling;
                 }
                 return text.trim();
             }
-            function getFullText() { return getVisibleText(mainContent); }
+            function getFullText() { return mainContent.innerText.trim(); }
             function obtenerTextoActual() {
                 const scope = scopeSelect.value;
                 if (scope === 'A') return getFullText();
