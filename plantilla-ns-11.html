@@ -9,7 +9,7 @@
         /* ===== PLANTILLA UNIFICADA ===== */
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
-        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:180px; word-wrap:break-word; overflow-wrap:break-word; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; word-wrap:break-word; overflow-wrap:break-word; }
 
         .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
         .content,.sidebar-left,.sidebar-right { min-width:0; }
@@ -33,29 +33,13 @@
         .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
         hr { margin:1rem 0; border-color:#b9c8dd; }
 
-        /* Botón de toggle en el árbol (nuevo) */
         .toggle-folder {
-            background: transparent;
-            border: none;
-            color: #1a4d6b;
-            font-size: 0.8rem;
-            padding: 0.2rem 0.4rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background 0.2s;
-            flex-shrink: 0;
-            line-height: 1;
-            width: 1.8rem;
-            text-align: center;
-            font-weight: bold;
+            background: transparent; border: none; color: #1a4d6b; font-size: 0.8rem;
+            padding: 0.2rem 0.4rem; cursor: pointer; border-radius: 4px; transition: background 0.2s;
+            flex-shrink: 0; line-height: 1; width: 1.8rem; text-align: center; font-weight: bold;
         }
-        .toggle-folder:hover {
-            background: rgba(0,0,0,0.08);
-        }
-        .toggle-folder:focus-visible {
-            outline: 2px solid #005a9c;
-            outline-offset: 2px;
-        }
+        .toggle-folder:hover { background: rgba(0,0,0,0.08); }
+        .toggle-folder:focus-visible { outline: 2px solid #005a9c; outline-offset: 2px; }
 
         .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
         .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
@@ -84,66 +68,61 @@
         .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
         .menu-desplegable.visible { display:block; }
 
-        /* ===== BARRA DE VOZ COMPACTA ===== */
+        /* ===== BARRA DE VOZ COMPACTA (2 LÍNEAS, SIN TEXTO DE ESTADO) ===== */
         .voice-floating-bar {
-            position:fixed; bottom:10px; left:50%; transform:translateX(-50%);
-            z-index:1100;
-            background:rgba(255,255,255,0.97); backdrop-filter:blur(12px);
-            border-radius:16px; padding:0.3rem 0.6rem;
-            display:grid;
-            grid-template-columns:auto auto auto auto;
-            grid-template-rows:auto;
-            gap:0.3rem 0.4rem;
-            justify-content:center; align-items:center;
-            box-shadow:0 8px 24px rgba(0,0,0,0.12), 0 0 0 1px rgba(30,74,107,0.15);
-            max-width:95vw;
-            border:1px solid #cbd5e1;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 1100;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 0.5rem 0.8rem;
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: auto auto;
+            gap: 0.4rem;
+            justify-content: center; align-items: center;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15), 0 0 0 1px rgba(30,74,107,0.25);
+            max-width: 95vw;
+            border: 1px solid #cbd5e1;
+        }
+        .voice-row-top {
+            display: flex; align-items: center; gap: 0.4rem; justify-content: center; flex-wrap: wrap;
+        }
+        .voice-row-bottom {
+            display: flex; align-items: center; gap: 0.4rem; justify-content: center; flex-wrap: wrap;
         }
         .voice-floating-bar .voice-btn {
-            background:#ffffff; border:1px solid #b9c8dd; border-radius:20px;
-            padding:0.3rem 0.8rem; font-family:'Georgia',serif; font-size:0.75rem;
-            color:#1e4a6b; cursor:pointer;
-            display:flex; align-items:center; gap:0.2rem;
-            transition:all 0.25s ease; min-width:50px;
-            justify-content:center; flex-shrink:0;
+            background: #ffffff; border: 1px solid #b9c8dd; border-radius: 50%;
+            width: 38px; height: 38px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s ease; flex-shrink: 0;
+            font-size: 1.1rem; color: #1e4a6b; padding: 0;
         }
-        .voice-floating-bar .voice-btn:hover { background:#e2eaf1; border-color:#2c5a7a; }
-        .voice-floating-bar .voice-btn:disabled { opacity:0.4; pointer-events:none; }
-        .voice-floating-bar .voice-btn.play-btn { background:#1e4a6b; border-color:#4cc9f0; color:white; font-weight:bold; }
-        .voice-floating-bar .voice-btn.play-btn:hover { background:#163d5c; }
+        .voice-floating-bar .voice-btn:hover { background: #e2eaf1; border-color: #2c5a7a; }
+        .voice-floating-bar .voice-btn:disabled { opacity: 0.4; pointer-events: none; }
+        .voice-floating-bar .voice-btn.play-btn { background: #1e4a6b; border-color: #4cc9f0; color: white; }
+        .voice-floating-bar .voice-btn.play-btn:hover { background: #163d5c; }
         .voice-progress-container {
-            grid-column:1 / -1; display:flex; align-items:center; gap:0.3rem;
-            width:100%; margin-top:0.1rem;
+            display: flex; align-items: center; gap: 0.3rem; min-width: 120px; flex: 1;
         }
         .voice-progress-bar {
-            flex:1; height:4px; background:#e2e8f0; border-radius:4px; overflow:hidden;
+            flex: 1; height: 5px; background: #e2e8f0; border-radius: 5px; overflow: hidden;
         }
         .voice-progress-fill {
-            height:100%; width:0%; background:linear-gradient(90deg, #1e4a6b, #3e92cc);
-            transition:width 0.3s ease; border-radius:4px;
+            height: 100%; width: 0%; background: linear-gradient(90deg, #1e4a6b, #3e92cc);
+            transition: width 0.3s ease; border-radius: 5px;
         }
         .voice-progress-text {
-            font-size:0.6rem; color:#2c5a7a; min-width:32px; text-align:right;
+            font-size: 0.65rem; color: #2c5a7a; min-width: 32px; text-align: right;
         }
-        .voice-floating-bar .voice-status {
-            font-size:0.7rem; color:#2c5a7a; font-style:italic;
-            display:flex; align-items:center; gap:0.2rem;
-            flex-shrink:1; min-width:0;
-            grid-column:1 / -1; justify-content:center;
-            margin-top:0.1rem;
-        }
-        .voice-floating-bar .voice-status::before { content:"🔊"; font-style:normal; }
         .voice-floating-bar .voice-select,
         .voice-floating-bar .voice-scope-select,
         .voice-floating-bar .voice-speed-select {
-            background:#ffffff; border:1px solid #b9c8dd; border-radius:20px;
-            padding:0.25rem 0.5rem; font-family:'Georgia',serif;
-            font-size:0.7rem; color:#1e4a6b; cursor:pointer; outline:none;
-            flex-shrink:0;
+            background: #ffffff; border: 1px solid #b9c8dd; border-radius: 20px;
+            padding: 0.25rem 0.5rem; font-family: 'Georgia', serif;
+            font-size: 0.65rem; color: #1e4a6b; cursor: pointer; outline: none;
+            flex-shrink: 0; max-width: 100px;
         }
-        .voice-floating-bar .voice-select { max-width:130px; }
-        .voice-floating-bar .voice-scope-select { max-width:160px; }
-        .voice-floating-bar .voice-speed-select { max-width:70px; }
+        .voice-floating-bar .voice-scope-select { max-width: 140px; }
+        .voice-floating-bar .voice-speed-select { max-width: 60px; }
 
         .back-button { display:block; text-align:center; margin-bottom:1rem; }
         .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.5rem 1rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.85rem; transition:background 0.2s,border-color 0.2s; }
@@ -165,25 +144,20 @@
             .header-text-block p { font-size:0.75rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
             .accesibilidad-header-text { font-size:0.65rem; }
             .header-imagen { padding:0.5rem 0.3rem; }
-            body { padding-bottom:120px; }
+            body { padding-bottom:100px; }
             .menu-flotante-left,.menu-flotante-right { bottom:90px; }
             .menu-desplegable { bottom:60px; max-height:calc(100vh - 200px); }
-            .indice-tarjetas { grid-template-columns:1fr 1fr; }
-            .bibliografia-tarjetas { grid-template-columns:1fr; }
             .voice-floating-bar {
-                bottom:0; left:0; right:0; transform:none; width:100%; max-width:100%;
-                grid-template-columns:1fr 1fr 1fr; gap:4px; padding:4px;
-                border-radius:10px 10px 0 0;
+                bottom: 0; left: 0; right: 0; transform: none; width: 100%; max-width: 100%;
+                border-radius: 16px 16px 0 0; padding: 4px 6px; gap: 2px;
             }
-            .voice-floating-bar .voice-btn { font-size:0.6rem; padding:4px 6px; min-width:0; }
+            .voice-floating-bar .voice-btn { width: 32px; height: 32px; font-size: 0.9rem; }
             .voice-floating-bar .voice-select,
             .voice-floating-bar .voice-scope-select,
-            .voice-floating-bar .voice-speed-select { font-size:0.6rem; padding:3px; max-width:100%; width:100%; }
-            .voice-floating-bar .voice-status { font-size:0.6rem; grid-column:1 / -1; }
-            .voice-progress-container { grid-column:1 / -1; }
+            .voice-floating-bar .voice-speed-select { font-size: 0.6rem; padding: 2px 4px; max-width: 80px; }
+            .voice-progress-text { font-size: 0.6rem; min-width: 24px; }
         }
 
-        /* ===== NUEVOS ESTILOS PARA COMPONENTES INTERACTIVOS ===== */
         :root {
             --tarjeta-bg: #ffffff;
             --acento-apoyo: #e74c3c;
@@ -204,203 +178,46 @@
             transition: var(--transicion);
             border: 1px solid var(--borde);
         }
-        .tarjeta:hover {
-            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
-            transform: translateY(-2px);
-        }
+        .tarjeta:hover { box-shadow: 0 12px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
         .tarjeta h2 {
-            font-size: 1.8rem;
-            color: #1e4a6b;
-            margin-bottom: 1.2rem;
-            border-bottom: 3px solid #3e92cc;
-            padding-bottom: 0.4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            font-size: 1.8rem; color: #1e4a6b; margin-bottom: 1.2rem;
+            border-bottom: 3px solid #3e92cc; padding-bottom: 0.4rem;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        .icono-toggle {
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: transform 0.3s;
-            color: #3e92cc;
-        }
-        .icono-toggle.girado {
-            transform: rotate(180deg);
-        }
-        .controles {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-            margin-bottom: 1.5rem;
-        }
+        .icono-toggle { font-size: 1.8rem; cursor: pointer; transition: transform 0.3s; color: #3e92cc; }
+        .icono-toggle.girado { transform: rotate(180deg); }
+        .controles { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
         .btn {
-            background: #1e4a6b;
-            color: white;
-            border: none;
-            padding: 0.5rem 1.2rem;
-            border-radius: 30px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transicion);
-            font-size: 0.9rem;
-            box-shadow: 0 4px 10px rgba(30,74,107,0.3);
-            font-family: 'Georgia', serif;
+            background: #1e4a6b; color: white; border: none; padding: 0.5rem 1.2rem;
+            border-radius: 30px; font-weight: 600; cursor: pointer; transition: var(--transicion);
+            font-size: 0.9rem; box-shadow: 0 4px 10px rgba(30,74,107,0.3); font-family: 'Georgia', serif;
         }
-        .btn:hover {
-            background: #163d5c;
-            box-shadow: 0 6px 14px rgba(30,74,107,0.4);
-            transform: scale(1.03);
-        }
-        .btn.secundario {
-            background: #ecf0f1;
-            color: #1e4a6b;
-            box-shadow: none;
-            border: 1px solid #b9c8dd;
-        }
-        .btn.secundario:hover {
-            background: #d5dbdb;
-        }
-        .contenido-colapsable {
-            max-height: 2000px;
-            overflow: hidden;
-            transition: max-height 0.5s ease, opacity 0.4s ease;
-            opacity: 1;
-        }
-        .colapsado {
-            max-height: 0;
-            opacity: 0;
-            margin: 0;
-        }
-        .fase-apoyo {
-            background: linear-gradient(135deg, #fdedec, #fadbd8);
-            border-left: 6px solid var(--acento-apoyo);
-            padding: 1rem;
-            border-radius: 0 20px 20px 0;
-            margin: 1rem 0;
-        }
-        .fase-balanceo {
-            background: linear-gradient(135deg, #eafaf1, #d5f5e3);
-            border-left: 6px solid var(--acento-balanceo);
-            padding: 1rem;
-            border-radius: 0 20px 20px 0;
-            margin: 1rem 0;
-        }
-        .barra-progreso {
-            width: 100%;
-            height: 12px;
-            background: #ecf0f1;
-            border-radius: 20px;
-            margin: 0.5rem 0 1rem;
-            overflow: hidden;
-            display: flex;
-        }
+        .btn:hover { background: #163d5c; box-shadow: 0 6px 14px rgba(30,74,107,0.4); transform: scale(1.03); }
+        .btn.secundario { background: #ecf0f1; color: #1e4a6b; box-shadow: none; border: 1px solid #b9c8dd; }
+        .btn.secundario:hover { background: #d5dbdb; }
+        .contenido-colapsable { max-height: 2000px; overflow: hidden; transition: max-height 0.5s ease, opacity 0.4s ease; opacity: 1; }
+        .colapsado { max-height: 0; opacity: 0; margin: 0; }
+        .fase-apoyo { background: linear-gradient(135deg, #fdedec, #fadbd8); border-left: 6px solid var(--acento-apoyo); padding: 1rem; border-radius: 0 20px 20px 0; margin: 1rem 0; }
+        .fase-balanceo { background: linear-gradient(135deg, #eafaf1, #d5f5e3); border-left: 6px solid var(--acento-balanceo); padding: 1rem; border-radius: 0 20px 20px 0; margin: 1rem 0; }
+        .barra-progreso { width: 100%; height: 12px; background: #ecf0f1; border-radius: 20px; margin: 0.5rem 0 1rem; overflow: hidden; display: flex; }
         .progreso-apoyo { background: var(--acento-apoyo); width: 60%; height: 100%; }
         .progreso-balanceo { background: var(--acento-balanceo); width: 40%; height: 100%; }
-        .galeria {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-        .galeria img {
-            width: 100%;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: var(--transicion);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid var(--borde);
-        }
-        .galeria img:hover {
-            transform: scale(1.04);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-            z-index: 1200;
-            backdrop-filter: blur(5px);
-        }
-        .modal img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+        .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .galeria img { width: 100%; border-radius: 20px; cursor: pointer; transition: var(--transicion); box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid var(--borde); }
+        .galeria img:hover { transform: scale(1.04); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 1200; backdrop-filter: blur(5px); }
+        .modal img { max-width: 90%; max-height: 90%; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .modal.visible { display: flex; }
-        .cerrar-modal {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            font-size: 2.5rem;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            background: rgba(0,0,0,0.5);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transicion);
-        }
+        .cerrar-modal { position: absolute; top: 2rem; right: 2rem; font-size: 2.5rem; color: white; cursor: pointer; font-weight: bold; background: rgba(0,0,0,0.5); width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; transition: var(--transicion); }
         .cerrar-modal:hover { background: rgba(255,255,255,0.3); }
-        .timeline {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1.5rem 0;
-            position: relative;
-            padding: 1rem 0;
-        }
-        .timeline::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0; right: 0;
-            height: 4px;
-            background: var(--borde);
-            z-index: 0;
-            transform: translateY(-50%);
-            border-radius: 2px;
-        }
-        .fase-timeline {
-            position: relative;
-            z-index: 1;
-            background: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            border: 1px solid var(--borde);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
+        .timeline { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin: 1.5rem 0; position: relative; padding: 1rem 0; }
+        .timeline::before { content: ""; position: absolute; top: 50%; left: 0; right: 0; height: 4px; background: var(--borde); z-index: 0; transform: translateY(-50%); border-radius: 2px; }
+        .fase-timeline { position: relative; z-index: 1; background: white; padding: 0.4rem 0.8rem; border-radius: 20px; font-weight: 600; font-size: 0.85rem; border: 1px solid var(--borde); box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
         .fase-timeline.apoyo { color: var(--acento-apoyo); border-color: var(--acento-apoyo); }
         .fase-timeline.balanceo { color: var(--acento-balanceo); border-color: var(--acento-balanceo); }
 
-        /* ===== BARRA DE CONTROLES PARA TARJETAS (PERMANENTE) ===== */
-        .controles-globales {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            background: #f9fbfd;
-            border: 1px dashed #b9c8dd;
-            border-radius: 20px;
-            padding: 1rem 1.5rem;
-            margin-bottom: 2rem;
-        }
-        .controles-globales .etiqueta-controles {
-            font-size: 0.85rem;
-            color: #2c5a7a;
-            margin-right: auto;
-        }
+        .controles-globales { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; background: #f9fbfd; border: 1px dashed #b9c8dd; border-radius: 20px; padding: 1rem 1.5rem; margin-bottom: 2rem; }
+        .controles-globales .etiqueta-controles { font-size: 0.85rem; color: #2c5a7a; margin-right: auto; }
 
         @media (max-width: 600px) {
             .tarjeta { padding: 1.2rem; }
@@ -411,31 +228,35 @@
 </head>
 <body id="top">
 
+    <!-- BARRA DE VOZ COMPACTA -->
     <div class="voice-floating-bar" id="voiceFloatingBar">
-        <button id="playPauseBtn" class="voice-btn play-btn"><span id="playPauseIcon">▶</span> <span id="playPauseLabel" data-es="Escuchar" data-en="Listen">Escuchar</span></button>
-        <button id="stopBtn" class="voice-btn" disabled><span>⏹️</span> <span data-es="Detener" data-en="Stop">Detener</span></button>
-        <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
-            <option value="fem_es">Femenina (España)</option>
-            <option value="fem_lat" selected>Femenina (Latina)</option>
-            <option value="masc_es">Masculina (España)</option>
-            <option value="masc_lat">Masculina (Latina)</option>
-        </select>
-        <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
-            <option value="0.7">0.7x</option>
-            <option value="0.85">0.85x</option>
-            <option value="1" selected>1x</option>
-            <option value="1.2">1.2x</option>
-            <option value="1.5">1.5x</option>
-        </select>
-        <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
-            <option value="intro" data-es="📖 Introducción" data-en="📖 Introduction">📖 Introducción</option>
-            <option value="completo" data-es="📄 Documento completo" data-en="📄 Full document">📄 Documento completo</option>
-        </select>
-        <div class="voice-progress-container">
-            <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
-            <span class="voice-progress-text" id="voiceProgressText">0%</span>
+        <div class="voice-row-top">
+            <button id="playPauseBtn" class="voice-btn play-btn" aria-label="Reproducir o pausar" title="Reproducir/Pausa">▶</button>
+            <button id="stopBtn" class="voice-btn" aria-label="Detener" title="Detener" disabled>⏹️</button>
+            <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+                <option value="fem_lat" selected>Fem(Lat)</option>
+                <option value="fem_es">Fem(Esp)</option>
+                <option value="masc_es">Masc(Esp)</option>
+                <option value="masc_lat">Masc(Lat)</option>
+            </select>
+            <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
+                <option value="0.7">0.7x</option>
+                <option value="0.85">0.85x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.2">1.2x</option>
+                <option value="1.5">1.5x</option>
+            </select>
         </div>
-        <div class="voice-status" id="voiceStatus" data-es="Listo" data-en="Ready">Listo</div>
+        <div class="voice-row-bottom">
+            <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
+                <option value="intro">📖 Introducción</option>
+                <option value="completo">📄 Documento completo</option>
+            </select>
+            <div class="voice-progress-container">
+                <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
+                <span class="voice-progress-text" id="voiceProgressText">0%</span>
+            </div>
+        </div>
     </div>
 
     <header class="header-imagen">
@@ -615,54 +436,32 @@
         (function() {
             document.documentElement.classList.remove('no-js');
 
-            // ===== NAVEGACIÓN CON BOTONES DE TOGGLE (REEMPLAZA DOBLE CLIC) =====
-            // 1. Añadir botones de toggle a todas las carpetas
+            // ===== NAVEGACIÓN CON BOTONES DE TOGGLE =====
             document.querySelectorAll('.tree .folder').forEach(folder => {
-                // Si ya tiene un botón, no duplicar
                 if (folder.querySelector('.toggle-folder')) return;
-
                 const btn = document.createElement('button');
                 btn.className = 'toggle-folder';
                 btn.setAttribute('aria-label', 'Expandir o contraer carpeta');
                 btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
-
                 const moduleRow = folder.querySelector('.module-row');
-                if (moduleRow) {
-                    moduleRow.prepend(btn); // lo pone antes del enlace
-                } else {
-                    folder.prepend(btn);
-                }
-
-                // Solo toggle al pulsar el botón
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    folder.classList.toggle('open');
-                });
+                if (moduleRow) { moduleRow.prepend(btn); } else { folder.prepend(btn); }
+                btn.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); folder.classList.toggle('open'); });
             });
 
-            // 2. Observar cambios de clase para actualizar la flecha
             document.querySelectorAll('.tree .folder').forEach(folder => {
                 const btn = folder.querySelector('.toggle-folder');
                 if (!btn) return;
-                const observer = new MutationObserver(() => {
-                    btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
-                });
+                const observer = new MutationObserver(() => { btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶'; });
                 observer.observe(folder, { attributes: true, attributeFilter: ['class'] });
             });
 
-            // 3. Comportamiento del enlace: navega normalmente y además abre la carpeta
             document.querySelectorAll('.tree .module-link').forEach(link => {
                 link.addEventListener('click', function(e) {
                     const folder = this.closest('.folder');
-                    if (folder) {
-                        folder.classList.add('open'); // mantener visible el submenú al volver
-                    }
-                    // No preventDefault, permite la navegación
+                    if (folder) folder.classList.add('open');
                 });
             });
 
-            // 4. Resaltar página actual
             function actualizarArbolSegunPagina() {
                 const pathActual = window.location.pathname.replace(/\/$/, '');
                 const nombreArchivo = pathActual.split('/').pop() || 'index.html';
@@ -674,115 +473,152 @@
                         const href = enlace.getAttribute('href');
                         if (!href) continue;
                         const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
-                        if (hrefArchivo === nombreArchivo) {
-                            enlaceActual = enlace;
-                            break;
-                        }
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
                     }
                     if (enlaceActual) {
                         enlaceActual.classList.add('current-page');
                         let elemento = enlaceActual.closest('.folder');
-                        while (elemento) {
-                            elemento.classList.add('open');
-                            elemento = elemento.parentElement.closest('.folder');
-                        }
+                        while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); }
                     }
                 });
             }
             actualizarArbolSegunPagina();
 
-            // 5. Menús flotantes (sin cambios)
             const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight'), btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
             function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); }
             btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible')) menuLeft.classList.remove('visible'); else { closeAll(); menuLeft.classList.add('visible'); } });
             btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains('visible')) menuRight.classList.remove('visible'); else { closeAll(); menuRight.classList.add('visible'); } });
             document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
 
-            // 6. Selector de idioma
             const langSelect = document.getElementById('langSelect');
-            function cambiarIdioma(lang) {
-                document.querySelectorAll('[data-es][data-en]').forEach(el => {
-                    el.textContent = el.getAttribute('data-' + lang);
-                });
-            }
-            langSelect.addEventListener('change', () => {
-                cambiarIdioma(langSelect.value);
-                localStorage.setItem('langPref', langSelect.value);
-            });
+            function cambiarIdioma(lang) { document.querySelectorAll('[data-es][data-en]').forEach(el => { el.textContent = el.getAttribute('data-' + lang); }); }
+            langSelect.addEventListener('change', () => { cambiarIdioma(langSelect.value); localStorage.setItem('langPref', langSelect.value); });
             const savedLang = localStorage.getItem('langPref');
-            if (savedLang && savedLang !== langSelect.value) {
-                langSelect.value = savedLang;
-                cambiarIdioma(savedLang);
-            }
+            if (savedLang && savedLang !== langSelect.value) { langSelect.value = savedLang; cambiarIdioma(savedLang); }
 
-            // 7. Síntesis de voz (adaptada para tarjetas opcionales)
+            // ===== SÍNTESIS DE VOZ (ADAPTADA A BARRA COMPACTA SIN TEXTO DE ESTADO) =====
             const synth = window.speechSynthesis;
-            const playPauseBtn = document.getElementById('playPauseBtn'), stopBtn = document.getElementById('stopBtn'), voiceSelect = document.getElementById('voiceSelect'), scopeSelect = document.getElementById('scopeSelect'), speedSelect = document.getElementById('speedSelect'), voiceStatus = document.getElementById('voiceStatus'), playPauseIcon = document.getElementById('playPauseIcon'), playPauseLabel = document.getElementById('playPauseLabel'), progressFill = document.getElementById('voiceProgressFill'), progressText = document.getElementById('voiceProgressText');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelect = document.getElementById('voiceSelect');
+            const scopeSelect = document.getElementById('scopeSelect');
+            const speedSelect = document.getElementById('speedSelect');
+            const progressFill = document.getElementById('voiceProgressFill');
+            const progressText = document.getElementById('voiceProgressText');
+            const mainContent = document.querySelector('.content');
+
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
             function getIntroText() { return 'Plantilla universal de newrostair11. Use esta base para crear nuevas páginas respetando el ecosistema. Reemplace el contenido de la zona editable.'; }
+            function getFullText() { return mainContent ? mainContent.innerText : getIntroText(); }
+
             function obtenerTextoActual() {
-                let base = scopeSelect.value === 'intro' ? getIntroText() : getIntroText() + ' Instrucciones: Copie y pegue su contenido dentro del bloque marcado. No modifique el resto de la estructura para mantener la coherencia visual y funcional.';
-                const tarjetas = document.querySelectorAll('.tarjeta .contenido-colapsable');
-                if (tarjetas.length > 0) {
-                    base += ' ';
-                    tarjetas.forEach(t => base += t.innerText + ' ');
-                }
-                return base;
+                return scopeSelect.value === 'completo' ? getFullText() : getIntroText();
             }
-            function construirVoiceMap() { const voces = synth.getVoices(); if (!voces.length) return; const spanish = voces.filter(v => v.lang.startsWith('es')), fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer')), masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre')); voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc }; selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null; voiceStatus.textContent = selectedVoice ? (langSelect.value === 'es' ? 'Voz lista' : 'Voice ready') : (langSelect.value === 'es' ? 'Sin voz compatible' : 'No compatible voice'); }
+
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces.length) return;
+                const spanish = voces.filter(v => v.lang.startsWith('es'));
+                const fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer'));
+                const masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre'));
+                voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc };
+                selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null;
+            }
+
             synth.onvoiceschanged = construirVoiceMap;
-            voiceSelect.addEventListener('change', () => { if (voiceMap[voiceSelect.value]) { if (isSpeaking) synth.cancel(); selectedVoice = voiceMap[voiceSelect.value]; isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); } });
-            function actualizarInterfaz(estado) { if (estado === 'reproduciendo') { playPauseIcon.textContent = '⏸️'; playPauseLabel.textContent = langSelect.value === 'es' ? 'Pausa' : 'Pause'; stopBtn.disabled = false; playPauseBtn.classList.add('play-btn'); } else if (estado === 'pausado') { playPauseIcon.textContent = '▶'; playPauseLabel.textContent = langSelect.value === 'es' ? 'Reanudar' : 'Resume'; stopBtn.disabled = false; playPauseBtn.classList.remove('play-btn'); } else { playPauseIcon.textContent = '▶'; playPauseLabel.textContent = langSelect.value === 'es' ? 'Escuchar' : 'Listen'; stopBtn.disabled = true; playPauseBtn.classList.add('play-btn'); progressFill.style.width = '0%'; progressText.textContent = '0%'; } }
-            function crearNuevaUtterance(texto, onEnd) { const u = new SpeechSynthesisUtterance(texto); if (selectedVoice) u.voice = selectedVoice; u.rate = parseFloat(speedSelect.value); u.pitch = 1.0; u.volume = 1; u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); }; u.onend = () => { if (onEnd) onEnd(); }; u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = langSelect.value === 'es' ? 'Error' : 'Error'; }; u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); }; u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); }; u.onboundary = (e) => { if (e.name === 'word' || e.name === 'sentence') { const charIndex = e.charIndex || 0; const totalLength = texto.length; const progress = Math.min(100, Math.round((charIndex / totalLength) * 100)); progressFill.style.width = progress + '%'; progressText.textContent = progress + '%'; } }; return u; }
-            function iniciarLectura() { if (synth.speaking) synth.cancel(); if (!selectedVoice) { voiceStatus.textContent = langSelect.value === 'es' ? 'Seleccione una voz compatible' : 'Select a compatible voice'; return; } const texto = obtenerTextoActual(); utterance = crearNuevaUtterance(texto, () => { isSpeaking = false; actualizarInterfaz('detenido'); voiceStatus.textContent = langSelect.value === 'es' ? 'Listo' : 'Ready'; progressFill.style.width = '100%'; progressText.textContent = '100%'; }); synth.speak(utterance); }
-            playPauseBtn.addEventListener('click', () => { if (!isSpeaking && !isPaused) iniciarLectura(); else if (isSpeaking && !isPaused) synth.pause(); else if (isSpeaking && isPaused) synth.resume(); });
-            stopBtn.addEventListener('click', () => { if (synth.speaking) synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); voiceStatus.textContent = langSelect.value === 'es' ? 'Detenido' : 'Stopped'; });
-            scopeSelect.addEventListener('change', () => { if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); } });
+            voiceSelect.addEventListener('change', () => {
+                if (voiceMap[voiceSelect.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelect.value];
+                    isSpeaking = false; isPaused = false;
+                    actualizarInterfaz('detenido');
+                }
+            });
+
+            function actualizarInterfaz(estado) {
+                if (estado === 'reproduciendo') {
+                    playPauseBtn.innerHTML = '⏸️';
+                    playPauseBtn.classList.add('play-btn');
+                    stopBtn.disabled = false;
+                } else if (estado === 'pausado') {
+                    playPauseBtn.innerHTML = '▶';
+                    playPauseBtn.classList.remove('play-btn');
+                    stopBtn.disabled = false;
+                } else {
+                    playPauseBtn.innerHTML = '▶';
+                    playPauseBtn.classList.add('play-btn');
+                    stopBtn.disabled = true;
+                    progressFill.style.width = '0%';
+                    progressText.textContent = '0%';
+                }
+            }
+
+            function crearNuevaUtterance(texto, onEnd) {
+                const u = new SpeechSynthesisUtterance(texto);
+                if (selectedVoice) u.voice = selectedVoice;
+                u.rate = parseFloat(speedSelect.value);
+                u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); };
+                u.onend = () => { if (onEnd) onEnd(); };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); };
+                u.onboundary = (e) => {
+                    if (e.name === 'word' || e.name === 'sentence') {
+                        const charIndex = e.charIndex || 0;
+                        const totalLength = texto.length;
+                        const progress = Math.min(100, Math.round((charIndex / totalLength) * 100));
+                        progressFill.style.width = progress + '%';
+                        progressText.textContent = progress + '%';
+                    }
+                };
+                return u;
+            }
+
+            function iniciarLectura() {
+                if (synth.speaking) synth.cancel();
+                if (!selectedVoice) return;
+                const texto = obtenerTextoActual();
+                utterance = crearNuevaUtterance(texto, () => {
+                    isSpeaking = false;
+                    actualizarInterfaz('detenido');
+                    progressFill.style.width = '100%';
+                    progressText.textContent = '100%';
+                });
+                synth.speak(utterance);
+            }
+
+            playPauseBtn.addEventListener('click', () => {
+                if (!isSpeaking && !isPaused) iniciarLectura();
+                else if (isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume();
+            });
+
+            stopBtn.addEventListener('click', () => {
+                if (synth.speaking) synth.cancel();
+                isSpeaking = false; isPaused = false;
+                actualizarInterfaz('detenido');
+            });
+
+            scopeSelect.addEventListener('change', () => {
+                if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); }
+            });
+
             window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
             construirVoiceMap();
         })();
     </script>
 
-    <!-- Funciones para tarjetas interactivas -->
     <script>
-        function toggleSeccion(idContenido, icono) {
-            const contenido = document.getElementById(idContenido);
-            if (contenido) {
-                contenido.classList.toggle('colapsado');
-                if (icono) icono.classList.toggle('girado');
-            }
-        }
-
-        function expandirTodo() {
-            document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.remove('colapsado'));
-            document.querySelectorAll('.icono-toggle').forEach(i => i.classList.remove('girado'));
-        }
-
-        function colapsarTodo() {
-            document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.add('colapsado'));
-            document.querySelectorAll('.icono-toggle').forEach(i => i.classList.add('girado'));
-        }
-
-        function abrirModal(src) {
-            const modal = document.getElementById('modalImagen');
-            if (modal) {
-                document.getElementById('imagenAmpliada').src = src;
-                modal.classList.add('visible');
-            }
-        }
-
-        function cerrarModal() {
-            const modal = document.getElementById('modalImagen');
-            if (modal) modal.classList.remove('visible');
-        }
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') cerrarModal();
-        });
+        function toggleSeccion(idContenido, icono) { const contenido = document.getElementById(idContenido); if (contenido) { contenido.classList.toggle('colapsado'); if (icono) icono.classList.toggle('girado'); } }
+        function expandirTodo() { document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.remove('colapsado')); document.querySelectorAll('.icono-toggle').forEach(i => i.classList.remove('girado')); }
+        function colapsarTodo() { document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.add('colapsado')); document.querySelectorAll('.icono-toggle').forEach(i => i.classList.add('girado')); }
+        function abrirModal(src) { const modal = document.getElementById('modalImagen'); if (modal) { document.getElementById('imagenAmpliada').src = src; modal.classList.add('visible'); } }
+        function cerrarModal() { const modal = document.getElementById('modalImagen'); if (modal) modal.classList.remove('visible'); }
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') cerrarModal(); });
     </script>
 
-    <!-- Modal genérico para imágenes -->
     <div id="modalImagen" class="modal" onclick="cerrarModal()">
         <span class="cerrar-modal" onclick="cerrarModal()">&times;</span>
         <img id="imagenAmpliada" src="" alt="Imagen ampliada">
