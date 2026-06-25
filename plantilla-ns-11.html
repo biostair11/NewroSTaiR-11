@@ -68,7 +68,7 @@
         .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
         .menu-desplegable.visible { display:block; }
 
-        /* ===== BARRA DE VOZ COMPACTA (2 LÍNEAS, SIN TEXTO DE ESTADO) ===== */
+        /* ===== BARRA DE VOZ COMPACTA ===== */
         .voice-floating-bar {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             z-index: 1100;
@@ -149,15 +149,39 @@
             .menu-desplegable { bottom:60px; max-height:calc(100vh - 200px); }
             .voice-floating-bar {
                 bottom: 0; left: 0; right: 0; transform: none; width: 100%; max-width: 100%;
-                border-radius: 16px 16px 0 0; padding: 4px 6px; gap: 2px;
+                border-radius: 16px 16px 0 0; padding: 4px 6px; gap: 4px;
+                grid-template-columns: auto auto auto auto;
+                grid-template-rows: auto auto;
             }
-            .voice-floating-bar .voice-btn { width: 32px; height: 32px; font-size: 0.9rem; }
+            .voice-row-top, .voice-row-bottom {
+                display: contents;
+            }
+            .voice-floating-bar .voice-btn { width: 30px; height: 30px; font-size: 0.8rem; }
             .voice-floating-bar .voice-select,
-            .voice-floating-bar .voice-scope-select,
-            .voice-floating-bar .voice-speed-select { font-size: 0.6rem; padding: 2px 4px; max-width: 80px; }
-            .voice-progress-text { font-size: 0.6rem; min-width: 24px; }
+            .voice-floating-bar .voice-speed-select { font-size: 0.55rem; padding: 2px 3px; max-width: 70px; }
+            .voice-floating-bar .voice-scope-select { font-size: 0.55rem; padding: 2px 3px; max-width: 110px; }
+            .voice-progress-text { font-size: 0.55rem; min-width: 24px; }
+            .voice-progress-container { min-width: 80px; grid-column: span 2; }
         }
 
+        /* ===== BARRA DE VOZ EN UNA SOLA LÍNEA PARA PANTALLAS ANCHAS ===== */
+        @media (min-width: 900px) {
+            .voice-floating-bar {
+                grid-template-columns: auto auto auto auto auto auto 1fr;
+                grid-template-rows: auto;
+                gap: 0.4rem;
+                align-items: center;
+            }
+            .voice-row-top, .voice-row-bottom {
+                display: contents;
+            }
+            .voice-progress-container {
+                grid-column: auto;
+                min-width: 100px;
+            }
+        }
+
+        /* ===== ESTILOS DE TARJETAS INTERACTIVAS ===== */
         :root {
             --tarjeta-bg: #ffffff;
             --acento-apoyo: #e74c3c;
@@ -249,8 +273,8 @@
         </div>
         <div class="voice-row-bottom">
             <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
-                <option value="intro">📖 Introducción</option>
-                <option value="completo">📄 Documento completo</option>
+                <option value="intro" data-full="📖 Introducción">📖 Intro</option>
+                <option value="completo" data-full="📄 Documento completo">📄 Completo</option>
             </select>
             <div class="voice-progress-container">
                 <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
@@ -371,6 +395,7 @@
         </aside>
     </div>
 
+    <!-- MENÚS FLOTANTES CON MINI-MAPA COMPLETO -->
     <div class="menu-flotante-left">
         <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
         <div class="menu-desplegable left" id="menuLeft">
@@ -381,25 +406,33 @@
                     <ul class="submenu">
                         <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">ESTRUCTURA FLEXIBLE</div>
                         <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link">🌱Origen, ▶️Misión y 🎥Visión</a></div><ul class="submenu"></ul></li>
-                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">📝Marco Teórico</a></div>
-                            <ul class="submenu"><li><a href="PI&FT.html">📘 Índice PI</a></li><li><a href="McDee11-NFC.html">📐 McDee-11</a></li><li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="sonificacion.html">🎵 Sonificación</a></li></ul>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">📜​Fundamentos y 📝Marco Teórico</a></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html">📘 Índice de documentos PI</a></li>
+                                <li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li>
+                                <li><a href="sonificacion.html">🎵 Sonificación</a></li>
+                            </ul>
                         </li>
                         <li class="folder open"><div class="module-row"><a href="i+d.html" class="module-link">🔎I+D y 📋Modelos de Negocio</a></div>
-                            <ul class="submenu"><li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="newrophome-11/index-np.html">📜 NewroPhome-11</a></li></ul>
+                            <ul class="submenu">
+                                <li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li>
+                                <li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li>
+                            </ul>
                         </li>
                         <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link">📚Bibliografía Temática</a></div><ul class="submenu"></ul></li>
-                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEX. ESTRUCTURADA</div>
-                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">🧑‍🏫Humanidades</a></div><ul class="submenu"></ul></li>
+                        <div class="etiqueta etiqueta-Mandelbrot" style="margin:0.5rem 0; font-size:0.7rem; text-align:left; width:auto; transform:none; letter-spacing:1px; display:block;">FLEXIBILIDAD ESTRUCTURADA</div>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link">🎨Arte y Humanidades</a></div><ul class="submenu"></ul></li>
                         <li class="folder"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="pyh/pyh.html" class="module-link">🛠️Proyectos y herramientas</a></div><ul class="submenu"></ul></li>
-                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">👋Comunidad</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="pyh/pyh.html" class="module-link">🛠️Proyectos y Herramientas</a></div><ul class="submenu"></ul></li>
+                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link">📱 Comunidad</a></div><ul class="submenu"></ul></li>
                     </ul>
                 </li>
-                <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">🤝Marco Conceptual</a></div><ul class="submenu"><li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arq. regulación</a></li><li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución</a></li><li><a href="06-Historia-Neuroplasticidad.html">📖 Complejidad</a></li></ul></li>
-                <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">📝 Marco Teórico</a></div><ul class="submenu"><li><a href="McDee11-NFC.html">📐 McDee-11</a></li><li><a href="McDee11-Anexo-ADN.html">🧬 ADN</a></li><li><a href="sonificacion.html">🎵 Sonificación</a></li></ul></li>
-                <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link">🛠️Proyectos</a></div><ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="i+d/presentacion-mh-digiti.html">🚶‍♂️Marcha Humana</a></li></ul></li>
-                <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚Bibliografía</a></div><ul class="submenu"><li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1</a></li><li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2</a></li><li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3</a></li><li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4</a></li><li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5</a></li><li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6</a></li></ul></li>
-                <li class="folder"><div class="module-row"><a href="i+d/galeria-mm.html" class="module-link">📡 Multimedia</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="galeria.html">🖼️ Galería</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link">🤝 Marco Conceptual</a></div><ul class="submenu"><li><a href="marco-conceptual/arqui-reg-dinam.html">⚙️ Arquitecturas de regulación dinámica</a></li><li><a href="ensayo-evolucion/evol-intro.html">🌿 Evolución y Teorías Modernas</a></li><li><a href="06-Historia-Neuroplasticidad.html">📖 Historia de la Complejidad</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link">📝 Marco Teórico</a></div><ul class="submenu"><li><a href="McDee11-NFC.html">📐 McDee-11 (Núcleo completo)</a></li><li><a href="McDee11-Anexo-ADN.html">🧬 Anexo ADN</a></li><li><a href="sonificacion.html">🎵 Sonificación</a></li></ul></li>
+                <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link">🛠️Proyectos y herramientas</a></div><ul class="submenu"><li><a href="Base-Newro-Sync.html">🔊 NewroSync-11</a></li><li><a href="https://newrosboxy11.netlify.app" target="_blank">📦 NewroBoxy-11</a></li><li><a href="NewroHand-11.html">🖐️ NewroHand-11</a></li><li><a href="i+d/hipotesis-pid.html">🧠 Hipótesis PID</a></li><li><a href="newrophome-11/index-np.html">📜 Proyecto NewroPhome-11</a></li><li><a href="i+d/presentacion-mh-digiti.html">Proyecto 🚶‍♂️Marcha 🚶Humana</a></li><li><a href="docs/grupos-abc.html">📊 Tabla de Grupos ABC</a></li><li><a href="pagina-en-desarrollo.html">🎛️ Método DSP</a></li><li><a href="07-Era-Humano-IA.html">🗣️ Humano IA</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="bibliografia-emojis.html" class="module-link" style="font-weight:bold;">📚Bibliografía Temática</a></div><ul class="submenu"><li><a href="bibliografia-emojis.html#eje1">🌀 Eje 1</a></li><li><a href="bibliografia-emojis.html#eje2">🧠 Eje 2</a></li><li><a href="bibliografia-emojis.html#eje3">⚙️ Eje 3</a></li><li><a href="bibliografia-emojis.html#eje4">🌿 Eje 4</a></li><li><a href="bibliografia-emojis.html#eje5">🛠️ Eje 5</a></li><li><a href="bibliografia-emojis.html#eje6">🌐 Eje 6</a></li></ul></li>
+                <li class="folder"><div class="module-row"><a href="i+d/galeria-mm.html" class="module-link">📡 Multimedia y enlaces externos</a></div><ul class="submenu"><li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li><li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li><li><a href="galeria.html">🖼️ Galería completa</a></li></ul></li>
             </ul>
         </div>
     </div>
@@ -496,24 +529,41 @@
             const savedLang = localStorage.getItem('langPref');
             if (savedLang && savedLang !== langSelect.value) { langSelect.value = savedLang; cambiarIdioma(savedLang); }
 
-            // ===== SÍNTESIS DE VOZ (ADAPTADA A BARRA COMPACTA SIN TEXTO DE ESTADO) =====
+            // ===== SÍNTESIS DE VOZ =====
             const synth = window.speechSynthesis;
             const playPauseBtn = document.getElementById('playPauseBtn');
             const stopBtn = document.getElementById('stopBtn');
-            const voiceSelect = document.getElementById('voiceSelect');
-            const scopeSelect = document.getElementById('scopeSelect');
-            const speedSelect = document.getElementById('speedSelect');
+            const voiceSelectV = document.getElementById('voiceSelect');
+            const scopeSelectV = document.getElementById('scopeSelect');
+            const speedSelectV = document.getElementById('speedSelect');
             const progressFill = document.getElementById('voiceProgressFill');
             const progressText = document.getElementById('voiceProgressText');
             const mainContent = document.querySelector('.content');
 
             let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
 
+            // Abreviar textos del scope en pantallas pequeñas
+            function actualizarTextosScope() {
+                const isSmall = window.innerWidth <= 600;
+                Array.from(scopeSelectV.options).forEach(option => {
+                    if (isSmall) {
+                        // Mantener el texto abreviado por defecto
+                    } else {
+                        const fullText = option.getAttribute('data-full');
+                        if (fullText) {
+                            option.textContent = fullText;
+                        }
+                    }
+                });
+            }
+            window.addEventListener('resize', actualizarTextosScope);
+            actualizarTextosScope();
+
             function getIntroText() { return 'Plantilla universal de newrostair11. Use esta base para crear nuevas páginas respetando el ecosistema. Reemplace el contenido de la zona editable.'; }
             function getFullText() { return mainContent ? mainContent.innerText : getIntroText(); }
 
             function obtenerTextoActual() {
-                return scopeSelect.value === 'completo' ? getFullText() : getIntroText();
+                return scopeSelectV.value === 'completo' ? getFullText() : getIntroText();
             }
 
             function construirVoiceMap() {
@@ -523,14 +573,14 @@
                 const fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer'));
                 const masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre'));
                 voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc };
-                selectedVoice = voiceMap[voiceSelect.value] || spanish[0] || null;
+                selectedVoice = voiceMap[voiceSelectV.value] || spanish[0] || null;
             }
 
             synth.onvoiceschanged = construirVoiceMap;
-            voiceSelect.addEventListener('change', () => {
-                if (voiceMap[voiceSelect.value]) {
+            voiceSelectV.addEventListener('change', () => {
+                if (voiceMap[voiceSelectV.value]) {
                     if (isSpeaking) synth.cancel();
-                    selectedVoice = voiceMap[voiceSelect.value];
+                    selectedVoice = voiceMap[voiceSelectV.value];
                     isSpeaking = false; isPaused = false;
                     actualizarInterfaz('detenido');
                 }
@@ -557,7 +607,7 @@
             function crearNuevaUtterance(texto, onEnd) {
                 const u = new SpeechSynthesisUtterance(texto);
                 if (selectedVoice) u.voice = selectedVoice;
-                u.rate = parseFloat(speedSelect.value);
+                u.rate = parseFloat(speedSelectV.value);
                 u.pitch = 1.0; u.volume = 1;
                 u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); };
                 u.onend = () => { if (onEnd) onEnd(); };
@@ -601,7 +651,7 @@
                 actualizarInterfaz('detenido');
             });
 
-            scopeSelect.addEventListener('change', () => {
+            scopeSelectV.addEventListener('change', () => {
                 if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); }
             });
 
