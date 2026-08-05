@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDee‑11 · Desde el Instante de un Clic Hacia el Marco de la Foto-Grafía</title>
+    <!--
+    ═══════════════════════════════════════════════════════════════════════════
+    CRITERIO DE TRAZABILIDAD EPISTEMOLÓGICA (Documento Divulgativo · v8.5)
+
+    Este documento presenta McDee‑11 mediante la analogía del estudio
+    fotográfico. Las definiciones formales, la estructura interna de las
+    entidades, los axiomas y las especificaciones algebraicas residen en
+    el Documento Formal (Doc 0). Los procedimientos de aplicación residen
+    en el Documento Metodológico.
+
+    Los enlaces [→ Doc Formal] y [→ Doc Metodológico] actúan como
+    adaptadores Φ entre capas documentales, encarnando la misma
+    arquitectura que describen.
+
+    v8.5 · Ajustes de precisión narrativa (cero reificación).
+    - Los siete operadores representan entidades organizacionales; no
+      realizan acciones por sí mismos.
+    - κ se explica como capa de cualquier nivel de granularidad.
+    - ε se vincula explícitamente con su organización matricial y su
+      posible conversión en nueva κ.
+    - Título añadido al índice de tarjetas.
+    ═══════════════════════════════════════════════════════════════════════════
+    -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        body {
+            background-color: #fafbfc;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #1a1a2e;
+            line-height: 1.7;
+            margin: 0;
+            padding: 2rem;
+        }
+        .mcdee-content {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .mcdee-content h1 {
+            font-size: 2.2rem;
+            color: #16213e;
+            margin-bottom: 0.3rem;
+        }
+        .mcdee-content h2 {
+            font-size: 1.6rem;
+            margin: 2.5rem 0 1rem;
+            color: #0f3460;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.3rem;
+        }
+        .mcdee-content h3 {
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.8rem;
+            color: #0d7377;
+        }
+        .mcdee-content p {
+            margin-bottom: 1rem;
+        }
+        .mcdee-content ul,
+        .mcdee-content ol {
+            margin: 0.5rem 0 1rem 1.8rem;
+        }
+        .mcdee-content li {
+            margin-bottom: 0.4rem;
+        }
+        .mcdee-content code {
+            background: #f4f4f4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+        }
+        .mcdee-content pre {
+            background: #1e1e2e;
+            color: #cdd6f4;
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        .mcdee-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0 1.5rem;
+            background: #f9f9f9;
+            font-size: 0.92rem;
+        }
+        .mcdee-content th,
+        .mcdee-content td {
+            border: 1px solid #e0e0e0;
+            padding: 0.7rem 0.8rem;
+            text-align: left;
+            vertical-align: middle;
+        }
+        .mcdee-content th {
+            background: #16213e;
+            color: white;
+            font-weight: 600;
+        }
+        .mcdee-content strong {
+            color: #0f3460;
+        }
+        .mcdee-content blockquote {
+            border-left: 4px solid #0d7377;
+            padding: 0.6rem 1.2rem;
+            margin: 1.2rem 0;
+            background: #f0f7f7;
+            font-style: italic;
+            color: #2c3e50;
+        }
+        .mcdee-content hr {
+            border: 0.5px solid #e0e0e0;
+            margin: 2rem 0;
+        }
+        .mcdee-content .signature {
+            margin-top: 3rem;
+            color: #555;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .mcdee-content .img-container {
+            margin: 1.8rem 0;
+            text-align: center;
+        }
+        .mcdee-content .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .mcdee-content .img-caption {
+            font-size: 0.85rem;
+            color: #555;
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+        .mcdee-content .align-center {
+            text-align: center;
+        }
+        .mcdee-content .thumb-center {
+            text-align: center;
+        }
+        .mcdee-content .reference-card {
+            background: #f9f9f9;
+            border-left: 4px solid #0d7377;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        .mcdee-content .manifesto {
+            text-align: center;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: #0d7377;
+            margin: 1.5rem 0 2rem;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .mcdee-content .reader-note {
+            background: #fef9e7;
+            border-left: 4px solid #f1c40f;
+            padding: 1rem 1.2rem;
+            margin: 1.5rem 0 2rem;
+            border-radius: 4px;
+            font-size: 0.92rem;
+            color: #5d4e37;
+        }
+        .mcdee-content .reader-note strong {
+            color: #5d4e37;
+        }
+        .mcdee-content .reinterpretation-example {
+            background: #f4f4f4;
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .mcdee-content .principle-scene {
+            background: #f9fafb;
+            border-left: 4px solid #0f3460;
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0 1.5rem 1rem;
+            font-style: normal;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .mcdee-content .principle-scene p {
+            margin-bottom: 0.4rem;
+        }
+        .mcdee-content .sigma-note {
+            background: #f4f4f4;
+            padding: 1rem 1.2rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .mcdee-content .concept-clarification {
+            background: #f0f7f7;
+            border-left: 4px solid #0d7377;
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0 1.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .mcdee-content .principle-img {
+            float: right;
+            margin: 0.5rem 0 0.5rem 1rem;
+            text-align: right;
+            clear: right;
+        }
+        .mcdee-content .principle-img img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .mcdee-content .table-wrapper {
+            overflow-x: auto;
+            margin: 1.2rem 0 1.5rem;
+        }
+        .mcdee-content .transformation-scene {
+            background: #fafbfc;
+            border-left: 4px solid #3e92cc;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .mcdee-content .transformation-scene .role-label {
+            display: inline-block;
+            background: #1e4a6b;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+        .mcdee-content .architectural-note {
+            background: #f0f4f8;
+            border-left: 4px solid #3e92cc;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .mcdee-content .philosophical-distinction {
+            background: #fef9e7;
+            border-left: 4px solid #e09d6f;
+            padding: 1.2rem 1.5rem;
+            margin: 1.8rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .mcdee-content .philosophical-distinction table {
+            background: white;
+            margin: 1rem 0 0.5rem;
+        }
+        .mcdee-content .organizational-diagram {
+            background: #f4f4f4;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            margin: 1.5rem 0;
+            white-space: pre;
+            overflow-x: auto;
+        }
+        .mcdee-content .pedagogical-note {
+            background: #eaf2f9;
+            border-left: 4px solid #3e92cc;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0 2rem;
+            border-radius: 8px;
+            font-style: normal;
+            font-size: 0.92rem;
+            color: #1e4a6b;
+        }
+        .mcdee-content .institutional-note {
+            background: #f0f7f7;
+            border-left: 4px solid #0d7377;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            font-size: 0.92rem;
+            color: #2c3e50;
+        }
+        .mcdee-content .scope-delimitation {
+            background: #f4f4f4;
+            border-left: 4px solid #0f3460;
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            font-size: 0.95rem;
+            color: #1a1a2e;
+            text-align: center;
+        }
+        .mcdee-content .series-context {
+            background: #eef2ff;
+            border-left: 4px solid #4f46e5;
+            padding: 1rem 1.5rem;
+            margin: 0 0 1.8rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            font-size: 0.95rem;
+            color: #1e1b4b;
+            text-align: left;
+        }
+        .mcdee-content .philosophical-insight {
+            background: #f9fafb;
+            border-left: 4px solid #6b7280;
+            padding: 1rem 1.5rem;
+            margin: 0 0 1.8rem 0;
+            border-radius: 8px;
+            font-style: normal;
+            font-size: 0.95rem;
+            color: #1f2937;
+            text-align: left;
+        }
+        .mcdee-content .doc-link {
+            background: #f0f4f8;
+            border-left: 4px solid #3e92cc;
+            padding: 0.8rem 1.2rem;
+            margin: 1rem 0 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .mcdee-content .formal-link {
+            display: inline-block;
+            background: #e8f0fe;
+            color: #1a56db;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid #1a56db;
+            margin-left: 0.3rem;
+            white-space: nowrap;
+        }
+        .mcdee-content .formal-link:hover {
+            background: #1a56db;
+            color: white;
+        }
+        .card-index {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0 2.5rem;
+        }
+        .card-index a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+            overflow: hidden;
+            border: 1px solid #eaeaea;
+        }
+        .card-index a:hover {
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .card-index .card-img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            display: block;
+            background: #f4f4f4;
+        }
+        .card-index .card-body {
+            padding: 0.6rem 0.8rem 0.8rem;
+        }
+        .card-index .card-num {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0d7377;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .card-index .card-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #0f3460;
+            margin-top: 0.2rem;
+            line-height: 1.3;
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .mcdee-content {
+                padding: 1rem;
+            }
+            .mcdee-content .principle-img {
+                float: none;
+                text-align: center;
+                margin-left: 0;
+            }
+            .mcdee-content .principle-img img {
+                max-width: 80px;
+            }
+            .card-index {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mcdee-content">
+
+        <h1>🧩 Desde el Instante de un Clic Hacia el Marco de la Foto-Grafía</h1>
+        <h3>Marco de trabajo McDee11<br>
+            Multi Correspondencia y Discretización de Estados Emergentes,<br>
+            a través de una metáfora foto-gráfica.</h3>
+
+        <div class="img-container">
+            <img src="img/portada_ilustracion.png" alt="Portada: desde el clic el marco de la foto-grafía" width="45%">
+        </div>
+
+ 
+        <div class="philosophical-insight">
+            <strong>🧠 Jerarquías y diálogo entre representaciones</strong><br>
+            Cada disciplina organiza su conocimiento mediante estructuras que le son propias —con
+             frecuencia, jerarquías que representan el fenómeno en niveles—. Esas jerarquías son
+              herramientas de análisis indispensables. McDee‑11 es un marco de trabajo donde
+               representaciones generadas desde distintas jerarquías pueden coexistir, relacionarse y
+                dialogar sin necesidad de adoptar una única estructura organizativa.
+        </div>
+
+        <div class="img-container">
+            <img src="img/observadores.png" alt="Red transdisciplinar con enlaces rígidos" width="35%">
+            <p class="img-caption">
+                Cada conexión es un adaptador que establece una correspondencia entre dos o más capas de observación, bajo un 
+                contexto que incluye marcos epistemológicos y criterios de observación.
+            </p>
+        </div>
+
+
+        <div class="reader-note">
+            <strong>📌 Nota para el lector.</strong> Este documento presenta los conceptos fundamentales de McDee‑11 mediante una analogía extendida. <strong>La fotografía —la cual no es el objeto de estudio, sino el lenguaje pedagógico que permite comprender cómo se organizan las observaciones—</strong> recorre todo el texto. Lo que comienza como el congelamiento de un instante mediante un simple clic va revelándose como una red de nodos y grafos: la experiencia de quien observa, la tecnología de una cámara, la complejidad del entorno o paisaje, los acetatos, archivadores, proyectores, salas, un cinema multisalas. La propuesta central no consiste en un nuevo método de observación, sino en un marco de trabajo organizacional que permite relacionar observaciones obtenidas mediante diferentes marcos metodológicos, preservando la identidad de cada representación y permitiendo mantener diálogos entre diferentes dominios.
+        </div>
+
+        <div class="img-container">
+            <img src="img/kit-fotografia.png" alt="Red transdisciplinar con enlaces rígidos" width="35%">
+            
+            <p class="manifesto" id="manifesto"><strong>Toda observación puede entenderse como una representación contextual de un mismo fenómeno.
+                 McDee‑11 es un marco de trabajo organizacional que permite representar, preservar, relacionar y reinterpretar esas 
+                 representaciones, permitiendo mantener diálogos entre diferentes lenguajes.</strong>
+            </p>
+        
+        </div>
+
+        <p>El marco de trabajo McDee‑11 se fundamenta en la ciencia establecida y propone una infraestructura de tipos organizacionales abstractos basada en composición, diseñada para coordinar las capacidades de observación que la ciencia ya ha validado. El objetivo es crear una red de comunicación interdisciplinar donde distintas metodologías puedan dialogar sin necesidad de abandonar su propio lenguaje.</p>
+
+        <div class="scope-delimitation">
+            <strong>🧭 Alcance</strong><br>
+            McDee‑11 es un marco de trabajo diseñado para preservar el contexto en el que esas preguntas fueron respondidas, relacionar las representaciones resultantes y facilitar el diálogo entre distintos marcos metodológicos.
+        </div>
+
+        <div class="pedagogical-note">
+            <strong>📷 Sobre el uso de la analogía en este documento</strong><br>
+            Este documento emplea la fotografía como lenguaje pedagógico. Las escenas del estudio, los acetatos, el archivador y el cinema multisalas no constituyen el modelo, sino un recurso divulgativo diseñado para hacer accesibles conceptos que, de otro modo, requerirían una formalización matemática extensa. Cada metáfora ha sido seleccionada con un propósito específico: ilustrar un operador o una relación organizacional. El modelo McDee‑11 no depende de la analogía; la analogía es el vehículo que permite recorrerlo sin necesidad de un lenguaje técnico previo.<br><br>
+            Para profundizar en las definiciones formales, consulte el <strong>Documento Formal</strong> de la red documental McDee‑11. Para aprender cómo aplicar el procedimiento, consulte el <strong>Documento Metodológico</strong>.
+        </div>
+
+        <h2 style="border-bottom: none; margin-bottom: 0.5rem;">📑 Índice</h2>
+
+        <div class="card-index">
+            <a href="#seccion1">
+                <img class="card-img" src="img/album-foto.png" alt="Sección 1">
+                <div class="card-body">
+                    <div class="card-num">Sección 1</div>
+                    <div class="card-title">La fotografía como lenguaje organizacional</div>
+                </div>
+            </a>
+            <a href="#seccion2">
+                <img class="card-img" src="img/seccion2_mochila.png" alt="Sección 2">
+                <div class="card-body">
+                    <div class="card-num">Sección 2</div>
+                    <div class="card-title">La mochila de herramientas (Ψ · Psi)</div>
+                </div>
+            </a>
+            <a href="#seccion3">
+                <img class="card-img" src="img/seccion3_omega.png" alt="Sección 3">
+                <div class="card-body">
+                    <div class="card-num">Sección 3</div>
+                    <div class="card-title">El acto de discretizar la observación (Ω · Omega)</div>
+                </div>
+            </a>
+            <a href="#seccion4">
+                <img class="card-img" src="img/seccion3_capa.png" alt="Sección 4">
+                <div class="card-body">
+                    <div class="card-num">Sección 4</div>
+                    <div class="card-title">Cómo nace una representación (κ · Kappa)</div>
+                </div>
+            </a>
+            <a href="#seccion5">
+                <img class="card-img" src="img/seccion4_persistencia.png" alt="Sección 5">
+                <div class="card-body">
+                    <div class="card-num">Sección 5</div>
+                    <div class="card-title">Persistencia (Σ · Sigma)</div>
+                </div>
+            </a>
+            <a href="#seccion6">
+                <img class="card-img" src="img/seccion5_organizacion.png" alt="Sección 6">
+                <div class="card-body">
+                    <div class="card-num">Sección 6</div>
+                    <div class="card-title">Organización por capas (μ · Mu)</div>
+                </div>
+            </a>
+            <a href="#seccion7">
+                <img class="card-img" src="img/seccion6_comparacion.png" alt="Sección 7">
+                <div class="card-body">
+                    <div class="card-num">Sección 7</div>
+                    <div class="card-title">Comparación (Φ · Phi)</div>
+                </div>
+            </a>
+            <a href="#seccion8">
+                <img class="card-img" src="img/seccion7_correspondencia.png" alt="Sección 8">
+                <div class="card-body">
+                    <div class="card-num">Sección 8</div>
+                    <div class="card-title">Correspondencia (ε · Épsilon)</div>
+                </div>
+            </a>
+            <a href="#seccion9">
+                <img class="card-img" src="img/colmena-azul.png" alt="Sección 9">
+                <div class="card-body">
+                    <div class="card-num">Sección 9</div>
+                    <div class="card-title">Del estudio fotográfico al plano de conexiones</div>
+                </div>
+            </a>
+            <a href="#seccion10">
+                <img class="card-img" src="img/seccion8_ciclo.png" alt="Sección 10">
+                <div class="card-body">
+                    <div class="card-num">Sección 10</div>
+                    <div class="card-title">Procesamiento y reinterpretación</div>
+                </div>
+            </a>
+            <a href="#seccion11">
+                <img class="card-img" src="img/seccion10_principios.png" alt="Sección 11">
+                <div class="card-body">
+                    <div class="card-num">Sección 11</div>
+                    <div class="card-title">Comportamientos esperados</div>
+                </div>
+            </a>
+            <a href="#seccion12">
+                <img class="card-img" src="img/seccion11_arquitectura.png" alt="Sección 12">
+                <div class="card-body">
+                    <div class="card-num">Sección 12</div>
+                    <div class="card-title">Ámbitos de aplicación</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- ==================== SECCIÓN 1 ==================== -->
+        <h2 id="seccion1">1. La fotografía como lenguaje organizacional</h2>
+        <div class="img-container">
+            <img src="img/album-foto.png" alt="La fotografía como organización de relaciones" width="40%">
+        </div>
+        <p>Cuando se piensa en una fotografía, suele imaginarse una imagen congelada en el tiempo. Sin embargo, <strong>la fotografía no es el objeto de estudio: es el lenguaje pedagógico que permite comprender cómo se organizan las observaciones.</strong> En ella interactúan la luz, la escena, la cámara, el instante de captura, la memoria donde se almacena, las imágenes con las que posteriormente será comparada y las interpretaciones que distintos observadores realizan sobre ella. Cada uno de estos elementos mantiene conexiones con los demás, formando una estructura organizada.</p>
+        <p>Una fotografía no surge de manera aislada. Es el resultado de la organización previa del entorno observado, del instrumento que lo registra y del contexto desde el cual quien observa decide cómo capturarlo. Antes de que exista una fotografía, ya existían múltiples sistemas complejos organizándose: quien está detrás de la cámara, la óptica, la escena, la iluminación, la evolución tecnológica, incluso la cultura fotográfica. La fotografía no crea la organización: es consecuencia de ella. Y, al mismo tiempo, una vez creada, deja de ser únicamente un resultado: pasa a convertirse en un nuevo elemento organizador que permite establecer comparaciones, construir memoria y generar nuevas representaciones.</p>
+        <p>En McDee‑11 esa organización se describe mediante una red de relaciones. <strong>Desde el comienzo se emplea la teoría de grafos como lenguaje formal y visual para representar relaciones organizacionales, sin afirmar que el fenómeno observado tenga estructura de grafo.</strong> La fotografía actúa como vehículo narrativo; la teoría de grafos proporciona la infraestructura que hace visible la organización subyacente.</p>
+        <div class="img-container">
+            <img src="img/roca-lamina.png" alt="Capas de observación interconectadas" width="40%">
+        </div>
+        <p>Lo que comienza como un simple clic va desplegándose en capas sucesivas —el acetato, el archivador, la sala de proyección, el cinema multisalas— donde cada capa conserva a la anterior, la amplía y nunca la reemplaza.</p>
+        <p>Al observar un sistema dinámico —un ecosistema, una red neuronal, el flujo de una corriente— el investigador se enfrenta a una cuestión fundamental: <strong>para capturar más detalles del instante se necesitan varias cámaras, que incluso pueden tener puntos de interés diferentes pero asociados a un punto de interés base.</strong> Una sola cámara no puede abarcar todas las dimensiones del fenómeno. McDee‑11 ofrece un flujo de trabajo donde cada contexto de observación queda documentado, y donde las representaciones pueden persistir, organizarse, compararse y reinterpretarse sin perder su identidad.</p>
+        <p>Conviene adelantar una distinción que resultará esencial. El paisaje que se fotografía tiene sus propias escalas naturales —el grano de arena, la hoja, el árbol, el bosque, la montaña— que emergen del propio entorno y de los fundamentos físicos del fenómeno. Las capas de observación —la fotografía visible, la infrarroja, la térmica, la nocturna— son, en cambio, decisiones de quien observa. <strong>La escala pertenece al fenómeno; la capa pertenece a quien observa.</strong> McDee‑11 no sustituye las escalas propias del sistema; organiza las capas desde las cuales se observan.</p>
+
+        <blockquote>👁️ <strong>Quien observa puede desempeñar distintos papeles</strong><br>
+        A lo largo de este recorrido aparecerán distintos observadores: quien fotografía, quien edita, quien archiva, quien restaura, quien analiza. No es necesario imaginar personas diferentes. En muchos casos todos esos papeles corresponden al mismo individuo, que observa la misma fotografía desde perspectivas distintas según la tarea que realiza en cada momento. Lo que cambia es el aspecto de su organización que cada observador decide explorar. Las diferentes descripciones no compiten entre sí: son proyecciones complementarias de un mismo fenómeno organizacional.<br><br>
+        Pero el marco de trabajo no se limita a las ciencias o la técnica. Otras miradas —la literatura, las humanidades, la cultura, la legislatura— también constituyen capas de observación válidas. A partir de una fotografía pueden nacer múltiples interpretaciones literarias: una misma imagen puede inspirar un poema, un relato, una crónica o una reflexión filosófica. Cada texto es una capa de observación diferente, y todas ellas dialogan con la imagen original sin sustituirla. La literatura, como las ciencias, también organiza observaciones. Así, distintas perspectivas no compiten, sino que se complementan para enriquecer la comprensión del fenómeno.</blockquote>
+
+        <div class="concept-clarification" style="margin-top: 1.5rem;">
+            <strong>📷 La fotografía no ocupa un lugar privilegiado en McDee‑11</strong><br>
+            Se ha escogido la fotografía como lenguaje pedagógico porque constituye una experiencia ampliamente compartida y permite ilustrar de forma intuitiva la construcción de representaciones, su persistencia, organización, comparación y reinterpretación. Sin embargo, <strong>la misma organización podría explicarse mediante otras actividades humanas</strong> —una biblioteca, un laboratorio, una cocina, una orquesta, una red logística, una partida de ajedrez— sin modificar el formalismo.<br><br>
+            <strong>Lo que cambia es la metáfora; la organización permanece invariante.</strong> Esta propiedad, que el propio documento ejemplifica al utilizar la fotografía como dominio narrativo, es en sí misma una manifestación del comportamiento esperado de <strong>Independencia del Sustrato</strong>: el marco de trabajo McDee‑11 no depende del dominio concreto desde el cual se expone. Diferentes documentos pedagógicos —McDee‑11 desde una cocina, McDee‑11 desde una biblioteca, McDee‑11 desde un laboratorio— serían proyecciones narrativas distintas de la misma arquitectura organizacional subyacente.
+        </div>
+
+        <!-- ==================== SECCIÓN 2 ==================== -->
+        <h2 id="seccion2">2. La mochila de herramientas (Ψ · Psi)</h2>
+        <div class="img-container">
+            <img src="img/seccion2_mochila.png" alt="Mochila del estudio fotográfico con herramientas" width="40%">
+        </div>
+        <p>Antes de que exista un contexto documentado, quien observa ya explora el entorno. Recorre el paisaje, examina la luz, reconoce las herramientas disponibles e incluso descubre capacidades que desconocía. Esa exploración pertenece al proceso humano de investigación y puede conducir a redefinir el propio contexto de observación. Una vez documentado dicho contexto, McDee‑11 le asigna el símbolo <strong>Ψ (Psi)</strong>, que <strong>representa el conjunto de condiciones bajo las cuales se realiza una observación</strong>: qué instrumento se utiliza, con qué configuración, bajo qué protocolo, con qué criterio y con qué propósito. Documentar Ψ es lo que permite que una observación pueda ser comprendida, auditada y replicada posteriormente.</p>
+        <blockquote>📷 <strong>La mochila del estudio fotográfico</strong><br>
+        En el estudio hay una mochila que contiene varios instrumentos:<br>
+        • Una cámara térmica, sensible a diferencias de calor.<br>
+        • Una cámara réflex con película de alta sensibilidad, que captura texturas con grano característico.<br>
+        • Una cámara digital de alta resolución, que registra detalles finos en color.<br>
+        • Un dron equipado con cámara y enlace inalámbrico, que permite observar desde el aire y transmitir en tiempo real.<br>
+        Ninguna es "mejor" que otra. Cada una contiene una memoria técnica acumulada y fue diseñada para observar propiedades diferentes del mismo sistema. En la analogía, Ψ es la ficha donde se anota cuál de ellas se utilizó, junto con la configuración, el criterio y el propósito de la observación.</blockquote>
+        <p>La mochila es la metáfora del acervo del conocimiento humano: todas las herramientas coexisten en una heterarquía pura. Un biólogo entiende que Ψ permite documentar si se ha fijado la capacidad estructural de un microscopio electrónico o la dinámica de un marcador fluorescente. Un astrónomo ve que Ψ permite registrar la opción por ondas de radio o rayos X. Un científico de datos comprende que Ψ permite documentar si se ha empleado una proyección lineal o una no lineal. En todos los casos, Ψ documenta el contexto de observación completo para que el proceso pueda ser auditado y replicado. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de Ψ">→ Doc Formal</a></p>
+
+        <!-- ==================== SECCIÓN 3 ==================== -->
+        <h2 id="seccion3">3. El acto de discretizar la observación (Ω · Omega)</h2>
+        <div class="img-container">
+            <img src="img/seccion3_omega.png" alt="El instante preciso del clic, la observación misma" width="40%">
+        </div>
+        <p>Una vez que el contexto Ψ está documentado, las capacidades de observación están disponibles, pero todavía no se ha producido ninguna adquisición concreta. El paso que convierte esa potencialidad en una observación real puede representarse mediante <strong>Ω (Omega)</strong>. En McDee‑11, Ω no es simplemente el clic del obturador: <strong>representa el acto de discretizar una capacidad de observación</strong>.</p>
+        <p>Ω <strong>representa el acto por el cual, dentro del espacio continuo de posibilidades definido por Ψ, se selecciona un instante, una configuración y un encuadre concretos</strong>. Esas variables de decisión —humanas o automáticas— determinan qué se observa, cómo, cuándo y desde qué perspectiva. De todas las fotografías posibles que la mochila permite tomar, <strong>Ω representa la discretización de exactamente una</strong>. Y al hacerlo, produce una representación discreta (κ) que, precisamente por ser discreta, ya puede ser almacenada, comparada y reinterpretada. La discretización es, en sí misma, lo que hace archivable el evento.</p>
+        
+        <div class="transformation-scene">
+            <span class="role-label">👤 Quien fotografía</span>
+            <p><em>En el estudio, alguien ajusta el diafragma, encuadra, contiene la respiración y dispara. Pero Ω no es solo ese instante final. Incluye también la decisión de haber escogido el teleobjetivo en lugar del gran angular, de haber esperado a que el pájaro cruzara el encuadre, de haber modificado la sensibilidad ISO porque una nube cubrió el sol. Todo ese proceso —la selección dentro del espacio de posibilidades— queda representado mediante Ω. El clic es la manifestación visible de la discretización: el continuo de luz y tiempo se convierte en un registro discreto.</em></p>
+        </div>
+
+        <p>Formalmente, Ω <strong>representa la documentación del hecho de la adquisición</strong> junto con su instante temporal, la configuración del sensor en el momento exacto y cualquier variable de decisión relevante. Es el operador que garantiza que la observación no se diluya en la representación: una cosa es <em>haber mirado</em> y otra distinta es <em>lo que se vio</em>. McDee‑11 permite representar ambas para que la trazabilidad pueda recorrer el camino completo desde la capacidad hasta la comparación entre representaciones. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de Ω">→ Doc Formal</a></p>
+
+        <div class="concept-clarification">
+            <strong>🧩 Ψ, Ω y κ: la tríada del nacimiento de una representación</strong><br>
+            Estos tres primeros operadores forman una secuencia natural:<br><br>
+            <strong>Ψ</strong> representa las <strong>posibilidades de observación</strong> (el espacio continuo).<br>
+            <strong>Ω</strong> representa la <strong>discretización de una de esas posibilidades</strong> bajo un conjunto de decisiones.<br>
+            <strong>κ</strong> representa la <strong>capa discreta obtenida</strong> como resultado de esa discretización.<br><br>
+            En la analogía fotográfica, Ψ es la mochila con todas las cámaras; Ω es la elección de una de ellas, el encuadre y el momento del disparo —la discretización del continuo—; κ es la imagen que queda guardada, archivable y comparable. En una sonda estratosférica, Ψ es el conjunto de sensores disponibles; Ω es la rutina que decide cuál se activa y bajo qué condiciones; κ es el paquete de telemetría registrado. El operador es el mismo; cambia el dominio de aplicación.
+        </div>
+
+        <!-- ==================== SECCIÓN 4 ==================== -->
+        <h2 id="seccion4">4. Cómo nace una representación (κ · Kappa)</h2>
+        <div class="img-container">
+            <img src="img/seccion3_capa.png" alt="Creación de una capa representacional" width="40%">
+        </div>
+        <p>Inmediatamente después del acto de discretizar la observación, el sistema conserva una <strong>representación organizada</strong>: una capa que en McDee‑11 se denomina <strong>κ (Kappa)</strong>. Cada κ es una fotografía, un acetato, una proyección concreta del fenómeno. <strong>Toda κ que existe en el sistema nació de un acto de discretización Ω, pero no se reduce a él.</strong> κ <strong>representa la capa que conserva tanto los valores registrados como la estructura que los organiza</strong>.</p>
+        <p>En la analogía, κ es el acetato impreso que se coloca en una de las pantallas de la sala de proyección. Si el contexto de observación incluía el dron con su configuración y criterio, κ podría contener tanto la imagen aérea como los metadatos de telemetría.</p>
+        <p>La fotografía no captura la realidad: captura una proyección de la realidad. Un mismo árbol puede ser fotografiado por una cámara analógica, una digital, una infrarroja, una térmica, una con gran angular y una macro. Cada fotografía es diferente; ninguna es falsa. Cada una resalta relaciones distintas del mismo fenómeno. Si esas imágenes se imprimieran sobre acetatos transparentes y luego se superpusieran cuidadosamente, emergería una representación más rica del fenómeno original. Ninguna capa sustituye a las demás; todas contribuyen a la organización final. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de κ">→ Doc Formal</a></p>
+        <div class="img-container">
+            <img src="img/prisma.png" alt="Superposición de acetatos como metáfora de capas" width="40%">
+        </div>
+
+        <div class="concept-clarification">
+            <strong>🎯 κ no está ligada a un único nivel de granularidad.</strong> Lo que en un momento funciona como una representación atómica (una imagen) puede, tras un proceso de reinterpretación, convertirse en una nueva κ que encapsula toda una organización previa (por ejemplo, una matriz de correspondencias, un clip de vídeo o una película completa). Esta capacidad de emerger en distintos niveles —siempre que exista una organización suficientemente estructurada— es esencial para la autosimilitud organizacional del marco.
+        </div>
+
+        <div class="concept-clarification" style="margin-top: 1.2rem;">
+            <strong>🎯 Tres grados de libertad de la observación</strong><br>
+            Una misma escena puede representarse de formas diferentes sin modificar el fenómeno observado. En la analogía fotográfica existen, al menos, tres grados de libertad independientes, todos ellos contenidos dentro del contexto de observación:<br><br>
+            <strong>1. Instrumento.</strong> Cambiar la cámara modifica la forma en que se registra la información del fenómeno. Una cámara RGB, una térmica o una infrarroja producirán representaciones diferentes del mismo paisaje.<br><br>
+            <strong>2. Configuración instrumental.</strong> Manteniendo el mismo instrumento y punto de observación, se puede cambiar el objetivo, la distancia focal o los parámetros de captura. Un gran angular y un teleobjetivo generan representaciones distintas, aunque el sensor sea el mismo.<br><br>
+            <strong>3. Criterio de observación.</strong> Con exactamente el mismo equipo y la misma posición, quien observa puede dirigir su atención hacia diferentes regiones o propiedades de la escena. Una representación puede centrarse en la copa de un árbol, otra en el sotobosque y otra en la textura de una hoja. Lo que cambia no es el fenómeno, sino <strong>la pregunta que se formula sobre él</strong>.
+        </div>
+
+        <p>Conviene precisar una distinción fundamental. El paisaje fotografiado posee escalas naturales —el grano de arena, la hoja, el árbol, el bosque, la montaña— que emergen del propio entorno y de los fundamentos físicos del fenómeno. Lo que quien fotografía decide es qué capas de observación construir: fotografía visible, infrarroja, térmica, nocturna, con distintas exposiciones. Las capas no modifican las escalas del paisaje; organizan distintas observaciones de esas escalas. <strong>La escala pertenece al fenómeno; la capa pertenece a quien observa.</strong></p>
+
+        <p>Cada fotografía no contiene únicamente una imagen. También conserva la información necesaria para comprender cómo fue obtenida: con qué cámara, bajo qué condiciones, con qué propósito. Esa información acompaña siempre a la representación y permite volver a interpretarla más adelante. En el Documento Formal se detalla la estructura interna de κ mediante propiedades como ρ (las interfaces que exponen información), ϖ (los valores concretos) y w (la ponderación o relevancia de cada propiedad). <a class="formal-link" href="#" title="Consultar Documento Formal: estructura interna de κ">→ Doc Formal</a></p>
+
+        <!-- ==================== SECCIÓN 5 ==================== -->
+        <h2 id="seccion5">5. Persistencia (Σ · Sigma)</h2>
+        <div class="img-container">
+            <img src="img/seccion4_persistencia.png" alt="Persistencia de capas en distintos sustratos" width="40%">
+        </div>
+        <p>Una capa κ debe poder permanecer disponible en el tiempo. Esta capacidad de persistencia puede representarse en McDee‑11 mediante el símbolo <strong>Σ (Sigma)</strong>. Σ <strong>representa la entidad organizacional que permite documentar la preservación de una representación y su continuidad</strong> a través del tiempo y de distintos sustratos. La persistencia no implica conservación perfecta: las representaciones permanecen expuestas a las restricciones del entorno y del medio en el que residen.</p>
+
+        <div class="transformation-scene">
+            <span class="role-label">👤 Quien archiva</span>
+            <p><em>Horas más tarde, la misma persona —ahora con las manos sobre el teclado— copia la imagen en varias carpetas, etiqueta, fecha, asigna palabras clave. La tarjeta de memoria no solo guarda imágenes; guarda también las relaciones entre ellas: qué foto se tomó antes, cuál después, con qué configuración. Quien archiva está construyendo un repositorio de estados y conexiones, trazando rutas entre nodos que luego podrán recorrerse.</em></p>
+        </div>
+
+        <div class="sigma-note">
+            <strong>💡 Vocación de continuidad, no garantía de permanencia.</strong><br>
+            Σ no representa un almacén perfecto. Es una entidad organizacional que permite documentar la preservación, cuya eficacia depende de las condiciones del entorno y del sustrato. Un disco puede fallar, una fotografía puede desteñirse, una memoria humana puede olvidarse. Σ permite representar la intención de preservar; el entorno impone sus restricciones. El resultado emerge de esa interacción. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de Σ">→ Doc Formal</a>
+        </div>
+        <p>En la analogía del estudio, Σ es el archivador donde se guardan los acetatos. Años después, algunos siguen intactos; otros tienen polvo, se rayaron, se perdieron. El archivador permitió preservarlos; no pudo impedir completamente el efecto del tiempo.</p>
+
+        <!-- ==================== SECCIÓN 6 ==================== -->
+        <h2 id="seccion6">6. Organización por capas (μ · Mu)</h2>
+        <div class="img-container">
+            <img src="img/seccion5_organizacion.png" alt="Superposición de acetatos" width="40%">
+        </div>
+        <p>Las representaciones persistidas pueden disponerse como un conjunto organizado de capas de observación. Esta organización por capas se representa mediante <strong>μ (Mu)</strong>. En la analogía, μ ya no es simplemente un collage: <strong>representa la superposición organizada de todos los acetatos compatibles.</strong> Se coloca una transparencia sobre otra, alineando cuidadosamente las referencias comunes. Al principio se distingue una capa, luego dos, luego cinco. La imagen completa nunca estuvo en un solo acetato: emergió de la organización de todas ellas. <strong>Cada acetato constituye una capa de relaciones. La organización conjunta de todas ellas forma una red de capas donde unas representaciones complementan a otras.</strong></p>
+        <p>Esta organización por capas no altera las escalas del paisaje original. El árbol y el bosque siguen ahí, con sus propiedades físicas. Lo que cambia es la riqueza de las capas que quien observa ha decidido construir para comprenderlos. μ <strong>representa la organización de las representaciones</strong> que se han generado a partir del fenómeno, sin modificarlo.</p>
+
+        <div class="img-container">
+            <img src="img/bola-cristal.png" alt="Red de capas interconectadas" width="40%">
+        </div>
+
+        <div class="transformation-scene">
+            <span class="role-label">👤 Quien edita</span>
+            <p><em>Ahora, la misma persona se coloca frente al panel de transparencias. Ya no dispara la cámara; dispone. No juzga la escena, juzga la organización: el contraste aquí, la saturación allá, la proximidad entre dos imágenes que parecen dialogar. Cada acetato ocupa un lugar en la superposición, pero lo importante no es su posición: son las líneas invisibles que se trazan mentalmente entre ellas, conectando unas con otras por similitud, contraste o secuencia.</em></p>
+        </div>
+
+        <p>μ no guarda las capas (eso lo hace Σ), sino que las dispone para que quien observa decida qué comparar y desde qué perspectiva. Además, en μ pueden coexistir múltiples mapas de relaciones sobre el mismo conjunto de capas, cada uno construido con un criterio de comparación diferente. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de μ">→ Doc Formal</a></p>
+
+        <!-- ==================== SECCIÓN 7 ==================== -->
+        <h2 id="seccion7">7. Comparación (Φ · Phi)</h2>
+        <div class="img-container">
+            <img src="img/seccion6_comparacion.png" alt="Adaptadores conectando capas" width="40%">
+        </div>
+        <p>Para examinar la relación entre dos capas, quien observa utiliza un adaptador que en McDee‑11 se denomina <strong>Φ (Phi)</strong>. Φ no es una función única, sino una familia de adaptadores; cada uno <strong>representa un modo distinto de establecer criterios de comparación</strong>. <strong>Φ representa el adaptador mediante el cual pueden relacionarse dos capas sin modificar su contenido.</strong> Selecciona qué aspectos de cada capa participan en la comparación y define cómo se traducen entre sí. <strong>En la analogía de los acetatos, Φ representa el dispositivo que permite alinear dos transparencias para que puedan compararse correctamente.</strong></p>
+        <blockquote>🔌 <strong>El adaptador en la sala de proyección</strong><br>
+        La sala dispone de distintos tipos de proyectores y pantallas. Para comparar la imagen proyectada por un proyector digital con la de un panel LED, se necesita un adaptador específico. Existen adaptadores para emparejar señales de distinto tipo, para traducir gamas de colores entre tecnologías diferentes, o para acoplar directamente las matrices de píxeles cuando ambas pantallas comparten resolución nativa.</blockquote>
+        <p>Así, las responsabilidades quedan perfectamente separadas: las capas ofrecen información, y los adaptadores <strong>representan el criterio</strong> mediante el cual se comparan. Φ proporciona el criterio, pero no el resultado numérico. Ese resultado corresponde al siguiente operador. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de Φ">→ Doc Formal</a></p>
+
+        <!-- ==================== SECCIÓN 8 ==================== -->
+        <h2 id="seccion8">8. Correspondencia (ε · Épsilon)</h2>
+        <div class="img-container">
+            <img src="img/seccion7_correspondencia.png" alt="Pantalla auxiliar mostrando valores de correspondencia" width="40%">
+        </div>
+        <p>El resultado de aplicar un adaptador Φ sobre dos capas es un valor que cuantifica su correspondencia, y que en McDee‑11 se denomina <strong>ε (Épsilon)</strong>. Un valor alto indica que ambas capas se corresponden fuertemente bajo el criterio elegido; un valor bajo indica que apenas presentan correspondencia bajo dicho criterio. ε <strong>representa el valor de correspondencia</strong> obtenido mediante un adaptador Φ.</p>
+        
+        <div class="transformation-scene">
+            <span class="role-label">👤 Quien analiza</span>
+            <p><em>Al caer la noche, la misma persona se sienta frente a las transparencias con la tableta en la mano. Ya no dispara, no archiva, no dispone: compara. Va señalando pares de acetatos y observando el número que aparece en la pantalla auxiliar. Si aplica el mismo adaptador a todas las parejas, obtiene una matriz completa de valores. Esa matriz es un nuevo grafo, construido sobre el anterior.</em></p>
+        </div>
+
+        <div class="concept-clarification">
+            <strong>📊 ε no es una métrica universal, sino el resultado de un adaptador específico.</strong><br>
+            ε no está predefinido por el formalismo. Es la salida de un adaptador Φ elegido para cada caso. En biomecánica, ε puede ser una distancia temporal entre patrones de marcha; en literatura, una medida de similitud semántica; en derecho, un criterio de compatibilidad entre marcos normativos; en imágenes, un índice de similitud estructural. La responsabilidad de definir qué significa «correspondencia» en cada caso recae sobre el adaptador, no sobre McDee‑11. <a class="formal-link" href="#" title="Consultar Documento Formal: definición de ε">→ Doc Formal</a>
+        </div>
+
+        <div class="concept-clarification" style="margin-top: 1.2rem;">
+            <strong>📊 De los valores ε a las matrices de correspondencia</strong><br>
+            Los valores ε se organizan naturalmente en <strong>matrices de correspondencia</strong> cuando se aplica un mismo adaptador Φ a múltiples pares de capas. Dichas matrices —que no son sino la matriz de adyacencia del grafo de relaciones— pueden ser persistidas mediante Σ. Y, cuando se decide tratarlas como una nueva representación, <strong>se convierten en una nueva capa κ</strong>, lista para ser observada con nuevos adaptadores. De este modo se cierra el ciclo organizacional sin introducir nuevos elementos: la matriz de ε es, simultáneamente, el resultado de una comparación y el punto de partida de una nueva observación.
+        </div>
+
+        <!-- ==================== TRANSICIÓN EXPLÍCITA ==================== -->
+        <div class="philosophical-insight" style="margin-top: 2.5rem; border-left-color: #3e92cc;">
+            <strong>🔄 Transición: del estudio fotográfico al marco organizacional</strong><br><br>
+            Hasta este punto hemos recorrido McDee‑11 mediante la metáfora del estudio fotográfico. Cada uno de los siete operadores —Ψ, Ω, κ, Σ, μ, Φ, ε— ha sido presentado con una escena reconocible: la mochila de herramientas, la discretización de la capacidad, el acetato, el archivador, la organización por capas, los adaptadores y la pantalla auxiliar.<br><br>
+            A partir de la siguiente sección, la mirada cambia. La fotografía no desaparece, pero deja de ser el centro de la explicación y pasa a ser un caso particular de una organización más general. Lo que hasta ahora era una historia se convierte en un plano; lo que era una escena puede representarse ahora mediante un grafo de relaciones.<br><br>
+        </div>
+
+        <!-- ==================== SECCIÓN 9 ==================== -->
+        <h2 id="seccion9">9. Del estudio fotográfico al plano de conexiones</h2>
+        <div class="img-container">
+            <img src="img/colmena-azul.png" alt="Red de conexiones del estudio fotográfico" width="40%">
+        </div>
+        <p><strong>Si se observa el estudio fotográfico no como un espacio de trabajo, sino como una red, se descubre algo que siempre estuvo ahí.</strong> Cada cámara, cada pantalla, cada adaptador y cada tarjeta de memoria es un nodo. Las conexiones entre ellos —un cable HDMI, una señal WiFi, un adaptador— son aristas. Este plano de conexiones es el esqueleto invisible del estudio.</p>
+        <p>La Teoría de Grafos ha estado sosteniendo toda la analogía desde la primera página. La analogía no era una secuencia de ejemplos independientes. La fotografía, el acetato, el archivador, la sala de proyección y el cinema multisalas no son metáforas distintas: <strong>son capas organizacionales del mismo fenómeno, observado a diferentes escalas.</strong></p>
+        <p>Cada capa conserva a la anterior, la amplía y nunca la reemplaza. La fotografía no es solo una imagen; el acetato no es solo un soporte; la sala no es solo un lugar; el cinema no es solo un edificio. Todos representan una capa organizacional del mismo fenómeno, y todos están conectados.</p>
+
+        <div class="architectural-note">
+            <strong>🏗️ El marco de trabajo unificado</strong><br>
+            El estudio fotográfico constituye un único edificio, planta por planta:<br>
+            <strong>Fotografía → Acetato → Colección de acetatos → Proyector → Sala → Cinema multisalas → Organización completa</strong><br>
+            Cada capa conserva a la anterior. La amplía. Nunca la reemplaza. La teoría de grafos no sustituye la historia; la hace visible desde otra perspectiva.
+        </div>
+
+        <div class="organizational-diagram">
+Fenómeno
+     │
+     ▼
+Escalas (del fenómeno)
+
+═══════════════════════════════
+
+Capa 1 · Fotografía visible
+Capa 2 · Fotografía térmica
+Capa 3 · Fotografía infrarroja
+Capa 4 · Fotografía temporal
+
+═══════════════════════════════
+
+Superposición
+
+═══════════════════════════════
+
+Adaptadores
+
+═══════════════════════════════
+
+Correspondencias
+
+═══════════════════════════════
+
+Nueva capa
+
+═══════════════════════════════
+
+Nuevo ciclo
+        </div>
+
+        <div class="philosophical-distinction">
+            <strong>🔬 Escalas y capas: una distinción fundamental</strong><br>
+            Todo sistema complejo se desarrolla en un entorno con determinadas condiciones. El paisaje que se fotografía tiene escalas naturales —el grano de arena, la hoja, el árbol, el bosque, la montaña— que emergen del propio entorno y de los fundamentos físicos del fenómeno. Esas escalas pertenecen al fenómeno.<br><br>
+            Las capas, en cambio, son decisiones de representación. Se elige qué acetatos construir: visible, infrarrojo, térmico, nocturno. Las capas no modifican las escalas del paisaje; organizan distintas observaciones de esas escalas. <strong>La escala pertenece al fenómeno; la capa pertenece a quien observa.</strong>
+            <table>
+                <thead><tr><th>Concepto</th><th>¿Quién lo define?</th><th>Función</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Escala</strong></td><td>El entorno y los fundamentos del fenómeno</td><td>Determina las propiedades naturales en las que emerge la organización.</td></tr>
+                    <tr><td><strong>Capa</strong></td><td>Quien observa y su estrategia de representación</td><td>Organiza diferentes observaciones del mismo fenómeno.</td></tr>
+                </tbody>
+            </table>
+            McDee‑11 se propone un marco de trabajo para organizar las observaciones de un fenómeno complejo respetando las escalas que el propio fenómeno ya posee. Esta separación entre la ontología del fenómeno y la epistemología de la observación armoniza con el resto del marco: el grafo no crea las escalas del sistema; representa las relaciones que quien observa decide modelar. Por eso diferentes grafos pueden describir el mismo fenómeno, dependiendo de la capa que se quiera estudiar.
+        </div>
+
+        <p>La fotografía puede proyectarse como una imagen, un archivo, una secuencia, una colección, una organización, un grafo, una matriz o un espacio de fases. No son fotografías distintas: son proyecciones equivalentes del mismo fenómeno.</p>
+
+        <!-- ==================== SECCIÓN 10 ==================== -->
+        <h2 id="seccion10">10. Procesamiento organizacional y reinterpretación 🔄</h2>
+        <div class="img-container">
+            <img src="img/seccion8_ciclo.png" alt="Ciclo continuo de reinterpretación" width="40%">
+        </div>
+        <p>La computadora del estudio no se limita a almacenar imágenes: puede ejecutar rutinas que automaticen la comparación de brillo, contraste o textura entre cientos de acetatos. La analogía del estudio sigue presente, pero ahora la tratamos como un dominio de aplicación entre otros posibles. En cada nivel de procesamiento, lo que la máquina construye es, en esencia, un grafo: los nodos son los patrones detectados, las aristas son las relaciones de similitud o dependencia, y la matriz de correspondencias no es más que la matriz de adyacencia de ese grafo.</p>
+        <p>Lo que hace McDee‑11 no es construir jerarquías, sino permitir la reorganización progresiva de las capas de observación. La organización resultante no es una propiedad intrínseca del sistema, sino el resultado de un acto de observación que, guiado por fundamentos, organiza estados en nuevas capas de representación.</p>
+        <p>El flujo de McDee‑11 es un ciclo continuo: documentar el contexto, ejecutar el acto de discretizar la observación, construir la representación, persistir, organizar por capas, comparar mediante adaptadores, leer las correspondencias y, finalmente, reinterpretar el conjunto de correspondencias como una nueva capa, que puede ser observada nuevamente, reiniciando el ciclo. <a class="formal-link" href="#" title="Consultar Documento Formal: flujo completo">→ Doc Formal</a></p>
+        <p>La <strong>🔄 Reinterpretación Organizacional</strong> es un comportamiento esperado del modelo: cualquier organización emergente (como la matriz de correspondencias) puede ser tratada como una nueva capa y, por tanto, ser observada nuevamente bajo un nuevo contexto y con nuevos adaptadores. Esta capacidad de recursividad metodológica constituye una hipótesis de trabajo que deberá ser contrastada en aplicaciones concretas.</p>
+        <div class="reinterpretation-example">
+            🔍 <strong>Ejemplo mínimo de reinterpretación</strong><br><br>
+            κ₁ = imagen térmica &nbsp;&nbsp;|&nbsp;&nbsp; κ₂ = fotografía RGB<br>
+            ↓<br>
+            Adaptador de textura (Φ)<br>
+            ↓<br>
+            ε = 0.84<br>
+            ↓<br>
+            <em>todos los ε forman una nueva κ</em><br>
+            ↓<br>
+            esa nueva κ puede observarse ahora<br>
+            como un <strong>mapa de relaciones</strong> entre capas
+        </div>
+
+        <div class="img-container">
+            <img src="img/eclosion.png" alt="Nuevo ciclo a partir de κ emergente" width="40%">
+        </div>
+
+        <div class="transformation-scene">
+            <span class="role-label">👤 Quien observa la infraestructura</span>
+            <p><em>Antes de apagar la luz, quien ha estado trabajando durante horas en el estudio da un paso atrás y observa el panel completo. Ya no ve imágenes individuales, ni adaptadores, ni pantallas auxiliares. Ve la matriz de relaciones que ha ido construyendo a lo largo de la jornada. Durante horas, la misma persona ha desempeñado distintos papeles y ahora —sin haberse movido de su estudio— contempla la red de conexiones que siempre estuvo allí, esperando a ser observada.</em></p>
+        </div>
+
+        <div class="architectural-note" style="margin-top: 2rem;">
+            <strong>🔄 El patrón fundamental: organización ↔ representación</strong><br>
+            A lo largo de todo el formalismo se observa un patrón recurrente:<br><br>
+            <div style="text-align: center; font-size: 1.05rem; margin: 0.8rem 0;">
+                <strong>Entidad</strong><br>
+                ↓<br>
+                <strong>Organización</strong><br>
+                ↓<br>
+                <strong>Nueva entidad</strong><br>
+                ↓<br>
+                <strong>Nueva organización</strong><br>
+                ↓<br>
+                <strong>Nueva entidad</strong>
+            </div>
+            <br>
+            Este ciclo se manifiesta en cada etapa: el contexto se organiza para producir una capa; varias capas se organizan en una matriz de superposición; la matriz se procesa mediante adaptadores para generar correspondencias; la colección de correspondencias se reinterpreta como una nueva capa, y así sucesivamente.<br><br>
+            <strong>Toda organización suficientemente estructurada puede convertirse en una nueva representación. Toda representación suficientemente documentada puede participar en una nueva organización.</strong> Esta alternancia explica la recursividad del formalismo y su capacidad de crecer sin perder trazabilidad.
+        </div>
+
+        <!-- ==================== SECCIÓN 10.2 ==================== -->
+        <h3 id="memoria-recursiva">10.2 Memoria recursiva: cuando una representación despliega una organización</h3>
+        <div class="img-container">
+            <img src="img/memoria-recursiva.png" alt="Una fotografía activando una organización cinematográfica" width="40%">
+        </div>
+        <p>Existe una experiencia cotidiana que ilustra el recorrido inverso a la reinterpretación organizacional. <strong>Todos hemos vivido esa escena:</strong> vemos una sola fotografía de una película —un fotograma, un póster promocional— y casi instantáneamente recordamos una escena completa. A veces incluso recordamos los diálogos, la música o las emociones asociadas. La imagen actúa como un disparador que convoca una organización mucho más amplia.</p>
+        <p>En la analogía del estudio, esta experiencia puede describirse como un juego de escalas anidadas donde <strong>la unidad organizacional que decidimos considerar como una κ cambia</strong>. Un <strong>clic (con C)</strong> genera una fotografía (κ). Muchos clics organizados producen un <strong>clip (con P)</strong>: otra κ, pero de mayor escala temporal. Muchos clips producen una escena (κ). Muchas escenas producen una película (κ). Y muchas películas, una saga (κ). En todos los casos, el patrón es el mismo: <strong>una organización suficientemente estructurada puede tratarse como una nueva representación</strong>.</p>
+        <div class="organizational-diagram" style="font-size: 0.8rem; line-height: 1.6;">
+κ₁ = fotografía (un clic)
+        ↓ (organización temporal)
+κ₂ = clip (muchos clics)
+        ↓ (organización narrativa)
+κ₃ = escena (muchos clips)
+        ↓ (organización dramática)
+κ₄ = película (muchas escenas)
+        ↓ (organización temática)
+κ₅ = saga (muchas películas)
+        </div>
+        <p>Ahora bien, lo fascinante ocurre en el sentido inverso. Cuando alguien ve el póster de una película que ya conoce, esa única κ —de baja resolución, estática— no contiene físicamente toda la información de la película. Sin embargo, <strong>actúa como un índice organizacional</strong> que, en presencia de la persistencia (Σ) y la organización por capas previamente construida (μ), permite reinstanciar representaciones de orden superior. La fotografía no almacena la película: <strong>reactiva las relaciones que la conectan con otras representaciones dentro del sistema</strong>.</p>
+        <div class="architectural-note">
+            <strong>🧠 Del recuerdo a la memoria organizacional</strong><br>
+            En el lenguaje cotidiano, este fenómeno se describe como un <em>recuerdo</em>. En McDee‑11, sin embargo, no se interpreta en sentido psicológico, sino como una propiedad organizacional del marco: la <strong>memoria recursiva</strong>. No depende de que exista un ser humano que recuerde; depende de que existan relaciones trazables entre representaciones y de que la persistencia las conserve.<br><br>
+            <strong>Una representación puede funcionar como un índice organizacional capaz de reinstanciar, mediante relaciones previamente persistidas, organizaciones de mayor o menor escala.</strong> La información no está contenida íntegramente en la representación pequeña; emerge de las relaciones explícitas que mantiene con otras representaciones dentro de la organización.<br><br>
+            <strong>Es importante notar que la memoria recursiva no constituye un nuevo componente del marco, sino una propiedad emergente de la interacción entre Σ, μ y κ.</strong> Σ no fue concebida como un simple almacenamiento pasivo, sino como el espacio donde se documentan las relaciones trazables que hacen posible esta reinstanciación. μ mantiene las relaciones de transformación o correspondencia, y κ permite representar diferentes niveles de resolución. La recuperación de una organización compleja desde una representación parcial surge de la trazabilidad conservada.
+        </div>
+        <p>Esta propiedad se manifiesta en múltiples dominios: una palabra puede reinstanciar un libro completo; una fórmula puede reinstanciar una teoría conocida; una tarjeta documental puede reinstanciar toda una red de conocimiento. En todos los casos, el mecanismo es el mismo: la representación pequeña no contiene los datos, pero sí <strong>conserva las conexiones que permiten reconstruir la organización</strong> cuando el contexto y los adaptadores adecuados están presentes.</p>
+        <div class="img-container">
+            <img src="img/foto-recuerdo.png" alt="Doble hélice pedagógica de los operadores McDee‑11" width="40%">
+        </div>
+        <div class="concept-clarification">
+            <strong>🔁 La simetría del ciclo organizacional</strong><br>
+            La memoria recursiva no añade un octavo operador a McDee‑11. Emerge de la interacción entre <strong>Σ</strong> (que permite documentar la preservación de las representaciones y sus relaciones), <strong>μ</strong> (que permite organizarlas por capas) y <strong>κ</strong> (que permite representar distintas escalas). Es, por tanto, un <strong>comportamiento esperado</strong> del marco, no una nueva entidad organizacional.<br><br>
+            Junto con la reinterpretación organizacional, la memoria recursiva cierra un ciclo simétrico:<br><br>
+            <strong>Organización → Representación</strong> (reinterpretación): una organización suficientemente estructurada se convierte en una nueva κ.<br>
+            <strong>Representación → Organización</strong> (memoria recursiva): una κ puede funcionar como punto de acceso que reinstancia una organización previamente persistida.<br><br>
+            Ambos recorridos son trazables, dependen del contexto y de los adaptadores, y no requieren nuevos símbolos. Entre ambos, describen la capacidad completa de McDee‑11 para crecer, comprimirse y volver a desplegarse sin perder la coherencia interna.
+        </div>
+
+        <!-- ==================== SECCIÓN 10.3 ==================== -->
+        <h3 id="geometria-operadores">10.3 La geometría interna de los siete operadores</h3>
+        <div class="img-container">
+            <img src="img/doble-helice.png" alt="Doble hélice pedagógica de los operadores McDee‑11" width="40%">
+        </div>
+        <p>Después de recorrer los siete operadores y sus ciclos de reinterpretación y memoria, surge una pregunta natural: ¿son simplemente una lista de símbolos independientes o poseen una <strong>arquitectura interna</strong>? Si se observan no por su función individual, sino por la forma en que se agrupan, los siete operadores revelan una geometría organizacional que no depende del dominio de aplicación.</p>
+        <p>Los tres primeros operadores —<strong>Ψ (Psi), Ω (Omega), κ (Kappa)</strong>— forman la <strong>tríada del nacimiento</strong> de una representación. No son independientes: Ω media entre Ψ y κ, representando la discretización de una capacidad en una representación concreta. Es una secuencia que va de lo potencial a lo actual.</p>
+        <p>Los cuatro operadores restantes se organizan, en cambio, como <strong>dos pares complementarios</strong>. Por un lado, <strong>Σ (Sigma) y μ (Mu)</strong> trabajan juntos: uno representa la documentación de la preservación de las representaciones en el tiempo, el otro representa su organización por capas para que puedan ser observadas simultáneamente. Sin Σ, μ no tendría materiales que organizar; sin μ, Σ sería un archivo inerte. Por otro lado, <strong>Φ (Phi) y ε (Épsilon)</strong> también se complementan: uno representa el criterio de comparación entre capas, el otro representa el resultado de esa comparación. Φ sin ε carecería de salida observable; ε sin Φ no sabría qué medir.</p>
+        <div class="organizational-diagram" style="font-size: 0.8rem; line-height: 1.8;">
+Tríada del nacimiento
+──────────────────────
+    Ψ  →  Ω  →  κ
+  (Psi) (Omega) (Kappa)
+
+Pares complementarios
+──────────────────────
+    Σ  ↔  μ
+  (Sigma) (Mu)
+  persistir  organizar por capas
+
+    Φ  ↔  ε
+  (Phi)  (Épsilon)
+  comparar  corresponder
+        </div>
+        <p>Esta organización —una tríada que origina, seguida de dos pares que desarrollan— admite una analogía pedagógica que puede ayudar a recordarla: recuerda la lógica de ciertos sistemas biológicos basados en complementariedad, como la doble hélice del ADN, donde la estructura se construye a partir de pares que se complementan mutuamente. <strong>La analogía pretende ilustrar una organización de responsabilidades, no establecer una equivalencia biológica entre ambos sistemas.</strong></p>
+        <div class="concept-clarification">
+            <strong>🧬 Precisión sobre la analogía de la doble hélice</strong><br>
+            La organización formada por la tríada Ψ–Ω–κ seguida por los dos pares complementarios Σ–μ y Φ–ε admite una representación pedagógica que recuerda la lógica de ciertos sistemas biológicos basados en complementariedad, como la doble hélice del ADN. La analogía ilustra visualmente cómo responsabilidades distintas pueden acoplarse de forma complementaria, pero <strong>no afirma que McDee‑11 describa, modele o se derive de la estructura del ADN</strong>. Es un recurso divulgativo para facilitar la memoria de la arquitectura interna, no una afirmación ontológica sobre biología molecular.
+        </div>
+
+        <!-- ==================== SECCIÓN 10.4 ==================== -->
+        <h3 id="autosimilitud-organizacional">10.4 Autosimilitud organizacional: la inspiración fractal</h3>
+        <div class="img-container">
+            <img src="img/mosaico-pixeles.png" alt="Píxeles formando un mosaico que a su vez forma una imagen" width="40%">
+        </div>
+        <p>Al observar el ciclo continuo de McDee‑11 —donde una organización genera una nueva representación, y esa representación puede, a su vez, desplegar una nueva organización— emerge un patrón que evoca un principio clásico de la geometría fractal: la <strong>autosimilitud</strong>. Sin embargo, McDee‑11 no afirma ser un modelo fractal ni utiliza las matemáticas de Mandelbrot como fundamento. Lo que toma prestado es una intuición organizacional.</p>
+        <p>En la analogía fotográfica, una imagen puede verse como un píxel dentro de un mosaico; ese mosaico puede convertirse en una nueva imagen; esa imagen puede integrarse en un mural, y así sucesivamente. Lo que se repite no es el contenido (los colores o las formas), sino <strong>la estructura relacional</strong>: la forma en que las partes se organizan para formar un todo que, a su vez, se convierte en una parte de una organización mayor.</p>
+        <blockquote>
+            <strong>Principio inspirador.</strong> La recursividad organizacional de McDee‑11 puede interpretarse como una forma de <strong>autosimilitud organizacional</strong>: los mismos patrones de relación reaparecen en distintas escalas sin necesidad de conservar el mismo contenido.
+        </blockquote>
+        <div class="philosophical-distinction">
+            <strong>🧩 Dos formas de autosimilitud</strong><br>
+            <table>
+                <thead><tr><th>Concepto</th><th>Definición</th><th>Ámbito</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Autosimilitud geométrica</strong></td><td>Propiedad formal de ciertos objetos matemáticos donde la estructura se replica de manera exacta o estadística al cambiar la escala.</td><td>Geometría fractal, sistemas dinámicos.</td></tr>
+                    <tr><td><strong>Autosimilitud organizacional</strong></td><td>Conservación de patrones de relación, correspondencias y estructuras funcionales a través de diferentes niveles de representación.</td><td>Marcos de trabajo, gestión documental, trazabilidad.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>McDee‑11 no propone una equivalencia con la geometría fractal ni utiliza la autosimilitud como una demostración matemática del marco; la referencia fractal funciona únicamente como una analogía organizacional</strong> para facilitar la interpretación de relaciones recursivas. La identidad no reside en cada elemento aislado, sino en la preservación de las relaciones entre los elementos.</p>
+        <p>Esta perspectiva conecta de forma natural con la <strong>memoria recursiva</strong> (sección 10.2): una κ de baja resolución puede reinstanciar una organización de orden superior porque ambas participan de una organización autosimilar. Y conecta también con la <strong>reinterpretación organizacional</strong>: la emergencia de una nueva κ a partir de una matriz de correspondencias es, en esencia, la manifestación del mismo patrón relacional operando en una nueva escala. De este modo, la autosimilitud organizacional no es un agregado externo, sino una forma de describir la recursividad que ya existía en el marco.</p>
+        <p>Del mismo modo que una matriz de correspondencias puede convertirse en una nueva capa, <strong>el propio contexto de observación Ψ puede ser el resultado de un ciclo organizacional previo</strong>. La ciencia no solo observa el mundo: también desarrolla nuevas formas de observarlo, y esas nuevas capacidades —nuevos instrumentos, nuevos protocolos, nuevos algoritmos— se incorporan a Ψ para ciclos posteriores. Así, el marco no distingue entre «modo aplicación» y «modo investigación»: ambos son instanciaciones del mismo ciclo, aplicado a distintos objetos organizacionales. Unas veces el fenómeno es el objeto de estudio; otras, también lo son las herramientas y los contextos de observación. La arquitectura permanece idéntica.</p>
+
+        <!-- ==================== SECCIÓN PIDCA ==================== -->
+        <div class="series-context" style="margin-top: 2.5rem;">
+            <strong>🧬 Transición hacia PIDCA: el doble par complementario</strong><br>
+            El marco de trabajo <strong>McDee‑11</strong> sirve de infraestructura organizacional para el marco de control <strong>PIDCA</strong> (Proporcional, Integral, Diferencial, Complementario y Adaptativo). No se afirma una igualdad absoluta entre componentes PIDCA y entidades McDee‑11, sino que <strong>bajo una determinada proyección organizacional</strong>, las entidades pueden desempeñar funciones compatibles con los siguientes componentes:
+            <ul style="margin-top:0.5rem;">
+                <li><strong>P – Proporcional:</strong> la capa actual puede funcionar como lectura instantánea del sistema.</li>
+                <li><strong>I – Integral:</strong> la persistencia puede funcionar como memoria que acumula la historia de capas.</li>
+                <li><strong>D – Diferencial:</strong> un adaptador específico puede evaluar la tasa de cambio entre capas consecutivas.</li>
+                <li><strong>C – Complementario:</strong> pares de respuestas acopladas pueden modelarse como capas que se estabilizan mutuamente, de forma análoga a las bases nitrogenadas del ADN.</li>
+                <li><strong>A – Adaptativo:</strong> la matriz de correspondencias puede convertirse en una nueva capa que modifica dinámicamente el contexto de observación.</li>
+            </ul>
+            <p style="margin-top:0.8rem;">
+                Así, McDee‑11 no prescribe una correspondencia fija entre sus operadores y los componentes de PIDCA. Proporciona, en cambio, la infraestructura para que dicha correspondencia emerja de manera trazable según el dominio de aplicación. <a class="formal-link" href="#" title="Consultar Documento Formal: acoplamiento PIDCA">→ Doc Formal</a>
+            </p>
+        </div>
+
+        <!-- ==================== SECCIÓN 11 ==================== -->
+        <h2 id="seccion11">11. Comportamientos esperados 🧭</h2>
+        <div class="img-container">
+            <img src="img/seccion10_principios.png" alt="Comportamientos de McDee‑11" width="40%">
+        </div>
+        
+        <p><strong>⚠️ Aclaración importante:</strong> Los siguientes no son operadores del marco, sino <strong>comportamientos esperados</strong> que emergen al instanciar los siete operadores invariantes (Ψ, Ω, κ, Σ, μ, Φ, ε) en un dominio concreto. Describen cómo debería comportarse el marco de trabajo, pero no añaden nuevos símbolos al formalismo.</p>
+
+        <p>Los siguientes no son leyes ni principios del modelo, sino <strong>comportamientos esperados</strong> que describen cómo debería funcionar el marco de trabajo McDee‑11. Su validez dependerá de la coherencia formal y de la validación en aplicaciones concretas. Se presentan junto con su manifestación en el estudio fotográfico para facilitar su comprensión. <a class="formal-link" href="#" title="Consultar Documento Formal: características propuestas">→ Doc Formal</a></p>
+
+        <div class="principle-scene">
+            <p><strong>📝 Explicitación de Criterios.</strong> Se espera que todo contexto de observación y cada adaptador empleado queden documentados. Esto garantiza reproducibilidad, auditabilidad y automatización.</p>
+            <div class="principle-img"><img src="img/principio_explicitacion.png" alt="Anotando en la libreta del estudio"></div>
+            <p><em>En el estudio:</em> Antes de comenzar la sesión, se anota qué cámara se utilizará, qué lente se ha montado, qué filtro se ha colocado y con qué propósito. Meses después, otra persona podrá repetir exactamente la misma sesión.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>⏳ Desfase, no error.</strong> Se espera que el valor de correspondencia no mida un "error" absoluto, sino el grado de correspondencia o desfase contextual entre dos capas, según el adaptador elegido.</p>
+            <div class="principle-img"><img src="img/principio_desfase.png" alt="Dos fotografías del mismo paisaje, distintas condiciones"></div>
+            <p><em>En el estudio:</em> Dos fotografías del mismo paisaje no coinciden perfectamente. Una fue tomada al amanecer con cámara térmica, otra al mediodía con cámara digital. La diferencia no es un error: es un desfase asociado a las condiciones de observación.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🔄 Reinterpretación Organizacional.</strong> Se espera que cualquier organización emergente pueda convertirse en una nueva capa y ser observada bajo nuevos contextos, preservando la autosimilitud del formalismo a cualquier escala.</p>
+            <div class="principle-img"><img src="img/principio_reinterpretacion.png" alt="Mapa de relaciones entre fotos"></div>
+            <p><em>En el estudio:</em> Después de comparar cientos de fotografías, se construye un gran mapa donde cada línea une imágenes similares. Días después, se estudia ese mapa como si fuera una nueva fotografía.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🧠 Memoria Recursiva.</strong> Se espera que una representación pueda reactivar, de manera trazable, organizaciones previamente construidas, permitiendo que una capa de menor resolución funcione como punto de acceso a representaciones de mayor complejidad. La información no está contenida íntegramente en la representación de menor escala; emerge de las relaciones explícitas que mantiene con otras representaciones dentro de la organización.</p>
+            <div class="principle-img"><img src="img/memoria-recursiva-icon.png" alt="Póster evocando una película completa"></div>
+            <p><em>En el estudio:</em> Un solo fotograma promocional no contiene la película entera, pero quien la ha visto puede reconstruir la escena, el clip, incluso la banda sonora. La fotografía funciona como un índice organizacional que, en presencia de la persistencia, reinstancia una organización de orden superior.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🧱 Independencia del Sustrato.</strong> Se espera que la identidad de una capa no dependa del soporte físico, pudiendo migrar entre distintos medios sin pérdida de continuidad.</p>
+            <div class="principle-img"><img src="img/principio_sustrato.png" alt="Misma imagen en distintos soportes"></div>
+            <p><em>En el estudio:</em> Una imagen se conserva en la tarjeta de memoria, se imprime en papel fotográfico y se proyecta posteriormente en la sala. La identidad de la fotografía no depende del medio en el que se encuentre.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🗃️ Composición Organizacional.</strong> Se espera que cada símbolo de McDee‑11 represente una entidad organizacional compuesta, y que el formalismo opere sobre la entidad completa, aislando los detalles de implementación.</p>
+            <div class="principle-img"><img src="img/principio_composicion.png" alt="Cámara despiezada, usada como unidad"></div>
+            <p><em>En el estudio:</em> Se habla de "la cámara" como un único objeto, aunque internamente contenga sensor, obturador y procesador.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>📈 Escalabilidad Organizacional.</strong> Se espera que las tareas repetitivas de organización, persistencia y comparación puedan automatizarse en diferentes escalas, preservando la trazabilidad de cada etapa.</p>
+            <div class="principle-img"><img src="img/principio_escalabilidad.png" alt="De pocas imágenes a miles automatizadas"></div>
+            <p><em>En el estudio:</em> Al principio se organizan diez imágenes manualmente. Más adelante hay que clasificar diez mil. La computadora las indexa, busca y agrupa automáticamente.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>💻 Organización Computable.</strong> Se espera que la explicitación de contextos, condiciones de observación, representaciones, persistencia y criterios de comparación genere una estructura que pueda ser procesada por herramientas computacionales.</p>
+            <div class="principle-img"><img src="img/principio_computable.png" alt="Computadora ejecutando rutinas de comparación"></div>
+            <p><em>En el estudio:</em> La computadora no solo almacena imágenes; ejecuta rutinas que automatizan la comparación de brillo, contraste o textura entre cientos de acetatos.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🔁 Retroalimentación Interpretativa.</strong> Se espera que el análisis se estructure como un ciclo cooperativo: las herramientas computacionales automatizan la organización y comparación; quien observa interpreta los resultados y redefine los contextos o los adaptadores para el siguiente ciclo.</p>
+            <div class="principle-img"><img src="img/principio_retroalimentacion.png" alt="Ciclo humano-máquina"></div>
+            <p><em>En el estudio:</em> La computadora sugiere agrupaciones de imágenes basadas en similitudes de color, pero es quien observa quien decide si esas agrupaciones tienen sentido. A partir de esa decisión, ajusta los adaptadores o redefine el contexto.</p>
+        </div>
+        <div class="principle-scene">
+            <p><strong>🧷 Preservación Explícita del Contexto.</strong> Se espera que ninguna representación exista de forma aislada. Toda capa está vinculada al contexto que la generó, al acto que la produjo y al medio que la preserva. Esta vinculación es lo que permite que distintas representaciones del mismo fenómeno puedan compararse, reinterpretarse y dialogar sin perder su identidad.</p>
+            <div class="principle-img"><img src="img/conexiones.png" alt="Cadena de contexto"></div>
+            <p><em>En el estudio:</em> Una fotografía no vale solo por lo que muestra, sino porque se sabe con qué cámara fue tomada, en qué condiciones, con qué propósito y dónde está almacenada.</p>
+        </div>
+
+        <!-- ==================== SECCIÓN 11.1 ==================== -->
+        <h2 id="relatividad-interpretaciones">11.1 Consecuencia metodológica: relatividad organizacional de las interpretaciones</h2>
+        <div class="img-container">
+            <img src="img/coreografia-aviones.png" alt="Distintas proyecciones de una misma entidad organizacional" width="40%">
+        </div>
+        <p>
+            Del conjunto de comportamientos esperados se desprende una consecuencia metodológica profunda:
+        </p>
+        <blockquote>
+            <strong>Ninguna interpretación establecida dentro de McDee‑11 posee carácter absoluto.</strong> Toda correspondencia, agrupación o equivalencia depende de la capa de observación, del contexto, del adaptador empleado y del propósito con el que se realiza la representación.
+        </blockquote>
+        <p>
+            Esta afirmación no es un nuevo comportamiento esperado, sino la manifestación conjunta de varios ya documentados. Cada símbolo representa una entidad organizacional compuesta cuya <strong>identidad formal permanece estable</strong>. Sin embargo, la función que desempeña dentro de una organización depende de la instanciación concreta en cada dominio de aplicación. En consecuencia, <strong>las funciones que desempeñan las entidades pueden variar según la capa de observación, sin que ello implique modificar su identidad formal</strong>.
+        </p>
+
+        <h3>Tipos invariantes y funciones organizacionales covariantes</h3>
+        <div class="architectural-note">
+            <p>Lo que cambia no es la identidad del operador, sino la <strong>función organizacional</strong> que desempeña dentro de una determinada composición. Puede establecerse una <strong>analogía parcial con algunos enfoques relacionales presentes en la teoría de categorías</strong>, donde el significado de un objeto depende de las relaciones que establece. Esta comparación tiene únicamente un propósito ilustrativo.</p>
+        </div>
+
+        <h3>Dependencia del marco organizacional</h3>
+        <div class="architectural-note" style="margin-top: 1rem;">
+            <p><strong>Ninguna entidad organizacional en McDee‑11 posee un significado operativo independiente del marco organizacional desde el cual es instanciada.</strong> Las funciones, los pesos, los adaptadores, los criterios de agrupación e incluso la definición práctica de sus propiedades dependen de la proyección organizacional concreta. Esta dependencia no es una limitación: es la propiedad que permite que el formalismo se mantenga abierto a nuevas capas, nuevos contextos y nuevos adaptadores sin necesidad de modificar su infraestructura fundamental.</p>
+            <p>En consecuencia, <strong>la aparición de nuevos adaptadores, nuevos criterios de observación o nuevos contextos no invalida interpretaciones anteriores; simplemente amplía el espacio de proyecciones organizacionales disponibles</strong>.</p>
+        </div>
+
+        <div class="img-container">
+            <img src="img/espejos-1.png" alt="Una entidad A interpretada como B o C según distintos marcos" width="60%">
+            <p class="img-caption">
+                <strong>Una misma entidad A puede ser interpretada como B bajo un marco organizacional y como C bajo un marco diferente.</strong><br>
+                No cambió la entidad A. Cambió el marco organizacional desde el cual se la está interpretando.
+            </p>
+        </div>
+
+        <p style="margin-top:1.5rem;">
+            <strong>McDee‑11 no asigna significados universales a sus entidades organizacionales.</strong> Es un marco de trabajo para que esos significados emerjan de manera trazable según el contexto, la capa de observación, la proyección y los adaptadores empleados. Esta propiedad explica por qué la recursividad y la reinterpretación producen interpretaciones diferentes sin romper la coherencia interna: las entidades permanecen estables, mientras que las funciones que desempeñan emergen de la organización en la que participan.
+        </p>
+
+        <!-- ==================== SECCIÓN 12 ==================== -->
+        <h2 id="seccion12">12. Ámbitos potenciales de aplicación</h2>
+        <div class="img-container">
+            <img src="img/seccion11_arquitectura.png" alt="Arquitectura de delegación humano‑computador" width="40%">
+        </div>
+        <p>Debido a que McDee‑11 describe la organización de representaciones, persistencia, comparación y reinterpretación de información sin depender del sustrato físico, el formalismo puede emplearse en múltiples dominios donde existan procesos de observación trazables.</p>
+
+        <p>Las investigaciones desarrolladas por el Grupo de Investigación DIGITI de la Facultad Tecnológica de la Universidad Distrital Francisco José de Caldas —institución donde el autor se formó como Tecnólogo en Electrónica— <strong>inspiraron la formulación del problema organizacional que motivó el desarrollo de McDee‑11</strong>. En proyectos como el análisis de la marcha protésica o el desarrollo de instrumentación aeroespacial se hizo evidente que comprender un mismo fenómeno <strong>con frecuencia requiere</strong> integrar múltiples instrumentos, disciplinas, metodologías y criterios de observación. Esa situación no es exclusiva de dichos proyectos: <strong>puede observarse en numerosos contextos de investigación contemporánea</strong>. Con frecuencia, el desarrollo científico incorpora nuevos instrumentos, metodologías y marcos de representación que permiten observar un mismo fenómeno desde perspectivas complementarias. McDee‑11 se propone como un marco de trabajo para facilitar la organización trazable de <strong>las relaciones entre esas representaciones</strong>, preservando la identidad y el contexto propios de cada una, sin sustituir los fundamentos científicos de las disciplinas que las generan. <strong>McDee‑11 no estudia a los investigadores como personas ni pretende modelar el proceso cognitivo de investigar. Se centra en la organización trazable de las representaciones generadas durante procesos de observación, análisis, diseño o investigación, así como en las relaciones que pueden establecerse entre ellas. En ese sentido, no organiza el conocimiento mismo, sino las relaciones entre sus representaciones.</strong></p>
+
+        <p>Además del contexto académico que inspiró la formulación del problema organizacional, <strong>yo, el autor de este documento, identifico un segundo contexto de reflexión a partir de mi propia experiencia de adaptación funcional asociada a una condición congénita de atresia auricular derecha</strong>. En los últimos años he percibido cambios que interpreto como parte de un posible proceso de reorganización funcional de mi cuerpo. No dispongo de evidencia experimental suficiente para caracterizar este proceso. Esta experiencia no se presenta como una validación del marco ni como una conclusión científica. Constituye, en cambio, una motivación adicional para desarrollar una infraestructura organizacional que facilite la formulación de preguntas de investigación, la integración trazable de representaciones provenientes de distintas disciplinas y, eventualmente, el diseño de estudios que permitan validar o refutar las hipótesis que puedan surgir.</p>
+        <p>La pregunta no es solo académica. Es personal. ¿Cómo podría formular preguntas trazables sobre lo que está ocurriendo en mi cuerpo? ¿Cómo podría saber que mi experiencia no es un sesgo de alguien que desea curarse? No estoy afirmando nada. McDee‑11 no valida ninguna hipótesis sobre mi caso. Pero sí ofrece un marco para organizar la investigación que algún día podría ayudar a responder esas preguntas.</p>
+
+        <ul>
+            <li><strong>🚶 Biomecánica y análisis de marcha:</strong> representación y comparación de patrones cinemáticos, señales de sensores inerciales y procesos de rehabilitación.</li>
+            <li><strong>🧠 Neurociencia:</strong> organización y comparación de registros neurofisiológicos, actividad cerebral y procesos de plasticidad.</li>
+            <li><strong>🖼️ Visión por computador y procesamiento de imágenes:</strong> integración y comparación de representaciones visuales obtenidas mediante diferentes sensores o modalidades.</li>
+            <li><strong>📈 Procesamiento de señales:</strong> análisis de audio, vibraciones, telecomunicaciones y sistemas de monitoreo.</li>
+            <li><strong>🌐 Sistemas complejos y teoría de redes:</strong> estudio de relaciones entre nodos, estados dinámicos y estructuras multicapa.</li>
+            <li><strong>🤖 Robótica y sistemas autónomos:</strong> integración de información proveniente de sensores heterogéneos para la toma de decisiones.</li>
+            <li><strong>⚕️ Ingeniería biomédica:</strong> análisis de señales fisiológicas, monitoreo clínico y evaluación de dispositivos médicos.</li>
+            <li><strong>📄 Gestión documental y gestión del conocimiento:</strong> organización, trazabilidad, auditoría y comparación de documentos técnicos y científicos.</li>
+            <li><strong>🏭 Control industrial e Internet de las Cosas (IoT):</strong> integración de múltiples fuentes de datos para supervisión y diagnóstico.</li>
+            <li><strong>🎨 Humanidades, literatura y cultura:</strong> interpretación y comparación de narrativas, textos y expresiones culturales como capas de observación de un mismo fenómeno social o histórico.</li>
+            <li><strong>⚖️ Legislatura y políticas públicas:</strong> análisis y articulación de distintos marcos normativos como representaciones complementarias de una misma realidad social.</li>
+            <li><strong>🔬 Investigación científica en general:</strong> cualquier disciplina donde sea necesario representar, persistir, organizar y comparar información de manera reproducible.</li>
+        </ul>
+        <p><strong>La inclusión de un dominio en esta lista no implica que McDee‑11 haya sido desarrollado para ese campo específico. Todos los ámbitos se presentan al mismo nivel, como ejemplos de posibles instanciaciones de un mismo formalismo organizacional.</strong></p>
+
+        <!-- ==================== SECCIÓN 12.1 ==================== -->
+        <h3 id="sistemas-hibridos">12.1 Sistemas híbridos como instanciaciones del modelo</h3>
+        <div class="img-container">
+            <img src="img/conector-hibrido.png" alt="Capas complementarias en sistemas híbridos" width="40%">
+        </div>
+        <p>
+            Más allá de los dominios disciplinares listados, McDee‑11 ofrece un marco de trabajo especialmente útil para modelar <strong>sistemas híbridos</strong>: organizaciones, modelos de negocio o plataformas donde coexisten lógicas distintas que no compiten, sino que se complementan.
+        </p>
+
+        <div class="transformation-scene">
+            <span class="role-label">🔴🔵 Linux‑RedHat: código abierto y servicio empresarial</span>
+            <p><em>
+                El ecosistema Linux funciona como una capa comunitaria gobernada por licencias abiertas, meritocracia y desarrollo distribuido. Red Hat opera como una capa corporativa que empaqueta, certifica y ofrece soporte empresarial sobre ese mismo núcleo. No son capas opuestas: son complementarias. Un adaptador establece la correspondencia entre ambas —el valor añadido de la certificación, el soporte y la integración— sin alterar la identidad de ninguna. El valor de correspondencia mide, en cada momento, el grado de acoplamiento entre la innovación abierta y la propuesta comercial.
+            </em></p>
+        </div>
+
+        <p>
+            Este patrón organizacional dual es directamente representable dentro del marco de trabajo McDee‑11: las capas comunitaria y corporativa se modelan como representaciones distintas, cada una con su propio contexto; la persistencia se diferencia en repositorios públicos y sistemas de suscripción privados; la organización por capas revela cómo ambas capas se relacionan; y el adaptador permite monitorizar el acoplamiento sin forzar la fusión de las capas.
+        </p>
+
+        <p>
+            <strong>Otros sistemas híbridos que se benefician de este patrón organizacional:</strong>
+        </p>
+        <ul>
+            <li><strong>🏪 Plataformas multisided (Mercado Libre, Airbnb):</strong> capas de oferta, demanda, logística y confianza coexisten con lógicas diferentes.</li>
+            <li><strong>🏢 Organizaciones ambidiestras (exploración / explotación):</strong> unidades de I+D y unidades de operación conviven con métricas y ritmos distintos.</li>
+            <li><strong>🆓 Modelos freemium (Spotify, Dropbox):</strong> capa gratuita y capa premium comparten infraestructura pero difieren en contexto.</li>
+            <li><strong>🔧 Sistemas producto‑servicio:</strong> la capa de producto físico y la capa de servicio digital se acoplan generando intervenciones preventivas.</li>
+            <li><strong>🏛️ Alianzas público‑privadas:</strong> capas con marcos normativos, temporalidades y criterios de éxito heterogéneos.</li>
+        </ul>
+
+        <p>
+            En todos estos casos, McDee‑11 no prescribe cómo deben relacionarse las capas. Proporciona la infraestructura para <strong>documentar los contextos, preservar las representaciones, organizar las relaciones por capas y medir las correspondencias</strong> sin imponer una fusión artificial de lógicas que, por naturaleza, deben permanecer diferenciadas.
+        </p>
+
+        <div class="scope-delimitation" style="margin-top: 2rem;">
+            <strong>🧭 De la comparación de representaciones a la organización de interpretaciones</strong><br>
+            McDee‑11 es, de manera fundamental, <strong>un marco de trabajo para organizar, de forma trazable, los procesos mediante los cuales surgen las interpretaciones</strong>. No busca producir interpretaciones finales, sino ofrecer una infraestructura donde las interpretaciones —siempre contextuales, siempre trazables, siempre revisables— puedan evolucionar sin perder el registro de las condiciones que las hicieron posibles.
+        </div>
+
+        <h3>Proyectos del grupo DIGITI como campo de aplicación, investigación y validación</h3>
+        <p>Los siguientes proyectos del Grupo de Investigación DIGITI se proponen como campos concretos de aplicación, investigación y validación o refutación del modelo McDee‑11:</p>
+
+        <div class="reference-card">
+            <p style="margin:0;"><strong>📄 Evaluación de la marcha del amputado transtibial mediante sensores inerciales y ciclogramas: impacto de la desalineación protésica</strong><br>
+            Camargo Casallas, E., Luengas Contreras, L. A., &amp; Garzón González, E. Y. (2025). <em>Revista Colombiana de Tecnologías de Avanzada (RCTA)</em>, 2(46), 123–131.<br>
+            <a href="https://doi.org/10.24054/rcta.v2i46.4006" target="_blank">DOI: 10.24054/rcta.v2i46.4006</a></p>
+            <p style="margin:0.5rem 0 0 0; font-size:0.9rem;">Este estudio utiliza sensores inerciales y ciclogramas para caracterizar la marcha protésica bajo desalineaciones controladas. Por su naturaleza multivariable y la necesidad de integrar distintas fuentes de observación, constituye un campo idóneo para la aplicación, experimentación y posible validación o refutación del modelo McDee‑11 en el área de biomecánica y rehabilitación protésica.</p>
+        </div>
+        <div class="img-container">
+            <img src="img/protesis-1.png" alt="Análisis de marcha con sensores inerciales" width="40%">
+        </div>
+
+        <div class="reference-card">
+            <p style="margin:0;"><strong>🚀 Sondas estratosféricas, telemetría y análisis de señales en condiciones extremas</strong><br>
+            Camargo Casallas, E., Luengas Contreras, L. A., &amp; grupo <a href="https://pi.udistrital.edu.co/DIGITI/Produccion-gruplac" target="_blank">DIGITI</a>. Proyecto Sonda Sabio Caldas — Desarrollo de vuelo autónomo estratosférico con instrumentación electrónica y telemetría. Universidad Distrital Francisco José de Caldas.</p>
+            <p style="margin:0.5rem 0 0 0; font-size:0.9rem;">Este proyecto aplica telemetría, ajuste de resolución de muestreo en condiciones extremas y análisis relacional de sensores inerciales y de control en misiones aeroespaciales. Constituye un entorno experimental propicio para la aplicación del formalismo McDee‑11.</p>
+        </div>
+        <div class="img-container">
+            <img src="img/telemetria-2.png" alt="Sonda estratosférica y telemetría" width="40%">
+        </div>
+
+        <!-- ==================== SECCIÓN 13 ==================== -->
+        <h2 id="seccion13">13. Entidades organizacionales y su documentación formal</h2>
+        <div class="img-container">
+            <img src="img/seccion9_tabla.png" alt="Diagrama de tipos abstractos" width="40%">
+        </div>
+        <p>El marco de trabajo McDee‑11 se compone de un conjunto de entidades organizacionales cuyas definiciones formales —estructura interna, propiedades algebraicas, restricciones e invariantes— residen en el <strong>Documento Formal</strong>. En el contexto de la analogía del estudio fotográfico, cada una de ellas tiene una manifestación concreta:</p>
+        <ul>
+            <li><strong>Ψ (Psi)</strong> — El contexto de observación: la ficha donde se anota qué cámara, con qué configuración, bajo qué criterio y con qué propósito.</li>
+            <li><strong>Ω (Omega)</strong> — El acto de discretizar la observación: representa la selección de un instante, una configuración y un encuadre concretos dentro del espacio de posibilidades.</li>
+            <li><strong>κ (Kappa)</strong> — La capa de representación: el acetato impreso, la fotografía que captura una proyección del fenómeno. Puede emerger en cualquier nivel de granularidad.</li>
+            <li><strong>μ (Mu)</strong> — La organización por capas: la superposición de todos los acetatos compatibles sobre la mesa de trabajo.</li>
+            <li><strong>Σ (Sigma)</strong> — La persistencia: el archivador donde se guardan los acetatos y las relaciones entre ellos.</li>
+            <li><strong>Φ (Phi)</strong> — Los adaptadores: los dispositivos que representan el criterio para alinear y comparar dos capas.</li>
+            <li><strong>ε (Épsilon)</strong> — Las correspondencias: los valores que aparecen en la pantalla auxiliar tras cada comparación y que pueden organizarse en matrices.</li>
+        </ul>
+        <p>La tabla completa de entidades, con sus tipos abstractos, su interpretación como grafos y sus especificaciones formales, está disponible en el Documento Formal. <a class="formal-link" href="#" title="Consultar Documento Formal: tabla de entidades">→ Doc Formal</a> Los procedimientos para construirlas e instanciarlas en un dominio concreto se describen en el Documento Metodológico. <a class="formal-link" href="#" title="Consultar Documento Metodológico">→ Doc Metodológico</a></p>
+
+        <hr>
+        <p><strong>🧩 McDee‑11 propone que comprender un fenómeno no consiste en elegir la mejor fotografía, sino en organizar el diálogo entre múltiples fotografías del mismo objetivo y entre diferentes interpretaciones de la misma fotografía. Cada imagen constituye una capa de observación; su superposición organizada revela una estructura que ninguna de ellas podría mostrar por separado. Y sobre cada imagen pueden tejerse interpretaciones —literarias, jurídicas, filosóficas— que añaden nuevas capas sin sustituir las anteriores.</strong></p>
+        <p>No importa lo que se observe: un sistema físico, un proceso biológico, una red de sensores o una ciudad. El camino es el mismo: <strong>documentar el contexto, discretizar la observación, capturar la representación, persistir, organizar por capas, acoplar mediante adaptadores, leer las correspondencias y reinterpretar</strong>.</p>
+        <p>El estudio fotográfico ha servido como lenguaje organizacional para mostrar cómo una observación puede evolucionar desde una representación individual hasta un marco de trabajo completo de organización. La fotografía, el acetato, la sala y el cinema multisalas no eran metáforas distintas: eran capas del mismo fenómeno, observado a diferentes escalas y organizado mediante capas complementarias. La teoría de grafos no ha interrumpido la analogía: ha sido, desde el principio, el plano arquitectónico que ahora se hace visible.</p>
+        <p><strong>La escala pertenece al fenómeno; la capa pertenece a quien observa.</strong> 
+            McDee‑11 se presenta como un marco de trabajo para organizar el diálogo entre las observaciones de un fenómeno complejo, respetando las escalas que el propio fenómeno ya posee.</p>
+
+        <div class="architectural-note" style="margin-top: 1.5rem;">
+            <strong>🧭 McDee‑11 no organiza el conocimiento; organiza las relaciones entre representaciones del conocimiento.</strong><br>
+            No pretende describir directamente el mundo, sino organizar de forma trazable las distintas maneras mediante las cuales lo describimos. Ésa es la función de este marco de trabajo: ofrecer un espacio donde distintas representaciones —científicas, técnicas, humanísticas, jurídicas— puedan coexistir, relacionarse y dialogar sin perder su identidad ni el contexto que las hizo posibles.
+        </div>
+
+        <p><strong>El clic nunca fue el comienzo del fenómeno. Fue el comienzo de su organización consciente.</strong></p>
+
+        <!-- ==================== AGRADECIMIENTOS ==================== -->
+        <div class="architectural-note" style="margin-top: 2rem;">
+            <strong>🙏 Agradecimientos</strong><br>
+            El autor desea expresar su gratitud a la Facultad Tecnológica de la Universidad Distrital Francisco José de Caldas, donde se formó como Tecnólogo en Electrónica, y cuyos proyectos de investigación en biomecánica y ciencias aeroespaciales inspiraron parte de las aplicaciones descritas en este documento.
+        </div>
+
+        <!-- ==================== PUENTE AL DOCUMENTO FORMAL ==================== -->
+        <div class="doc-link" style="margin-top: 2rem;">
+            <strong>📎 Para profundizar</strong><br>
+            Los fundamentos teóricos que inspiran McDee‑11 —la complementariedad de sistemas, los principios de control adaptativo, y la autosimilitud organizacional entendida como conservación de patrones relacionales entre escalas de representación— se desarrollan en el <strong>Documento Formal</strong>, donde se detallan las equivalencias matemáticas y la justificación epistemológica de cada vínculo. <a class="formal-link" href="#" title="Consultar Documento Formal: fundamentos e inspiración">→ Doc Formal</a>
+        </div>
+
+        <!-- ==================== REGLA DE TRAZABILIDAD DOCUMENTAL ==================== -->
+        <div class="architectural-note" style="margin-top: 2rem;">
+            <strong>📎 La red documental como instanciación del marco de trabajo</strong><br>
+            En la <strong>Red de Recursos Digitales McDee‑11</strong>, cada concepto dispone de una <strong>tarjeta documental autónoma</strong> que integra su definición, justificación, bibliografía y enlaces a conceptos vinculados. <strong>La tarjeta documental constituye la unidad mínima de trazabilidad:</strong> mantiene identidad propia, puede reutilizarse en múltiples documentos y conserva la relación explícita entre el concepto y su fundamentación.<br><br>
+            De este modo, la referencia bibliográfica deja de ser un apéndice al final del texto y se convierte en una <strong>propiedad del propio nodo de conocimiento</strong>. <strong>El sistema documental no solo explica un marco de trabajo para organizar representaciones: está organizado siguiendo esa misma arquitectura.</strong> Esta autorreferencia metodológica, explícita y trazable, refuerza la coherencia interna del proyecto. <a class="formal-link" href="#" title="Consultar Documento Formal: regla editorial">→ Doc Formal</a>
+        </div>
+
+        <p class="signature">— McDee‑11 · Desde el Instante de un Clic hacia el marco de la foto-grafía · 2026</p>
+    </div>
+</body>
+</html>
