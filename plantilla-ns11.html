@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es" style="scroll-behavior: smooth;" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plantilla Universal · newrostair11</title>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <style>
+        /* ===== PLANTILLA UNIFICADA ===== */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; scroll-padding-top:100px; height:auto; }
+        body { background-color:#f5f3f0; font-family:'Georgia','Times New Roman',serif; color:#1e2a3a; line-height:1.7; overflow-x:hidden; overflow-y:auto; padding-bottom:120px; word-wrap:break-word; overflow-wrap:break-word; }
+
+        .main-grid { display:grid; grid-template-columns:280px 1fr 280px; width:100%; max-width:1600px; margin:0 auto; gap:0; align-items:start; }
+        .content,.sidebar-left,.sidebar-right { min-width:0; }
+
+        .sidebar-left,.sidebar-right { background-color:#f0f4f8; padding:0.5rem; box-shadow:0 4px 10px rgba(0,0,0,0.05); border:1px solid #cbd5e1; scrollbar-width:thin; overflow-y:auto; }
+        .sidebar-left { border-radius:0 25px 25px 0; direction:rtl; height:calc(100vh - 40px); position:sticky; top:20px; }
+        .sidebar-left>* { direction:ltr; }
+        .sidebar-right { border-radius:25px 0 0 25px; position:sticky; top:20px; max-height:calc(100vh - 40px); }
+        h2 { font-size:1.1rem; color:#1e4a6b; border-bottom:1px solid #b9c8dd; padding-bottom:0.4rem; margin-bottom:0.8rem; }
+
+        .tree { list-style:none; margin:0; padding-left:0; }
+        .tree li { margin-bottom:0.1rem; position:relative; }
+        .module-row { display:flex; align-items:center; gap:0.1rem; }
+        .module-link { flex:1; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.2rem 0.4rem; border-radius:30px; background:#e6edf4; border:1px solid #cbdae6; transition:all 0.2s; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:0.7rem; cursor:pointer; user-select:none; }
+        .module-link:hover { background-color:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+        .module-link.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        .submenu { display:none; margin-left:0.8rem; padding-left:0.4rem; border-left:2px solid #b9c8dd; }
+        .folder.open>.submenu { display:block; }
+        .submenu a { color:#1a4d6b; text-decoration:none; font-size:0.65rem; display:block; padding:0.15rem 0.3rem 0.15rem 0.5rem; border-radius:25px; background:#f9fbfd; border:1px solid #dce5ed; margin:0.05rem 0; font-weight:500; transition:all 0.2s; }
+        .submenu a:hover { background-color:#e4edf5; border-color:#9fb7cc; transform:translateX(3px); }
+        .submenu a.current-page { background-color:#d0dce8; border-left:4px solid #e09d6f; font-weight:bold; color:#0f3b5c; }
+        hr { margin:0.6rem 0; border-color:#b9c8dd; }
+
+        .toggle-folder {
+            background: transparent; border: none; color: #1a4d6b; font-size: 0.7rem;
+            padding: 0.15rem 0.3rem; cursor: pointer; border-radius: 4px; transition: background 0.2s;
+            flex-shrink: 0; line-height: 1; width: 1.6rem; text-align: center; font-weight: bold;
+        }
+        .toggle-folder:hover { background: rgba(0,0,0,0.08); }
+        .toggle-folder:focus-visible { outline: 2px solid #005a9c; outline-offset: 2px; }
+
+        .header-imagen { background:linear-gradient(180deg, #0a2463 0%, #1a3a8a 100%); padding:2rem 3rem; display:flex; justify-content:center; align-items:center; border-bottom:4px solid #3e92cc; box-shadow:0 10px 30px rgba(0,0,0,0.2); }
+        .header-container { display:flex; align-items:center; justify-content:space-between; max-width:1350px; width:100%; gap:20px; flex-wrap:wrap; }
+        .logo-main { background:#ffffff; padding:12px; border-radius:22px; box-shadow:0 4px 15px rgba(0,0,0,0.3); flex-shrink:0; display:flex; align-items:center; }
+        .logo-main img { height:auto; max-height:90px; width:auto; display:block; }
+        .header-text-block { text-align:center; color:white; flex:1; }
+        .header-text-block h1 { font-family:'Century Gothic','CenturyGothic','AppleGothic',sans-serif; font-size:3rem; font-weight:400; color:#FFFFF0; margin-bottom:0rem; }
+        .header-text-block p { font-size:0.9rem; color:#bbdfec; margin:0rem 0; }
+        .header-text-block .accesibilidad-header-text { font-size:1rem; color:#ffffff; margin-top:0.2rem; line-height:1.6; border-top:1px solid rgba(255,255,255,0.15); padding-top:0.6rem; font-style:normal; opacity:1; }
+        .lang-selector { margin-top:0.5rem; display:flex; justify-content:center; align-items:center; gap:0.4rem; }
+        .lang-selector select { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:0.3rem 0.6rem; color:white; font-family:'Georgia',serif; font-size:0.8rem; cursor:pointer; }
+
+        .content { background-color:#ffffff; border:1px solid #cbd5e1; border-radius:28px; padding:2rem; box-shadow:0 8px 20px rgba(0,0,0,0.02); margin:2rem 0; overflow-x:hidden; }
+        section[id],div[id],section.modulo { scroll-margin-top:100px; }
+
+        .formula { background:#eaf2f9; padding:1rem 1.8rem; border-radius:40px; font-family:'Courier New',Courier,monospace; font-size:1.2rem; text-align:center; margin:1.5rem 0; border:1px dashed #2c7da0; box-shadow:inset 0 1px 4px #cbdbe9; overflow-x:auto; }
+        .nota-cafe { background:#fff4e6; border-left:6px solid #b97341; padding:1.5rem 2rem; border-radius:20px; font-style:italic; color:#3d2f1f; margin:2rem 0; }
+        .badge { background:#1b4a6b; color:white; border-radius:30px; padding:0.3rem 1rem; font-size:0.8rem; display:inline-block; margin-right:0.6rem; }
+        .firma { text-align:right; border-top:2px solid #b0b9c5; padding-top:2rem; margin-top:3rem; color:#2b4b64; }
+
+        .menu-flotante-left,.menu-flotante-right { display:none; position:fixed; bottom:20px; z-index:1000; }
+        .menu-flotante-left { left:20px; } .menu-flotante-right { right:20px; }
+        .menu-flotante-btn { background-color:#1e4a6b; color:white; border:none; border-radius:50px; width:60px; height:60px; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:0.8rem; transition:transform 0.05s linear; }
+        .menu-flotante-btn:active { transform:scale(0.95); }
+        .menu-desplegable { display:none; position:absolute; bottom:70px; background-color:#f0f4f8; border-radius:20px; padding:0.8rem; width:260px; box-shadow:0 4px 20px rgba(0,0,0,0.2); border:1px solid #cbd5e1; max-height:60vh; overflow-y:auto; }
+        .menu-desplegable.left { left:0; } .menu-desplegable.right { right:0; }
+        .menu-desplegable.visible { display:block; }
+
+        /* ===== BARRA DE VOZ COMPACTA ===== */
+        .voice-floating-bar {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 1100;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+            border-radius: 24px; padding: 0.5rem 0.8rem;
+            display: grid;
+            grid-template-columns: auto;
+            grid-template-rows: auto auto;
+            gap: 0.4rem;
+            justify-content: center; align-items: center;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.15), 0 0 0 1px rgba(30,74,107,0.25);
+            max-width: 95vw;
+            border: 1px solid #cbd5e1;
+        }
+        .voice-row-top {
+            display: flex; align-items: center; gap: 0.4rem; justify-content: center; flex-wrap: wrap;
+        }
+        .voice-row-bottom {
+            display: flex; align-items: center; gap: 0.4rem; justify-content: center; flex-wrap: wrap;
+        }
+        .voice-floating-bar .voice-btn {
+            background: #ffffff; border: 1px solid #b9c8dd; border-radius: 50%;
+            width: 38px; height: 38px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.25s ease; flex-shrink: 0;
+            font-size: 1.1rem; color: #1e4a6b; padding: 0;
+        }
+        .voice-floating-bar .voice-btn:hover { background: #e2eaf1; border-color: #2c5a7a; }
+        .voice-floating-bar .voice-btn:disabled { opacity: 0.4; pointer-events: none; }
+        .voice-floating-bar .voice-btn.play-btn { background: #1e4a6b; border-color: #4cc9f0; color: white; }
+        .voice-floating-bar .voice-btn.play-btn:hover { background: #163d5c; }
+        .voice-progress-container {
+            display: flex; align-items: center; gap: 0.3rem; min-width: 120px; flex: 1;
+        }
+        .voice-progress-bar {
+            flex: 1; height: 5px; background: #e2e8f0; border-radius: 5px; overflow: hidden;
+        }
+        .voice-progress-fill {
+            height: 100%; width: 0%; background: linear-gradient(90deg, #1e4a6b, #3e92cc);
+            transition: width 0.3s ease; border-radius: 5px;
+        }
+        .voice-progress-text {
+            font-size: 0.65rem; color: #2c5a7a; min-width: 32px; text-align: right;
+        }
+        .voice-floating-bar .voice-select,
+        .voice-floating-bar .voice-scope-select,
+        .voice-floating-bar .voice-speed-select {
+            background: #ffffff; border: 1px solid #b9c8dd; border-radius: 20px;
+            padding: 0.25rem 0.5rem; font-family: 'Georgia', serif;
+            font-size: 0.65rem; color: #1e4a6b; cursor: pointer; outline: none;
+            flex-shrink: 0; max-width: 100px;
+        }
+        .voice-floating-bar .voice-scope-select { max-width: 140px; }
+        .voice-floating-bar .voice-speed-select { max-width: 60px; }
+
+        .back-button { display:block; text-align:center; margin-bottom:0.5rem; }
+        .back-button a { display:inline-block; background:#e6edf4; color:#1a4d6b; text-decoration:none; font-weight:600; padding:0.3rem 0.8rem; border-radius:30px; border:1px solid #cbdae6; font-size:0.8rem; transition:background 0.2s,border-color 0.2s; }
+        .back-button a:hover { background:#d4e0ea; border-color:#9eb4c8; color:#0a3146; }
+
+        img { max-width:100%; height:auto; }
+        .menu-desplegable img { width:120px; max-width:100%; }
+
+        @media (max-width:1000px) { .main-grid { grid-template-columns:1fr; } .sidebar-left,.sidebar-right { display:none; } .menu-flotante-left,.menu-flotante-right { display:block; bottom:80px; } .menu-desplegable { bottom:70px; max-height:calc(100vh - 200px); } }
+        @media (max-width:700px) { .content { padding:1.2rem; } .formula { font-size:1rem; padding:0.8rem; } }
+        @media (max-width:600px) {
+            .header-container { flex-direction:row !important; flex-wrap:nowrap !important; justify-content:space-between; align-items:center; gap:0.3rem; }
+            .logo-main { flex:0 0 auto; padding:4px; }
+            .logo-main img { max-height:50px !important; width:auto; }
+            .header-text-block { flex:1; width:auto; text-align:center; margin:0; padding:0 0.2rem; }
+            .header-text-block h1 { font-size:1.8rem; margin-bottom:0.1rem; white-space:normal; }
+            .header-text-block p { font-size:0.75rem; line-height:1.2; margin:0.1rem 0; white-space:normal; }
+            .accesibilidad-header-text { font-size:0.65rem; }
+            .header-imagen { padding:0.5rem 0.3rem; }
+            body { padding-bottom:100px; }
+            .menu-flotante-left,.menu-flotante-right { bottom:90px; }
+            .menu-desplegable { bottom:60px; max-height:calc(100vh - 200px); }
+            .voice-floating-bar {
+                bottom: 0; left: 0; right: 0; transform: none; width: 100%; max-width: 100%;
+                border-radius: 16px 16px 0 0; padding: 4px 6px; gap: 4px;
+                grid-template-columns: auto auto auto auto;
+                grid-template-rows: auto auto;
+            }
+            .voice-row-top, .voice-row-bottom { display: contents; }
+            .voice-floating-bar .voice-btn { width: 30px; height: 30px; font-size: 0.8rem; }
+            .voice-floating-bar .voice-select,
+            .voice-floating-bar .voice-speed-select { font-size: 0.55rem; padding: 2px 3px; max-width: 70px; }
+            .voice-floating-bar .voice-scope-select { font-size: 0.55rem; padding: 2px 3px; max-width: 110px; }
+            .voice-progress-text { font-size: 0.55rem; min-width: 24px; }
+            .voice-progress-container { min-width: 80px; grid-column: span 2; }
+        }
+
+        @media (min-width: 900px) {
+            .voice-floating-bar {
+                grid-template-columns: auto auto auto auto auto auto 1fr;
+                grid-template-rows: auto;
+                gap: 0.4rem;
+                align-items: center;
+            }
+            .voice-row-top, .voice-row-bottom { display: contents; }
+            .voice-progress-container { grid-column: auto; min-width: 100px; }
+        }
+    </style>
+</head>
+<body id="top">
+
+    <!-- BARRA DE VOZ COMPACTA -->
+    <div class="voice-floating-bar" id="voiceFloatingBar">
+        <div class="voice-row-top">
+            <button id="playPauseBtn" class="voice-btn play-btn" aria-label="Reproducir o pausar" title="Reproducir/Pausa">▶</button>
+            <button id="stopBtn" class="voice-btn" aria-label="Detener" title="Detener" disabled>⏹️</button>
+            <select id="voiceSelect" class="voice-select" aria-label="Seleccionar voz">
+                <option value="fem_lat" selected>Fem(Lat)</option>
+                <option value="fem_es">Fem(Esp)</option>
+                <option value="masc_es">Masc(Esp)</option>
+                <option value="masc_lat">Masc(Lat)</option>
+            </select>
+            <select id="speedSelect" class="voice-speed-select" aria-label="Velocidad de lectura">
+                <option value="0.7">0.7x</option>
+                <option value="0.85">0.85x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.2">1.2x</option>
+                <option value="1.5">1.5x</option>
+            </select>
+        </div>
+        <div class="voice-row-bottom">
+            <select id="scopeSelect" class="voice-scope-select" aria-label="Seleccionar tema">
+                <option value="completo" data-full="📄 Documento completo">📄 Completo</option>
+                <option value="introduccion" data-full="📖 Introducción">📖 Intro</option>
+                <option value="seccion1" data-full="📋 Sección 1">📋 Sec. 1</option>
+                <option value="seccion2" data-full="📄 Sección 2">📄 Sec. 2</option>
+                <option value="seccionn" data-full="📄 Sección n">📄 Sec. n</option>
+            </select>
+            <div class="voice-progress-container">
+                <div class="voice-progress-bar"><div class="voice-progress-fill" id="voiceProgressFill"></div></div>
+                <span class="voice-progress-text" id="voiceProgressText">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <header class="header-imagen">
+        <div class="header-container">
+            <a href="index.html" class="logo-main"><img src="img/logo-ns11-fb-rec.png" alt="Logo Principal - Ir a Inicio"></a>
+            <div class="header-text-block">
+                <h1>newrostair11</h1>
+                <p data-es="Conocimiento Colaborativo Complementario" data-en="Collaborative Complementary Knowledge">Conocimiento Colaborativo Complementario</p>
+                <p class="accesibilidad-header-text">
+                    <span aria-hidden="true">🧩</span> 
+                    <span data-es="Este sitio web integra iconos semánticos como " data-en="This website integrates semantic icons such as ">Este sitio web integra iconos semánticos como </span>
+                    <span aria-hidden="true">🧠</span>
+                    <strong data-es="anclajes cognitivos" data-en="cognitive anchors">anclajes cognitivos</strong>
+                    <span data-es=". Con el fin de promover una " data-en=". In order to promote inclusive ">. Con el fin de promover una </span>
+                    <span aria-hidden="true">📖</span>
+                    <span data-es="lectura inclusiva" data-en="reading">lectura inclusiva</span>
+                    <span aria-hidden="true">🌈</span>.
+                </p>
+                <div class="lang-selector">
+                    <select id="langSelect" aria-label="Seleccionar idioma">
+                        <option value="es" selected>🇪🇸 Español</option>
+                        <option value="en">🇬🇧 English</option>
+                    </select>
+                </div>
+            </div>
+            <a href="elipso/elipso.html" class="logo-main"><img src="img/elipso-completo.png" alt="Nodo B - Ir a Red Elipso"></a>
+        </div>
+    </header>
+
+    <div class="main-grid">
+        <aside class="sidebar-left" role="navigation" aria-label="Mapa del sitio">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <h4><span aria-hidden="true">🗺️</span> Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="index.html" class="module-link"><span aria-hidden="true">🏠</span> newrostair11</a></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link"><span aria-hidden="true">🌱</span>Origen, <span aria-hidden="true">▶️</span>Misión y <span aria-hidden="true">🎥</span>Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link"><span aria-hidden="true">📜</span>​Fundamentos y <span aria-hidden="true">📝</span>Marco Teórico</a></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html"><span aria-hidden="true">📘</span> Índice de documentos PI</a></li>
+                                <li><a href="McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11 (Núcleo completo)</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li>
+                                <li><a href="sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="i+d.html" class="module-link"><span aria-hidden="true">🔎</span>I+D y <span aria-hidden="true">📋</span>Modelos de Negocio</a></div>
+                            <ul class="submenu">
+                                <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                                <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> Proyecto NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="indice-rd.html" class="module-link"><span aria-hidden="true">📚</span>Recursos Digitales</a></div>
+                            <ul class="submenu">
+                                <li><a href="indice-rd.html"><span aria-hidden="true">🏠</span> Contenido</a></li>
+                                <li><a href="eje1-rd.html"><span aria-hidden="true">🌀</span> Eje 1 · Fundamentos</a></li>
+                                <li><a href="eje2-rd.html"><span aria-hidden="true">⚙️</span> Eje 2 · Aplicadas</a></li>
+                                <li><a href="eje3-rd.html"><span aria-hidden="true">🧬</span> Eje 3 · Biológicas</a></li>
+                                <li><a href="eje4-rd.html"><span aria-hidden="true">🌿</span> Eje 4 · Sistemas</a></li>
+                                <li><a href="eje5-rd.html"><span aria-hidden="true">🧠</span> Eje 5 · Cognición</a></li>
+                                <li><a href="eje6-rd.html"><span aria-hidden="true">🌐</span> Eje 6 · Humanidades</a></li>
+                                <li><a href="eje7-rd.html"><span aria-hidden="true">📷</span> Eje 7 · Imagen</a></li>
+                                <li><a href="eje8-rd.html"><span aria-hidden="true">🛠️</span> Eje 8 · I+D</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link"><span aria-hidden="true">🎨</span>Arte y Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span>Marco Conceptual</a></div>
+                            <ul class="submenu">
+                                <li><a href="marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arquitecturas de regulación dinámica</a></li>
+                                <li><a href="ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución y Teorías Modernas</a></li>
+                                <li><a href="06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Historia de la Complejidad</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos y Herramientas</a></div>
+                            <ul class="submenu">
+                                <li><a href="Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li>
+                                <li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li>
+                                <li><a href="NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li>
+                                <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                                <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> Proyecto NewroPhome-11</a></li>
+                                <li><a href="i+d/presentacion-mh-digiti.html">Proyecto <span aria-hidden="true">🚶‍♂️</span>Marcha <span aria-hidden="true">🚶</span>Humana</a></li>
+                                <li><a href="docs/grupos-abc.html"><span aria-hidden="true">📊</span> Tabla de Grupos ABC</a></li>
+                                <li><a href="pagina-en-desarrollo.html"><span aria-hidden="true">🎛️</span> Método DSP</a></li>
+                                <li><a href="07-Era-Humano-IA.html"><span aria-hidden="true">🗣️</span> Humano IA</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link"><span aria-hidden="true">📱</span> Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <hr>
+            <h4><span aria-hidden="true">​🎯</span> Accesos Directos</h4>
+            <ul class="tree">
+                <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span> Marco Conceptual</a></div>
+                    <ul class="submenu">
+                        <li><a href="marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arquitecturas de regulación dinámica</a></li>
+                        <li><a href="ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución y Teorías Modernas</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Historia de la Complejidad</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link"><span aria-hidden="true">📝</span> Marco Teórico</a></div>
+                    <ul class="submenu">
+                        <li><a href="McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11 (Núcleo completo)</a></li>
+                        <li><a href="McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li>
+                        <li><a href="sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos y herramientas</a></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li>
+                        <li><a href="NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li>
+                        <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                        <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> Proyecto NewroPhome-11</a></li>
+                        <li><a href="i+d/presentacion-mh-digiti.html">Proyecto <span aria-hidden="true">🚶‍♂️</span>Marcha <span aria-hidden="true">🚶</span>Humana</a></li>
+                        <li><a href="docs/grupos-abc.html"><span aria-hidden="true">📊</span> Tabla de Grupos ABC</a></li>
+                        <li><a href="pagina-en-desarrollo.html"><span aria-hidden="true">🎛️</span> Método DSP</a></li>
+                        <li><a href="07-Era-Humano-IA.html"><span aria-hidden="true">🗣️</span> Humano IA</a></li>
+                    </ul>
+                </li>
+                <li class="folder"><div class="module-row"><a href="i+d/galeria-mm.html" class="module-link"><span aria-hidden="true">📡</span> Multimedia y enlaces externos</a></div>
+                    <ul class="submenu">
+                        <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs"><span aria-hidden="true">🎶</span> YouTube</a></li>
+                        <li><a href="https://www.tiktok.com/@atresicoaureo"><span aria-hidden="true">🎶</span> TikTok</a></li>
+                        <li><a href="galeria.html"><span aria-hidden="true">🖼️</span> Galería completa</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="indice-rd.html" class="module-link"><span aria-hidden="true">📚</span> Recursos Digitales</a></div>
+                    <ul class="submenu">
+                        <li><a href="indice-rd.html"><span aria-hidden="true">🏠</span> Contenido</a></li>
+                        <li><a href="eje1-rd.html"><span aria-hidden="true">🌀</span> Eje 1 · Fundamentos</a></li>
+                        <li><a href="eje2-rd.html"><span aria-hidden="true">⚙️</span> Eje 2 · Aplicadas</a></li>
+                        <li><a href="eje3-rd.html"><span aria-hidden="true">🧬</span> Eje 3 · Biológicas</a></li>
+                        <li><a href="eje4-rd.html"><span aria-hidden="true">🌿</span> Eje 4 · Sistemas</a></li>
+                        <li><a href="eje5-rd.html"><span aria-hidden="true">🧠</span> Eje 5 · Cognición</a></li>
+                        <li><a href="eje6-rd.html"><span aria-hidden="true">🌐</span> Eje 6 · Humanidades</a></li>
+                        <li><a href="eje7-rd.html"><span aria-hidden="true">📷</span> Eje 7 · Imagen</a></li>
+                        <li><a href="eje8-rd.html"><span aria-hidden="true">🛠️</span> Eje 8 · I+D</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;"><span aria-hidden="true">📍</span> Estás en: <strong>Plantilla Universal · newrostair11</strong></p>
+        </aside>
+
+        <main class="content">
+            <!-- ZONA EDITABLE -->
+            <div id="introduccion" style="border: 3px dashed #e09d6f; background: #fefaf5; border-radius: 28px; padding: 3rem 2rem; text-align: center; margin: 2rem 0;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📋</div>
+                <h2 style="color: #b45a3b; margin-bottom: 1rem;">Área de contenido personalizable</h2>
+                <p style="color: #5a4a3a; max-width: 600px; margin: 0 auto 1.5rem auto;">
+                    Copie y pegue aquí el contenido específico de su página.<br>
+                    Mantenga la estructura semántica (títulos, párrafos, imágenes, tablas, etc.)<br>
+                    y respete los estilos existentes o añada los suyos propios dentro de esta sección.
+                </p>
+
+                <div id="seccion1" style="text-align:left; margin-top:2rem;">
+                    <h3>📋 Sección 1</h3>
+                    <p>Contenido de ejemplo para la sección 1. Aquí puede desarrollar el primer bloque temático de su página.</p>
+                </div>
+                <hr>
+                <div id="seccion2" style="text-align:left;">
+                    <h3>📄 Sección 2</h3>
+                    <p>Contenido de ejemplo para la sección 2. Incluya imágenes, tablas o referencias según sea necesario.</p>
+                </div>
+                <hr>
+                <div id="seccionn" style="text-align:left;">
+                    <h3>📄 Sección n</h3>
+                    <p>Contenido de ejemplo para la sección n. Recuerde que puede agregar tantas secciones como requiera, asignándoles un <code>id</code> único y enlazándolas desde el menú lateral.</p>
+                </div>
+
+                <p style="color: #5a4a3a; max-width: 600px; margin: 1.5rem auto 0 auto;">
+                    Incorpore emojis como apoyo contextual para enriquecer la lectura. Se recomienda incluir al menos dos o tres emojis por oración, alineados con las palabras clave del texto.
+                </p>
+                <code style="background: #e2eaf1; padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.85rem; display: inline-block; margin-top: 1rem;">
+                    &lt;!-- Todo lo que ponga aquí se mostrará en el área principal --&gt;
+                </code>
+            </div>
+        </main>
+
+        <aside class="sidebar-right" role="navigation" aria-label="Nodo de acceso">
+            <div style="text-align:center;margin:15px 0 5px 0;"><img src="img/qr_newrostair.png" alt="QR newrostair" style="width:180px;border-radius:15px;box-shadow:0 4px 10px rgba(0,0,0,0.2);"></div>
+            <p style="font-size:0.9rem;text-align:center;">📱 Escanea para compartir<br><strong>newrostair11</strong></p>
+            <hr>
+            <p style="font-weight:bold;color:#1e4a6b;margin:0 0 0.3rem 0;">📑 En esta página</p>
+            <div style="padding: 0.8rem; border-radius: 16px; margin-bottom: 1rem;">
+                <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                    <li><a href="#introduccion">📋 Introducción</a></li>
+                    <li><a href="#seccion1">📋 Sección 1</a></li>
+                    <li><a href="#seccion2">📄 Sección 2</a></li>
+                    <li><a href="#seccionn">📄 Sección n</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;margin-top:.9rem;">🎶🎚️ Escucha Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶⏯️ Audio en Youtube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶⏯️ Audio en TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </aside>
+    </div>
+
+    <!-- MENÚS FLOTANTES CON MINI-MAPA COMPLETO -->
+    <div class="menu-flotante-left">
+        <button class="menu-flotante-btn" id="menuLeftBtn" aria-label="Abrir menú local">📖<br><small>Mapa</small></button>
+        <div class="menu-desplegable left" id="menuLeft">
+            <div class="back-button"><a href="#" onclick="history.back();return false;">⬅️ Volver atrás</a></div>
+            <h4><span aria-hidden="true">🗺️</span> Mini‑mapa del sitio</h4>
+            <ul class="tree">
+                <li class="folder open">
+                    <div class="module-row"><a href="index.html" class="module-link"><span aria-hidden="true">🏠</span> newrostair11</a></div>
+                    <ul class="submenu">
+                        <li class="folder"><div class="module-row"><a href="MVO/OSD.html" class="module-link"><span aria-hidden="true">🌱</span>Origen, <span aria-hidden="true">▶️</span>Misión y <span aria-hidden="true">🎥</span>Visión</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link"><span aria-hidden="true">📜</span>​Fundamentos y <span aria-hidden="true">📝</span>Marco Teórico</a></div>
+                            <ul class="submenu">
+                                <li><a href="PI&FT.html"><span aria-hidden="true">📘</span> Índice PI</a></li>
+                                <li><a href="McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11</a></li>
+                                <li><a href="McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li>
+                                <li><a href="sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="i+d.html" class="module-link"><span aria-hidden="true">🔎</span>I+D y <span aria-hidden="true">📋</span>Modelos de Negocio</a></div>
+                            <ul class="submenu">
+                                <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                                <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> NewroPhome-11</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="indice-rd.html" class="module-link"><span aria-hidden="true">📚</span>Recursos Digitales</a></div>
+                            <ul class="submenu">
+                                <li><a href="indice-rd.html"><span aria-hidden="true">🏠</span> Contenido</a></li>
+                                <li><a href="eje1-rd.html"><span aria-hidden="true">🌀</span> Eje 1 · Fundamentos</a></li>
+                                <li><a href="eje2-rd.html"><span aria-hidden="true">⚙️</span> Eje 2 · Aplicadas</a></li>
+                                <li><a href="eje3-rd.html"><span aria-hidden="true">🧬</span> Eje 3 · Biológicas</a></li>
+                                <li><a href="eje4-rd.html"><span aria-hidden="true">🌿</span> Eje 4 · Sistemas</a></li>
+                                <li><a href="eje5-rd.html"><span aria-hidden="true">🧠</span> Eje 5 · Cognición</a></li>
+                                <li><a href="eje6-rd.html"><span aria-hidden="true">🌐</span> Eje 6 · Humanidades</a></li>
+                                <li><a href="eje7-rd.html"><span aria-hidden="true">📷</span> Eje 7 · Imagen</a></li>
+                                <li><a href="eje8-rd.html"><span aria-hidden="true">🛠️</span> Eje 8 · I+D</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="Humanidades.html" class="module-link"><span aria-hidden="true">🎨</span>Arte y Humanidades</a></div><ul class="submenu"></ul></li>
+                        <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span>Marco Conceptual</a></div>
+                            <ul class="submenu">
+                                <li><a href="marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arq. regulación</a></li>
+                                <li><a href="ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución</a></li>
+                                <li><a href="06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Complejidad</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos</a></div>
+                            <ul class="submenu">
+                                <li><a href="Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li>
+                                <li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li>
+                                <li><a href="NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li>
+                                <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                                <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> NewroPhome-11</a></li>
+                                <li><a href="i+d/presentacion-mh-digiti.html"><span aria-hidden="true">🚶‍♂️</span> Marcha Humana</a></li>
+                                <li><a href="docs/grupos-abc.html"><span aria-hidden="true">📊</span> Grupos ABC</a></li>
+                                <li><a href="pagina-en-desarrollo.html"><span aria-hidden="true">🎛️</span> Método DSP</a></li>
+                                <li><a href="07-Era-Humano-IA.html"><span aria-hidden="true">🗣️</span> Humano IA</a></li>
+                            </ul>
+                        </li>
+                        <li class="folder"><div class="module-row"><a href="elipso/elipso.html" class="module-link"><span aria-hidden="true">📱</span> Comunidad</a></div><ul class="submenu"></ul></li>
+                    </ul>
+                </li>
+            </ul>
+            <hr>
+            <h4><span aria-hidden="true">​🎯</span> Accesos Directos</h4>
+            <ul class="tree">
+                <li class="folder open"><div class="module-row"><a href="marco-conceptual/marco-conceptual.html" class="module-link"><span aria-hidden="true">🤝</span> Marco Conceptual</a></div>
+                    <ul class="submenu">
+                        <li><a href="marco-conceptual/arqui-reg-dinam.html"><span aria-hidden="true">⚙️</span> Arq. regulación</a></li>
+                        <li><a href="ensayo-evolucion/evol-intro.html"><span aria-hidden="true">🌿</span> Evolución</a></li>
+                        <li><a href="06-Historia-Neuroplasticidad.html"><span aria-hidden="true">📖</span> Complejidad</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="PI&FT.html" class="module-link"><span aria-hidden="true">📝</span> Marco Teórico</a></div>
+                    <ul class="submenu">
+                        <li><a href="McDee11-NFC.html"><span aria-hidden="true">📐</span> McDee-11</a></li>
+                        <li><a href="McDee11-Anexo-ADN.html"><span aria-hidden="true">🧬</span> Anexo ADN</a></li>
+                        <li><a href="sonificacion.html"><span aria-hidden="true">🎵</span> Sonificación</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="pyh/pyh.html" class="module-link"><span aria-hidden="true">🛠️</span>Proyectos</a></div>
+                    <ul class="submenu">
+                        <li><a href="Base-Newro-Sync.html"><span aria-hidden="true">🔊</span> NewroSync-11</a></li>
+                        <li><a href="https://newrosboxy11.netlify.app" target="_blank"><span aria-hidden="true">📦</span> NewroBoxy-11</a></li>
+                        <li><a href="NewroHand-11.html"><span aria-hidden="true">🖐️</span> NewroHand-11</a></li>
+                        <li><a href="i+d/hipotesis-pid.html"><span aria-hidden="true">🧠</span> Hipótesis PID</a></li>
+                        <li><a href="newrophome-11/index-np.html"><span aria-hidden="true">📜</span> NewroPhome-11</a></li>
+                        <li><a href="i+d/presentacion-mh-digiti.html"><span aria-hidden="true">🚶‍♂️</span> Marcha Humana</a></li>
+                        <li><a href="docs/grupos-abc.html"><span aria-hidden="true">📊</span> Grupos ABC</a></li>
+                        <li><a href="pagina-en-desarrollo.html"><span aria-hidden="true">🎛️</span> Método DSP</a></li>
+                        <li><a href="07-Era-Humano-IA.html"><span aria-hidden="true">🗣️</span> Humano IA</a></li>
+                    </ul>
+                </li>
+                <li class="folder"><div class="module-row"><a href="i+d/galeria-mm.html" class="module-link"><span aria-hidden="true">📡</span> Multimedia y enlaces</a></div>
+                    <ul class="submenu">
+                        <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs"><span aria-hidden="true">🎶</span> YouTube</a></li>
+                        <li><a href="https://www.tiktok.com/@atresicoaureo"><span aria-hidden="true">🎶</span> TikTok</a></li>
+                        <li><a href="galeria.html"><span aria-hidden="true">🖼️</span> Galería completa</a></li>
+                    </ul>
+                </li>
+                <li class="folder open"><div class="module-row"><a href="indice-rd.html" class="module-link"><span aria-hidden="true">📚</span> Recursos Digitales</a></div>
+                    <ul class="submenu">
+                        <li><a href="indice-rd.html"><span aria-hidden="true">🏠</span> Contenido</a></li>
+                        <li><a href="eje1-rd.html"><span aria-hidden="true">🌀</span> Eje 1 · Fundamentos</a></li>
+                        <li><a href="eje2-rd.html"><span aria-hidden="true">⚙️</span> Eje 2 · Aplicadas</a></li>
+                        <li><a href="eje3-rd.html"><span aria-hidden="true">🧬</span> Eje 3 · Biológicas</a></li>
+                        <li><a href="eje4-rd.html"><span aria-hidden="true">🌿</span> Eje 4 · Sistemas</a></li>
+                        <li><a href="eje5-rd.html"><span aria-hidden="true">🧠</span> Eje 5 · Cognición</a></li>
+                        <li><a href="eje6-rd.html"><span aria-hidden="true">🌐</span> Eje 6 · Humanidades</a></li>
+                        <li><a href="eje7-rd.html"><span aria-hidden="true">📷</span> Eje 7 · Imagen</a></li>
+                        <li><a href="eje8-rd.html"><span aria-hidden="true">🛠️</span> Eje 8 · I+D</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <hr>
+            <p style="font-size:0.85rem;"><span aria-hidden="true">📍</span> Estás en: <strong>Plantilla Universal · newrostair11</strong></p>
+        </div>
+    </div>
+
+    <div class="menu-flotante-right">
+        <button class="menu-flotante-btn" id="menuRightBtn" aria-label="Abrir menú docs">⚙️<br><small>Docs</small></button>
+        <div class="menu-desplegable right" id="menuRight">
+            <div style="text-align:center;margin:10px 0;"><img src="img/qr_newrostair.png" alt="QR" style="width:120px;border-radius:12px;"></div>
+            <p style="font-size:0.8rem;text-align:center;">🔗 Escanea para compartir</p>
+            <hr>
+            <p style="font-weight:bold;color:#1e4a6b;">📑 En esta página</p>
+            <div style="padding: 0.5rem; border-radius: 12px; margin-bottom: 0.5rem;">
+                <ul class="submenu" style="margin-left:0;padding-left:0.5rem;display:block;">
+                    <li><a href="#introduccion">📋 Introducción</a></li>
+                    <li><a href="#seccion1">📋 Sección 1</a></li>
+                    <li><a href="#seccion2">📄 Sección 2</a></li>
+                    <li><a href="#seccionn">📄 Sección n</a></li>
+                </ul>
+            </div>
+            <hr>
+            <h2 style="font-size:.9rem;">🎶 Audios Procesados</h2>
+            <div class="back-button">
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=ywdoFJf_sTs">🎶 YouTube</a></li>
+                    <li><a href="https://www.tiktok.com/@atresicoaureo">🎶 TikTok</a></li>
+                </ul>
+            </div>
+            <hr>
+            <div class="back-button"><a href="#top">⬆️ Volver arriba</a></div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            document.documentElement.classList.remove('no-js');
+
+            // ===== NAVEGACIÓN CON BOTONES DE TOGGLE =====
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                if (folder.querySelector('.toggle-folder')) return;
+                const btn = document.createElement('button');
+                btn.className = 'toggle-folder';
+                btn.setAttribute('aria-label', 'Expandir o contraer carpeta');
+                btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶';
+                const moduleRow = folder.querySelector('.module-row');
+                if (moduleRow) { moduleRow.prepend(btn); } else { folder.prepend(btn); }
+                btn.addEventListener('click', function(e) { e.stopPropagation(); e.preventDefault(); folder.classList.toggle('open'); });
+            });
+
+            document.querySelectorAll('.tree .folder').forEach(folder => {
+                const btn = folder.querySelector('.toggle-folder');
+                if (!btn) return;
+                const observer = new MutationObserver(() => { btn.innerHTML = folder.classList.contains('open') ? '▼' : '▶'; });
+                observer.observe(folder, { attributes: true, attributeFilter: ['class'] });
+            });
+
+            document.querySelectorAll('.tree .module-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const folder = this.closest('.folder');
+                    if (folder) folder.classList.add('open');
+                });
+            });
+
+            function actualizarArbolSegunPagina() {
+                const pathActual = window.location.pathname.replace(/\/$/, '');
+                const nombreArchivo = pathActual.split('/').pop() || 'index.html';
+                document.querySelectorAll('.tree').forEach(tree => {
+                    tree.querySelectorAll('.current-page').forEach(el => el.classList.remove('current-page'));
+                    tree.querySelectorAll('.folder').forEach(f => f.classList.remove('open'));
+                    let enlaceActual = null;
+                    for (const enlace of tree.querySelectorAll('a')) {
+                        const href = enlace.getAttribute('href');
+                        if (!href) continue;
+                        const hrefArchivo = href.split('/').pop().split('?')[0].split('#')[0];
+                        if (hrefArchivo === nombreArchivo) { enlaceActual = enlace; break; }
+                    }
+                    if (enlaceActual) {
+                        enlaceActual.classList.add('current-page');
+                        let elemento = enlaceActual.closest('.folder');
+                        while (elemento) { elemento.classList.add('open'); elemento = elemento.parentElement.closest('.folder'); }
+                    }
+                });
+            }
+            actualizarArbolSegunPagina();
+
+            const menuLeft = document.getElementById('menuLeft'), menuRight = document.getElementById('menuRight'), btnLeft = document.getElementById('menuLeftBtn'), btnRight = document.getElementById('menuRightBtn');
+            function closeAll() { menuLeft.classList.remove('visible'); menuRight.classList.remove('visible'); }
+            btnLeft.addEventListener('click', (e) => { e.stopPropagation(); if (menuLeft.classList.contains('visible')) menuLeft.classList.remove('visible'); else { closeAll(); menuLeft.classList.add('visible'); } });
+            btnRight.addEventListener('click', (e) => { e.stopPropagation(); if (menuRight.classList.contains('visible')) menuRight.classList.remove('visible'); else { closeAll(); menuRight.classList.add('visible'); } });
+            document.addEventListener('click', (e) => { if (!menuLeft.contains(e.target) && e.target !== btnLeft && !menuRight.contains(e.target) && e.target !== btnRight) closeAll(); });
+
+            // Cerrar menús flotantes al hacer clic en un enlace interno
+            document.querySelectorAll('#menuLeft a, #menuRight a').forEach(link => {
+                link.addEventListener('click', function() {
+                    closeAll();
+                });
+            });
+
+            const langSelect = document.getElementById('langSelect');
+            function cambiarIdioma(lang) { document.querySelectorAll('[data-es][data-en]').forEach(el => { el.textContent = el.getAttribute('data-' + lang); }); }
+            langSelect.addEventListener('change', () => { cambiarIdioma(langSelect.value); localStorage.setItem('langPref', langSelect.value); });
+            const savedLang = localStorage.getItem('langPref');
+            if (savedLang && savedLang !== langSelect.value) { langSelect.value = savedLang; cambiarIdioma(savedLang); }
+
+            // ===== SÍNTESIS DE VOZ =====
+            const synth = window.speechSynthesis;
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            const voiceSelectV = document.getElementById('voiceSelect');
+            const scopeSelectV = document.getElementById('scopeSelect');
+            const speedSelectV = document.getElementById('speedSelect');
+            const progressFill = document.getElementById('voiceProgressFill');
+            const progressText = document.getElementById('voiceProgressText');
+            const mainContent = document.querySelector('.content');
+
+            let utterance = null, isPaused = false, isSpeaking = false, voiceMap = {}, selectedVoice = null;
+
+            // Función para eliminar todos los emojis de un texto (no se narran)
+            function limpiarTexto(texto) {
+                return texto.replace(/[\p{Extended_Pictographic}\p{Emoji_Component}]/gu, '');
+            }
+
+            // ===== TEXTOS DE LAS SECCIONES =====
+            const textosSecciones = {
+                completo: () => mainContent ? limpiarTexto(mainContent.innerText) : '',
+                introduccion: () => {
+                    const el = document.getElementById('introduccion');
+                    return el ? limpiarTexto(el.innerText) : '';
+                },
+                seccion1: () => {
+                    const el = document.getElementById('seccion1');
+                    return el ? limpiarTexto(el.innerText) : '';
+                },
+                seccion2: () => {
+                    const el = document.getElementById('seccion2');
+                    return el ? limpiarTexto(el.innerText) : '';
+                },
+                seccionn: () => {
+                    const el = document.getElementById('seccionn');
+                    return el ? limpiarTexto(el.innerText) : '';
+                }
+            };
+
+            function actualizarTextosScope() {
+                const isSmall = window.innerWidth <= 600;
+                Array.from(scopeSelectV.options).forEach(option => {
+                    if (!isSmall) {
+                        const fullText = option.getAttribute('data-full');
+                        if (fullText) option.textContent = fullText;
+                    }
+                });
+            }
+            window.addEventListener('resize', actualizarTextosScope);
+            actualizarTextosScope();
+
+            function obtenerTextoActual() {
+                const ambito = scopeSelectV.value;
+                if (textosSecciones[ambito]) {
+                    return typeof textosSecciones[ambito] === 'function' ? textosSecciones[ambito]() : textosSecciones[ambito];
+                }
+                return '';
+            }
+
+            function construirVoiceMap() {
+                const voces = synth.getVoices();
+                if (!voces.length) return;
+                const spanish = voces.filter(v => v.lang.startsWith('es'));
+                const fem = spanish.find(v => v.name.toLowerCase().includes('female') || v.name.toLowerCase().includes('mujer'));
+                const masc = spanish.find(v => v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('hombre'));
+                voiceMap = { fem_es: fem, fem_lat: fem, masc_es: masc, masc_lat: masc };
+                selectedVoice = voiceMap[voiceSelectV.value] || spanish[0] || null;
+            }
+
+            synth.onvoiceschanged = construirVoiceMap;
+            voiceSelectV.addEventListener('change', () => {
+                if (voiceMap[voiceSelectV.value]) {
+                    if (isSpeaking) synth.cancel();
+                    selectedVoice = voiceMap[voiceSelectV.value];
+                    isSpeaking = false; isPaused = false;
+                    actualizarInterfaz('detenido');
+                }
+            });
+
+            function actualizarInterfaz(estado) {
+                if (estado === 'reproduciendo') {
+                    playPauseBtn.innerHTML = '⏸️';
+                    playPauseBtn.classList.add('play-btn');
+                    stopBtn.disabled = false;
+                } else if (estado === 'pausado') {
+                    playPauseBtn.innerHTML = '▶';
+                    playPauseBtn.classList.remove('play-btn');
+                    stopBtn.disabled = false;
+                } else {
+                    playPauseBtn.innerHTML = '▶';
+                    playPauseBtn.classList.add('play-btn');
+                    stopBtn.disabled = true;
+                    progressFill.style.width = '0%';
+                    progressText.textContent = '0%';
+                }
+            }
+
+            function crearNuevaUtterance(texto, onEnd) {
+                const u = new SpeechSynthesisUtterance(texto);
+                if (selectedVoice) u.voice = selectedVoice;
+                u.rate = parseFloat(speedSelectV.value);
+                u.pitch = 1.0; u.volume = 1;
+                u.onstart = () => { isSpeaking = true; actualizarInterfaz('reproduciendo'); };
+                u.onend = () => { if (onEnd) onEnd(); };
+                u.onerror = () => { isSpeaking = false; actualizarInterfaz('detenido'); };
+                u.onpause = () => { isPaused = true; actualizarInterfaz('pausado'); };
+                u.onresume = () => { isPaused = false; actualizarInterfaz('reproduciendo'); };
+                u.onboundary = (e) => {
+                    if (e.name === 'word' || e.name === 'sentence') {
+                        const charIndex = e.charIndex || 0;
+                        const totalLength = texto.length;
+                        const progress = Math.min(100, Math.round((charIndex / totalLength) * 100));
+                        progressFill.style.width = progress + '%';
+                        progressText.textContent = progress + '%';
+                    }
+                };
+                return u;
+            }
+
+            function iniciarLectura() {
+                if (synth.speaking) synth.cancel();
+                if (!selectedVoice) return;
+                const texto = obtenerTextoActual();
+                if (!texto.trim()) return;
+                utterance = crearNuevaUtterance(texto, () => {
+                    isSpeaking = false;
+                    actualizarInterfaz('detenido');
+                    progressFill.style.width = '100%';
+                    progressText.textContent = '100%';
+                });
+                synth.speak(utterance);
+            }
+
+            playPauseBtn.addEventListener('click', () => {
+                if (!isSpeaking && !isPaused) iniciarLectura();
+                else if (isSpeaking && !isPaused) synth.pause();
+                else if (isSpeaking && isPaused) synth.resume();
+            });
+
+            stopBtn.addEventListener('click', () => {
+                if (synth.speaking) synth.cancel();
+                isSpeaking = false; isPaused = false;
+                actualizarInterfaz('detenido');
+            });
+
+            scopeSelectV.addEventListener('change', () => {
+                if (isSpeaking) { synth.cancel(); isSpeaking = false; isPaused = false; actualizarInterfaz('detenido'); }
+            });
+
+            window.addEventListener('beforeunload', () => { if (synth.speaking) synth.cancel(); });
+            construirVoiceMap();
+        })();
+    </script>
+
+    <script>
+        function toggleSeccion(idContenido, icono) { const contenido = document.getElementById(idContenido); if (contenido) { contenido.classList.toggle('colapsado'); if (icono) icono.classList.toggle('girado'); } }
+        function expandirTodo() { document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.remove('colapsado')); document.querySelectorAll('.icono-toggle').forEach(i => i.classList.remove('girado')); }
+        function colapsarTodo() { document.querySelectorAll('.contenido-colapsable').forEach(c => c.classList.add('colapsado')); document.querySelectorAll('.icono-toggle').forEach(i => i.classList.add('girado')); }
+        function abrirModal(src) { const modal = document.getElementById('modalImagen'); if (modal) { document.getElementById('imagenAmpliada').src = src; modal.classList.add('visible'); } }
+        function cerrarModal() { const modal = document.getElementById('modalImagen'); if (modal) modal.classList.remove('visible'); }
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') cerrarModal(); });
+    </script>
+
+</body>
+</html>
